@@ -1,0 +1,21 @@
+cd /Users/neo/Desktop/Uni/Collin/05.HIPPA_SW2/0/Rocket.Chat.ReactNative
+export PATH="$HOME/.local/bin:$PATH"
+cursor-agent "How does authentication work in this app?"
+cursor-agent "How does authentication work in this app?" --print
+cursor-agent "is this app good?" --print
+cursor-agent -p "is this app good?"
+
+cursor-agent create-chat
+cursor-agent --resume="433e6f40-afc2-475b-8dff-3fc84e80ec95" --print "can you explain the ask_cursor_agent function in more detail?"
+
+
+
+cursor-agent --resume="4767b421-45b1-453b-bbcd-b8bef7883842" --print "what does this app do"
+cursor-agent --resume="4767b421-45b1-453b-bbcd-b8bef7883842" --print "what did i just asked?"
+
+cursor-agent create-chat /Users/neo/Desktop/Uni/Collin/05.HIPPA_SW2/0/Rocket.Chat.ReactNative
+
+############
+python -m venv venv
+source venv/bin/activate
+pip install flask

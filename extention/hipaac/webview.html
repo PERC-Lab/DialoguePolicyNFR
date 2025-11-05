@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{CSS_PATH}}">
+</head>
+<body>
+  <div class="chat-header">HIPAA Compliance Assistant</div>
+  
+  <div class="chat-messages" id="chat">
+    <div class="message bot">
+      <div class="message-content">
+        <div>Hello! You need to verify if this app is HIPAA compliant. You can check the list of requirements from "HIPAA Checklist" tab.</div>
+        <div class="message-time">Just now</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="typing-indicator" id="typing">
+    <div class="typing-dot"></div>
+    <div class="typing-dot"></div>
+    <div class="typing-dot"></div>
+  </div>
+
+  <div class="chat-input-container">
+    <input 
+      id="input" 
+      type="text" 
+      placeholder="Type your message..." 
+      autocomplete="off"
+    />
+    <button id="send">Send</button>
+  </div>
+
+  <script>
+    const vscode = acquireVsCodeApi();
+    const chat = document.getElementById('chat');
+    const input = document.getElementById('input');
+    const sendButton = document.getElementById('send');
+    const typingIndicator = document.getElementById('typing');
+
+    function scrollToBottom() {
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    function formatTime() {
+      const now = new Date();
+      return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
+
+    function parseMarkdown(text) {
+      if (!text) return '';
+      
+      // Process code blocks first (before escaping)
+      const codeBlocks = [];
+      let blockIndex = 0;
+      let html = text.replace(/```([\s\S]*?)```/g, (match, code) => {
+        const id = `CODE_BLOCK_${blockIndex++}`;
+        codeBlocks.push(`<pre><code>${escapeHtml(code)}</code></pre>`);
+        return id;
+      });
+      
+      // Escape HTML to prevent XSS
+      html = escapeHtml(html);
+      
+      // Restore code blocks
+      codeBlocks.forEach((block, index) => {
+        html = html.replace(`CODE_BLOCK_${index}`, block);
+      });
+      
+      // Process inline code (after escaping main text)
+      html = html.replace(/`([^`\n]+)`/g, '<code>$1</code>');
+      
+      // Process headers (before other formatting)
+      html = html.replace(/^### (.*$)/gm, '<h3>$1</h3>');
+      html = html.replace(/^## (.*$)/gm, '<h2>$1</h2>');
+      html = html.replace(/^# (.*$)/gm, '<h1>$1</h1>');
+      
+      // Process links
+      html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+      
+      // Process bold first (avoid conflicts with italic)
+      html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+      html = html.replace(/__(.+?)__/g, '<strong>$1</strong>');
+      
+      // Process italic (single asterisk/underscore, not already in bold or code)
+      html = html.replace(/(?<![*`])\*([^*`\n]+)\*(?![*])/g, '<em>$1</em>');
+      html = html.replace(/(?<![_`])_([^_`\n]+)_(?![_])/g, '<em>$1</em>');
+      
+      // Process lists
+      html = html.replace(/^[\*\-\+]\s+(.+)$/gm, '<li>$1</li>');
+      
+      // Wrap consecutive list items in <ul>
+      html = html.replace(/(<li>.*?<\/li>(?:\s*<li>.*?<\/li>)*)/gs, '<ul>$1</ul>');
+      
+      // Line breaks (but preserve them in code blocks)
+      html = html.replace(/\n/g, '<br>');
+      
+      return html;
+    }
+    
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function addMessage(text, isUser) {
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `message ${isUser ? 'user' : 'bot'}`;
+      
+      const contentDiv = document.createElement('div');
+      contentDiv.className = 'message-content';
+      
+      const textDiv = document.createElement('div');
+      // Use innerHTML for bot messages to render markdown, textContent for user messages
+      if (isUser) {
+        textDiv.textContent = text;
+      } else {
+        textDiv.innerHTML = parseMarkdown(text);
+      }
+      contentDiv.appendChild(textDiv);
+      
+      const timeDiv = document.createElement('div');
+      timeDiv.className = 'message-time';
+      timeDiv.textContent = formatTime();
+      contentDiv.appendChild(timeDiv);
+      
+      messageDiv.appendChild(contentDiv);
+      chat.appendChild(messageDiv);
+      scrollToBottom();
+    }
+
+    function showTyping() {
+      typingIndicator.classList.add('active');
+      scrollToBottom();
+    }
+
+    function hideTyping() {
+      typingIndicator.classList.remove('active');
+    }
+
+    function sendMessage() {
+      const text = input.value.trim();
+      if (!text || sendButton.disabled) return;
+
+      addMessage(text, true);
+      input.value = '';
+      sendButton.disabled = true;
+      showTyping();
+
+      vscode.postMessage({ type: 'userResponse', text });
+    }
+
+    sendButton.addEventListener('click', sendMessage);
+    
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
+
+    input.addEventListener('input', () => {
+      sendButton.disabled = !input.value.trim();
+    });
+
+    window.addEventListener('message', event => {
+      const msg = event.data;
+      if (msg.type === 'backendResponse') {
+        hideTyping();
+        addMessage(msg.text, false);
+        sendButton.disabled = false;
+        input.focus();
+      }
+    });
+    input.focus();
+    scrollToBottom();
+  </script>
+</body>
+</html>

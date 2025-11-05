@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{CSS_PATH}}">
+</head>
+<body>
+  <div class="checklist-header">
+    <h2>HIPAA Compliance Checklist</h2>
+    <div class="summary">
+      <span id="compliantCount">0</span> / <span id="totalCount">0</span> Compliant
+    </div>
+  </div>
+  
+  <div class="checklist-container" id="checklist">
+    <div class="loading" id="loading">
+      Loading requirements...
+    </div>
+    <div class="error" id="error" style="display: none;">
+      Error loading requirements. Please make sure the server is running.
+    </div>
+  </div>
+
+  <script>
+    const vscode = acquireVsCodeApi();
+    const checklist = document.getElementById('checklist');
+    const loading = document.getElementById('loading');
+    const error = document.getElementById('error');
+    const compliantCount = document.getElementById('compliantCount');
+    const totalCount = document.getElementById('totalCount');
+    
+    let requirements = [];
+    let complianceStatus = {}; // Store compliance status by requirement id
+
+    function updateSummary() {
+      const compliant = Object.values(complianceStatus).filter(status => status === 'compliant').length;
+      compliantCount.textContent = compliant;
+      totalCount.textContent = requirements.length;
+    }
+
+    function renderRequirements() {
+      if (requirements.length === 0) {
+        error.style.display = 'block';
+        loading.style.display = 'none';
+        return;
+      }
+
+      loading.style.display = 'none';
+      error.style.display = 'none';
+      
+      checklist.innerHTML = requirements.map(req => {
+        const status = complianceStatus[req.id] || 'none';
+        return `
+          <div class="requirement-item" data-id="${req.id}">
+            <div class="requirement-header">
+              <div class="requirement-title">
+                <span class="requirement-number">${req.id}</span>
+                <h3>${req.title}</h3>
+              </div>
+              <div class="compliance-buttons">
+                <button 
+                  class="btn-compliance ${status === 'compliant' ? 'active compliant' : ''}" 
+                  data-status="compliant"
+                  data-id="${req.id}">
+                  ✓ Yes
+                </button>
+                <button 
+                  class="btn-compliance ${status === 'not-compliant' ? 'active not-compliant' : ''}" 
+                  data-status="not-compliant"
+                  data-id="${req.id}">
+                  ✗ No
+                </button>
+              </div>
+            </div>
+            <div class="requirement-description">
+              ${req.description}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Add event listeners to buttons
+      checklist.querySelectorAll('.btn-compliance').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const reqId = parseInt(btn.getAttribute('data-id'));
+          const status = btn.getAttribute('data-status');
+          
+          // Toggle status
+          if (complianceStatus[reqId] === status) {
+            complianceStatus[reqId] = 'none';
+          } else {
+            complianceStatus[reqId] = status;
+          }
+          
+          // Update UI
+          renderRequirements();
+          updateSummary();
+          
+          // Notify extension
+          vscode.postMessage({
+            type: 'updateCompliance',
+            requirementId: reqId,
+            status: complianceStatus[reqId]
+          });
+        });
+      });
+
+      updateSummary();
+    }
+
+    // Request requirements when page loads
+    vscode.postMessage({ type: 'loadRequirements' });
+
+    // Listen for requirements from extension
+    window.addEventListener('message', event => {
+      const msg = event.data;
+      if (msg.type === 'requirementsLoaded') {
+        requirements = msg.requirements;
+        renderRequirements();
+      }
+    });
+  </script>
+</body>
+</html>

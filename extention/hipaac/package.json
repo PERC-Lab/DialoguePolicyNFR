@@ -1,0 +1,58 @@
+{
+  "name": "hipaac",
+  "displayName": "HIPAAC",
+  "description": "This code will ask users to check whether the app is HIPAA compliant",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.105.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./extension.js",
+  "contributes": {
+  "viewsContainers": {
+    "activitybar": [
+      {
+        "id": "interactiveChatSidebar",
+        "title": "HIPAA Compliance",
+        "icon": "media/chat.png"
+      }
+    ]
+  },
+  "views": {
+    "interactiveChatSidebar": [
+      {
+        "id": "chatView",
+        "name": "Assistant",
+        "type": "webview"
+      },
+      {
+        "id": "checklistView",
+        "name": "HIPAA Checklist",
+        "type": "webview"
+      }
+    ]
+  },
+  "commands": [
+    {
+      "command": "hipaac.clearSession",
+      "title": "Clear Session ID"
+    }
+  ]
+},
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.105.0",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "22.x",
+    "eslint": "^9.36.0",
+    "@vscode/test-cli": "^0.0.11",
+    "@vscode/test-electron": "^2.5.2"
+  }
+}

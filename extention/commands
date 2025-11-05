@@ -1,0 +1,7 @@
+npm install -g yo generator-code
+yo code
+	console.log('Congratulations, your extension "hipaac" is now active!');
+	const disposable = vscode.commands.registerCommand('hipaac.helloWorld', function () {
+		vscode.window.showInformationMessage('Hello World from HIPAAC!');
+	});
+	context.subscriptions.push(disposable);
