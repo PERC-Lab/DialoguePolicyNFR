@@ -30,7 +30,7 @@
       },
       {
         "id": "checklistView",
-        "name": "HIPAA Checklist",
+        "name": "List of NFRs",
         "type": "webview"
       }
     ]

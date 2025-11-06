@@ -60,6 +60,9 @@ class ChatViewProvider {
       if (message.type === 'userResponse') {
         const response = await this._sendToBackend(message.text);
         webviewView.webview.postMessage({ type: 'backendResponse', text: response });
+      } else if (message.type === 'loadConversations') {
+        // Webview is requesting conversations (on initial load or restore)
+        await this._loadPreviousConversations(webviewView);
       }
     });
   }
@@ -106,6 +109,51 @@ class ChatViewProvider {
       });
 
       req.write(postData);
+      req.end();
+    });
+  }
+
+  async _loadPreviousConversations(webviewView) {
+    try {
+      const conversations = await this._fetchConversations();
+      webviewView.webview.postMessage({ 
+        type: 'loadPreviousConversations', 
+        conversations: conversations 
+      });
+    } catch (err) {
+      // If error, just continue without previous conversations
+      console.error('Error loading previous conversations:', err);
+    }
+  }
+
+  async _fetchConversations() {
+    return new Promise((resolve) => {
+      const options = {
+        hostname: 'localhost',
+        port: 3000,
+        path: `/api/conversations/${this._sessionId}`,
+        method: 'GET'
+      };
+
+      const req = http.request(options, (res) => {
+        let data = '';
+        res.on('data', (chunk) => {
+          data += chunk;
+        });
+        res.on('end', () => {
+          try {
+            const json = JSON.parse(data);
+            resolve(json.conversations || []);
+          } catch (err) {
+            resolve([]);
+          }
+        });
+      });
+
+      req.on('error', () => {
+        resolve([]);
+      });
+
       req.end();
     });
   }

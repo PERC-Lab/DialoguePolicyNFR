@@ -75,84 +75,77 @@ def ask():
             "session_id": session_id
         }), 500
 
+@app.route("/api/conversations/<session_id>", methods=["GET"])
+def get_conversations(session_id):
+    """Retrieve previous conversations for a session ID"""
+    if session_id in conversations:
+        return jsonify({
+            "conversations": conversations[session_id],
+            "session_id": session_id
+        })
+    return jsonify({
+        "conversations": [],
+        "session_id": session_id
+    })
+
 @app.route("/api/hipaa-requirements", methods=["GET"])
 def get_hipaa_requirements():
     requirements = [
         {
             "id": 1,
-            "title": "Administrative Safeguards",
-            "description": "Security management process, assigned security responsibility, workforce security, information access management, security awareness and training, security incident procedures, contingency plan, evaluation, business associate contracts and other arrangements."
+            "title": "Protection Against Unauthorized Uses or Disclosures",
+            "description": "The system must protect against any reasonably anticipated uses or disclosures of electronic protected health information that are not permitted or required."
         },
         {
             "id": 2,
-            "title": "Physical Safeguards",
-            "description": "Facility access controls, workstation use, workstation security, and device and media controls to restrict physical access to ePHI."
+            "title": "Access Rights Enforcement",
+            "description": "The system shall implement technical policies and procedures for electronic information systems that store ePHI, to ensure that only those persons or software programs that have been granted access rights may access such information."
         },
         {
             "id": 3,
-            "title": "Technical Safeguards",
-            "description": "Access control, audit controls, integrity controls, transmission security to protect and control access to ePHI."
+            "title": "Unique User Identification",
+            "description": "The system shall assign a unique name and/or number to each user for the purpose of identifying and tracking user identity."
         },
         {
             "id": 4,
-            "title": "Encryption of ePHI",
-            "description": "Encrypt ePHI both at rest (stored data) and in transit (data being transmitted) to protect against unauthorized access."
+            "title": "Emergency Access Procedures",
+            "description": "The system shall establish and implement procedures to enable access to necessary electronic protected health information during an emergency."
         },
         {
             "id": 5,
-            "title": "Access Control",
-            "description": "Implement unique user identification, emergency access procedures, automatic logoff, and encryption and decryption of ePHI."
+            "title": "Automatic Session Termination",
+            "description": "The system shall implement electronic procedures that automatically terminate an electronic session after a predetermined period of inactivity."
         },
         {
             "id": 6,
-            "title": "Audit Controls",
-            "description": "Implement hardware, software, and/or procedural mechanisms to record and examine access and other activity in information systems that contain or use ePHI."
+            "title": "Encryption and Decryption Mechanism",
+            "description": "The system shall implement a mechanism to encrypt and decrypt electronic protected health information."
         },
         {
             "id": 7,
-            "title": "Integrity Controls",
-            "description": "Implement policies and procedures to ensure ePHI is not improperly altered or destroyed."
+            "title": "Transmission Security for ePHI",
+            "description": "The system shall implement technical security measures to guard against unauthorized access to ePHI that is transmitted over an electronic communications network. (e.g., The system shall implement a mechanism to encrypt ePHI during electronic transmission whenever deemed appropriate.)"
         },
         {
             "id": 8,
-            "title": "Transmission Security",
-            "description": "Implement technical security measures to guard against unauthorized access to ePHI that is being transmitted over an electronic communications network."
+            "title": "Access Granting Policies and Procedures",
+            "description": "The system shall implement procedures for granting access to ePHI."
         },
         {
             "id": 9,
-            "title": "Privacy Notice",
-            "description": "Provide patients with a notice of privacy practices that explains how their health information is used and disclosed, and their rights regarding their health information."
+            "title": "Log-in Monitoring and Password Management",
+            "description": "The system shall implement procedures for monitoring log-in attempts and reporting discrepancies. Implement procedures for creating, changing, and safeguarding passwords."
         },
         {
             "id": 10,
-            "title": "Minimum Necessary Rule",
-            "description": "When using or disclosing PHI or when requesting PHI from another covered entity, make reasonable efforts to limit PHI to the minimum necessary to accomplish the intended purpose."
+            "title": "Privacy Notice to Individuals",
+            "description": "The system shall ensure that individuals receive adequate notice of the uses and disclosures of protected health information that may be made by the covered entity, as well as the individual's rights and the entity's legal duties regarding that information."
         },
         {
             "id": 11,
-            "title": "Business Associate Agreements",
-            "description": "Have written contracts or other arrangements with business associates that ensure they appropriately safeguard PHI."
-        },
-        {
-            "id": 12,
-            "title": "Breach Notification",
-            "description": "Notify affected individuals, HHS, and in some cases the media, if there is a breach of unsecured PHI."
-        },
-        {
-            "id": 13,
-            "title": "Patient Rights",
-            "description": "Provide patients with rights to access, amend, and receive an accounting of disclosures of their PHI, and the right to request restrictions on certain uses and disclosures."
-        },
-        {
-            "id": 14,
-            "title": "Workforce Training",
-            "description": "Train all workforce members on HIPAA policies and procedures, including security awareness training and periodic updates."
-        },
-        {
-            "id": 15,
-            "title": "Risk Assessment",
-            "description": "Conduct a thorough risk assessment to identify potential threats and vulnerabilities to the confidentiality, integrity, and availability of ePHI."
-        }
+            "title": "Confidentiality, Integrity, and Availability of ePHI",
+            "description": "The system must ensure the confidentiality, integrity, and availability of all electronic protected health information it creates, receives, maintains, or transmits."
+        }        
     ]
     return jsonify({"requirements": requirements})
 

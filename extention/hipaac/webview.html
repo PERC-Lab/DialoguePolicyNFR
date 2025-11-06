@@ -9,9 +9,9 @@
   <div class="chat-header">HIPAA Compliance Assistant</div>
   
   <div class="chat-messages" id="chat">
-    <div class="message bot">
+    <div class="message bot" id="welcome-message">
       <div class="message-content">
-        <div>Hello! You need to verify if this app is HIPAA compliant. You can check the list of requirements from "HIPAA Checklist" tab.</div>
+        <div>Hello! You need to verify if this app is HIPAA compliant. You can check the list of requirements from "List of NFRs" tab.</div>
         <div class="message-time">Just now</div>
       </div>
     </div>
@@ -44,7 +44,15 @@
       chat.scrollTop = chat.scrollHeight;
     }
 
-    function formatTime() {
+    function formatTime(timestamp) {
+      if (timestamp) {
+        try {
+          const date = new Date(timestamp);
+          return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        } catch (e) {
+          // Fallback if timestamp parsing fails
+        }
+      }
       const now = new Date();
       return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     }
@@ -106,7 +114,7 @@
       return div.innerHTML;
     }
 
-    function addMessage(text, isUser) {
+    function addMessage(text, isUser, timestamp) {
       const messageDiv = document.createElement('div');
       messageDiv.className = `message ${isUser ? 'user' : 'bot'}`;
       
@@ -124,12 +132,59 @@
       
       const timeDiv = document.createElement('div');
       timeDiv.className = 'message-time';
-      timeDiv.textContent = formatTime();
+      timeDiv.textContent = formatTime(timestamp);
       contentDiv.appendChild(timeDiv);
       
       messageDiv.appendChild(contentDiv);
       chat.appendChild(messageDiv);
       scrollToBottom();
+    }
+
+    function loadPreviousConversations(conversations) {
+      const chat = document.getElementById('chat');
+      const welcomeMessage = document.getElementById('welcome-message');
+      
+      // Store welcome message if it exists
+      let welcomeElement = null;
+      if (welcomeMessage) {
+        welcomeElement = welcomeMessage.cloneNode(true);
+      }
+      
+      // Clear all messages
+      chat.innerHTML = '';
+      
+      // Restore or create welcome message
+      if (welcomeElement) {
+        chat.appendChild(welcomeElement);
+      } else {
+        // Recreate welcome message if it doesn't exist
+        const welcomeDiv = document.createElement('div');
+        welcomeDiv.className = 'message bot';
+        welcomeDiv.id = 'welcome-message';
+        const contentDiv = document.createElement('div');
+        contentDiv.className = 'message-content';
+        contentDiv.innerHTML = '<div>Hello! You need to verify if this app is HIPAA compliant. You can check the list of requirements from "List of NFRs" tab.</div><div class="message-time">Just now</div>';
+        welcomeDiv.appendChild(contentDiv);
+        chat.appendChild(welcomeDiv);
+      }
+      
+      // Hide welcome message if there are previous conversations
+      if (conversations && conversations.length > 0) {
+        const welcomeMsg = document.getElementById('welcome-message');
+        if (welcomeMsg) {
+          welcomeMsg.style.display = 'none';
+        }
+        
+        // Load previous conversations in chronological order
+        conversations.forEach(conv => {
+          if (conv.user_message) {
+            addMessage(conv.user_message, true, conv.timestamp);
+          }
+          if (conv.bot_reply) {
+            addMessage(conv.bot_reply, false, conv.timestamp);
+          }
+        });
+      }
     }
 
     function showTyping() {
@@ -173,8 +228,14 @@
         addMessage(msg.text, false);
         sendButton.disabled = false;
         input.focus();
+      } else if (msg.type === 'loadPreviousConversations') {
+        loadPreviousConversations(msg.conversations);
       }
     });
+
+    // Request conversations when page loads (or is restored)
+    vscode.postMessage({ type: 'loadConversations' });
+    
     input.focus();
     scrollToBottom();
   </script>
