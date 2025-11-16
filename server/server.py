@@ -10,7 +10,16 @@ CORS(app)
 
 STATIC_PROJECT_PATH = "/Users/neo/Desktop/Uni/Collin/05.HIPPA_SW2/0/Rocket.Chat.ReactNative"
 STATIC_PROJECT_PATH = "/Users/neo/Desktop/Uni/Collin/05.HIPPA_SW2/4/iTrust"
+STATIC_PROJECT_PATH = "/Users/neo/Desktop/Uni/Collin/05.HIPPA_SW2/2/openemr"
+STATIC_PROJECT_PATH = "/Users/neo/Desktop/Uni/Collin/05.HIPPA_SW2/3/openmrs-module-webservices.rest"
+STATIC_PROJECT_PATH = "/Users/neo/Desktop/Uni/Collin/05.HIPPA_SW2/0/Rocket.Chat.ReactNative"
+STATIC_PROJECT_PATH = "/Users/neo/Desktop/Uni/Collin/05.HIPPA_SW2/1/Rocket.Chat"
+STATIC_PROJECT_PATH = "/Users/neo/Desktop/Uni/Collin/05.HIPPA_SW2/5/openmrs-core"
+
+STATIC_PROJECT_PATH = "/Users/neo/Desktop/Uni/Collin/05.HIPPA_SW2/2/openemr"
+
 CONVERSATIONS_FILE = "conversations.json"
+FEEDBACK_FILE = "nfr_feedback.json"
 
 cursor_sessions = set()
 
@@ -34,6 +43,27 @@ def save_conversations(conversations):
         print(f"Error saving conversations: {e}")
 
 conversations = load_conversations()
+
+def load_feedback():
+    """Load NFR feedback from file"""
+    if os.path.exists(FEEDBACK_FILE):
+        try:
+            with open(FEEDBACK_FILE, 'r') as f:
+                return json.load(f)
+        except Exception as e:
+            print(f"Error loading feedback: {e}")
+            return {}
+    return {}
+
+def save_feedback(feedback_data):
+    """Save NFR feedback to file"""
+    try:
+        with open(FEEDBACK_FILE, 'w') as f:
+            json.dump(feedback_data, f, indent=2)
+    except Exception as e:
+        print(f"Error saving feedback: {e}")
+
+nfr_feedback = load_feedback()
 
 @app.route("/api/ask", methods=["POST"])
 def ask():
@@ -148,6 +178,75 @@ def get_hipaa_requirements():
         }        
     ]
     return jsonify({"requirements": requirements})
+
+@app.route("/api/nfr-feedback", methods=["POST"])
+def submit_nfr_feedback():
+    """Save NFR feedback"""
+    try:
+        data = request.get_json()
+        requirement_id = data.get("requirementId")
+        session_id = data.get("session_id", "default")
+        
+        if not requirement_id:
+            return jsonify({"error": "requirementId is required"}), 400
+        
+        feedback_entry = {
+            "requirementId": requirement_id,
+            "located": data.get("located"),
+            "validated": data.get("validated"),
+            "otherFeedback": data.get("otherFeedback", ""),
+            "timestamp": datetime.now().isoformat()
+        }
+        
+        # Store feedback by session_id, then by requirement ID
+        if session_id not in nfr_feedback:
+            nfr_feedback[session_id] = {}
+        
+        if requirement_id not in nfr_feedback[session_id]:
+            nfr_feedback[session_id][requirement_id] = []
+        
+        nfr_feedback[session_id][requirement_id].append(feedback_entry)
+        save_feedback(nfr_feedback)
+        
+        return jsonify({
+            "success": True,
+            "message": "Feedback saved successfully",
+            "feedback": feedback_entry
+        }), 201
+    
+    except Exception as e:
+        error_msg = str(e)
+        return jsonify({
+            "error": error_msg
+        }), 500
+
+@app.route("/api/nfr-feedback/<session_id>", methods=["GET"])
+def get_nfr_feedback(session_id):
+    """Get NFR feedback for a specific session"""
+    try:
+        # Return feedback with completion status for the session
+        feedback_status = {}
+        
+        if session_id in nfr_feedback:
+            for req_id, feedback_list in nfr_feedback[session_id].items():
+                if feedback_list:
+                    # Get the most recent feedback
+                    latest = feedback_list[-1]
+                    feedback_status[int(req_id)] = {
+                        "completed": True,
+                        "latestFeedback": latest
+                    }
+        
+        return jsonify({
+            "feedback": feedback_status,
+            "session_id": session_id
+        }), 200
+    
+    except Exception as e:
+        error_msg = str(e)
+        return jsonify({
+            "error": error_msg
+        }), 500
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=3000)

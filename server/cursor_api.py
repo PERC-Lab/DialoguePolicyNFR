@@ -14,7 +14,7 @@ class CursorAPI:
             self.uuid = self.create_chat()
             self.ask_cursor_agent(initial_prompt)
     
-    def create_chat(self, timeout=60):
+    def create_chat(self, timeout=180):
         shell_command = f'cd "{self.project_path}" && export PATH="$HOME/.local/bin:$PATH" && cursor-agent create-chat'
         
         try:
@@ -40,7 +40,7 @@ class CursorAPI:
         except Exception as e:
             raise Exception(f"Error creating cursor-agent chat: {str(e)}")
     
-    def ask_cursor_agent(self, message, timeout=180):
+    def ask_cursor_agent(self, message, timeout=600):
         if not self.uuid:
             raise Exception("UUID not initialized. Cannot ask cursor-agent.")
         

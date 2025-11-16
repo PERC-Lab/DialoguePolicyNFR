@@ -8,9 +8,6 @@
 <body>
   <div class="checklist-header">
     <h2>List of NFRs</h2>
-    <div class="summary">
-      <span id="compliantCount">0</span> / <span id="totalCount">0</span> Compliant
-    </div>
   </div>
   
   <div class="checklist-container" id="checklist">
@@ -27,17 +24,9 @@
     const checklist = document.getElementById('checklist');
     const loading = document.getElementById('loading');
     const error = document.getElementById('error');
-    const compliantCount = document.getElementById('compliantCount');
-    const totalCount = document.getElementById('totalCount');
     
     let requirements = [];
-    let complianceStatus = {}; // Store compliance status by requirement id
-
-    function updateSummary() {
-      const compliant = Object.values(complianceStatus).filter(status => status === 'compliant').length;
-      compliantCount.textContent = compliant;
-      totalCount.textContent = requirements.length;
-    }
+    let feedbackData = {}; // Store feedback status by requirement id
 
     function renderRequirements() {
       if (requirements.length === 0) {
@@ -50,74 +39,191 @@
       error.style.display = 'none';
       
       checklist.innerHTML = requirements.map(req => {
-        const status = complianceStatus[req.id] || 'none';
+        const isCompleted = feedbackData[req.id] && feedbackData[req.id].completed;
+        const latestFeedback = isCompleted ? feedbackData[req.id].latestFeedback : null;
         return `
-          <div class="requirement-item" data-id="${req.id}">
+          <div class="requirement-item ${isCompleted ? 'completed' : ''}" data-id="${req.id}">
             <div class="requirement-header">
               <div class="requirement-title">
                 <span class="requirement-number">${req.id}</span>
                 <h3>${req.title}</h3>
-              </div>
-              <div class="compliance-buttons">
-                <button 
-                  class="btn-compliance ${status === 'compliant' ? 'active compliant' : ''}" 
-                  data-status="compliant"
-                  data-id="${req.id}">
-                  ✓ Yes
-                </button>
-                <button 
-                  class="btn-compliance ${status === 'not-compliant' ? 'active not-compliant' : ''}" 
-                  data-status="not-compliant"
-                  data-id="${req.id}">
-                  ✗ No
-                </button>
+                ${isCompleted ? '<span class="completed-badge">✓ Completed</span>' : ''}
               </div>
             </div>
             <div class="requirement-description">
               ${req.description}
             </div>
+            <div class="feedback-section ${isCompleted ? 'disabled' : ''}" data-id="${req.id}">
+              <div class="feedback-questions">
+                ${isCompleted ? `
+                  <div class="completed-feedback-display">
+                    <div class="completed-info">
+                      <strong>Submitted on:</strong> ${latestFeedback ? new Date(latestFeedback.timestamp).toLocaleString() : 'N/A'}
+                    </div>
+                    <div class="completed-answers">
+                      <div><strong>Located code section:</strong> ${latestFeedback && latestFeedback.located ? latestFeedback.located === 'yes' ? 'Yes' : 'No' : 'N/A'}</div>
+                      <div><strong>Validated NFR:</strong> ${latestFeedback && latestFeedback.validated ? latestFeedback.validated === 'yes' ? 'Yes' : 'No' : 'N/A'}</div>
+                      ${latestFeedback && latestFeedback.otherFeedback ? `<div><strong>Feedback:</strong> ${latestFeedback.otherFeedback}</div>` : ''}
+                    </div>
+                  </div>
+                ` : `
+                  <div class="feedback-question">
+                    <label>Did the model successfully locate the code section related to this NFR?</label>
+                    <div class="radio-group">
+                      <input type="radio" name="located-${req.id}" value="yes" id="located-yes-${req.id}" class="feedback-radio">
+                      <button class="btn-radio btn-radio-yes" data-for="located-${req.id}" data-value="yes">✓ Yes</button>
+                      <input type="radio" name="located-${req.id}" value="no" id="located-no-${req.id}" class="feedback-radio">
+                      <button class="btn-radio btn-radio-no" data-for="located-${req.id}" data-value="no">✗ No</button>
+                    </div>
+                  </div>
+                  <div class="feedback-question">
+                    <label>Did the model validate or invalidate the NFR?</label>
+                    <div class="radio-group">
+                      <input type="radio" name="validated-${req.id}" value="yes" id="validated-yes-${req.id}" class="feedback-radio">
+                      <button class="btn-radio btn-radio-yes" data-for="validated-${req.id}" data-value="yes">✓ Yes</button>
+                      <input type="radio" name="validated-${req.id}" value="no" id="validated-no-${req.id}" class="feedback-radio">
+                      <button class="btn-radio btn-radio-no" data-for="validated-${req.id}" data-value="no">✗ No</button>
+                    </div>
+                  </div>
+                  <div class="feedback-question">
+                    <label>Any other feedback?</label>
+                    <textarea 
+                      class="feedback-textarea" 
+                      placeholder="Enter your feedback here..."
+                      data-id="${req.id}">
+                    </textarea>
+                  </div>
+                  <button class="btn-submit-feedback" data-id="${req.id}">
+                    Submit Feedback
+                  </button>
+                `}
+              </div>
+              <div class="feedback-status" data-id="${req.id}" style="display: none;"></div>
+            </div>
           </div>
         `;
       }).join('');
 
-      // Add event listeners to buttons
-      checklist.querySelectorAll('.btn-compliance').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const reqId = parseInt(btn.getAttribute('data-id'));
-          const status = btn.getAttribute('data-status');
+      // Skip event listeners for disabled/completed items
+      // Add event listeners to radio buttons (styled as buttons)
+      checklist.querySelectorAll('.btn-radio:not(.disabled)').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const radioName = btn.getAttribute('data-for');
+          const radioValue = btn.getAttribute('data-value');
+          const radio = checklist.querySelector(`input[name="${radioName}"][value="${radioValue}"]`);
           
-          // Toggle status
-          if (complianceStatus[reqId] === status) {
-            complianceStatus[reqId] = 'none';
-          } else {
-            complianceStatus[reqId] = status;
+          if (radio) {
+            radio.checked = true;
+            // Update button styles
+            const group = btn.closest('.radio-group');
+            group.querySelectorAll('.btn-radio').forEach(b => {
+              b.classList.remove('active');
+            });
+            btn.classList.add('active');
+            
+            // Trigger change event for the radio
+            radio.dispatchEvent(new Event('change', { bubbles: true }));
           }
-          
-          // Update UI
-          renderRequirements();
-          updateSummary();
-          
-          // Notify extension
-          vscode.postMessage({
-            type: 'updateCompliance',
-            requirementId: reqId,
-            status: complianceStatus[reqId]
-          });
         });
       });
 
-      updateSummary();
+      // Update button styles when radio changes
+      checklist.querySelectorAll('.feedback-radio').forEach(radio => {
+        radio.addEventListener('change', () => {
+          const group = radio.closest('.radio-group');
+          group.querySelectorAll('.btn-radio').forEach(b => {
+            b.classList.remove('active');
+          });
+          const btn = group.querySelector(`.btn-radio[data-value="${radio.value}"]`);
+          if (btn && radio.checked) {
+            btn.classList.add('active');
+          }
+        });
+      });
+
+      // Add event listeners to feedback submit buttons (only for non-completed items)
+      checklist.querySelectorAll('.btn-submit-feedback').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const reqId = parseInt(btn.getAttribute('data-id'));
+          const feedbackSection = document.querySelector(`.feedback-section[data-id="${reqId}"]`);
+          if (!feedbackSection || !feedbackSection.classList.contains('disabled')) {
+            submitFeedback(reqId);
+          }
+        });
+      });
     }
 
-    // Request requirements when page loads
-    vscode.postMessage({ type: 'loadRequirements' });
+    function submitFeedback(reqId) {
+      const feedbackSection = document.querySelector(`.feedback-section[data-id="${reqId}"]`);
+      const locatedRadio = feedbackSection.querySelector(`input[name="located-${reqId}"]:checked`);
+      const validatedRadio = feedbackSection.querySelector(`input[name="validated-${reqId}"]:checked`);
+      const feedbackTextarea = feedbackSection.querySelector(`.feedback-textarea[data-id="${reqId}"]`);
+      const statusDiv = feedbackSection.querySelector(`.feedback-status[data-id="${reqId}"]`);
 
-    // Listen for requirements from extension
+      const feedback = {
+        requirementId: reqId,
+        located: locatedRadio ? locatedRadio.value : null,
+        validated: validatedRadio ? validatedRadio.value : null,
+        otherFeedback: feedbackTextarea ? feedbackTextarea.value.trim() : ''
+      };
+
+      // Show status
+      statusDiv.style.display = 'block';
+      statusDiv.textContent = 'Submitting...';
+      statusDiv.className = 'feedback-status submitting';
+
+      // Send to extension
+      vscode.postMessage({
+        type: 'submitFeedback',
+        feedback: feedback
+      });
+    }
+
+    // Request requirements and feedback when page loads
+    vscode.postMessage({ type: 'loadRequirements' });
+    
+    // Also request feedback separately (in case requirements load first)
+    setTimeout(() => {
+      vscode.postMessage({ type: 'loadFeedback' });
+    }, 200);
+
+    // Listen for messages from extension
     window.addEventListener('message', event => {
       const msg = event.data;
       if (msg.type === 'requirementsLoaded') {
         requirements = msg.requirements;
+        if (msg.feedback) {
+          feedbackData = msg.feedback;
+        }
         renderRequirements();
+      } else if (msg.type === 'feedbackLoaded') {
+        feedbackData = msg.feedback;
+        renderRequirements();
+      } else if (msg.type === 'feedbackSubmitted') {
+        const statusDiv = document.querySelector(`.feedback-status[data-id="${msg.requirementId}"]`);
+        if (statusDiv) {
+          if (msg.success) {
+            // Mark as completed
+            if (msg.feedback) {
+              feedbackData[msg.requirementId] = {
+                completed: true,
+                latestFeedback: msg.feedback
+              };
+            }
+            // Re-render to show completed state
+            renderRequirements();
+            statusDiv.textContent = 'Feedback submitted successfully!';
+            statusDiv.className = 'feedback-status success';
+          } else {
+            statusDiv.textContent = 'Error submitting feedback: ' + (msg.error || 'Unknown error');
+            statusDiv.className = 'feedback-status error';
+          }
+          // Hide status after 3 seconds
+          setTimeout(() => {
+            statusDiv.style.display = 'none';
+          }, 3000);
+        }
       }
     });
   </script>

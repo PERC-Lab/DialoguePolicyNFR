@@ -5,11 +5,12 @@ const http = require('http');
 
 function activate(context) {
   const chatProvider = new ChatViewProvider(context.extensionUri, context);
-  const checklistProvider = new ChecklistViewProvider(context.extensionUri);
+  const checklistProvider = new ChecklistViewProvider(context.extensionUri, context);
   
   // Register command to clear session ID
   const clearSessionCommand = vscode.commands.registerCommand('hipaac.clearSession', () => {
     chatProvider._clearSessionId();
+    checklistProvider._sessionId = 'default'; // Also reset checklist session ID
     vscode.window.showInformationMessage('Session ID cleared. New session will be created on next message.');
   });
   
@@ -173,8 +174,19 @@ class ChatViewProvider {
 class ChecklistViewProvider {
   static viewType = 'checklistView';
 
-  constructor(extensionUri) {
+  constructor(extensionUri, context) {
     this._extensionUri = extensionUri;
+    this._context = context;
+    this._sessionId = this._getSessionId();
+  }
+
+  _getSessionId() {
+    const sessionKey = 'hipaaSessionId';
+    let sessionId = this._context.globalState.get(sessionKey);
+    if (!sessionId) {
+      sessionId = 'default';
+    }
+    return sessionId;
   }
 
   resolveWebviewView(webviewView) {
@@ -186,12 +198,33 @@ class ChecklistViewProvider {
     webviewView.webview.onDidReceiveMessage(async (message) => {
       if (message.type === 'loadRequirements') {
         const requirements = await this._getRequirements();
-        webviewView.webview.postMessage({ type: 'requirementsLoaded', requirements });
+        const feedback = await this._getFeedback();
+        webviewView.webview.postMessage({ 
+          type: 'requirementsLoaded', 
+          requirements: requirements,
+          feedback: feedback
+        });
+      } else if (message.type === 'loadFeedback') {
+        await this._loadFeedback(webviewView);
       } else if (message.type === 'updateCompliance') {
         // Handle compliance status updates if needed
         // Could send to backend to save state
+      } else if (message.type === 'submitFeedback') {
+        const result = await this._submitFeedback(message.feedback);
+        webviewView.webview.postMessage({
+          type: 'feedbackSubmitted',
+          requirementId: message.feedback.requirementId,
+          success: result.success,
+          error: result.error,
+          feedback: result.feedback
+        });
       }
     });
+
+    // Load feedback when webview is ready
+    setTimeout(() => {
+      this._loadFeedback(webviewView);
+    }, 100);
   }
 
   async _getRequirements() {
@@ -224,6 +257,102 @@ class ChecklistViewProvider {
 
       req.end();
     });
+  }
+
+  async _submitFeedback(feedback) {
+    // Refresh session ID in case it was updated
+    this._sessionId = this._getSessionId();
+    
+    return new Promise((resolve) => {
+      const postData = JSON.stringify({
+        ...feedback,
+        session_id: this._sessionId
+      });
+      
+      const options = {
+        hostname: 'localhost',
+        port: 3000,
+        path: '/api/nfr-feedback',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Content-Length': Buffer.byteLength(postData)
+        }
+      };
+
+      const req = http.request(options, (res) => {
+        let data = '';
+        res.on('data', (chunk) => {
+          data += chunk;
+        });
+        res.on('end', () => {
+          try {
+            const json = JSON.parse(data);
+            if (res.statusCode === 200 || res.statusCode === 201) {
+              resolve({ success: true, feedback: json.feedback });
+            } else {
+              resolve({ success: false, error: json.error || 'Unknown error' });
+            }
+          } catch (err) {
+            resolve({ success: false, error: 'Invalid response from server' });
+          }
+        });
+      });
+
+      req.on('error', () => {
+        resolve({ success: false, error: 'Cannot connect to backend' });
+      });
+
+      req.write(postData);
+      req.end();
+    });
+  }
+
+  async _getFeedback() {
+    // Refresh session ID in case it was updated
+    this._sessionId = this._getSessionId();
+    
+    return new Promise((resolve) => {
+      const options = {
+        hostname: 'localhost',
+        port: 3000,
+        path: `/api/nfr-feedback/${this._sessionId}`,
+        method: 'GET'
+      };
+
+      const req = http.request(options, (res) => {
+        let data = '';
+        res.on('data', (chunk) => {
+          data += chunk;
+        });
+        res.on('end', () => {
+          try {
+            const json = JSON.parse(data);
+            resolve(json.feedback || {});
+          } catch (err) {
+            resolve({});
+          }
+        });
+      });
+
+      req.on('error', () => {
+        resolve({});
+      });
+
+      req.end();
+    });
+  }
+
+  async _loadFeedback(webviewView) {
+    try {
+      const feedback = await this._getFeedback();
+      webviewView.webview.postMessage({ 
+        type: 'feedbackLoaded', 
+        feedback: feedback 
+      });
+    } catch (err) {
+      console.error('Error loading feedback:', err);
+    }
   }
 
   _getHtmlForWebview() {
