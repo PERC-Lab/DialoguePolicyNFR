@@ -1,20 +1,12 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from cursor_api import CursorAPI
+from copilot_api import CursorAPI
 import os
 import json
 from datetime import datetime
 
 app = Flask(__name__)
 CORS(app)
-
-STATIC_PROJECT_PATH = "/Users/neo/Desktop/Uni/Collin/05.HIPPA_SW2/0/Rocket.Chat.ReactNative"
-STATIC_PROJECT_PATH = "/Users/neo/Desktop/Uni/Collin/05.HIPPA_SW2/4/iTrust"
-STATIC_PROJECT_PATH = "/Users/neo/Desktop/Uni/Collin/05.HIPPA_SW2/2/openemr"
-STATIC_PROJECT_PATH = "/Users/neo/Desktop/Uni/Collin/05.HIPPA_SW2/3/openmrs-module-webservices.rest"
-STATIC_PROJECT_PATH = "/Users/neo/Desktop/Uni/Collin/05.HIPPA_SW2/0/Rocket.Chat.ReactNative"
-STATIC_PROJECT_PATH = "/Users/neo/Desktop/Uni/Collin/05.HIPPA_SW2/1/Rocket.Chat"
-STATIC_PROJECT_PATH = "/Users/neo/Desktop/Uni/Collin/05.HIPPA_SW2/5/openmrs-core"
 
 STATIC_PROJECT_PATH = "/Users/neo/Desktop/Uni/Collin/05.HIPPA_SW2/2/openemr"
 
@@ -71,21 +63,32 @@ def ask():
     user_message = data.get("message", "").strip()
     session_id = data.get("session_id", "default")
     
+    # Capture request timestamp
+    request_timestamp = datetime.now().isoformat()
+    print('here')
+    print(user_message)
+    print(session_id)
     try:
         if session_id == "default" or session_id not in cursor_sessions:
+            print('here1')
             cursor_api = CursorAPI(STATIC_PROJECT_PATH)
             session_id = cursor_api.get_uuid()
             cursor_sessions.add(session_id)
             conversations[session_id] = []
         else:
+            print('here2')
             cursor_api = CursorAPI(STATIC_PROJECT_PATH, uuid=session_id)
             if session_id not in conversations:
                 conversations[session_id] = []
         
         reply = cursor_api.ask_cursor_agent(user_message)
         
+        # Capture response timestamp
+        response_timestamp = datetime.now().isoformat()
+        
         conversation_entry = {
-            "timestamp": datetime.now().isoformat(),
+            "request_timestamp": request_timestamp,
+            "response_timestamp": response_timestamp,
             "user_message": user_message,
             "bot_reply": reply
         }
@@ -192,9 +195,10 @@ def submit_nfr_feedback():
         
         feedback_entry = {
             "requirementId": requirement_id,
-            "located": data.get("located"),
-            "validated": data.get("validated"),
-            "otherFeedback": data.get("otherFeedback", ""),
+            "systemResponse": data.get("systemResponse"),
+            "rationale": data.get("rationale", ""),
+            "userEvaluation": data.get("userEvaluation"),
+            "evidence": data.get("evidence"),
             "timestamp": datetime.now().isoformat()
         }
         
