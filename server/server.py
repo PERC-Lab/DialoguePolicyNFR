@@ -124,61 +124,110 @@ def get_conversations(session_id):
 @app.route("/api/hipaa-requirements", methods=["GET"])
 def get_hipaa_requirements():
     requirements = [
+        [
         {
             "id": 1,
-            "title": "Protection Against Unauthorized Uses or Disclosures",
-            "description": "The system must protect against any reasonably anticipated uses or disclosures of electronic protected health information that are not permitted or required."
+            "title": "§ 164.306 Security standards: General rules",
+            "description": "The system shall ensure the confidentiality of all electronic protected health information (ePHI) that it creates."
         },
         {
             "id": 2,
-            "title": "Access Rights Enforcement",
-            "description": "The system shall implement technical policies and procedures for electronic information systems that store ePHI, to ensure that only those persons or software programs that have been granted access rights may access such information."
+            "title": "§ 164.306 Security standards: General rules",
+            "description": "The system shall ensure the confidentiality of all electronic protected health information (ePHI) that it receives."
         },
         {
             "id": 3,
-            "title": "Unique User Identification",
-            "description": "The system shall assign a unique name and/or number to each user for the purpose of identifying and tracking user identity."
+            "title": "§ 164.306 Security standards: General rules",
+            "description": "The system shall ensure the confidentiality of all electronic protected health information (ePHI) that it maintains."
         },
         {
             "id": 4,
-            "title": "Emergency Access Procedures",
-            "description": "The system shall establish and implement procedures to enable access to necessary electronic protected health information during an emergency."
+            "title": "§ 164.306 Security standards: General rules",
+            "description": "The system shall ensure the confidentiality of all electronic protected health information (ePHI) that it transmits."
         },
         {
             "id": 5,
-            "title": "Automatic Session Termination",
-            "description": "The system shall implement electronic procedures that automatically terminate an electronic session after a predetermined period of inactivity."
+            "title": "§ 164.306 Security standards: General rules",
+            "description": "The system shall ensure the integrity of all electronic protected health information (ePHI) that it creates."
         },
         {
             "id": 6,
-            "title": "Encryption and Decryption Mechanism",
-            "description": "The system shall implement a mechanism to encrypt and decrypt electronic protected health information."
+            "title": "§ 164.306 Security standards: General rules",
+            "description": "The system shall ensure the integrity of all electronic protected health information (ePHI) that it receives."
         },
         {
             "id": 7,
-            "title": "Transmission Security for ePHI",
-            "description": "The system shall implement technical security measures to guard against unauthorized access to ePHI that is transmitted over an electronic communications network. (e.g., The system shall implement a mechanism to encrypt ePHI during electronic transmission whenever deemed appropriate.)"
+            "title": "§ 164.306 Security standards: General rules",
+            "description": "The system shall ensure the integrity of all electronic protected health information (ePHI) that it maintains."
         },
         {
             "id": 8,
-            "title": "Access Granting Policies and Procedures",
-            "description": "The system shall implement procedures for granting access to ePHI."
+            "title": "§ 164.306 Security standards: General rules",
+            "description": "The system shall ensure the integrity of all electronic protected health information (ePHI) that it transmits."
         },
         {
             "id": 9,
-            "title": "Log-in Monitoring and Password Management",
-            "description": "The system shall implement procedures for monitoring log-in attempts and reporting discrepancies. Implement procedures for creating, changing, and safeguarding passwords."
+            "title": "§ 164.306 Security standards: General rules",
+            "description": "The system shall ensure the availability of all electronic protected health information (ePHI) that it creates."
         },
         {
             "id": 10,
-            "title": "Privacy Notice to Individuals",
-            "description": "The system shall ensure that individuals receive adequate notice of the uses and disclosures of protected health information that may be made by the covered entity, as well as the individual's rights and the entity's legal duties regarding that information."
-        },
+            "title": "§ 164.306 Security standards: General rules",
+            "description": "The system shall ensure the availability of all electronic protected health information (ePHI) that it receives."
+        }      
+    ],
+    [
         {
             "id": 11,
-            "title": "Confidentiality, Integrity, and Availability of ePHI",
-            "description": "The system must ensure the confidentiality, integrity, and availability of all electronic protected health information it creates, receives, maintains, or transmits."
-        }        
+            "title": "§ 164.312 Technical safeguards.",
+            "description": "The system shall support technical policies and procedures that allow access to electronic protected health information (ePHI) only for authorized users and authorized software programs. The system shall assign a unique user identifier to each user to support identification and tracking of user identity."
+        },
+        {
+            "id": 12,
+            "title": "§ 164.312 Technical safeguards.",
+            "description": "The system shall support procedures for obtaining necessary electronic protected health information (ePHI) during an emergency."
+        },
+        {
+            "id": 13,
+            "title": "§ 164.312 Technical safeguards.",
+            "description": "The system shall support electronic procedures that automatically terminate a session after a predetermined period of inactivity."
+        },
+        {
+            "id": 14,
+            "title": "§ 164.312 Technical safeguards.",
+            "description": "The system shall implement a mechanism to encrypt and decrypt electronic protected health information (ePHI)."
+        },
+        {
+            "id": 15,
+            "title": "§ 164.312 Technical safeguards.",
+            "description": "The system shall implement hardware, software, and/or procedural mechanisms that record and examine activity in information systems that contain or use electronic protected health information (ePHI)."
+        },
+        {
+            "id": 16,
+            "title": "§ 164.312 Technical safeguards.",
+            "description": "The system shall support policies and procedures to protect electronic protected health information (ePHI) from improper alteration or destruction."
+        },
+        {
+            "id": 17,
+            "title": "§ 164.312 Technical safeguards.",
+            "description": "The system shall implement electronic mechanisms to corroborate that electronic protected health information (ePHI) has not been altered or destroyed in an unauthorized manner."
+        },
+        {
+            "id": 18,
+            "title": "§ 164.312 Technical safeguards.",
+            "description": "The system shall implement procedures to verify that a person or entity seeking access to electronic protected health information (ePHI) is the one claimed."
+        },
+        {
+            "id": 19,
+            "title": "§ 164.312 Technical safeguards.",
+            "description": "The system shall implement technical security measures to protect electronic protected health information (ePHI) from unauthorized access during transmission over an electronic communications network."
+        },
+        {
+            "id": 20,
+            "title": "§ 164.312 Technical safeguards.",
+            "description": "The system shall implement security measures to ensure that electronically transmitted electronic protected health information (ePHI) is not improperly modified without detection until disposal."
+        },
+    ]
     ]
     return jsonify({"requirements": requirements})
 
@@ -186,6 +235,9 @@ def get_hipaa_requirements():
 def submit_nfr_feedback():
     """Save NFR feedback"""
     try:
+        # Capture request timestamp
+        request_timestamp = datetime.now().isoformat()
+        
         data = request.get_json()
         requirement_id = data.get("requirementId")
         session_id = data.get("session_id", "default")
@@ -193,13 +245,22 @@ def submit_nfr_feedback():
         if not requirement_id:
             return jsonify({"error": "requirementId is required"}), 400
         
+        # Capture response timestamp
+        response_timestamp = datetime.now().isoformat()
+        
         feedback_entry = {
             "requirementId": requirement_id,
-            "systemResponse": data.get("systemResponse"),
-            "rationale": data.get("rationale", ""),
-            "userEvaluation": data.get("userEvaluation"),
-            "evidence": data.get("evidence"),
-            "timestamp": datetime.now().isoformat()
+            "satisfactionLevel": data.get("satisfactionLevel"),
+            "reasoning": data.get("reasoning", ""),
+            "codeLocations": data.get("codeLocations", ""),
+            "agreeQ1": data.get("agreeQ1"),
+            "agreeQ2": data.get("agreeQ2"),
+            "agreeQ3": data.get("agreeQ3"),
+            "ownAssessmentQ1": data.get("ownAssessmentQ1", ""),
+            "ownAssessmentQ2": data.get("ownAssessmentQ2", ""),
+            "ownAssessmentQ3": data.get("ownAssessmentQ3", ""),
+            "request_timestamp": request_timestamp,
+            "response_timestamp": response_timestamp
         }
         
         # Store feedback by session_id, then by requirement ID
