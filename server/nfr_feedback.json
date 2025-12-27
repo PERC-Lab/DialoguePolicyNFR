@@ -1,20 +1,2 @@
 {
-  "cbcea993-d5a1-4ba7-8dff-1d4ef07d31cd": {
-    "1": [
-      {
-        "requirementId": 1,
-        "satisfactionLevel": "Weakly Satisfied",
-        "reasoning": "test q",
-        "codeLocations": "teass2",
-        "agreeQ1": "Agree",
-        "agreeQ2": "Agree",
-        "agreeQ3": "Partially agree",
-        "ownAssessmentQ1": "",
-        "ownAssessmentQ2": "",
-        "ownAssessmentQ3": "j",
-        "request_timestamp": "2025-12-25T20:23:36.007036",
-        "response_timestamp": "2025-12-25T20:23:36.008650"
-      }
-    ]
-  }
 }

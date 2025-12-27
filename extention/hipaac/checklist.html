@@ -8,6 +8,15 @@
 <body>
   <div class="checklist-header">
     <h2>List of NFRs</h2>
+    <div class="pagination-controls" id="paginationControls" style="display: none;">
+      <button class="pagination-btn pagination-prev" id="prevBtn" disabled>
+        ← Previous
+      </button>
+      <span class="pagination-info" id="paginationInfo">Page 1 of 1</span>
+      <button class="pagination-btn pagination-next" id="nextBtn" disabled>
+        Next →
+      </button>
+    </div>
   </div>
   
   <div class="checklist-container" id="checklist">
@@ -24,21 +33,69 @@
     const checklist = document.getElementById('checklist');
     const loading = document.getElementById('loading');
     const error = document.getElementById('error');
+    const paginationControls = document.getElementById('paginationControls');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const paginationInfo = document.getElementById('paginationInfo');
     
-    let requirements = [];
+    let requirements = []; // Now a list of lists (pages)
     let feedbackData = {}; // Store feedback status by requirement id
+    let currentPage = 0; // Current page index
+
+    function renderPaginationControls() {
+      if (!requirements || requirements.length === 0 || !Array.isArray(requirements[0])) {
+        paginationControls.style.display = 'none';
+        return;
+      }
+
+      if (requirements.length <= 1) {
+        paginationControls.style.display = 'none';
+        return;
+      }
+
+      paginationControls.style.display = 'flex';
+      
+      // Update page info
+      const totalPages = requirements.length;
+      paginationInfo.textContent = `Page ${currentPage + 1} of ${totalPages}`;
+      
+      // Update button states
+      prevBtn.disabled = currentPage === 0;
+      nextBtn.disabled = currentPage >= totalPages - 1;
+    }
 
     function renderRequirements() {
-      if (requirements.length === 0) {
+      if (!requirements || requirements.length === 0) {
         error.style.display = 'block';
         loading.style.display = 'none';
+        paginationControls.style.display = 'none';
         return;
+      }
+
+      // Check if requirements is a list of lists
+      if (requirements.length > 0 && !Array.isArray(requirements[0])) {
+        // Fallback: treat as single page if it's not a list of lists
+        requirements = [requirements];
+      }
+
+      // Validate current page index
+      if (currentPage < 0 || currentPage >= requirements.length) {
+        currentPage = 0;
       }
 
       loading.style.display = 'none';
       error.style.display = 'none';
       
-      checklist.innerHTML = requirements.map(req => {
+      // Get the current page's requirements
+      const currentPageRequirements = requirements[currentPage] || [];
+      
+      if (currentPageRequirements.length === 0) {
+        checklist.innerHTML = '<div class="error">No requirements found for this page.</div>';
+        renderPaginationControls();
+        return;
+      }
+
+      checklist.innerHTML = currentPageRequirements.map(req => {
         const isCompleted = feedbackData[req.id] && feedbackData[req.id].completed;
         const latestFeedback = isCompleted ? feedbackData[req.id].latestFeedback : null;
         return `
@@ -61,38 +118,127 @@
                       <strong>Submitted on:</strong> ${latestFeedback ? new Date(latestFeedback.timestamp).toLocaleString() : 'N/A'}
                     </div>
                     <div class="completed-answers">
-                      <div><strong>Located code section:</strong> ${latestFeedback && latestFeedback.located ? latestFeedback.located === 'yes' ? 'Yes' : 'No' : 'N/A'}</div>
-                      <div><strong>Validated NFR:</strong> ${latestFeedback && latestFeedback.validated ? latestFeedback.validated === 'yes' ? 'Yes' : 'No' : 'N/A'}</div>
-                      ${latestFeedback && latestFeedback.otherFeedback ? `<div><strong>Feedback:</strong> ${latestFeedback.otherFeedback}</div>` : ''}
+                      <div><strong>Q1 - Satisfaction Level:</strong> ${latestFeedback && latestFeedback.satisfactionLevel ? latestFeedback.satisfactionLevel : 'N/A'}</div>
+                      <div><strong>Q2 - Reasoning:</strong> ${latestFeedback && latestFeedback.reasoning ? latestFeedback.reasoning : 'N/A'}</div>
+                      <div><strong>Q3 - Code Locations:</strong> ${latestFeedback && latestFeedback.codeLocations ? latestFeedback.codeLocations : 'N/A'}</div>
+                      <div><strong>Q4 - Agree with Q1:</strong> ${latestFeedback && latestFeedback.agreeQ1 ? latestFeedback.agreeQ1 : 'N/A'}</div>
+                      ${latestFeedback && latestFeedback.ownAssessmentQ1 ? `<div><strong>Own Assessment (Q1):</strong> ${latestFeedback.ownAssessmentQ1}</div>` : ''}
+                      <div><strong>Q5 - Agree with Q2:</strong> ${latestFeedback && latestFeedback.agreeQ2 ? latestFeedback.agreeQ2 : 'N/A'}</div>
+                      ${latestFeedback && latestFeedback.ownAssessmentQ2 ? `<div><strong>Own Assessment (Q2):</strong> ${latestFeedback.ownAssessmentQ2}</div>` : ''}
+                      <div><strong>Q6 - Agree with Q3:</strong> ${latestFeedback && latestFeedback.agreeQ3 ? latestFeedback.agreeQ3 : 'N/A'}</div>
+                      ${latestFeedback && latestFeedback.ownAssessmentQ3 ? `<div><strong>Own Assessment (Q3):</strong> ${latestFeedback.ownAssessmentQ3}</div>` : ''}
                     </div>
                   </div>
                 ` : `
+                  <div class="feedback-section-title">Based on Chatbot Assessment:</div>
+                  
                   <div class="feedback-question">
-                    <label>Did the model successfully locate the code section related to this NFR?</label>
+                    <label>Question 1: What is the level of satisfaction for this NFR assessed based on the Chatbot? <span class="required">*</span></label>
                     <div class="radio-group">
-                      <input type="radio" name="located-${req.id}" value="yes" id="located-yes-${req.id}" class="feedback-radio">
-                      <button class="btn-radio btn-radio-yes" data-for="located-${req.id}" data-value="yes">✓ Yes</button>
-                      <input type="radio" name="located-${req.id}" value="no" id="located-no-${req.id}" class="feedback-radio">
-                      <button class="btn-radio btn-radio-no" data-for="located-${req.id}" data-value="no">✗ No</button>
+                      <input type="radio" name="satisfactionLevel-${req.id}" value="Satisfied" id="satisfactionLevel-Satisfied-${req.id}" class="feedback-radio">
+                      <button class="btn-radio btn-radio-satisfied" data-for="satisfactionLevel-${req.id}" data-value="Satisfied">Satisfied</button>
+                      <input type="radio" name="satisfactionLevel-${req.id}" value="Weakly Satisfied" id="satisfactionLevel-Weakly Satisfied-${req.id}" class="feedback-radio">
+                      <button class="btn-radio btn-radio-weakly-satisfied" data-for="satisfactionLevel-${req.id}" data-value="Weakly Satisfied">Weakly Satisfied</button>
+                      <input type="radio" name="satisfactionLevel-${req.id}" value="Weakly Denied" id="satisfactionLevel-Weakly Denied-${req.id}" class="feedback-radio">
+                      <button class="btn-radio btn-radio-weakly-denied" data-for="satisfactionLevel-${req.id}" data-value="Weakly Denied">Weakly Denied</button>
+                      <input type="radio" name="satisfactionLevel-${req.id}" value="Denied" id="satisfactionLevel-Denied-${req.id}" class="feedback-radio">
+                      <button class="btn-radio btn-radio-denied" data-for="satisfactionLevel-${req.id}" data-value="Denied">Denied</button>
+                      <input type="radio" name="satisfactionLevel-${req.id}" value="NA" id="satisfactionLevel-NA-${req.id}" class="feedback-radio">
+                      <button class="btn-radio btn-radio-na" data-for="satisfactionLevel-${req.id}" data-value="NA">NA</button>
                     </div>
                   </div>
+                  
                   <div class="feedback-question">
-                    <label>Did the model validate or invalidate the NFR?</label>
-                    <div class="radio-group">
-                      <input type="radio" name="validated-${req.id}" value="yes" id="validated-yes-${req.id}" class="feedback-radio">
-                      <button class="btn-radio btn-radio-yes" data-for="validated-${req.id}" data-value="yes">✓ Yes</button>
-                      <input type="radio" name="validated-${req.id}" value="no" id="validated-no-${req.id}" class="feedback-radio">
-                      <button class="btn-radio btn-radio-no" data-for="validated-${req.id}" data-value="no">✗ No</button>
-                    </div>
-                  </div>
-                  <div class="feedback-question">
-                    <label>Any other feedback?</label>
+                    <label>Question 2: What is the reasoning for the level of satisfaction assessed based on the Chatbot? <span class="required">*</span></label>
                     <textarea 
                       class="feedback-textarea" 
-                      placeholder="Enter your feedback here..."
-                      data-id="${req.id}">
+                      placeholder="Enter reasoning here..."
+                      data-id="${req.id}"
+                      data-field="reasoning">
                     </textarea>
                   </div>
+                  
+                  <div class="feedback-question">
+                    <label>Question 3: What are the specific code locations that positively or negatively contribute to the NFR, located by the chatbot? <span class="required">*</span></label>
+                    <textarea 
+                      class="feedback-textarea" 
+                      placeholder="Enter code locations here..."
+                      data-id="${req.id}"
+                      data-field="codeLocations">
+                    </textarea>
+                  </div>
+                  
+                  <div class="feedback-section-title">Verify the chatbot's responses:</div>
+                  
+                  <div class="feedback-question">
+                    <label>Question 4: Do you agree with the level of satisfaction identified in Question 1? <span class="required">*</span></label>
+                    <div class="radio-group">
+                      <input type="radio" name="agreeQ1-${req.id}" value="Agree" id="agreeQ1-Agree-${req.id}" class="feedback-radio">
+                      <button class="btn-radio btn-radio-agree" data-for="agreeQ1-${req.id}" data-value="Agree">Agree</button>
+                      <input type="radio" name="agreeQ1-${req.id}" value="Partially agree" id="agreeQ1-Partially agree-${req.id}" class="feedback-radio">
+                      <button class="btn-radio btn-radio-partially-agree" data-for="agreeQ1-${req.id}" data-value="Partially agree">Partially agree</button>
+                      <input type="radio" name="agreeQ1-${req.id}" value="Partially disagree" id="agreeQ1-Partially disagree-${req.id}" class="feedback-radio">
+                      <button class="btn-radio btn-radio-partially-disagree" data-for="agreeQ1-${req.id}" data-value="Partially disagree">Partially disagree</button>
+                      <input type="radio" name="agreeQ1-${req.id}" value="Disagree" id="agreeQ1-Disagree-${req.id}" class="feedback-radio">
+                      <button class="btn-radio btn-radio-disagree" data-for="agreeQ1-${req.id}" data-value="Disagree">Disagree</button>
+                    </div>
+                  </div>
+                  <div class="feedback-question conditional-field" id="conditional-disagree-Q1-${req.id}" style="display: none;">
+                    <label>If you partially agree or disagree, please provide your own assessment: <span class="required">*</span></label>
+                    <textarea 
+                      class="feedback-textarea" 
+                      placeholder="Enter your own assessment here..."
+                      data-id="${req.id}"
+                      data-field="ownAssessmentQ1">
+                    </textarea>
+                  </div>
+                  
+                  <div class="feedback-question">
+                    <label>Question 5: Do you agree with the reasoning provided in Question 2? <span class="required">*</span></label>
+                    <div class="radio-group">
+                      <input type="radio" name="agreeQ2-${req.id}" value="Agree" id="agreeQ2-Agree-${req.id}" class="feedback-radio">
+                      <button class="btn-radio btn-radio-agree" data-for="agreeQ2-${req.id}" data-value="Agree">Agree</button>
+                      <input type="radio" name="agreeQ2-${req.id}" value="Partially agree" id="agreeQ2-Partially agree-${req.id}" class="feedback-radio">
+                      <button class="btn-radio btn-radio-partially-agree" data-for="agreeQ2-${req.id}" data-value="Partially agree">Partially agree</button>
+                      <input type="radio" name="agreeQ2-${req.id}" value="Partially disagree" id="agreeQ2-Partially disagree-${req.id}" class="feedback-radio">
+                      <button class="btn-radio btn-radio-partially-disagree" data-for="agreeQ2-${req.id}" data-value="Partially disagree">Partially disagree</button>
+                      <input type="radio" name="agreeQ2-${req.id}" value="Disagree" id="agreeQ2-Disagree-${req.id}" class="feedback-radio">
+                      <button class="btn-radio btn-radio-disagree" data-for="agreeQ2-${req.id}" data-value="Disagree">Disagree</button>
+                    </div>
+                  </div>
+                  <div class="feedback-question conditional-field" id="conditional-disagree-Q2-${req.id}" style="display: none;">
+                    <label>If you partially agree or disagree, please provide your own assessment and explanation: <span class="required">*</span></label>
+                    <textarea 
+                      class="feedback-textarea" 
+                      placeholder="Enter your own assessment and explanation here..."
+                      data-id="${req.id}"
+                      data-field="ownAssessmentQ2">
+                    </textarea>
+                  </div>
+                  
+                  <div class="feedback-question">
+                    <label>Question 6: Do you agree with the code locations provided in Question 3? <span class="required">*</span></label>
+                    <div class="radio-group">
+                      <input type="radio" name="agreeQ3-${req.id}" value="Agree" id="agreeQ3-Agree-${req.id}" class="feedback-radio">
+                      <button class="btn-radio btn-radio-agree" data-for="agreeQ3-${req.id}" data-value="Agree">Agree</button>
+                      <input type="radio" name="agreeQ3-${req.id}" value="Partially agree" id="agreeQ3-Partially agree-${req.id}" class="feedback-radio">
+                      <button class="btn-radio btn-radio-partially-agree" data-for="agreeQ3-${req.id}" data-value="Partially agree">Partially agree</button>
+                      <input type="radio" name="agreeQ3-${req.id}" value="Partially disagree" id="agreeQ3-Partially disagree-${req.id}" class="feedback-radio">
+                      <button class="btn-radio btn-radio-partially-disagree" data-for="agreeQ3-${req.id}" data-value="Partially disagree">Partially disagree</button>
+                      <input type="radio" name="agreeQ3-${req.id}" value="Disagree" id="agreeQ3-Disagree-${req.id}" class="feedback-radio">
+                      <button class="btn-radio btn-radio-disagree" data-for="agreeQ3-${req.id}" data-value="Disagree">Disagree</button>
+                    </div>
+                  </div>
+                  <div class="feedback-question conditional-field" id="conditional-disagree-Q3-${req.id}" style="display: none;">
+                    <label>If you partially agree or disagree, please provide your own assessment and explanation: <span class="required">*</span></label>
+                    <textarea 
+                      class="feedback-textarea" 
+                      placeholder="Enter your own assessment and explanation here..."
+                      data-id="${req.id}"
+                      data-field="ownAssessmentQ3">
+                    </textarea>
+                  </div>
+                  
                   <button class="btn-submit-feedback" data-id="${req.id}">
                     Submit Feedback
                   </button>
@@ -103,6 +249,9 @@
           </div>
         `;
       }).join('');
+
+      // Render pagination controls after rendering requirements
+      renderPaginationControls();
 
       // Skip event listeners for disabled/completed items
       // Add event listeners to radio buttons (styled as buttons)
@@ -139,6 +288,28 @@
           if (btn && radio.checked) {
             btn.classList.add('active');
           }
+          
+          // Handle conditional fields for agreeQ1, agreeQ2, agreeQ3
+          if (radio.name.startsWith('agreeQ1-') || radio.name.startsWith('agreeQ2-') || radio.name.startsWith('agreeQ3-')) {
+            const parts = radio.name.split('-');
+            const questionNum = parts[0]; // Get "agreeQ1", "agreeQ2", or "agreeQ3"
+            const reqId = parts.slice(1).join('-'); // Get reqId (everything after first part)
+            
+            // Extract Q1, Q2, or Q3 from agreeQ1, agreeQ2, agreeQ3
+            const qNum = questionNum.replace('agree', ''); // Gets "Q1", "Q2", or "Q3"
+            
+            // Find the conditional field for this question
+            const conditionalField = checklist.querySelector(`#conditional-disagree-${qNum}-${reqId}`);
+            if (conditionalField) {
+              // Show if Partially agree, Partially disagree, or Disagree is selected
+              const shouldShow = radio.checked && (
+                radio.value === 'Partially agree' ||
+                radio.value === 'Partially disagree' || 
+                radio.value === 'Disagree'
+              );
+              conditionalField.style.display = shouldShow ? 'block' : 'none';
+            }
+          }
         });
       });
 
@@ -152,20 +323,132 @@
           }
         });
       });
+
+      // Initialize conditional fields for any pre-selected values
+      checklist.querySelectorAll('.feedback-radio:checked').forEach(radio => {
+        if (radio.name.startsWith('agreeQ1-') || radio.name.startsWith('agreeQ2-') || radio.name.startsWith('agreeQ3-')) {
+          const parts = radio.name.split('-');
+          const questionNum = parts[0]; // Get "agreeQ1", "agreeQ2", or "agreeQ3"
+          const reqId = parts.slice(1).join('-');
+          const qNum = questionNum.replace('agree', ''); // Gets "Q1", "Q2", or "Q3"
+          const conditionalField = checklist.querySelector(`#conditional-disagree-${qNum}-${reqId}`);
+          if (conditionalField && (
+            radio.value === 'Partially agree' ||
+            radio.value === 'Partially disagree' || 
+            radio.value === 'Disagree'
+          )) {
+            conditionalField.style.display = 'block';
+          }
+        }
+      });
+    }
+
+    function validateFeedback(reqId) {
+      const feedbackSection = document.querySelector(`.feedback-section[data-id="${reqId}"]`);
+      const errors = [];
+
+      // Check Q1 - Satisfaction Level (mandatory)
+      const satisfactionLevelRadio = feedbackSection.querySelector(`input[name="satisfactionLevel-${reqId}"]:checked`);
+      if (!satisfactionLevelRadio) {
+        errors.push('Question 1: Please select a satisfaction level');
+      }
+
+      // Check Q2 - Reasoning (mandatory)
+      const reasoningField = feedbackSection.querySelector(`textarea[data-field="reasoning"][data-id="${reqId}"]`);
+      if (!reasoningField || !reasoningField.value.trim()) {
+        errors.push('Question 2: Please provide reasoning');
+      }
+
+      // Check Q3 - Code Locations (mandatory)
+      const codeLocationsField = feedbackSection.querySelector(`textarea[data-field="codeLocations"][data-id="${reqId}"]`);
+      if (!codeLocationsField || !codeLocationsField.value.trim()) {
+        errors.push('Question 3: Please provide code locations');
+      }
+
+      // Check Q4 - Agree with Q1 (mandatory)
+      const agreeQ1Radio = feedbackSection.querySelector(`input[name="agreeQ1-${reqId}"]:checked`);
+      if (!agreeQ1Radio) {
+        errors.push('Question 4: Please select your agreement level');
+      } else {
+        // If partially agree, partially disagree, or disagree, own assessment is mandatory
+        if (agreeQ1Radio.value === 'Partially agree' || agreeQ1Radio.value === 'Partially disagree' || agreeQ1Radio.value === 'Disagree') {
+          const ownAssessmentQ1Field = feedbackSection.querySelector(`textarea[data-field="ownAssessmentQ1"][data-id="${reqId}"]`);
+          if (!ownAssessmentQ1Field || !ownAssessmentQ1Field.value.trim()) {
+            errors.push('Question 4: Please provide your own assessment (required when not agreeing)');
+          }
+        }
+      }
+
+      // Check Q5 - Agree with Q2 (mandatory)
+      const agreeQ2Radio = feedbackSection.querySelector(`input[name="agreeQ2-${reqId}"]:checked`);
+      if (!agreeQ2Radio) {
+        errors.push('Question 5: Please select your agreement level');
+      } else {
+        // If partially agree, partially disagree, or disagree, own assessment is mandatory
+        if (agreeQ2Radio.value === 'Partially agree' || agreeQ2Radio.value === 'Partially disagree' || agreeQ2Radio.value === 'Disagree') {
+          const ownAssessmentQ2Field = feedbackSection.querySelector(`textarea[data-field="ownAssessmentQ2"][data-id="${reqId}"]`);
+          if (!ownAssessmentQ2Field || !ownAssessmentQ2Field.value.trim()) {
+            errors.push('Question 5: Please provide your own assessment (required when not agreeing)');
+          }
+        }
+      }
+
+      // Check Q6 - Agree with Q3 (mandatory)
+      const agreeQ3Radio = feedbackSection.querySelector(`input[name="agreeQ3-${reqId}"]:checked`);
+      if (!agreeQ3Radio) {
+        errors.push('Question 6: Please select your agreement level');
+      } else {
+        // If partially agree, partially disagree, or disagree, own assessment is mandatory
+        if (agreeQ3Radio.value === 'Partially agree' || agreeQ3Radio.value === 'Partially disagree' || agreeQ3Radio.value === 'Disagree') {
+          const ownAssessmentQ3Field = feedbackSection.querySelector(`textarea[data-field="ownAssessmentQ3"][data-id="${reqId}"]`);
+          if (!ownAssessmentQ3Field || !ownAssessmentQ3Field.value.trim()) {
+            errors.push('Question 6: Please provide your own assessment (required when not agreeing)');
+          }
+        }
+      }
+
+      return errors;
     }
 
     function submitFeedback(reqId) {
       const feedbackSection = document.querySelector(`.feedback-section[data-id="${reqId}"]`);
-      const locatedRadio = feedbackSection.querySelector(`input[name="located-${reqId}"]:checked`);
-      const validatedRadio = feedbackSection.querySelector(`input[name="validated-${reqId}"]:checked`);
-      const feedbackTextarea = feedbackSection.querySelector(`.feedback-textarea[data-id="${reqId}"]`);
       const statusDiv = feedbackSection.querySelector(`.feedback-status[data-id="${reqId}"]`);
+
+      // Validate all fields
+      const errors = validateFeedback(reqId);
+      if (errors.length > 0) {
+        statusDiv.style.display = 'block';
+        statusDiv.textContent = 'Validation errors: ' + errors.join('; ');
+        statusDiv.className = 'feedback-status error';
+        // Scroll to status div
+        statusDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        return;
+      }
+
+      // Get all the form values
+      const satisfactionLevelRadio = feedbackSection.querySelector(`input[name="satisfactionLevel-${reqId}"]:checked`);
+      const reasoningField = feedbackSection.querySelector(`textarea[data-field="reasoning"][data-id="${reqId}"]`);
+      const codeLocationsField = feedbackSection.querySelector(`textarea[data-field="codeLocations"][data-id="${reqId}"]`);
+      const agreeQ1Radio = feedbackSection.querySelector(`input[name="agreeQ1-${reqId}"]:checked`);
+      const agreeQ2Radio = feedbackSection.querySelector(`input[name="agreeQ2-${reqId}"]:checked`);
+      const agreeQ3Radio = feedbackSection.querySelector(`input[name="agreeQ3-${reqId}"]:checked`);
+      
+      // Get conditional fields (own assessments)
+      const ownAssessmentQ1Field = feedbackSection.querySelector(`textarea[data-field="ownAssessmentQ1"][data-id="${reqId}"]`);
+      const ownAssessmentQ2Field = feedbackSection.querySelector(`textarea[data-field="ownAssessmentQ2"][data-id="${reqId}"]`);
+      const ownAssessmentQ3Field = feedbackSection.querySelector(`textarea[data-field="ownAssessmentQ3"][data-id="${reqId}"]`);
 
       const feedback = {
         requirementId: reqId,
-        located: locatedRadio ? locatedRadio.value : null,
-        validated: validatedRadio ? validatedRadio.value : null,
-        otherFeedback: feedbackTextarea ? feedbackTextarea.value.trim() : ''
+        satisfactionLevel: satisfactionLevelRadio ? satisfactionLevelRadio.value : null,
+        reasoning: reasoningField ? reasoningField.value.trim() : '',
+        codeLocations: codeLocationsField ? codeLocationsField.value.trim() : '',
+        agreeQ1: agreeQ1Radio ? agreeQ1Radio.value : null,
+        agreeQ2: agreeQ2Radio ? agreeQ2Radio.value : null,
+        agreeQ3: agreeQ3Radio ? agreeQ3Radio.value : null,
+        ownAssessmentQ1: ownAssessmentQ1Field ? ownAssessmentQ1Field.value.trim() : '',
+        ownAssessmentQ2: ownAssessmentQ2Field ? ownAssessmentQ2Field.value.trim() : '',
+        ownAssessmentQ3: ownAssessmentQ3Field ? ownAssessmentQ3Field.value.trim() : ''
       };
 
       // Show status
@@ -180,6 +463,21 @@
       });
     }
 
+    // Add event listeners for pagination buttons
+    prevBtn.addEventListener('click', () => {
+      if (requirements && requirements.length > 0 && currentPage > 0) {
+        currentPage--;
+        renderRequirements();
+      }
+    });
+
+    nextBtn.addEventListener('click', () => {
+      if (requirements && requirements.length > 0 && currentPage < requirements.length - 1) {
+        currentPage++;
+        renderRequirements();
+      }
+    });
+
     // Request requirements and feedback when page loads
     vscode.postMessage({ type: 'loadRequirements' });
     
@@ -192,7 +490,15 @@
     window.addEventListener('message', event => {
       const msg = event.data;
       if (msg.type === 'requirementsLoaded') {
-        requirements = msg.requirements;
+        requirements = msg.requirements || [];
+        // Ensure requirements is a list of lists
+        if (requirements.length > 0) {
+          if (!Array.isArray(requirements[0])) {
+            // If it's a flat list, wrap it in an array
+            requirements = [requirements];
+          }
+        }
+        currentPage = 0; // Reset to first page when requirements are loaded
         if (msg.feedback) {
           feedbackData = msg.feedback;
         }
@@ -229,3 +535,5 @@
   </script>
 </body>
 </html>
+
+

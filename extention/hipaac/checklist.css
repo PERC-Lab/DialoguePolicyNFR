@@ -19,13 +19,58 @@ body {
   border-bottom: 1px solid var(--vscode-panel-border);
   background-color: var(--vscode-sideBar-background);
   flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .checklist-header h2 {
   font-size: 14px;
   font-weight: 600;
-  margin-bottom: 6px;
+  margin: 0;
   color: var(--vscode-foreground);
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.pagination-btn {
+  padding: 6px 14px;
+  border: 1px solid var(--vscode-button-border);
+  background-color: var(--vscode-button-background);
+  color: var(--vscode-button-foreground);
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  white-space: nowrap;
+  min-width: 80px;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background-color: var(--vscode-button-hoverBackground);
+}
+
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: var(--vscode-button-secondaryBackground);
+  color: var(--vscode-button-secondaryForeground);
+}
+
+.pagination-info {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--vscode-foreground);
+  min-width: 80px;
+  text-align: center;
 }
 
 .checklist-container {
@@ -212,6 +257,12 @@ body {
   color: var(--vscode-foreground);
 }
 
+.required {
+  color: #dc3545;
+  font-weight: 600;
+  margin-left: 2px;
+}
+
 .radio-group {
   display: flex;
   gap: 6px;
@@ -259,12 +310,177 @@ body {
   color: white;
 }
 
+.btn-radio.active {
+  background-color: var(--vscode-button-background);
+  border-color: var(--vscode-button-background);
+  color: var(--vscode-button-foreground);
+  font-weight: 600;
+}
+
+.btn-radio.active:hover {
+  background-color: var(--vscode-button-hoverBackground);
+}
+
+/* Colorful button styles for NA, Satisfied, Not satisfied */
+.btn-radio-na.active {
+  background-color: #ffc107;
+  border-color: #ffc107;
+  color: #000;
+  font-weight: 600;
+}
+
+.btn-radio-na.active:hover {
+  background-color: #e0a800;
+}
+
+.btn-radio-satisfied.active {
+  background-color: #28a745;
+  border-color: #28a745;
+  color: white;
+  font-weight: 600;
+}
+
+.btn-radio-satisfied.active:hover {
+  background-color: #218838;
+}
+
+.btn-radio-not-satisfied.active {
+  background-color: #dc3545;
+  border-color: #dc3545;
+  color: white;
+  font-weight: 600;
+}
+
+.btn-radio-not-satisfied.active:hover {
+  background-color: #c82333;
+}
+
 .btn-radio-yes.active:hover {
   background-color: #218838;
 }
 
 .btn-radio-no.active:hover {
   background-color: #c82333;
+}
+
+/* New button styles for updated questions */
+.btn-radio-weakly-satisfied.active {
+  background-color: #90ee90;
+  border-color: #90ee90;
+  color: #000;
+  font-weight: 600;
+}
+
+.btn-radio-weakly-satisfied.active:hover {
+  background-color: #7acc7a;
+}
+
+.btn-radio-weakly-denied.active {
+  background-color: #ffa500;
+  border-color: #ffa500;
+  color: #000;
+  font-weight: 600;
+}
+
+.btn-radio-weakly-denied.active:hover {
+  background-color: #e69400;
+}
+
+.btn-radio-denied.active {
+  background-color: #dc3545;
+  border-color: #dc3545;
+  color: white;
+  font-weight: 600;
+}
+
+.btn-radio-denied.active:hover {
+  background-color: #c82333;
+}
+
+.btn-radio-agree.active {
+  background-color: #28a745;
+  border-color: #28a745;
+  color: white;
+  font-weight: 600;
+}
+
+.btn-radio-agree.active:hover {
+  background-color: #218838;
+}
+
+.btn-radio-partially-agree.active {
+  background-color: #90ee90;
+  border-color: #90ee90;
+  color: #000;
+  font-weight: 600;
+}
+
+.btn-radio-partially-agree.active:hover {
+  background-color: #7acc7a;
+}
+
+.btn-radio-partially-disagree.active {
+  background-color: #ffa500;
+  border-color: #ffa500;
+  color: #000;
+  font-weight: 600;
+}
+
+.btn-radio-partially-disagree.active:hover {
+  background-color: #e69400;
+}
+
+.btn-radio-disagree.active {
+  background-color: #dc3545;
+  border-color: #dc3545;
+  color: white;
+  font-weight: 600;
+}
+
+.btn-radio-disagree.active:hover {
+  background-color: #c82333;
+}
+
+.btn-radio-strongly-agree.active {
+  background-color: #155724;
+  border-color: #155724;
+  color: white;
+  font-weight: 600;
+}
+
+.btn-radio-strongly-agree.active:hover {
+  background-color: #0f3d16;
+}
+
+.btn-radio-strongly-disagree.active {
+  background-color: #721c24;
+  border-color: #721c24;
+  color: white;
+  font-weight: 600;
+}
+
+.btn-radio-strongly-disagree.active:hover {
+  background-color: #5a151b;
+}
+
+.feedback-section-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--vscode-textLink-foreground);
+  margin-top: 16px;
+  margin-bottom: 8px;
+  padding-top: 12px;
+  border-top: 2px solid var(--vscode-panel-border);
+}
+
+.feedback-section-title:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+
+.conditional-field {
+  margin-top: 8px;
 }
 
 .feedback-textarea {

@@ -4,6 +4,7 @@ from copilot_api import CursorAPI
 import os
 import json
 from datetime import datetime
+from NFRs.get_requirements import get_requirements_by_batch
 
 app = Flask(__name__)
 CORS(app)
@@ -229,7 +230,7 @@ def get_hipaa_requirements():
         },
     ]
     ]
-    return jsonify({"requirements": requirements})
+    return jsonify({"requirements": get_requirements_by_batch(3)})
 
 @app.route("/api/nfr-feedback", methods=["POST"])
 def submit_nfr_feedback():
