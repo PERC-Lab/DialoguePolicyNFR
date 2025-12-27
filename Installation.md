@@ -1,5 +1,5 @@
 access key:
-
+https://docs.google.com/document/d/1OBhvyztEf_7NTQ1aq1m5WFDF8zPIrhCm3_6qNfHbJHM/edit?tab=t.0
 copilot
 /login
 choose model GPT-5.1-Codex-Max
