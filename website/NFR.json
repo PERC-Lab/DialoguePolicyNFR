@@ -1,152 +1,1361 @@
 [
-  {
-    "id": 1,
-    "requirement": "The system shall respond to user requests within 2 seconds under normal load conditions.",
-    "category": "Performance"
-  },
-  {
-    "id": 2,
-    "requirement": "The system shall maintain 99.9% uptime availability.",
-    "category": "Reliability"
-  },
-  {
-    "id": 3,
-    "requirement": "All user data shall be encrypted using AES-256 encryption.",
-    "category": "Security"
-  },
-  {
-    "id": 4,
-    "requirement": "The system shall support concurrent access by at least 1000 users.",
-    "category": "Scalability"
-  },
-  {
-    "id": 5,
-    "requirement": "The user interface shall be accessible according to WCAG 2.1 Level AA standards.",
-    "category": "Usability"
-  },
-  {
-    "id": 6,
-    "requirement": "The system shall log all critical operations for audit purposes.",
-    "category": "Maintainability"
-  },
-  {
-    "id": 7,
-    "requirement": "Database queries shall be optimized to execute within 500ms.",
-    "category": "Performance"
-  },
-  {
-    "id": 8,
-    "requirement": "The system shall automatically backup data every 24 hours.",
-    "category": "Reliability"
-  },
-  {
-    "id": 9,
-    "requirement": "User authentication shall use multi-factor authentication (MFA).",
-    "category": "Security"
-  },
-  {
-    "id": 10,
-    "requirement": "The system shall be deployable on cloud infrastructure (AWS, Azure, GCP).",
-    "category": "Portability"
-  },
-  {
-    "id": 11,
-    "requirement": "The system shall support internationalization for at least 5 languages.",
-    "category": "Usability"
-  },
-  {
-    "id": 12,
-    "requirement": "Code coverage for unit tests shall be at least 80%.",
-    "category": "Maintainability"
-  },
-  {
-    "id": 13,
-    "requirement": "API endpoints shall handle rate limiting of 100 requests per minute per user.",
-    "category": "Security"
-  },
-  {
-    "id": 14,
-    "requirement": "The system shall scale horizontally to handle 10x traffic spikes.",
-    "category": "Scalability"
-  },
-  {
-    "id": 15,
-    "requirement": "Error messages shall be user-friendly and provide actionable guidance.",
-    "category": "Usability"
-  },
-  {
-    "id": 16,
-    "requirement": "The system shall maintain data consistency across distributed components.",
-    "category": "Reliability"
-  },
-  {
-    "id": 17,
-    "requirement": "All external API calls shall implement retry logic with exponential backoff.",
-    "category": "Reliability"
-  },
-  {
-    "id": 18,
-    "requirement": "Sensitive data shall be masked in logs and error messages.",
-    "category": "Security"
-  },
-  {
-    "id": 19,
-    "requirement": "The system shall support dark mode and light mode themes.",
-    "category": "Usability"
-  },
-  {
-    "id": 20,
-    "requirement": "Database migrations shall be version-controlled and reversible.",
-    "category": "Maintainability"
-  },
-  {
-    "id": 21,
-    "requirement": "The system shall cache frequently accessed data to improve response times.",
-    "category": "Performance"
-  },
-  {
-    "id": 22,
-    "requirement": "The system shall support containerization using Docker.",
-    "category": "Portability"
-  },
-  {
-    "id": 23,
-    "requirement": "User sessions shall timeout after 30 minutes of inactivity.",
-    "category": "Security"
-  },
-  {
-    "id": 24,
-    "requirement": "The system shall provide real-time notifications for critical events.",
-    "category": "Usability"
-  },
-  {
-    "id": 25,
-    "requirement": "Code shall follow consistent style guidelines and pass linting checks.",
-    "category": "Maintainability"
-  },
-  {
-    "id": 26,
-    "requirement": "The system shall support load balancing across multiple server instances.",
-    "category": "Scalability"
-  },
-  {
-    "id": 27,
-    "requirement": "API responses shall be paginated for large datasets (max 100 items per page).",
-    "category": "Performance"
-  },
-  {
-    "id": 28,
-    "requirement": "The system shall implement circuit breakers for external service calls.",
-    "category": "Reliability"
-  },
-  {
-    "id": 29,
-    "requirement": "User passwords shall meet complexity requirements (min 12 characters, mixed case, numbers, symbols).",
-    "category": "Security"
-  },
-  {
-    "id": 30,
-    "requirement": "The system shall provide comprehensive API documentation.",
-    "category": "Maintainability"
-  }
+  [
+      {
+          "id": 1,
+          "title": "§ 164.306 Security standards: General rules",
+          "description": "The system shall ensure the confidentiality of all electronic protected health information (ePHI) that it creates."
+      },
+      {
+          "id": 2,
+          "title": "§ 164.306 Security standards: General rules",
+          "description": "The system shall ensure the confidentiality of all electronic protected health information (ePHI) that it receives."
+      },
+      {
+          "id": 3,
+          "title": "§ 164.306 Security standards: General rules",
+          "description": "The system shall ensure the confidentiality of all electronic protected health information (ePHI) that it maintains."
+      },
+      {
+          "id": 4,
+          "title": "§ 164.306 Security standards: General rules",
+          "description": "The system shall ensure the confidentiality of all electronic protected health information (ePHI) that it transmits."
+      },
+      {
+          "id": 5,
+          "title": "§ 164.306 Security standards: General rules",
+          "description": "The system shall ensure the integrity of all electronic protected health information (ePHI) that it creates."
+      },
+      {
+          "id": 6,
+          "title": "§ 164.306 Security standards: General rules",
+          "description": "The system shall ensure the integrity of all electronic protected health information (ePHI) that it receives."
+      },
+      {
+          "id": 7,
+          "title": "§ 164.306 Security standards: General rules",
+          "description": "The system shall ensure the integrity of all electronic protected health information (ePHI) that it maintains."
+      },
+      {
+          "id": 8,
+          "title": "§ 164.306 Security standards: General rules",
+          "description": "The system shall ensure the integrity of all electronic protected health information (ePHI) that it transmits."
+      },
+      {
+          "id": 9,
+          "title": "§ 164.306 Security standards: General rules",
+          "description": "The system shall ensure the availability of all electronic protected health information (ePHI) that it creates."
+      },
+      {
+          "id": 10,
+          "title": "§ 164.306 Security standards: General rules",
+          "description": "The system shall ensure the availability of all electronic protected health information (ePHI) that it receives."
+      }
+  ],
+  [
+      {
+          "id": 11,
+          "title": "§ 164.306 Security standards: General rules",
+          "description": "The system shall ensure the availability of all electronic protected health information (ePHI) that it maintains."
+      },
+      {
+          "id": 12,
+          "title": "§ 164.306 Security standards: General rules",
+          "description": "The system shall ensure the availability of all electronic protected health information (ePHI) that it transmits."
+      },
+      {
+          "id": 13,
+          "title": "§ 164.306 Security standards: General rules",
+          "description": "The system shall protect against any reasonably anticipated threats or hazards to the security of electronic protected health information (ePHI)."
+      },
+      {
+          "id": 14,
+          "title": "§ 164.306 Security standards: General rules",
+          "description": "The system shall protect against any reasonably anticipated threats or hazards to the integrity of electronic protected health information (ePHI)."
+      },
+      {
+          "id": 15,
+          "title": "§ 164.306 Security standards: General rules",
+          "description": "The system shall protect against any reasonably anticipated uses of electronic protected health information (ePHI) that are not permitted or required."
+      },
+      {
+          "id": 16,
+          "title": "§ 164.306 Security standards: General rules",
+          "description": "The system shall protect against any disclosures of electronic protected health information (ePHI) that are not permitted or required."
+      },
+      {
+          "id": 17,
+          "title": "§ 164.308 Administrative safeguards",
+          "description": "The system shall support the organization in implementing policies and procedures to prevent security violations."
+      },
+      {
+          "id": 18,
+          "title": "§ 164.308 Administrative safeguards",
+          "description": "The system shall support the organization in implementing policies and procedures to detect security violations."
+      },
+      {
+          "id": 19,
+          "title": "§ 164.308 Administrative safeguards",
+          "description": "The system shall support the organization in implementing policies and procedures to contain security violations."
+      },
+      {
+          "id": 20,
+          "title": "§ 164.308 Administrative safeguards",
+          "description": "The system shall support the organization in implementing policies and procedures to correct security violations."
+      }
+  ],
+  [
+      {
+          "id": 21,
+          "title": "§ 164.308 Administrative safeguards",
+          "description": "The system shall support conducting an accurate and thorough assessment of potential risks and vulnerabilities to the confidentiality of electronic protected health information (ePHI)"
+      },
+      {
+          "id": 22,
+          "title": "§ 164.308 Administrative safeguards",
+          "description": "The system shall support conducting an accurate and thorough assessment of potential risks and vulnerabilities to the integrity of electronic protected health information (ePHI)"
+      },
+      {
+          "id": 23,
+          "title": "§ 164.308 Administrative safeguards",
+          "description": "The system shall support conducting an accurate and thorough assessment of potential risks and vulnerabilities to the availability of electronic protected health information (ePHI)"
+      },
+      {
+          "id": 24,
+          "title": "§ 164.308 Administrative safeguards",
+          "description": "The system shall support implementing security measures sufficient to reduce risks and vulnerabilities to a reasonable and appropriate level to comply with the general security requirements."
+      },
+      {
+          "id": 25,
+          "title": "§ 164.308 Administrative safeguards",
+          "description": "The system shall support procedures to regularly review records of information system activity, including audit logs, access reports, and security incident tracking reports."
+      },
+      {
+          "id": 26,
+          "title": "§ 164.308 Administrative safeguards",
+          "description": "The system shall support implementing policies and procedures to ensure that workforce members have appropriate access to electronic protected health information (ePHI), and to prevent access by workforce members who are not authorized."
+      },
+      {
+          "id": 27,
+          "title": "§ 164.308 Administrative safeguards",
+          "description": "The system shall support procedures for the authorization and/or supervision of workforce members who work with electronic protected health information (ePHI) or in locations where ePHI might be accessed."
+      },
+      {
+          "id": 28,
+          "title": "§ 164.308 Administrative safeguards",
+          "description": "The system shall support procedures to determine that a workforce member’s access to electronic protected health information (ePHI) is appropriate."
+      },
+      {
+          "id": 29,
+          "title": "§ 164.308 Administrative safeguards",
+          "description": "The system shall support procedures for terminating a workforce member’s access to electronic protected health information (ePHI) when employment or other authorized arrangement ends."
+      },
+      {
+          "id": 30,
+          "title": "§ 164.308 Administrative safeguards",
+          "description": "The system shall support implementing policies and procedures to isolate health care clearinghouse functions."
+      }
+  ],
+  [
+      {
+          "id": 31,
+          "title": "§ 164.308 Administrative safeguards",
+          "description": "The system shall implement policies and procedures to protect the clearinghouse’s electronic protected health information (ePHI) from unauthorized access by the larger organization."
+      },
+      {
+          "id": 32,
+          "title": "§ 164.308 Administrative safeguards",
+          "description": "The system shall implement policies and procedures for granting access to electronic protected health information (ePHI), for example via a workstation, transaction, program, process or other mechanism."
+      },
+      {
+          "id": 33,
+          "title": "§ 164.308 Administrative safeguards",
+          "description": "The system shall implement policies and procedures that establish a user’s right of access to a workstation, transaction, program, or process based on the organization’s access authorization policies."
+      },
+      {
+          "id": 34,
+          "title": "§ 164.308 Administrative safeguards",
+          "description": "The system shall implement policies and procedures that document a user’s right of access to a workstation, transaction, program, or process based on the organization’s access authorization policies."
+      },
+      {
+          "id": 35,
+          "title": "§ 164.308 Administrative safeguards",
+          "description": "The system shall implement policies and procedures that review a user’s right of access to a workstation, transaction, program, or process based on the organization’s access authorization policies."
+      },
+      {
+          "id": 36,
+          "title": "§ 164.308 Administrative safeguards",
+          "description": "The system shall implement policies and procedures that modify a user’s right of access to a workstation, transaction, program, or process based on the organization’s access authorization policies."
+      },
+      {
+          "id": 37,
+          "title": "§ 164.308 Administrative safeguards",
+          "description": "The system shall implement procedures for guarding against malicious software."
+      },
+      {
+          "id": 38,
+          "title": "§ 164.308 Administrative safeguards",
+          "description": "The system shall implement procedures for detecting malicious software."
+      },
+      {
+          "id": 39,
+          "title": "§ 164.308 Administrative safeguards",
+          "description": "The system shall implement procedures for reporting malicious software."
+      },
+      {
+          "id": 40,
+          "title": "§ 164.308 Administrative safeguards",
+          "description": "The system shall implement procedures for monitoring log-in attempts and reporting discrepancies."
+      }
+  ],
+  [
+      {
+          "id": 41,
+          "title": "§ 164.308 Administrative safeguards",
+          "description": "The system shall implement procedures for creating passwords."
+      },
+      {
+          "id": 42,
+          "title": "§ 164.308 Administrative safeguards",
+          "description": "The system shall implement procedures for changing passwords."
+      },
+      {
+          "id": 43,
+          "title": "§ 164.308 Administrative safeguards",
+          "description": "The system shall implement procedures for safeguarding passwords."
+      },
+      {
+          "id": 44,
+          "title": "§ 164.308 Administrative safeguards",
+          "description": "The system shall support implementing policies and procedures to address security incidents."
+      },
+      {
+          "id": 45,
+          "title": "§ 164.308 Administrative safeguards",
+          "description": "The system shall identify and respond to suspected or known security incidents."
+      },
+      {
+          "id": 46,
+          "title": "§ 164.308 Administrative safeguards",
+          "description": "The system shall mitigate harmful effects to the extent practicable after a suspected or known security incidents."
+      },
+      {
+          "id": 47,
+          "title": "§ 164.308 Administrative safeguards",
+          "description": "The system shall document security incidents and their outcomes."
+      },
+      {
+          "id": 48,
+          "title": "§ 164.308 Administrative safeguards",
+          "description": "The system shall establish and implement policies and procedures for responding to emergencies or other occurrences (such as fire, vandalism, system failure, or natural disaster) that damage systems containing electronic protected health information (ePHI)"
+      },
+      {
+          "id": 49,
+          "title": "§ 164.308 Administrative safeguards",
+          "description": "The system shall establish and implement procedures to create retrievable exact copies of electronic protected health information (ePHI)"
+      },
+      {
+          "id": 50,
+          "title": "§ 164.308 Administrative safeguards",
+          "description": "The system shall establish and implement procedures to maintain retrievable exact copies of electronic protected health information (ePHI)"
+      }
+  ],
+  [
+      {
+          "id": 51,
+          "title": "§ 164.308 Administrative safeguards",
+          "description": "The system shall establish and implement procedures to restore any loss of electronic protected health information (ePHI)."
+      },
+      {
+          "id": 52,
+          "title": "§ 164.312 Technical safeguards",
+          "description": "The system shall support technical policies and procedures that allow access to electronic protected health information (ePHI) only for authorized users and authorized software programs."
+      },
+      {
+          "id": 53,
+          "title": "§ 164.312 Technical safeguards",
+          "description": "The system shall assign a unique user identifier to each user to support identification and tracking of user identity."
+      },
+      {
+          "id": 54,
+          "title": "§ 164.312 Technical safeguards",
+          "description": "The system shall support procedures for obtaining necessary electronic protected health information (ePHI) during an emergency."
+      },
+      {
+          "id": 55,
+          "title": "§ 164.312 Technical safeguards",
+          "description": "The system shall support electronic procedures that automatically terminate a session after a predetermined period of inactivity."
+      },
+      {
+          "id": 56,
+          "title": "§ 164.312 Technical safeguards",
+          "description": "The system shall implement a mechanism to encrypt and decrypt electronic protected health information (ePHI)."
+      },
+      {
+          "id": 57,
+          "title": "§ 164.312 Technical safeguards",
+          "description": "The system shall implement hardware, software, and/or procedural mechanisms that record and examine activity in information systems that contain or use electronic protected health information (ePHI)."
+      },
+      {
+          "id": 58,
+          "title": "§ 164.312 Technical safeguards",
+          "description": "The system shall support policies and procedures to protect electronic protected health information (ePHI) from improper alteration or destruction."
+      },
+      {
+          "id": 59,
+          "title": "§ 164.312 Technical safeguards",
+          "description": "The system shall implement electronic mechanisms to corroborate that electronic protected health information (ePHI) has not been altered or destroyed in an unauthorized manner."
+      },
+      {
+          "id": 60,
+          "title": "§ 164.312 Technical safeguards",
+          "description": "The system shall implement procedures to verify that a person or entity seeking access to electronic protected health information (ePHI) is the one claimed."
+      }
+  ],
+  [
+      {
+          "id": 61,
+          "title": "§ 164.312 Technical safeguards",
+          "description": "The system shall implement technical security measures to protect electronic protected health information (ePHI) from unauthorized access during transmission over an electronic communications network."
+      },
+      {
+          "id": 62,
+          "title": "§ 164.312 Technical safeguards",
+          "description": "The system shall implement security measures to ensure that electronically transmitted electronic protected health information (ePHI) is not improperly modified without detection until disposal."
+      },
+      {
+          "id": 63,
+          "title": "§ 164.312 Technical safeguards",
+          "description": "The system shall implement a mechanism to encrypt electronic protected health information (ePHI) during transmission whenever appropriate."
+      },
+      {
+          "id": 64,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system may allow the use of protected health information (PHI) to the individual who is the subject of the information."
+      },
+      {
+          "id": 65,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system may allow the disclosure of protected health information (PHI) to the individual who is the subject of the information."
+      },
+      {
+          "id": 66,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system may allow the use of protected health information (PHI) for treatment operations."
+      },
+      {
+          "id": 67,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system may allow the use of protected health information (PHI) for payment operations."
+      },
+      {
+          "id": 68,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system may allow the use of protected health information (PHI) for health care operations."
+      },
+      {
+          "id": 69,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system may allow the disclosure of protected health information (PHI) for payment operations."
+      },
+      {
+          "id": 70,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system may allow the disclosure of protected health information (PHI) for payment operations."
+      }
+  ],
+  [
+      {
+          "id": 71,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system may allow the disclosure of protected health information (PHI) for health care operations."
+      },
+      {
+          "id": 72,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system may allow incidental uses of protected health information (PHI) when they occur as a byproduct of permitted or required uses or disclosures."
+      },
+      {
+          "id": 73,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system may allow incidenta disclosures of protected health information (PHI) when they occur as a byproduct of permitted or required uses or disclosures."
+      },
+      {
+          "id": 74,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system may allow the use of protected health information (PHI) when a valid authorization has been obtained."
+      },
+      {
+          "id": 75,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system must disclose protected health information (PHI) to an individual when the individual requests a right to access or receive an accounting of disclosures."
+      },
+      {
+          "id": 76,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system may allow disclosing protected health information (PHI) when required for compliance investigations by the regulatory authority."
+      },
+      {
+          "id": 77,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system shall support disclosing protected health information (PHI) when required for regulatory compliance investigations by the Secretary."
+      },
+      {
+          "id": 78,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system shall prevent health plans (excluding long-term care policy issuers) from using or disclosing protected health information that is genetic information for the following underwriting purpose: Determining eligibility for enrollment or continued enrollment in the plan"
+      },
+      {
+          "id": 79,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system shall prevent health plans (excluding long-term care policy issuers) from using or disclosing protected health information that is genetic information for the following underwriting purpose: Determining benefits, including modifications to deductibles or cost-sharing mechanisms"
+      },
+      {
+          "id": 80,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system shall prevent health plans (excluding long-term care policy issuers) from using or disclosing protected health information that is genetic information for the following underwriting purpose: Computing premium or contribution amounts, including discounts, rebates, or premium differentials"
+      }
+  ],
+  [
+      {
+          "id": 81,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system shall permit the use of genetic information for determinations of medical appropriateness when an individual seeks a benefit under the plan."
+      },
+      {
+          "id": 82,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system shall prevent using or disclosing protected health information (PHI) to conduct investigations of persons for the act of seeking, obtaining, providing, or facilitating reproductive health care."
+      },
+      {
+          "id": 83,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system shall prevent using or disclosing protected health information (PHI) to impose criminal, civil, or administrative liability on persons for the act of seeking, obtaining, providing, or facilitating reproductive health care."
+      },
+      {
+          "id": 84,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system shall prevent using or disclosing protected health information (PHI) to identify persons for purposes of investigation or liability related to reproductive health care."
+      },
+      {
+          "id": 85,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system shall support limiting the use, disclosure, and requests for protected health information (PHI) to the minimum necessary to accomplish the intended purpose."
+      },
+      {
+          "id": 86,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system shall support using or disclosing protected health information (PHI) for the purpose of creating de-identified information."
+      },
+      {
+          "id": 87,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system shall support using or disclosing de-identified information without treating it as protected health information (PHI), unless the information has been re-identified."
+      },
+      {
+          "id": 88,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system shall treat any disclosure of a code or mechanism that enables re-identification as a disclosure of protected health information (PHI)."
+      },
+      {
+          "id": 89,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system shall support using or disclosing re-identified information only in ways permitted for protected health information (PHI)."
+      },
+      {
+          "id": 90,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system shall support disclosing protected health information (PHI) to a business associate only when assurances exist that the business associate will appropriately safeguard the PHI."
+      }
+  ],
+  [
+      {
+          "id": 91,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system shall allow personal representatives to exercise an individual’s rights over their protected health information (PHI)."
+      },
+      {
+          "id": 92,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system shall treat a legally authorized person acting on behalf of an adult or emancipated minor as the personal representative for accessing or managing protected health information (PHI) relevant to that authority."
+      },
+      {
+          "id": 93,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system shall treat a parent, guardian, or person acting in loco parentis as the personal representative for an unemancipated minor for accessing or managing protected health information (PHI), except where the minor has the legal authority to act as the individual."
+      },
+      {
+          "id": 94,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system shall support allowing an unemancipated minor to act as the individual and restrict a parent or guardian’s access to protected health information (PHI) when the minor has legal authority over a specific health care service."
+      },
+      {
+          "id": 95,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system shall allow a legally authorized person to act as the personal representative of a deceased individual for accessing or managing protected health information (PHI) relevant to that authority."
+      },
+      {
+          "id": 96,
+          "title": "§ 164.506 Uses and disclosures to carry out treatment, payment, or health care operations",
+          "description": "The system shall permit uses and disclosures of protected health information for treatment operations without requiring individual authorization."
+      },
+      {
+          "id": 97,
+          "title": "§ 164.506 Uses and disclosures to carry out treatment, payment, or health care operations",
+          "description": "The system shall permit uses and disclosures of protected health information for payment operations without requiring individual authorization."
+      },
+      {
+          "id": 98,
+          "title": "§ 164.506 Uses and disclosures to carry out treatment, payment, or health care operations",
+          "description": "The system shall permit uses and disclosures of protected health information for health care operations without requiring individual authorization."
+      },
+      {
+          "id": 99,
+          "title": "§ 164.506 Uses and disclosures to carry out treatment, payment, or health care operations",
+          "description": "The system may support obtaining and recording individual consent for Treatment operations uses and disclosures, but shall not require such consent as a condition for permitting Treatment activities."
+      },
+      {
+          "id": 100,
+          "title": "§ 164.506 Uses and disclosures to carry out treatment, payment, or health care operations",
+          "description": "The system may support obtaining and recording individual consent for Payment operations uses and disclosures, but shall not require such consent as a condition for permitting Payment activities."
+      }
+  ],
+  [
+      {
+          "id": 101,
+          "title": "§ 164.506 Uses and disclosures to carry out treatment, payment, or health care operations",
+          "description": "The system may support obtaining and recording individual consent for health care Operations uses and disclosures, but shall not require such consent as a condition for permitting health care Operations activities."
+      },
+      {
+          "id": 102,
+          "title": "§ 164.506 Uses and disclosures to carry out treatment, payment, or health care operations",
+          "description": "The system shall permit disclosure of PHI to external health care providers for their treatment activities without requiring individual authorization."
+      },
+      {
+          "id": 103,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system must require authorization for any use or disclosure of psychotherapy notes, except when the originator uses the notes for treatment."
+      },
+      {
+          "id": 104,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system must require authorization for any use or disclosure of psychotherapy notes, except when the notes are used or disclosed by the covered entity in its own supervised mental health training programs."
+      },
+      {
+          "id": 105,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system must require an authorization for any use or disclosure of protected health information for marketing, unless the communication is a face-to-face interaction or a promotional gift of nominal value provided by the covered entity."
+      },
+      {
+          "id": 106,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system must ensure that when marketing involves financial payment to the covered entity from a third party, the required authorization explicitly states that financial remuneration is involved."
+      },
+      {
+          "id": 107,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system must require an authorization for any disclosure of protected health information that constitutes a sale."
+      },
+      {
+          "id": 108,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system must ensure that an authorization for the sale of protected health information explicitly states that the disclosure will result in payment to the covered entity."
+      },
+      {
+          "id": 109,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system must treat an authorization as valid only if it meets all required content and formatting conditions specified for authorizations."
+      },
+      {
+          "id": 110,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system must allow additional elements or information to be included in an authorization, as long as they do not conflict with the required elements for validity."
+      }
+  ],
+  [
+      {
+          "id": 111,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system must treat an authorization as invalid if the expiration date has passed or if the expiration event has occurred."
+      },
+      {
+          "id": 112,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system must treat an authorization as invalid if any required element has not been completed."
+      },
+      {
+          "id": 113,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system must treat an authorization as invalid if it has been revoked."
+      },
+      {
+          "id": 114,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system must treat an authorization as invalid if any material information in the authorization is known to be false."
+      },
+      {
+          "id": 115,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system shall not permit an authorization for use or disclosure of protected health information to be combined with any other document to create a compound authorization."
+      },
+      {
+          "id": 116,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system must allow an individual to revoke an authorization at any time in writing, except where the covered entity has already acted in reliance on the authorization or where the authorization was a condition of obtaining insurance coverage and the insurer retains the right to contest a claim or the policy."
+      },
+      {
+          "id": 117,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system shall require that a valid authorization for use or disclosure of protected health information contain at least the following elements: (i) A description of the information to be used or disclosed that identifies the information in a specific and meaningful fashion. (ii) The name or other specific identification of the person(s), or class of persons, authorized to make the requested use or disclosure. (iii) The name or other specific identification of the person(s), or class of persons, to whom the covered entity may make the requested use or disclosure. (iv) A description of each purpose of the requested use or disclosure. The statement “at the request of the individual” is a sufficient description of the purpose when an individual initiates the authorization and does not, or elects not to, provide a statement of the purpose. (v) An expiration date or an expiration event that relates to the individual or the purpose of the use or disclosure. The statement “end of the research study,” “none,” or similar language is sufficient if the authorization is for a use or disclosure of protected health information for research, including for the creation and maintenance of a research database or research repository. (vi) Signature of the individual and date. If the authorization is signed by a personal representative of the individual, a description of such representative's authority to act for the individual must also be provided."
+      },
+      {
+          "id": 118,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system must ensure that each authorization includes a statement informing the individual of their right to revoke the authorization, and includes a description of any exceptions and how to revoke it."
+      },
+      {
+          "id": 119,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system must ensure that each authorization includes a statement explaining whether treatment, payment, enrollment, or eligibility for benefits can or cannot be conditioned on signing the authorization, and if it can, the consequences of not signing must be stated."
+      },
+      {
+          "id": 120,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system must ensure that each authorization includes a statement warning the individual that information disclosed under the authorization may be redisclosed by the recipient and may no longer be protected."
+      }
+  ],
+  [
+      {
+          "id": 121,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system must ensure that each authorization is written in plain language."
+      },
+      {
+          "id": 122,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system must ensure that when an authorization is requested from an individual for the use or disclosure of protected health information, a copy of the signed authorization is provided to the individual."
+      },
+      {
+          "id": 123,
+          "title": "§ 164.506 Uses and disclosures to carry out treatment, payment, or health care operations",
+          "description": "The system may allow a covered entity to obtain an individual’s consent to use or disclose protected health information for treatment operations."
+      },
+      {
+          "id": 124,
+          "title": "§ 164.506 Uses and disclosures to carry out treatment, payment, or health care operations",
+          "description": "The system may allow a covered entity to obtain an individual’s consent to use or disclose protected health information for payment operations."
+      },
+      {
+          "id": 125,
+          "title": "§ 164.506 Uses and disclosures to carry out treatment, payment, or health care operations",
+          "description": "The system may allow a covered entity to obtain an individual’s consent to use or disclose protected health information for health care operations."
+      },
+      {
+          "id": 126,
+          "title": "§ 164.506 Uses and disclosures to carry out treatment, payment, or health care operations",
+          "description": "The system shall ensure that consent is not treated as valid for use or disclosure of protected health information when an authorization is required."
+      },
+      {
+          "id": 127,
+          "title": "§ 164.506 Uses and disclosures to carry out treatment, payment, or health care operations",
+          "description": "The system shall allow a covered entity to use or disclose protected health information for its own treatment operations."
+      },
+      {
+          "id": 128,
+          "title": "§ 164.506 Uses and disclosures to carry out treatment, payment, or health care operations",
+          "description": "The system shall allow a covered entity to use or disclose protected health information for its own payment operations."
+      },
+      {
+          "id": 129,
+          "title": "§ 164.506 Uses and disclosures to carry out treatment, payment, or health care operations",
+          "description": "The system shall allow a covered entity to use or disclose protected health information for its own health care operations."
+      },
+      {
+          "id": 130,
+          "title": "§ 164.506 Uses and disclosures to carry out treatment, payment, or health care operations",
+          "description": "The system shall allow a covered entity to disclose protected health information for the treatment activities of a health care provider."
+      }
+  ],
+  [
+      {
+          "id": 131,
+          "title": "§ 164.506 Uses and disclosures to carry out treatment, payment, or health care operations",
+          "description": "The system shall allow a covered entity to disclose protected health information to another covered entity or to a health care provider for the payment activities of the receiving entity."
+      },
+      {
+          "id": 132,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system shall not allow a covered entity to use or disclose protected health information without a valid authorization. When a valid authorization is obtained, the use or disclosure shall match the scope of the authorization."
+      },
+      {
+          "id": 133,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system shall require a covered entity to obtain an authorization for any use or disclosure of psychotherapy notes, unless the use is by the originator of the notes for treatment purposes."
+      },
+      {
+          "id": 134,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system shall allow a covered entity to use or disclose psychotherapy notes without authorization for its own training programs involving supervised mental health instruction."
+      },
+      {
+          "id": 135,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system shall allow a covered entity to use or disclose psychotherapy notes without authorization when defending itself in a legal action or other proceeding brought by the individual."
+      },
+      {
+          "id": 136,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system shall allow a covered entity to use or disclose psychotherapy notes without authorization only when the use or disclosure is required or permitted under specific exceptions."
+      },
+      {
+          "id": 137,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system shall require a covered entity to obtain an authorization for any use or disclosure of protected health information for marketing, unless the communication is a face-to-face interaction with the individual."
+      },
+      {
+          "id": 138,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system shall allow a covered entity to use or disclose protected health information for marketing without authorization if the communication is a promotional gift of nominal value provided by the covered entity."
+      },
+      {
+          "id": 139,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system shall ensure that if marketing involves financial payment to the covered entity from a third party, the authorization clearly states that financial remuneration is involved."
+      },
+      {
+          "id": 140,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system shall require a covered entity to obtain an authorization for any disclosure of protected health information that constitutes a sale of such information."
+      }
+  ],
+  [
+      {
+          "id": 141,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system shall ensure that any authorization for the sale of protected health information states that the disclosure will result in payment to the covered entity."
+      },
+      {
+          "id": 142,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system shall treat an authorization as valid only if it meets all required content and structural conditions."
+      },
+      {
+          "id": 143,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system shall treat an authorization as invalid if the expiration date has passed or the expiration event has occurred."
+      },
+      {
+          "id": 144,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system shall treat an authorization as invalid if it has been revoked."
+      },
+      {
+          "id": 145,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system shall treat an authorization as invalid if any material information in the authorization is known to be false."
+      },
+      {
+          "id": 146,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system shall not allow an authorization to be combined with other documents unless it qualifies as a permitted compound authorization."
+      },
+      {
+          "id": 147,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system shall allow an authorization for use or disclosure of protected health information for a research study to be combined with other permissions for the same or another research study. The system shall clearly separate conditioned and unconditioned components and allow the individual to opt in to unconditioned research activities."
+      },
+      {
+          "id": 148,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system shall allow an authorization for use or disclosure of psychotherapy notes to be combined only with another authorization for use or disclosure of psychotherapy notes."
+      },
+      {
+          "id": 149,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system shall allow an authorization, other than for psychotherapy notes, to be combined with another such authorization unless one of them conditions access to services, in which case combining is not permitted."
+      },
+      {
+          "id": 150,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system shall document and retain any signed authorization for the use or disclosure of protected health information."
+      }
+  ],
+  [
+      {
+          "id": 151,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system shall require each authorization to include a specific and meaningful description of the information to be used or disclosed."
+      },
+      {
+          "id": 152,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system shall require each authorization to include the name or specific identification of the person(s) or class of persons authorized to use or disclose the information."
+      },
+      {
+          "id": 153,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system shall require each authorization to include the name or specific identification of the person(s) or class of persons to whom the information may be disclosed."
+      },
+      {
+          "id": 154,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system shall require each authorization to include a description of the purpose for each use or disclosure. If initiated by the individual, the phrase “at the request of the individual” is sufficient when no other purpose is stated."
+      },
+      {
+          "id": 155,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system shall require each authorization to include an expiration date or an expiration event related to the individual or the purpose. For research, phrases like “end of the research study” or “none” are sufficient."
+      },
+      {
+          "id": 156,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system shall require each authorization to include the individual’s signature and date. If signed by a personal representative, a description of their authority shall also be included."
+      },
+      {
+          "id": 157,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system shall ensure that each authorization includes a statement that the individual may revoke the authorization in writing, and either includes an explanation of exceptions and how to revoke, or refers to where this information is provided."
+      },
+      {
+          "id": 158,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system shall ensure that each authorization states whether treatment, payment, enrollment, or eligibility for benefits is conditioned on signing the authorization, and if so, what the consequences are."
+      },
+      {
+          "id": 159,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system shall ensure that each authorization states whether treatment is conditioned on signing the authorization, and if so, what the consequences are."
+      },
+      {
+          "id": 160,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system shall ensure that each authorization states whether payment is conditioned on signing the authorization, and if so, what the consequences are."
+      }
+  ],
+  [
+      {
+          "id": 161,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system shall ensure that each authorization states whether enrollment is conditioned on signing the authorization, and if so, what the consequences are."
+      },
+      {
+          "id": 162,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system shall ensure that each authorization states whether eligibility for benefits is conditioned on signing the authorization, and if so, what the consequences are."
+      },
+      {
+          "id": 163,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system shall ensure that each authorization includes a statement that information disclosed under the authorization may be redisclosed by the recipient and may no longer be protected."
+      },
+      {
+          "id": 164,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system shall ensure that each authorization is written in plain language."
+      },
+      {
+          "id": 165,
+          "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+          "description": "The system shall ensure that a copy of the signed authorization is provided to the individual when an authorization is requested for use or disclosure of protected health information."
+      },
+      {
+          "id": 166,
+          "title": "§ 164.514 Other requirements relating to uses and disclosures of protected health information",
+          "description": "The system shall ensure that any code or other means of record identification used to re-identify information that has been de-identified is not derived from or related to information about the individual and is not otherwise capable of being translated so as to identify the individual."
+      },
+      {
+          "id": 167,
+          "title": "§ 164.514 Other requirements relating to uses and disclosures of protected health information",
+          "description": "The system shall ensure that the covered entity does not use or disclose the code or other means of record identification for any other purpose, and does not disclose the mechanism for re-identification."
+      },
+      {
+          "id": 168,
+          "title": "§ 164.514 Other requirements relating to uses and disclosures of protected health information",
+          "description": "The system must implement policies and procedures that limit the amount of protected health information disclosed during routine and recurring disclosures to only what is reasonably necessary to achieve the disclosure’s purpose."
+      },
+      {
+          "id": 169,
+          "title": "§ 164.514 Other requirements relating to uses and disclosures of protected health information",
+          "description": "The system must ensure that the data use agreement prohibits the recipient from identifying the information or contacting the individuals who are the subjects of the limited data set."
+      },
+      {
+          "id": 170,
+          "title": "§ 164.514 Other requirements relating to uses and disclosures of protected health information",
+          "description": "The system must ensure that, before disclosing protected health information, the identity and authority of the person requesting the information are verified if the identity or authority are not already known."
+      }
+  ],
+  [
+      {
+          "id": 171,
+          "title": "§ 164.514 Other requirements relating to uses and disclosures of protected health information",
+          "description": "The system must allow reliance on documentation, statements, or representations submitted by a requester if the materials appear to meet applicable requirements and reliance is reasonable under the circumstances."
+      },
+      {
+          "id": 172,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that individuals receive adequate notice of the uses and disclosures of protected health information that may be made by the covered entity."
+      },
+      {
+          "id": 173,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that individuals receive adequate notice of the individuals’ rights."
+      },
+      {
+          "id": 174,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that individuals receive adequate notice of the covered entity’s legal duties regarding protected health information."
+      },
+      {
+          "id": 175,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that individuals who are the subjects of records related to substance use disorder treatment receive adequate notice of the uses and disclosures of those records."
+      },
+      {
+          "id": 176,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that individuals who are the subjects of records related to substance use disorder treatment receive adequate notice of their rights."
+      },
+      {
+          "id": 177,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that individuals who are the subjects of records related to substance use disorder treatment receive adequate notice of the covered entity’s legal duties with respect to those records."
+      },
+      {
+          "id": 178,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that an individual enrolled in a group health plan receives a notice of privacy practices from the health insurance issuer or Health Maintenance Organization (HMO) if the individual receives health benefits under the plan through that issuer or HMO."
+      },
+      {
+          "id": 179,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that a group health plan providing health benefits solely through an insurance contract, and that creates or receives protected health information beyond summary health information or enrollment status, maintains a notice of privacy practices."
+      },
+      {
+          "id": 180,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that any group health plan required to maintain a notice of privacy practices must provide the notice to any person upon request."
+      }
+  ],
+  [
+      {
+          "id": 181,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that inmates do not receive a notice of privacy practices and that correctional institutions acting as covered entities are not subject to the notice requirements."
+      },
+      {
+          "id": 182,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that the notice of privacy practices is written in plain language and includes all required elements."
+      },
+      {
+          "id": 183,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that the notice of privacy practices includes the following prominently displayed statement:“THIS NOTICE DESCRIBES HOW MEDICAL INFORMATION ABOUT YOU MAY BE USED AND DISCLOSED AND HOW YOU CAN GET ACCESS TO THIS INFORMATION. PLEASE REVIEW IT CAREFULLY.”"
+      },
+      {
+          "id": 184,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that the notice of privacy practices contains a description, including at least one example, of the types of uses and disclosures permitted for treatment, payment, and health care operations."
+      },
+      {
+          "id": 185,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that the notice of privacy practices includes a description of each other purpose for which protected health information may be used or disclosed without the individual’s written authorization."
+      },
+      {
+          "id": 186,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that the notice of privacy practices reflects any prohibition or material limitation on uses or disclosures imposed by other applicable law, and that the description reflects the stricter standard when required."
+      },
+      {
+          "id": 187,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that each description of permitted or required use or disclosure includes sufficient detail to notify the individual of how their information may be used or disclosed."
+      },
+      {
+          "id": 188,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that the notice of privacy practices describes the types of uses and disclosures that require written authorization, includes a statement that any other uses or disclosures will only be made with written authorization, and informs the individual of their right to revoke that authorization."
+      },
+      {
+          "id": 189,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that the notice of privacy practices includes a description, with at least one example, of the types of uses and disclosures that are prohibited, written in sufficient detail for individuals to understand the prohibition."
+      },
+      {
+          "id": 190,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that the notice of privacy practices includes a description, with at least one example, of the types of uses and disclosures that require an attestation."
+      }
+  ],
+  [
+      {
+          "id": 191,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that the notice of privacy practices contains a statement informing individuals that information disclosed may be subject to redisclosure by the recipient and may no longer be protected."
+      },
+      {
+          "id": 192,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that if the covered entity intends to contact individuals for fundraising purposes, the notice of privacy practices includes a separate statement informing individuals of their right to opt out of receiving such communications."
+      },
+      {
+          "id": 193,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that if a group health plan, health insurance issuer, or Health Maintenance Organization (HMO) intends to disclose protected health information to a plan sponsor, the notice of privacy practices includes a separate statement informing individuals of this practice."
+      },
+      {
+          "id": 194,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that if a health plan intends to use or disclose protected health information for underwriting purposes, the notice of privacy practices includes a separate statement informing individuals that genetic information may not be used or disclosed for those purposes."
+      },
+      {
+          "id": 195,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that the notice of privacy practices includes a statement informing individuals of their right to request restrictions on certain uses and disclosures of protected health information (i.e., treatment, payment, or health care operations), along with a clarification that the covered entity is not required to agree to such requests."
+      },
+      {
+          "id": 196,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that the notice of privacy practices informs individuals of their right to request to receive protected health information through confidential communications."
+      },
+      {
+          "id": 197,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that the notice of privacy practices informs individuals of their right to inspect and obtain a copy of their protected health information."
+      },
+      {
+          "id": 198,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that the notice of privacy practices informs individuals of their right to request an amendment to their protected health information."
+      },
+      {
+          "id": 199,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that the notice of privacy practices informs individuals of their right to receive a record of disclosures of their protected health information."
+      },
+      {
+          "id": 200,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that the notice of privacy practices informs individuals of their right to request and receive a paper copy of the notice, even if they previously agreed to receive it electronically."
+      }
+  ],
+  [
+      {
+          "id": 201,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that the notice of privacy practices includes a statement that the covered entity is required by law to maintain the privacy of protected health information, to provide individuals with notice of its legal duties and privacy practices, and to notify affected individuals in the event of a breach involving unsecured protected health information."
+      },
+      {
+          "id": 202,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that the notice of privacy practices includes a statement that the covered entity is required to follow the terms of the notice currently in effect."
+      },
+      {
+          "id": 203,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that the notice of privacy practices includes a statement that the covered entity reserves the right to change the terms of its notice and apply those changes to all protected health information it maintains, including information created or received before the change. The notice must describe how individuals will be informed of any revised notice."
+      },
+      {
+          "id": 204,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that the notice of privacy practices includes a statement informing individuals that they may file a complaint with the covered entity and with the Secretary if they believe their privacy rights have been violated. The notice must briefly explain how to file a complaint with the covered entity and state that individuals will not be retaliated against for filing a complaint."
+      },
+      {
+          "id": 205,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that the notice of privacy practices includes the name or title, and telephone number, of a person or office that individuals may contact for more information."
+      },
+      {
+          "id": 206,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that the notice of privacy practices includes the date it first becomes effective, which must not be earlier than the date on which the notice is printed or published."
+      },
+      {
+          "id": 207,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that the notice of privacy practices is available upon request to any person and to individuals as required."
+      },
+      {
+          "id": 208,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that a health plan provides the notice of privacy practices to individuals covered by the plan no later than the compliance date and to new enrollees at the time of enrollment."
+      },
+      {
+          "id": 209,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that a health plan notifies individuals of the availability of the notice of privacy practices and how to obtain it at least once every three years."
+      },
+      {
+          "id": 210,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that, when a material change is made to the notice of privacy practices and the health plan does not post its notice on a website, the health plan provides the revised notice, or information about the material change and how to obtain the revised notice, to individuals covered by the plan at that time within 60 days of the material revision."
+      }
+  ],
+  [
+      {
+          "id": 211,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that a health care provider with a direct treatment relationship provides the notice no later than the date of the first service delivery, or as soon as reasonably practicable after emergency treatment."
+      },
+      {
+          "id": 212,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that the health care provider makes a good faith effort to obtain written acknowledgment of receipt of the notice."
+      },
+      {
+          "id": 213,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that, when the covered health care provider maintains a physical service delivery site, the notice of privacy practices is available at the service delivery site for individuals to request to take with them."
+      },
+      {
+          "id": 214,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that, when the covered health care provider maintains a physical service delivery site, the notice of privacy practices is posted in a clear and prominent location where individuals seeking service from the covered health care provider can reasonably be expected to read the notice."
+      },
+      {
+          "id": 215,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that when a covered entity maintains a website that provides information about its customer services or benefits, the covered entity prominently posts its notice on the website and makes the notice available electronically through the website."
+      },
+      {
+          "id": 216,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that the covered entity may provide the required notice to an individual by email only if the individual has agreed to electronic notice and has not withdrawn that agreement."
+      },
+      {
+          "id": 217,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that a paper copy of the notice is provided, If the covered entity knows that the email transmission has failed."
+      },
+      {
+          "id": 218,
+          "title": "§ 164.520 Notice of privacy practices for protected health information",
+          "description": "The system must ensure that an individual who receives electronic notice retains the right to obtain a paper copy of the notice from the covered entity upon request."
+      },
+      {
+          "id": 219,
+          "title": "§ 164.522 Rights to request privacy protection for protected health information",
+          "description": "The system must allow individuals to request restrictions on the use or disclosure of their protected health information for treatment operations."
+      },
+      {
+          "id": 220,
+          "title": "§ 164.522 Rights to request privacy protection for protected health information",
+          "description": "The system must allow individuals to request restrictions on the use or disclosure of their protected health information for payment operations."
+      }
+  ],
+  [
+      {
+          "id": 221,
+          "title": "§ 164.522 Rights to request privacy protection for protected health information",
+          "description": "The system must allow individuals to request restrictions on the use or disclosure of their protected health information for health care operations."
+      },
+      {
+          "id": 222,
+          "title": "§ 164.522 Rights to request privacy protection for protected health information",
+          "description": "The system must allow restricted protected health information to be used or disclosed to a health care provider for emergency treatment when necessary and must include a request to the provider not to further use or disclose the information."
+      },
+      {
+          "id": 223,
+          "title": "§ 164.522 Rights to request privacy protection for protected health information",
+          "description": "The system must retain documentation of any agreed-upon restrictions."
+      },
+      {
+          "id": 224,
+          "title": "§ 164.522 Rights to request privacy protection for protected health information",
+          "description": "The system must allow individuals to request confidential communications from a health plan and must accommodate the request if the individual states that disclosure could endanger them."
+      },
+      {
+          "id": 225,
+          "title": "§ 164.522 Rights to request privacy protection for protected health information",
+          "description": "The system may require that a request for confidential communication be made in writing."
+      },
+      {
+          "id": 226,
+          "title": "§ 164.522 Rights to request privacy protection for protected health information",
+          "description": "The system may require individuals to provide information on how payment will be handled and to specify an alternative address or contact method when requesting confidential communication."
+      },
+      {
+          "id": 227,
+          "title": "§ 164.522 Rights to request privacy protection for protected health information",
+          "description": "The system must not require individuals to explain the reason for requesting confidential communication from a health care provider."
+      },
+      {
+          "id": 228,
+          "title": "§ 164.522 Rights to request privacy protection for protected health information",
+          "description": "The system may require that a request to a health plan for confidential communication include a statement that disclosure could endanger the individual."
+      },
+      {
+          "id": 229,
+          "title": "§ 164.524 Access of individuals to protected health information",
+          "description": "The system must allow an individual to inspect and obtain a copy of their protected health information maintained in a designated record set, for as long as the information is maintained in that set."
+      },
+      {
+          "id": 230,
+          "title": "§ 164.524 Access of individuals to protected health information",
+          "description": "The system must not allow individuals to access psychotherapy notes as part of their right to access protected health information."
+      }
+  ],
+  [
+      {
+          "id": 231,
+          "title": "§ 164.524 Access of individuals to protected health information",
+          "description": "The system must not allow individuals to access perotected health information compiled in reasonable anticipation of, or for use in, a civil, criminal, or administrative action or proceeding."
+      },
+      {
+          "id": 232,
+          "title": "§ 164.524 Access of individuals to protected health information",
+          "description": "The system must allow denial of access to an inmate’s protected health information, in whole or in part, if providing access would jeopardize the health, safety, security, custody, or rehabilitation of the individual or others, or the safety of staff or transport personnel."
+      },
+      {
+          "id": 233,
+          "title": "§ 164.524 Access of individuals to protected health information",
+          "description": "The system must allow temporary denial of access to protected health information obtained during a research study that includes treatment, if the individual agreed to the denial when consenting to participate and is informed that access will be restored after the research concludes."
+      },
+      {
+          "id": 234,
+          "title": "§ 164.524 Access of individuals to protected health information",
+          "description": "The system must allow denial of access to protected health information in records subject to the Privacy Act if the denial meets the requirements of that law."
+      },
+      {
+          "id": 235,
+          "title": "§ 164.524 Access of individuals to protected health information",
+          "description": "The system must allow denial of access to protected health information received from a source under a promise of confidentiality, if providing access would likely reveal the source of the information."
+      },
+      {
+          "id": 236,
+          "title": "§ 164.524 Access of individuals to protected health information",
+          "description": "The system must allow a denial of access to protected health information if a licensed health care professional determines, using professional judgment, that the requested access is reasonably likely to endanger the life or physical safety of the individual or another person."
+      },
+      {
+          "id": 237,
+          "title": "§ 164.524 Access of individuals to protected health information",
+          "description": "The system must allow a denial of access to protected health information that references another person (excluding health care providers), if a licensed health care professional determines that access is reasonably likely to cause substantial harm to that other person."
+      },
+      {
+          "id": 238,
+          "title": "§ 164.524 Access of individuals to protected health information",
+          "description": "The system must allow a denial of access when the request is made by the individual’s personal representative and a licensed health care professional determines that granting access is reasonably likely to cause substantial harm to the individual or another person."
+      },
+      {
+          "id": 239,
+          "title": "§ 164.524 Access of individuals to protected health information",
+          "description": "The system must ensure that individuals have the right to request a review of any denial made on the basis of risk or harm, and that a designated licensed health care professional who was not involved in the original denial makes a determination."
+      },
+      {
+          "id": 240,
+          "title": "§ 164.524 Access of individuals to protected health information",
+          "description": "The system must ensure that access is either granted or denied based on the final determination made by the reviewing official assigned to evaluate the denial."
+      }
+  ],
+  [
+      {
+          "id": 241,
+          "title": "§ 164.524 Access of individuals to protected health information",
+          "description": "The system must allow individuals to request access to inspect or obtain a copy of protected health information about themselves that is maintained in a designated record set."
+      },
+      {
+          "id": 242,
+          "title": "§ 164.524 Access of individuals to protected health information",
+          "description": "The system must ensure that any request for access to protected health information is acted upon within 30 days of receipt, either by granting access or issuing a written denial."
+      },
+      {
+          "id": 243,
+          "title": "§ 164.524 Access of individuals to protected health information",
+          "description": "The system must ensure that if access is granted, in whole or in part, the individual is notified of the acceptance and provided with the requested access."
+      },
+      {
+          "id": 244,
+          "title": "§ 164.524 Access of individuals to protected health information",
+          "description": "The system must provide the requested access in the form and format specified by the individual, if readily producible. If it is not readily producible, the information must be provided in a readable hard copy or another format agreed upon by the individual and the covered entity."
+      },
+      {
+          "id": 245,
+          "title": "§ 164.524 Access of individuals to protected health information",
+          "description": "The system must provide access in the electronic form and format requested by the individual if the information is maintained electronically and it is readily producible. If it is not readily producible in the requested format, it must be provided in another readable electronic format agreed upon by the individual and the covered entity."
+      },
+      {
+          "id": 246,
+          "title": "§ 164.524 Access of individuals to protected health information",
+          "description": "The system may provide a summary or explanation of the requested protected health information instead of full access, only if the individual agrees to receive a summary or explanation in advance and agrees to any fees associated with it."
+      },
+      {
+          "id": 247,
+          "title": "§ 164.524 Access of individuals to protected health information",
+          "description": "The system must ensure that access to protected health information is provided in a timely manner, including offering to arrange a convenient time and place for inspection or mailing the information if requested. The system must also support discussions with the individual to clarify scope, format, or other access-related preferences."
+      },
+      {
+          "id": 248,
+          "title": "§ 164.524 Access of individuals to protected health information",
+          "description": "The system must support an individual's request to transmit a copy of their protected health information directly to another person, provided the request is in writing, signed by the individual, and clearly identifies the recipient and the delivery location."
+      },
+      {
+          "id": 249,
+          "title": "§ 164.524 Access of individuals to protected health information",
+          "description": "The system may allow the imposition of a reasonable, cost-based fee for copies, summaries, or explanations of protected health information. The fee must include only the cost of:Labor for copying the information in paper or electronic form, Supplies for creating the copy (e.g., paper or portable media), Postage, if the individual requests mailed delivery, and Preparation of a summary or explanation, if agreed to in advance."
+      },
+      {
+          "id": 250,
+          "title": "§ 164.524 Access of individuals to protected health information",
+          "description": "The system must allow partial access to any requested protected health information not subject to denial, even if part of the request is denied."
+      }
+  ],
+  [
+      {
+          "id": 251,
+          "title": "§ 164.524 Access of individuals to protected health information",
+          "description": "The system must provide a timely, written denial in plain language when access is denied. The denial must include: The reason for the denial, A statement of the individual's right to request a review, if applicable, and how to exercise that right, and Instructions on how to file a complaint, including the name or title and telephone number of a designated contact person."
+      },
+      {
+          "id": 252,
+          "title": "§ 164.524 Access of individuals to protected health information",
+          "description": "The system must maintain documentation of: The designated record sets subject to individual access rights, and The titles of personnel or offices responsible for receiving and handling such access requests."
+      },
+      {
+          "id": 253,
+          "title": "§ 164.526 Amendment of protected health information",
+          "description": "The system must allow individuals to request an amendment to their protected health information maintained in designated record sets, for as long as the information is retained in those sets."
+      },
+      {
+          "id": 254,
+          "title": "§ 164.526 Amendment of protected health information",
+          "description": "The system must allow the covered entity to deny an amendment request if: The information was not created by the entity, unless the originator is no longer available to amend it. The information is not part of the designated record set. The information is not eligible for access under the access provision. The information is already accurate and complete."
+      },
+      {
+          "id": 255,
+          "title": "§ 164.526 Amendment of protected health information",
+          "description": "The system may require that amendment requests be submitted in writing and include a reason for the amendment, as long as individuals are informed of these requirements in advance."
+      },
+      {
+          "id": 256,
+          "title": "§ 164.526 Amendment of protected health information",
+          "description": "The system must ensure that any request for amendment to protected health information is acted upon within 60 calendar days of receipt."
+      },
+      {
+          "id": 257,
+          "title": "§ 164.526 Amendment of protected health information",
+          "description": "The system must allow the covered entity to make reasonable efforts to share accepted amendments with: Individuals/entities identified by the patient, Any third parties (including business associates) known to hold or rely on the original data."
+      },
+      {
+          "id": 258,
+          "title": "§ 164.526 Amendment of protected health information",
+          "description": "The system must allow individuals to submit a written statement of disagreement and optionally allow covered entities to limit the length of such statements."
+      },
+      {
+          "id": 259,
+          "title": "§ 164.526 Amendment of protected health information",
+          "description": "The system must allow the covered entity to issue a written rebuttal to the individual’s disagreement and ensure a copy is shared with the individual."
+      },
+      {
+          "id": 260,
+          "title": "§ 164.526 Amendment of protected health information",
+          "description": "The system must ensure that all documents related to denied amendments (request, denial, disagreement, rebuttal) are: Appended or linked to the relevant protected health information record in the designated record set."
+      }
+  ],
+  [
+      {
+          "id": 261,
+          "title": "§ 164.526 Amendment of protected health information",
+          "description": "The system must record and retain The titles of persons or offices responsible for receiving and processing amendment requests"
+      }
+  ]
 ]

@@ -29,18 +29,10 @@ class Chatbot:
         """
         user_time = datetime.now().isoformat()
         
-        # Mock responses for demonstration
-        mock_responses = [
-            "I understand your question about the NFR. Let me analyze the code structure.",
-            "Based on my analysis, this requirement appears to be satisfied in the current implementation.",
-            "I've identified several code locations that relate to this requirement.",
-            "The satisfaction level for this NFR is moderate based on the code review.",
-            "I can see that this requirement is partially implemented in the codebase.",
-        ]
         
         # Simple mock: cycle through responses or provide a generic one
         import random
-        bot_reply = random.choice(mock_responses)
+        bot_reply = f"You said: {request}"
         
         bot_time = datetime.now().isoformat()
         

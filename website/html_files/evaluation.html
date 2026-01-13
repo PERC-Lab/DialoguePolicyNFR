@@ -10,19 +10,34 @@
         gap: 20px;
         margin: 20px;
     }
-    .left-panel {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
-    .nfr-display {
+    .nfr-panel, .form-panel, .chatbot-panel {
         flex: 1;
         background: white;
-        padding: 20px;
         border-radius: 8px;
         box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+    .panel-header {
+        padding: 15px;
+        background: #007bff;
+        color: white;
+        font-weight: 600;
+        border-radius: 8px 8px 0 0;
+    }
+    .panel-content {
+        flex: 1;
+        padding: 20px;
         overflow-y: auto;
+    }
+    .batch-info {
+        padding: 10px;
+        background: #e9ecef;
+        border-radius: 4px;
+        margin-bottom: 15px;
+        text-align: center;
+        font-weight: 600;
     }
     .nfr-item {
         margin-bottom: 20px;
@@ -31,67 +46,63 @@
         border-radius: 4px;
         border-left: 4px solid #007bff;
     }
-    .nfr-item h3 {
-        margin-bottom: 10px;
-        color: #333;
-    }
-    .nfr-item .category {
-        display: inline-block;
-        padding: 4px 8px;
-        background: #007bff;
-        color: white;
-        border-radius: 3px;
-        font-size: 12px;
+    .nfr-item h4 {
         margin-bottom: 8px;
+        color: #333;
+        font-size: 14px;
+        font-weight: 600;
     }
-    .form-panel {
-        flex: 1;
-        background: white;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        overflow-y: auto;
+    .nfr-item p {
+        margin: 0;
+        color: #666;
+        font-size: 13px;
+        line-height: 1.5;
+    }
+    .nfr-form-section {
+        margin-bottom: 30px;
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 4px;
+        border: 1px solid #ddd;
+    }
+    .nfr-form-section h4 {
+        margin-bottom: 15px;
+        color: #333;
+        font-size: 14px;
     }
     .form-group {
-        margin-bottom: 20px;
+        margin-bottom: 15px;
     }
     .form-group label {
         display: block;
         margin-bottom: 8px;
         font-weight: 600;
-    }
-    .form-group select, .form-group textarea {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        font-size: 14px;
+        font-size: 13px;
     }
     .form-group textarea {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 13px;
         resize: vertical;
-        min-height: 80px;
+        min-height: 60px;
     }
     .radio-group {
         display: flex;
-        gap: 15px;
+        gap: 10px;
         flex-wrap: wrap;
+        margin-top: 5px;
     }
     .radio-group label {
         display: flex;
         align-items: center;
         font-weight: normal;
         cursor: pointer;
+        font-size: 12px;
     }
     .radio-group input[type="radio"] {
         margin-right: 5px;
-    }
-    .right-panel {
-        width: 400px;
-        background: white;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        display: flex;
-        flex-direction: column;
     }
     .chatbot-header {
         padding: 15px;
@@ -150,82 +161,45 @@
     .chatbot-input button {
         padding: 10px 20px;
     }
-    .batch-info {
-        padding: 10px;
-        background: #e9ecef;
-        border-radius: 4px;
-        margin-bottom: 15px;
-        text-align: center;
-        font-weight: 600;
-    }
     .submit-batch-btn {
         margin-top: 20px;
         width: 100%;
+        padding: 12px;
+        font-size: 16px;
+    }
+    .nfr-form-section.completed {
+        border-color: #28a745;
+        background: #d4edda;
     }
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="evaluation-container">
-    <div class="left-panel">
-        <div class="nfr-display">
+    <!-- NFR Display Panel -->
+    <div class="nfr-panel">
+        <div class="panel-header">NFRs Display</div>
+        <div class="panel-content">
             <div class="batch-info">
-                Batch <span id="currentBatch">1</span> of <span id="totalBatches">3</span> - NFRs <span id="nfrRange">1-10</span>
+                Batch <span id="currentBatch">1</span> of <span id="totalBatches">3</span>
             </div>
             <div id="nfrList"></div>
         </div>
-        
-        <div class="form-panel">
-            <h3 style="margin-bottom: 20px;">Feedback Form</h3>
-            <form id="nfrForm">
-                <input type="hidden" id="currentNfrId" value="">
-                
-                <div class="form-group">
-                    <label>Question 1: Do you agree with the chatbot's satisfaction level assessment?</label>
-                    <div class="radio-group">
-                        <label><input type="radio" name="satisfaction" value="Satisfied" required> Satisfied</label>
-                        <label><input type="radio" name="satisfaction" value="Weakly Satisfied"> Weakly Satisfied</label>
-                        <label><input type="radio" name="satisfaction" value="Weakly Denied"> Weakly Denied</label>
-                        <label><input type="radio" name="satisfaction" value="Denied"> Denied</label>
-                        <label><input type="radio" name="satisfaction" value="NA"> NA</label>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label>Question 2: Do you agree with the chatbot's reasoning?</label>
-                    <div class="radio-group">
-                        <label><input type="radio" name="reasoning" value="Agree" required> Agree</label>
-                        <label><input type="radio" name="reasoning" value="Partially agree"> Partially agree</label>
-                        <label><input type="radio" name="reasoning" value="Partially disagree"> Partially disagree</label>
-                        <label><input type="radio" name="reasoning" value="Disagree"> Disagree</label>
-                    </div>
-                    <textarea id="reasoningText" placeholder="Additional comments (optional)" style="margin-top: 10px;"></textarea>
-                </div>
-                
-                <div class="form-group">
-                    <label>Question 3: Do you agree with the chatbot's identified code locations?</label>
-                    <div class="radio-group">
-                        <label><input type="radio" name="locations" value="Agree" required> Agree</label>
-                        <label><input type="radio" name="locations" value="Partially agree"> Partially agree</label>
-                        <label><input type="radio" name="locations" value="Partially disagree"> Partially disagree</label>
-                        <label><input type="radio" name="locations" value="Disagree"> Disagree</label>
-                    </div>
-                    <textarea id="locationsText" placeholder="Additional comments (optional)" style="margin-top: 10px;"></textarea>
-                </div>
-                
-                <div class="form-group" id="ownAssessmentGroup" style="display: none;">
-                    <label>Question 4: Please provide your own assessment.</label>
-                    <textarea id="ownAssessment" placeholder="Enter your assessment..." required></textarea>
-                </div>
-                
-                <button type="submit" class="btn">Submit Feedback</button>
+    </div>
+    
+    <!-- Form Panel -->
+    <div class="form-panel">
+        <div class="panel-header">Feedback Form</div>
+        <div class="panel-content">
+            <form id="batchForm">
+                <div id="nfrFormsContainer"></div>
+                <button type="submit" class="btn submit-batch-btn" id="submitBatchBtn">Submit All Feedback</button>
             </form>
-            
-            <button class="btn submit-batch-btn" id="nextBatchBtn" onclick="nextBatch()" style="display: none;">Proceed to Next Batch</button>
         </div>
     </div>
     
-    <div class="right-panel">
+    <!-- Chatbot Panel -->
+    <div class="chatbot-panel">
         <div class="chatbot-header">Chatbot Assistant</div>
         <div class="chatbot-messages" id="chatMessages"></div>
         <div class="chatbot-input">
@@ -238,10 +212,9 @@
 <script>
 let currentBatch = {{ batch }};
 let nfrs = [];
-let currentNfrIndex = 0;
-let submittedNfrs = new Set();
 let batchData = null;
 let uuid = null;
+let submittedNfrs = new Set();
 
 // Load UUID and chat history on page load
 window.addEventListener('load', () => {
@@ -275,128 +248,285 @@ window.addEventListener('load', () => {
     loadProgress();
 });
 
-function loadChatHistory() {
-    if (!uuid) return;
-    fetch('/api/load_chat_history', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({uuid: uuid})
-    })
-    .then(r => r.json())
-    .then(data => {
-        // Display chat history
-        data.history.forEach(entry => {
-            addMessage('user', entry.user_message);
-            addMessage('bot', entry.bot_reply);
-        });
-    });
-}
-
 function loadNFRs() {
     fetch(`/api/get_requirements?batch=${currentBatch}`)
         .then(r => r.json())
         .then(data => {
             batchData = data;
             nfrs = data.nfrs;
-            currentNfrIndex = 0;
             document.getElementById('currentBatch').textContent = data.batch;
             document.getElementById('totalBatches').textContent = data.total_batches;
-            const start = (data.batch - 1) * 10 + 1;
-            const end = Math.min(start + 9, data.total_nfrs);
-            document.getElementById('nfrRange').textContent = `${start}-${end}`;
             displayNFRs();
-            if (nfrs.length > 0) {
-                showNFRForm(nfrs[0]);
-            }
+            displayForms();
         });
 }
 
 function displayNFRs() {
     const container = document.getElementById('nfrList');
-    container.innerHTML = nfrs.map((nfr, idx) => `
-        <div class="nfr-item ${idx === currentNfrIndex ? 'active' : ''}" onclick="selectNFR(${idx})" style="cursor: pointer; ${idx === currentNfrIndex ? 'border-left-color: #28a745;' : ''}">
-            <span class="category">${nfr.category}</span>
-            <h3>NFR ${nfr.id}: ${nfr.requirement}</h3>
-            ${submittedNfrs.has(nfr.id) ? '<span style="color: green;">✓ Submitted</span>' : ''}
+    container.innerHTML = nfrs.map(nfr => `
+        <div class="nfr-item">
+            <h4>NFR ${nfr.id}: ${nfr.title}</h4>
+            <p>${nfr.description}</p>
         </div>
     `).join('');
 }
 
-function selectNFR(index) {
-    currentNfrIndex = index;
-    displayNFRs();
-    showNFRForm(nfrs[index]);
-}
-
-function showNFRForm(nfr) {
-    document.getElementById('currentNfrId').value = nfr.id;
-    document.getElementById('nfrForm').reset();
-    document.getElementById('ownAssessmentGroup').style.display = 'none';
-    document.getElementById('ownAssessment').required = false;
-}
-
-function checkDisagreement() {
-    const reasoning = document.querySelector('input[name="reasoning"]:checked')?.value;
-    const locations = document.querySelector('input[name="locations"]:checked')?.value;
+function displayForms() {
+    const container = document.getElementById('nfrFormsContainer');
+    container.innerHTML = nfrs.map(nfr => `
+        <div class="nfr-form-section" id="nfr-form-${nfr.id}">
+            <h4>NFR ${nfr.id}: ${nfr.title}</h4>
+            
+            <div class="form-group">
+                <label>Question 1: Do you agree with the chatbot's satisfaction level assessment?</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="q1_${nfr.id}" value="Agree" required> Agree</label>
+                    <label><input type="radio" name="q1_${nfr.id}" value="Partially agree"> Partially agree</label>
+                    <label><input type="radio" name="q1_${nfr.id}" value="Partially disagree"> Partially disagree</label>
+                    <label><input type="radio" name="q1_${nfr.id}" value="Disagree"> Disagree</label>
+                </div>
+                <div class="form-group" id="q1_assessment_${nfr.id}" style="display: none; margin-top: 10px;">
+                    <label>Provide your own assessment:</label>
+                    <select name="q1_own_assessment_${nfr.id}" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                        <option value="">Select...</option>
+                        <option value="Satisfied">Satisfied</option>
+                        <option value="Weakly Satisfied">Weakly Satisfied</option>
+                        <option value="Weakly Denied">Weakly Denied</option>
+                        <option value="Denied">Denied</option>
+                        <option value="NA">NA</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Question 2: Do you agree with the chatbot's reasoning?</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="q2_${nfr.id}" value="Agree" required> Agree</label>
+                    <label><input type="radio" name="q2_${nfr.id}" value="Partially agree"> Partially agree</label>
+                    <label><input type="radio" name="q2_${nfr.id}" value="Partially disagree"> Partially disagree</label>
+                    <label><input type="radio" name="q2_${nfr.id}" value="Disagree"> Disagree</label>
+                </div>
+                <div class="form-group" id="q2_assessment_${nfr.id}" style="display: none; margin-top: 10px;">
+                    <label>Provide your own assessment:</label>
+                    <textarea name="q2_own_assessment_${nfr.id}" placeholder="Enter your own assessment..." style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; min-height: 80px;"></textarea>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Question 3: Do you agree with the chatbot's identified code locations?</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="q3_${nfr.id}" value="Agree" required> Agree</label>
+                    <label><input type="radio" name="q3_${nfr.id}" value="Partially agree"> Partially agree</label>
+                    <label><input type="radio" name="q3_${nfr.id}" value="Partially disagree"> Partially disagree</label>
+                    <label><input type="radio" name="q3_${nfr.id}" value="Disagree"> Disagree</label>
+                </div>
+                <div class="form-group" id="q3_assessment_${nfr.id}" style="display: none; margin-top: 10px;">
+                    <label>Provide your own assessment:</label>
+                    <textarea name="q3_own_assessment_${nfr.id}" placeholder="Enter your own assessment..." style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; min-height: 80px;"></textarea>
+                </div>
+            </div>
+        </div>
+    `).join('');
     
-    if (reasoning === 'Disagree' || reasoning === 'Partially disagree' || 
-        locations === 'Disagree' || locations === 'Partially disagree') {
-        document.getElementById('ownAssessmentGroup').style.display = 'block';
-        document.getElementById('ownAssessment').required = true;
-    } else {
-        document.getElementById('ownAssessmentGroup').style.display = 'none';
-        document.getElementById('ownAssessment').required = false;
-    }
-}
-
-// Use event delegation on the form to handle radio button changes
-document.getElementById('nfrForm').addEventListener('change', (e) => {
-    if (e.target.name === 'reasoning' || e.target.name === 'locations') {
-        checkDisagreement();
-    }
-});
-
-document.getElementById('nfrForm').addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    const formData = {
-        uuid: uuid,
-        nfr_id: parseInt(document.getElementById('currentNfrId').value),
-        batch: currentBatch,
-        satisfaction: document.querySelector('input[name="satisfaction"]:checked').value,
-        reasoning: document.querySelector('input[name="reasoning"]:checked').value,
-        reasoning_text: document.getElementById('reasoningText').value,
-        locations: document.querySelector('input[name="locations"]:checked').value,
-        locations_text: document.getElementById('locationsText').value,
-        own_assessment: document.getElementById('ownAssessment').value,
-        timestamp: new Date().toISOString()
-    };
-    
-    fetch('/api/submit_nfr_feedback', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(formData)
-    }).then(() => {
-        submittedNfrs.add(formData.nfr_id);
-        saveNfrProgress();
-        displayNFRs();
+    // Add event listeners for disagreement detection
+    nfrs.forEach(nfr => {
+        const q1Radios = document.querySelectorAll(`input[name="q1_${nfr.id}"]`);
+        const q2Radios = document.querySelectorAll(`input[name="q2_${nfr.id}"]`);
+        const q3Radios = document.querySelectorAll(`input[name="q3_${nfr.id}"]`);
         
-        // Move to next NFR or show next batch button
-        if (currentNfrIndex < nfrs.length - 1) {
-            currentNfrIndex++;
-            showNFRForm(nfrs[currentNfrIndex]);
+        q1Radios.forEach(radio => {
+            radio.addEventListener('change', () => checkDisagreement(nfr.id, 1));
+        });
+        q2Radios.forEach(radio => {
+            radio.addEventListener('change', () => checkDisagreement(nfr.id, 2));
+        });
+        q3Radios.forEach(radio => {
+            radio.addEventListener('change', () => checkDisagreement(nfr.id, 3));
+        });
+    });
+    
+    // Mark completed NFRs
+    submittedNfrs.forEach(nfrId => {
+        const formSection = document.getElementById(`nfr-form-${nfrId}`);
+        if (formSection) {
+            formSection.classList.add('completed');
+        }
+    });
+}
+
+function checkDisagreement(nfrId, questionNum) {
+    const selectedValue = document.querySelector(`input[name="q${questionNum}_${nfrId}"]:checked`)?.value;
+    const assessmentDiv = document.getElementById(`q${questionNum}_assessment_${nfrId}`);
+    
+    if (assessmentDiv) {
+        if (selectedValue && selectedValue !== 'Agree') {
+            assessmentDiv.style.display = 'block';
+            // Make the assessment field required
+            if (questionNum === 1) {
+                const select = document.querySelector(`select[name="q${questionNum}_own_assessment_${nfrId}"]`);
+                if (select) select.required = true;
+            } else {
+                const textarea = document.querySelector(`textarea[name="q${questionNum}_own_assessment_${nfrId}"]`);
+                if (textarea) textarea.required = true;
+            }
         } else {
-            // All NFRs in batch completed
-            if (submittedNfrs.size === nfrs.length) {
-                if (currentBatch < batchData.total_batches) {
-                    document.getElementById('nextBatchBtn').style.display = 'block';
-                } else {
-                    // All batches completed
-                    setCurrentProgress(PROGRESS_STEPS.SURVEY);
-                    window.location.href = '/survey';
+            assessmentDiv.style.display = 'none';
+            // Remove required attribute
+            if (questionNum === 1) {
+                const select = document.querySelector(`select[name="q${questionNum}_own_assessment_${nfrId}"]`);
+                if (select) {
+                    select.required = false;
+                    select.value = '';
+                }
+            } else {
+                const textarea = document.querySelector(`textarea[name="q${questionNum}_own_assessment_${nfrId}"]`);
+                if (textarea) {
+                    textarea.required = false;
+                    textarea.value = '';
                 }
             }
         }
+    }
+}
+
+document.getElementById('batchForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    // Validate all forms first
+    let allValid = true;
+    const missingFields = [];
+    
+    nfrs.forEach(nfr => {
+        const q1 = document.querySelector(`input[name="q1_${nfr.id}"]:checked`)?.value;
+        const q2 = document.querySelector(`input[name="q2_${nfr.id}"]:checked`)?.value;
+        const q3 = document.querySelector(`input[name="q3_${nfr.id}"]:checked`)?.value;
+        
+        if (!q1) {
+            allValid = false;
+            missingFields.push(`NFR ${nfr.id}: Question 1`);
+        }
+        if (!q2) {
+            allValid = false;
+            missingFields.push(`NFR ${nfr.id}: Question 2`);
+        }
+        if (!q3) {
+            allValid = false;
+            missingFields.push(`NFR ${nfr.id}: Question 3`);
+        }
+        
+        // Check if own assessments are required (when not Agree)
+        if (q1 && q1 !== 'Agree') {
+            const q1Assessment = document.querySelector(`select[name="q1_own_assessment_${nfr.id}"]`)?.value || '';
+            if (!q1Assessment) {
+                allValid = false;
+                missingFields.push(`NFR ${nfr.id}: Your own assessment for Question 1`);
+            }
+        }
+        if (q2 && q2 !== 'Agree') {
+            const q2Assessment = document.querySelector(`textarea[name="q2_own_assessment_${nfr.id}"]`)?.value || '';
+            if (!q2Assessment.trim()) {
+                allValid = false;
+                missingFields.push(`NFR ${nfr.id}: Your own assessment for Question 2`);
+            }
+        }
+        if (q3 && q3 !== 'Agree') {
+            const q3Assessment = document.querySelector(`textarea[name="q3_own_assessment_${nfr.id}"]`)?.value || '';
+            if (!q3Assessment.trim()) {
+                allValid = false;
+                missingFields.push(`NFR ${nfr.id}: Your own assessment for Question 3`);
+            }
+        }
+    });
+    
+    if (!allValid) {
+        alert('Please fill in all required fields:\n' + missingFields.join('\n'));
+        return;
+    }
+    
+    // Collect all form data for all NFRs
+    const formDataArray = [];
+    
+    nfrs.forEach(nfr => {
+        const q1 = document.querySelector(`input[name="q1_${nfr.id}"]:checked`).value;
+        const q2 = document.querySelector(`input[name="q2_${nfr.id}"]:checked`).value;
+        const q3 = document.querySelector(`input[name="q3_${nfr.id}"]:checked`).value;
+        
+        // Get own assessments (only if not Agree)
+        const q1_own_assessment = q1 !== 'Agree' ? (document.querySelector(`select[name="q1_own_assessment_${nfr.id}"]`)?.value || '') : '';
+        const q2_own_assessment = q2 !== 'Agree' ? (document.querySelector(`textarea[name="q2_own_assessment_${nfr.id}"]`)?.value || '') : '';
+        const q3_own_assessment = q3 !== 'Agree' ? (document.querySelector(`textarea[name="q3_own_assessment_${nfr.id}"]`)?.value || '') : '';
+        
+        formDataArray.push({
+            uuid: uuid,
+            nfr_id: nfr.id,
+            batch: currentBatch,
+            q1_agreement: q1,
+            q1_own_assessment: q1_own_assessment,
+            q2_agreement: q2,
+            q2_own_assessment: q2_own_assessment,
+            q3_agreement: q3,
+            q3_own_assessment: q3_own_assessment,
+            timestamp: new Date().toISOString()
+        });
+    });
+    
+    // Disable submit button to prevent double submission
+    const submitBtn = document.getElementById('submitBatchBtn');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting...';
+    
+    // Submit all feedback in one batch request to avoid race conditions
+    fetch('/api/submit_batch_feedback', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(formDataArray)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to submit batch feedback');
+        }
+        return response.json();
+    })
+    .then(result => {
+        console.log(`Successfully submitted ${result.count} NFRs`);
+        
+        // Mark all as submitted
+        nfrs.forEach(nfr => {
+            submittedNfrs.add(nfr.id);
+            const formSection = document.getElementById(`nfr-form-${nfr.id}`);
+            if (formSection) {
+                formSection.classList.add('completed');
+            }
+        });
+        
+        saveNfrProgress();
+        
+        // Automatically proceed to next batch or survey
+        if (currentBatch < batchData.total_batches) {
+            // Go to next batch
+            currentBatch++;
+            submittedNfrs.clear();
+            localStorage.setItem('evaluation_batch', currentBatch.toString());
+            localStorage.setItem('submitted_nfrs', JSON.stringify([]));
+            setCurrentProgress(PROGRESS_STEPS.EVALUATION, {batch: currentBatch});
+            // Reload NFRs for next batch
+            loadNFRs();
+            // Reset form
+            document.getElementById('submitBatchBtn').disabled = false;
+            document.getElementById('submitBatchBtn').textContent = 'Submit All Feedback';
+            // Scroll to top
+            window.scrollTo(0, 0);
+        } else {
+            // All batches completed - go to survey
+            setCurrentProgress(PROGRESS_STEPS.SURVEY);
+            window.location.href = '/survey';
+        }
+    })
+    .catch(error => {
+        console.error('Error submitting feedback:', error);
+        alert('Error submitting feedback. Please try again.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit All Feedback';
     });
 });
 
@@ -405,6 +535,7 @@ function nextBatch() {
         currentBatch++;
         submittedNfrs.clear();
         document.getElementById('nextBatchBtn').style.display = 'none';
+        document.getElementById('submitBatchBtn').style.display = 'block';
         localStorage.setItem('evaluation_batch', currentBatch.toString());
         localStorage.setItem('submitted_nfrs', JSON.stringify([]));
         setCurrentProgress(PROGRESS_STEPS.EVALUATION, {batch: currentBatch});
@@ -433,7 +564,7 @@ function sendMessage() {
     .then(r => r.json())
     .then(data => {
         addMessage('bot', data.response);
-        // Update UUID if returned (shouldn't change, but just in case)
+        // Update UUID if returned
         if (data.uuid) {
             uuid = data.uuid;
             localStorage.setItem('chatbot_uuid', uuid);
@@ -453,6 +584,23 @@ function addMessage(type, content) {
     messagesDiv.scrollTop = messagesDiv.scrollHeight;
 }
 
+function loadChatHistory() {
+    if (!uuid) return;
+    fetch('/api/load_chat_history', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({uuid: uuid})
+    })
+    .then(r => r.json())
+    .then(data => {
+        // Display chat history
+        data.history.forEach(entry => {
+            addMessage('user', entry.user_message);
+            addMessage('bot', entry.bot_reply);
+        });
+    });
+}
+
 function loadProgress() {
     // Load from localStorage
     const savedBatch = localStorage.getItem('evaluation_batch');
@@ -466,7 +614,6 @@ function loadProgress() {
     }
 }
 
-// Save progress to localStorage when NFR is submitted
 function saveNfrProgress() {
     localStorage.setItem('evaluation_batch', currentBatch.toString());
     localStorage.setItem('submitted_nfrs', JSON.stringify(Array.from(submittedNfrs)));

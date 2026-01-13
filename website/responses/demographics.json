@@ -1,10 +1,10 @@
 {
-  "7c8d4554-7ad3-442b-b28c-9bd95e4d36b8": {
-    "uuid": "7c8d4554-7ad3-442b-b28c-9bd95e4d36b8",
+  "edfdca43-fc5d-4e6e-8363-bd45eb856bbf": {
+    "uuid": "edfdca43-fc5d-4e6e-8363-bd45eb856bbf",
     "age": "1",
-    "gender": "male",
+    "gender": "other",
     "experience": "1",
-    "education": "phd",
-    "timestamp": "2026-01-13T15:36:12.945843"
+    "education": "bachelor",
+    "timestamp": "2026-01-13T18:26:50.208916"
   }
 }

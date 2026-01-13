@@ -108,44 +108,132 @@ def prize():
     prolific = request.args.get('id') == 'prolific'
     return render_template('prize.html', prolific_id=prolific)
 
-# API Routes
 
+def get_nfr_batch_number():
+    return 1
+
+# API Routes
 @app.route('/api/get_requirements', methods=['GET'])
 def get_requirements():
-    """Get NFRs for a specific batch (10 per batch)."""
+    """Get NFRs for a specific batch (batches are already in the JSON)."""
     batch = int(request.args.get('batch', 1))
     
     with open(NFR_FILE, 'r') as f:
-        all_nfrs = json.load(f)
+        all_batches = json.load(f)
     
-    start_idx = (batch - 1) * 10
-    end_idx = start_idx + 10
-    batch_nfrs = all_nfrs[start_idx:end_idx]
+    # NFR.json is now an array of batches (each batch is an array of NFRs)
+    if batch <= len(all_batches):
+        batch_nfrs = all_batches[batch - 1]
+    else:
+        batch_nfrs = []
+    
+    # Calculate total NFRs
+    total_nfrs = sum(len(b) for b in all_batches)
     
     return jsonify({
         'nfrs': batch_nfrs,
         'batch': batch,
-        'total_batches': (len(all_nfrs) + 9) // 10,
-        'total_nfrs': len(all_nfrs)
+        'total_batches': len(all_batches),
+        'total_nfrs': total_nfrs
     })
 
 @app.route('/api/submit_nfr_feedback', methods=['POST'])
 def submit_nfr_feedback():
-    """Save NFR feedback."""
-    data = request.json
-    uuid = data.get('uuid') or request.json.get('uuid')
-    session_id = get_session_id(uuid)
-    
-    # Load existing responses
-    responses = load_json_file(NFR_RESPONSES_FILE)
-    
-    if session_id not in responses:
-        responses[session_id] = []
-    
-    responses[session_id].append(data)
-    save_json_file(NFR_RESPONSES_FILE, responses)
-    
-    return jsonify({'status': 'success'})
+    """Save NFR feedback. Accepts either single feedback or batch of feedbacks."""
+    try:
+        data = request.json
+        if not data:
+            return jsonify({'status': 'error', 'message': 'No data provided'}), 400
+        
+        uuid = data.get('uuid')
+        if not uuid:
+            return jsonify({'status': 'error', 'message': 'UUID is required'}), 400
+        
+        session_id = get_session_id(uuid)
+        
+        # Load existing responses
+        responses = load_json_file(NFR_RESPONSES_FILE)
+        
+        if session_id not in responses:
+            responses[session_id] = []
+        
+        # Check if this is a batch submission (array) or single submission
+        if isinstance(data, list):
+            # Batch submission - process all items
+            batch = data[0].get('batch') if data else None
+            # Remove all existing entries for this batch
+            responses[session_id] = [
+                r for r in responses[session_id] 
+                if r.get('batch') != batch
+            ]
+            # Add all new entries
+            responses[session_id].extend(data)
+        else:
+            # Single submission
+            nfr_id = data.get('nfr_id')
+            batch = data.get('batch')
+            
+            # Remove existing entry for this NFR in this batch if it exists
+            responses[session_id] = [
+                r for r in responses[session_id] 
+                if not (r.get('nfr_id') == nfr_id and r.get('batch') == batch)
+            ]
+            
+            # Add new entry
+            responses[session_id].append(data)
+        
+        save_json_file(NFR_RESPONSES_FILE, responses)
+        
+        if isinstance(data, list):
+            return jsonify({'status': 'success', 'count': len(data)})
+        else:
+            return jsonify({'status': 'success', 'nfr_id': data.get('nfr_id')})
+    except Exception as e:
+        print(f"Error in submit_nfr_feedback: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
+@app.route('/api/submit_batch_feedback', methods=['POST'])
+def submit_batch_feedback():
+    """Save batch of NFR feedbacks in one request to avoid race conditions."""
+    try:
+        data_list = request.json
+        if not data_list or not isinstance(data_list, list):
+            return jsonify({'status': 'error', 'message': 'Array of feedback data required'}), 400
+        
+        if not data_list:
+            return jsonify({'status': 'error', 'message': 'Empty array'}), 400
+        
+        uuid = data_list[0].get('uuid')
+        if not uuid:
+            return jsonify({'status': 'error', 'message': 'UUID is required'}), 400
+        
+        session_id = get_session_id(uuid)
+        batch = data_list[0].get('batch')
+        
+        # Load existing responses
+        responses = load_json_file(NFR_RESPONSES_FILE)
+        
+        if session_id not in responses:
+            responses[session_id] = []
+        
+        # Remove all existing entries for this batch
+        responses[session_id] = [
+            r for r in responses[session_id] 
+            if r.get('batch') != batch
+        ]
+        
+        # Add all new entries
+        responses[session_id].extend(data_list)
+        save_json_file(NFR_RESPONSES_FILE, responses)
+        
+        return jsonify({'status': 'success', 'count': len(data_list)})
+    except Exception as e:
+        print(f"Error in submit_batch_feedback: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({'status': 'error', 'message': str(e)}), 500
 
 @app.route('/api/ask_chatbot', methods=['POST'])
 def ask_chatbot():
