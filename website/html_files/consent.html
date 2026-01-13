@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Consent Form{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div style="max-width: 800px; margin: 40px auto; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        <h1 style="margin-bottom: 30px; color: #333;">Consent Form</h1>
+        
+        <div style="margin-bottom: 30px; line-height: 1.8;">
+            {% if consent_html %}
+                {{ consent_html|safe }}
+            {% else %}
+                <p>Loading consent form...</p>
+            {% endif %}
+        </div>
+        
+        <div style="margin-top: 40px; display: flex; gap: 20px; justify-content: center;">
+            <button class="btn" onclick="agreeToConsent()">I Agree</button>
+            <button class="btn btn-secondary" onclick="window.location.href='/'">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// Check progress on page load
+window.addEventListener('load', () => {
+    redirectToCorrectPage();
+});
+
+function agreeToConsent() {
+    // Check if UUID already exists in localStorage
+    let uuid = localStorage.getItem('chatbot_uuid');
+    
+    if (uuid) {
+        // UUID exists, validate it and proceed
+        fetch('/api/get_or_create_uuid', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({uuid: uuid})
+        })
+        .then(r => r.json())
+        .then(data => {
+            localStorage.setItem('chatbot_uuid', data.uuid);
+            setCurrentProgress(PROGRESS_STEPS.TUTORIAL, {page: 1});
+            window.location.href = '/tutorial?page=1';
+        });
+    } else {
+        // Create new UUID when user agrees to consent
+        fetch('/api/get_or_create_uuid')
+            .then(r => r.json())
+            .then(data => {
+                // Save UUID to localStorage
+                localStorage.setItem('chatbot_uuid', data.uuid);
+                setCurrentProgress(PROGRESS_STEPS.TUTORIAL, {page: 1});
+                window.location.href = '/tutorial?page=1';
+            })
+            .catch(error => {
+                console.error('Error creating UUID:', error);
+                alert('An error occurred. Please try again.');
+            });
+    }
+}
+</script>
+{% endblock %}

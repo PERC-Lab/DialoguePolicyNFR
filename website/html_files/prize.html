@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block title %}Prize Collection{% endblock %}
+
+{% block extra_css %}
+<style>
+    .prize-container {
+        max-width: 600px;
+        margin: 40px auto;
+        background: white;
+        padding: 40px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .form-group {
+        margin-bottom: 25px;
+    }
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #333;
+    }
+    .form-group input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+    .form-group input:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+    }
+    .success-message {
+        padding: 15px;
+        background: #d4edda;
+        color: #155724;
+        border-radius: 4px;
+        margin-top: 20px;
+        display: none;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <script>
+    // Check progress on page load
+    window.addEventListener('load', () => {
+        if (redirectToCorrectPage()) return;
+    });
+    </script>
+    <div class="prize-container">
+        <h1 style="margin-bottom: 10px;">Thank You!</h1>
+        <p style="margin-bottom: 30px; color: #666;">Your participation in this study is greatly appreciated.</p>
+        
+        <form id="prizeForm">
+            <div class="form-group">
+                <label for="identifier">
+                    {% if prolific_id %}
+                        Prolific ID:
+                    {% else %}
+                        Email Address:
+                    {% endif %}
+                </label>
+                <input 
+                    type="{% if prolific_id %}text{% else %}email{% endif %}" 
+                    id="identifier" 
+                    name="identifier"
+                    placeholder="{% if prolific_id %}Enter your Prolific ID{% else %}Enter your email address{% endif %}"
+                    required
+                >
+            </div>
+            
+            <div style="margin-top: 30px;">
+                <button type="submit" class="btn">Submit</button>
+            </div>
+        </form>
+        
+        <div class="success-message" id="successMessage">
+            Thank you! Your information has been recorded. You may now close this page.
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('prizeForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const uuid = localStorage.getItem('chatbot_uuid');
+    const identifier = document.getElementById('identifier').value;
+    const urlParams = new URLSearchParams(window.location.search);
+    const prolificId = urlParams.get('id');
+    
+    const prizeData = {
+        uuid: uuid,
+        identifier: identifier,
+        type: prolificId === 'prolific' ? 'prolific_id' : 'email',
+        timestamp: new Date().toISOString()
+    };
+    
+    fetch('/api/submit_prize', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(prizeData)
+    })
+    .then(() => {
+        document.getElementById('prizeForm').style.display = 'none';
+        document.getElementById('successMessage').style.display = 'block';
+    })
+    .catch(error => {
+        alert('An error occurred. Please try again.');
+        console.error(error);
+    });
+});
+</script>
+{% endblock %}

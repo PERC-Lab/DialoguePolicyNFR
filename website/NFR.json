@@ -1,0 +1,152 @@
+[
+  {
+    "id": 1,
+    "requirement": "The system shall respond to user requests within 2 seconds under normal load conditions.",
+    "category": "Performance"
+  },
+  {
+    "id": 2,
+    "requirement": "The system shall maintain 99.9% uptime availability.",
+    "category": "Reliability"
+  },
+  {
+    "id": 3,
+    "requirement": "All user data shall be encrypted using AES-256 encryption.",
+    "category": "Security"
+  },
+  {
+    "id": 4,
+    "requirement": "The system shall support concurrent access by at least 1000 users.",
+    "category": "Scalability"
+  },
+  {
+    "id": 5,
+    "requirement": "The user interface shall be accessible according to WCAG 2.1 Level AA standards.",
+    "category": "Usability"
+  },
+  {
+    "id": 6,
+    "requirement": "The system shall log all critical operations for audit purposes.",
+    "category": "Maintainability"
+  },
+  {
+    "id": 7,
+    "requirement": "Database queries shall be optimized to execute within 500ms.",
+    "category": "Performance"
+  },
+  {
+    "id": 8,
+    "requirement": "The system shall automatically backup data every 24 hours.",
+    "category": "Reliability"
+  },
+  {
+    "id": 9,
+    "requirement": "User authentication shall use multi-factor authentication (MFA).",
+    "category": "Security"
+  },
+  {
+    "id": 10,
+    "requirement": "The system shall be deployable on cloud infrastructure (AWS, Azure, GCP).",
+    "category": "Portability"
+  },
+  {
+    "id": 11,
+    "requirement": "The system shall support internationalization for at least 5 languages.",
+    "category": "Usability"
+  },
+  {
+    "id": 12,
+    "requirement": "Code coverage for unit tests shall be at least 80%.",
+    "category": "Maintainability"
+  },
+  {
+    "id": 13,
+    "requirement": "API endpoints shall handle rate limiting of 100 requests per minute per user.",
+    "category": "Security"
+  },
+  {
+    "id": 14,
+    "requirement": "The system shall scale horizontally to handle 10x traffic spikes.",
+    "category": "Scalability"
+  },
+  {
+    "id": 15,
+    "requirement": "Error messages shall be user-friendly and provide actionable guidance.",
+    "category": "Usability"
+  },
+  {
+    "id": 16,
+    "requirement": "The system shall maintain data consistency across distributed components.",
+    "category": "Reliability"
+  },
+  {
+    "id": 17,
+    "requirement": "All external API calls shall implement retry logic with exponential backoff.",
+    "category": "Reliability"
+  },
+  {
+    "id": 18,
+    "requirement": "Sensitive data shall be masked in logs and error messages.",
+    "category": "Security"
+  },
+  {
+    "id": 19,
+    "requirement": "The system shall support dark mode and light mode themes.",
+    "category": "Usability"
+  },
+  {
+    "id": 20,
+    "requirement": "Database migrations shall be version-controlled and reversible.",
+    "category": "Maintainability"
+  },
+  {
+    "id": 21,
+    "requirement": "The system shall cache frequently accessed data to improve response times.",
+    "category": "Performance"
+  },
+  {
+    "id": 22,
+    "requirement": "The system shall support containerization using Docker.",
+    "category": "Portability"
+  },
+  {
+    "id": 23,
+    "requirement": "User sessions shall timeout after 30 minutes of inactivity.",
+    "category": "Security"
+  },
+  {
+    "id": 24,
+    "requirement": "The system shall provide real-time notifications for critical events.",
+    "category": "Usability"
+  },
+  {
+    "id": 25,
+    "requirement": "Code shall follow consistent style guidelines and pass linting checks.",
+    "category": "Maintainability"
+  },
+  {
+    "id": 26,
+    "requirement": "The system shall support load balancing across multiple server instances.",
+    "category": "Scalability"
+  },
+  {
+    "id": 27,
+    "requirement": "API responses shall be paginated for large datasets (max 100 items per page).",
+    "category": "Performance"
+  },
+  {
+    "id": 28,
+    "requirement": "The system shall implement circuit breakers for external service calls.",
+    "category": "Reliability"
+  },
+  {
+    "id": 29,
+    "requirement": "User passwords shall meet complexity requirements (min 12 characters, mixed case, numbers, symbols).",
+    "category": "Security"
+  },
+  {
+    "id": 30,
+    "requirement": "The system shall provide comprehensive API documentation.",
+    "category": "Maintainability"
+  }
+]

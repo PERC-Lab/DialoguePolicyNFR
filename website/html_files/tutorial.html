@@ -1,0 +1,291 @@
+{% extends "base.html" %}
+
+{% block title %}Tutorial{% endblock %}
+
+{% block extra_css %}
+<style>
+    .tutorial-container {
+        max-width: 900px;
+        margin: 40px auto;
+        background: white;
+        padding: 40px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .tutorial-page {
+        display: none;
+    }
+    .tutorial-page.active {
+        display: block;
+    }
+    .tutorial-page h2 {
+        margin-bottom: 20px;
+        color: #333;
+    }
+    .tutorial-page p {
+        margin-bottom: 15px;
+        line-height: 1.8;
+    }
+    .form-group {
+        margin-bottom: 20px;
+    }
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+    }
+    .form-group input, .form-group select, .form-group textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+    .form-group textarea {
+        resize: vertical;
+        min-height: 100px;
+    }
+    .navigation {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #eee;
+    }
+    .page-indicator {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #666;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="tutorial-container">
+        <div class="page-indicator">
+            <span id="pageNum">1</span> / 5
+        </div>
+        
+        <!-- Page 1: Instructions -->
+        <div class="tutorial-page active" id="page1">
+            <h2>Welcome to the Tutorial</h2>
+            <p>This tutorial will guide you through the evaluation process. Please read each section carefully.</p>
+            <p><strong>Overview:</strong></p>
+            <ul style="margin-left: 20px; line-height: 2;">
+                <li>You will evaluate AI-generated assessments of Non-Functional Requirements (NFRs)</li>
+                <li>You can interact with a chatbot to ask questions</li>
+                <li>You will provide feedback on the AI's assessments</li>
+                <li>The study consists of 30 NFRs divided into 3 batches of 10</li>
+            </ul>
+        </div>
+        
+        <!-- Page 2: Download Code -->
+        <div class="tutorial-page" id="page2">
+            <h2>Download the Code</h2>
+            <p>Please download the code repository and open it in your code editor.</p>
+            <p><strong>Instructions:</strong></p>
+            <ol style="margin-left: 20px; line-height: 2;">
+                <li>Download the code package provided</li>
+                <li>Extract the files to a location on your computer</li>
+                <li>Open the project in your preferred code editor (VS Code, IntelliJ, etc.)</li>
+                <li>Familiarize yourself with the code structure</li>
+            </ol>
+            <p style="margin-top: 20px; padding: 15px; background: #f0f0f0; border-radius: 4px;">
+                <em>Note: This is a placeholder. In the actual study, you would download real code here.</em>
+            </p>
+        </div>
+        
+        <!-- Page 3: Code Structure -->
+        <div class="tutorial-page" id="page3">
+            <h2>Code Structure Explanation</h2>
+            <p>The codebase follows a standard structure:</p>
+            <ul style="margin-left: 20px; line-height: 2;">
+                <li><strong>src/</strong> - Main source code files</li>
+                <li><strong>tests/</strong> - Unit and integration tests</li>
+                <li><strong>config/</strong> - Configuration files</li>
+                <li><strong>docs/</strong> - Documentation</li>
+            </ul>
+            <p style="margin-top: 20px;">When evaluating NFRs, consider how the code structure relates to the requirements being assessed.</p>
+        </div>
+        
+        <!-- Page 4: Demographics -->
+        <div class="tutorial-page" id="page4">
+            <h2>Demographic Information</h2>
+            <p>Please provide the following information:</p>
+            
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="number" id="age" min="18" max="100">
+            </div>
+            
+            <div class="form-group">
+                <label for="gender">Gender:</label>
+                <select id="gender">
+                    <option value="">Select...</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                    <option value="prefer-not-to-say">Prefer not to say</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="experience">Years of Programming Experience:</label>
+                <input type="number" id="experience" min="0" max="50">
+            </div>
+            
+            <div class="form-group">
+                <label for="education">Highest Education Level:</label>
+                <select id="education">
+                    <option value="">Select...</option>
+                    <option value="high-school">High School</option>
+                    <option value="bachelor">Bachelor's Degree</option>
+                    <option value="master">Master's Degree</option>
+                    <option value="phd">PhD</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+        </div>
+        
+        <!-- Page 5: Password -->
+        <div class="tutorial-page" id="page5">
+            <h2>Password Entry</h2>
+            <p>Please enter the password to proceed to the evaluation phase.</p>
+            
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="text" id="password" placeholder="Enter password">
+            </div>
+            
+            <div id="passwordError" style="color: red; margin-top: 10px; display: none;">
+                Incorrect password. Please try again.
+            </div>
+        </div>
+        
+        <div class="navigation">
+            <button class="btn btn-secondary" id="prevBtn" onclick="changePage(-1)" style="display: none;">Previous</button>
+            <button class="btn" id="nextBtn" onclick="changePage(1)">Next</button>
+        </div>
+    </div>
+</div>
+
+<script>
+const STATIC_PASSWORD = '1234'; // Static password
+let currentPage = 1;
+const totalPages = 5;
+let uuid = null;
+
+// Get UUID from localStorage (should already exist from consent page)
+window.addEventListener('load', () => {
+    // Check if should redirect
+    if (redirectToCorrectPage()) return;
+    
+    // Get UUID from localStorage - it should already exist from consent
+    uuid = localStorage.getItem('chatbot_uuid');
+    if (uuid) {
+        // Validate UUID with server
+        fetch('/api/get_or_create_uuid', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({uuid: uuid})
+        })
+        .then(r => r.json())
+        .then(data => {
+            uuid = data.uuid;
+            localStorage.setItem('chatbot_uuid', uuid);
+            setCurrentProgress(PROGRESS_STEPS.TUTORIAL, {page: currentPage});
+            loadProgress();
+        });
+    } else {
+        // UUID should exist - if not, redirect back to consent
+        console.warn('No UUID found, redirecting to consent');
+        window.location.href = '/';
+    }
+});
+
+function loadProgress() {
+    // Load page progress from localStorage
+    const savedPage = localStorage.getItem('tutorial_page');
+    if (savedPage) {
+        currentPage = parseInt(savedPage);
+        showPage(currentPage);
+    } else {
+        showPage(currentPage);
+    }
+}
+
+function showPage(page) {
+    // Hide all pages
+    for (let i = 1; i <= totalPages; i++) {
+        document.getElementById(`page${i}`).classList.remove('active');
+    }
+    
+    // Show current page
+    document.getElementById(`page${page}`).classList.add('active');
+    document.getElementById('pageNum').textContent = page;
+    
+    // Update navigation buttons
+    document.getElementById('prevBtn').style.display = page === 1 ? 'none' : 'block';
+    document.getElementById('nextBtn').textContent = page === totalPages ? 'Start Evaluation' : 'Next';
+}
+
+function changePage(direction) {
+    if (direction === 1) {
+        // Validate current page before proceeding
+        if (currentPage === 4) {
+            // Validate demographics
+            const age = document.getElementById('age').value;
+            const gender = document.getElementById('gender').value;
+            const experience = document.getElementById('experience').value;
+            const education = document.getElementById('education').value;
+            
+            if (!age || !gender || !experience || !education) {
+                alert('Please fill in all demographic fields.');
+                return;
+            }
+            
+            // Save demographics to JSON file
+            const demographics = {
+                uuid: uuid,
+                age: age,
+                gender: gender,
+                experience: experience,
+                education: education
+            };
+            
+            fetch('/api/submit_demographics', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(demographics)
+            });
+        } else if (currentPage === 5) {
+            // Validate password
+            const password = document.getElementById('password').value;
+            if (password !== STATIC_PASSWORD) {
+                document.getElementById('passwordError').style.display = 'block';
+                return;
+            }
+        }
+        
+        if (currentPage === totalPages) {
+            // Save progress and go to evaluation
+            localStorage.setItem('tutorial_page', currentPage.toString());
+            setCurrentProgress(PROGRESS_STEPS.EVALUATION, {batch: 1});
+            window.location.href = '/evaluation?batch=1';
+            return;
+        }
+        currentPage++;
+    } else {
+        currentPage--;
+    }
+    
+    showPage(currentPage);
+    // Save page progress to localStorage
+    localStorage.setItem('tutorial_page', currentPage.toString());
+    setCurrentProgress(PROGRESS_STEPS.TUTORIAL, {page: currentPage});
+}
+
+showPage(currentPage);
+</script>
+{% endblock %}
