@@ -249,7 +249,7 @@ window.addEventListener('load', () => {
 });
 
 function loadNFRs() {
-    fetch(`/api/get_requirements?batch=${currentBatch}`)
+    fetch(`/api/get_requirements?batch=${currentBatch}&uuid=${uuid}`)
         .then(r => r.json())
         .then(data => {
             batchData = data;

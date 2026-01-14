@@ -2,12 +2,55 @@
 
 {% block title %}Consent Form{% endblock %}
 
+{% block extra_css %}
+<style>
+    .consent-content {
+        line-height: 1.8;
+    }
+    .consent-content ul, 
+    .consent-content ol {
+        margin: 15px 0;
+        padding-left: 40px;
+        display: block;
+    }
+    .consent-content li {
+        margin: 8px 0;
+        display: list-item;
+        list-style-position: outside;
+    }
+    .consent-content ul {
+        list-style-type: disc;
+    }
+    .consent-content ul li {
+        list-style-type: disc;
+    }
+    .consent-content ol {
+        list-style-type: decimal;
+    }
+    .consent-content ol li {
+        list-style-type: decimal;
+    }
+    .consent-content p {
+        margin: 15px 0;
+    }
+    .consent-content strong {
+        font-weight: 600;
+    }
+    .consent-content h1, 
+    .consent-content h2, 
+    .consent-content h3 {
+        margin: 20px 0 10px 0;
+        font-weight: 600;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="container">
     <div style="max-width: 800px; margin: 40px auto; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
         <h1 style="margin-bottom: 30px; color: #333;">Consent Form</h1>
         
-        <div style="margin-bottom: 30px; line-height: 1.8;">
+        <div class="consent-content" style="margin-bottom: 30px; line-height: 1.8;">
             {% if consent_html %}
                 {{ consent_html|safe }}
             {% else %}

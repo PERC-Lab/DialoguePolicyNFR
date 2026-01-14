@@ -1,7 +1,7 @@
 {
-  "edfdca43-fc5d-4e6e-8363-bd45eb856bbf": [
+  "01a2d2ab-e9ec-4e42-9f0e-bfbc83fb8c40": [
     {
-      "uuid": "edfdca43-fc5d-4e6e-8363-bd45eb856bbf",
+      "uuid": "01a2d2ab-e9ec-4e42-9f0e-bfbc83fb8c40",
       "nfr_id": 1,
       "batch": 1,
       "q1_agreement": "Agree",
@@ -10,10 +10,10 @@
       "q2_own_assessment": "",
       "q3_agreement": "Agree",
       "q3_own_assessment": "",
-      "timestamp": "2026-01-13T23:27:46.288Z"
+      "timestamp": "2026-01-13T23:40:32.447Z"
     },
     {
-      "uuid": "edfdca43-fc5d-4e6e-8363-bd45eb856bbf",
+      "uuid": "01a2d2ab-e9ec-4e42-9f0e-bfbc83fb8c40",
       "nfr_id": 2,
       "batch": 1,
       "q1_agreement": "Agree",
@@ -22,10 +22,10 @@
       "q2_own_assessment": "",
       "q3_agreement": "Agree",
       "q3_own_assessment": "",
-      "timestamp": "2026-01-13T23:27:46.288Z"
+      "timestamp": "2026-01-13T23:40:32.447Z"
     },
     {
-      "uuid": "edfdca43-fc5d-4e6e-8363-bd45eb856bbf",
+      "uuid": "01a2d2ab-e9ec-4e42-9f0e-bfbc83fb8c40",
       "nfr_id": 3,
       "batch": 1,
       "q1_agreement": "Agree",
@@ -34,10 +34,10 @@
       "q2_own_assessment": "",
       "q3_agreement": "Agree",
       "q3_own_assessment": "",
-      "timestamp": "2026-01-13T23:27:46.288Z"
+      "timestamp": "2026-01-13T23:40:32.447Z"
     },
     {
-      "uuid": "edfdca43-fc5d-4e6e-8363-bd45eb856bbf",
+      "uuid": "01a2d2ab-e9ec-4e42-9f0e-bfbc83fb8c40",
       "nfr_id": 4,
       "batch": 1,
       "q1_agreement": "Agree",
@@ -46,10 +46,10 @@
       "q2_own_assessment": "",
       "q3_agreement": "Agree",
       "q3_own_assessment": "",
-      "timestamp": "2026-01-13T23:27:46.288Z"
+      "timestamp": "2026-01-13T23:40:32.447Z"
     },
     {
-      "uuid": "edfdca43-fc5d-4e6e-8363-bd45eb856bbf",
+      "uuid": "01a2d2ab-e9ec-4e42-9f0e-bfbc83fb8c40",
       "nfr_id": 5,
       "batch": 1,
       "q1_agreement": "Agree",
@@ -58,10 +58,10 @@
       "q2_own_assessment": "",
       "q3_agreement": "Agree",
       "q3_own_assessment": "",
-      "timestamp": "2026-01-13T23:27:46.288Z"
+      "timestamp": "2026-01-13T23:40:32.447Z"
     },
     {
-      "uuid": "edfdca43-fc5d-4e6e-8363-bd45eb856bbf",
+      "uuid": "01a2d2ab-e9ec-4e42-9f0e-bfbc83fb8c40",
       "nfr_id": 6,
       "batch": 1,
       "q1_agreement": "Agree",
@@ -70,10 +70,10 @@
       "q2_own_assessment": "",
       "q3_agreement": "Agree",
       "q3_own_assessment": "",
-      "timestamp": "2026-01-13T23:27:46.288Z"
+      "timestamp": "2026-01-13T23:40:32.447Z"
     },
     {
-      "uuid": "edfdca43-fc5d-4e6e-8363-bd45eb856bbf",
+      "uuid": "01a2d2ab-e9ec-4e42-9f0e-bfbc83fb8c40",
       "nfr_id": 7,
       "batch": 1,
       "q1_agreement": "Agree",
@@ -82,10 +82,10 @@
       "q2_own_assessment": "",
       "q3_agreement": "Agree",
       "q3_own_assessment": "",
-      "timestamp": "2026-01-13T23:27:46.288Z"
+      "timestamp": "2026-01-13T23:40:32.447Z"
     },
     {
-      "uuid": "edfdca43-fc5d-4e6e-8363-bd45eb856bbf",
+      "uuid": "01a2d2ab-e9ec-4e42-9f0e-bfbc83fb8c40",
       "nfr_id": 8,
       "batch": 1,
       "q1_agreement": "Agree",
@@ -94,10 +94,10 @@
       "q2_own_assessment": "",
       "q3_agreement": "Agree",
       "q3_own_assessment": "",
-      "timestamp": "2026-01-13T23:27:46.288Z"
+      "timestamp": "2026-01-13T23:40:32.447Z"
     },
     {
-      "uuid": "edfdca43-fc5d-4e6e-8363-bd45eb856bbf",
+      "uuid": "01a2d2ab-e9ec-4e42-9f0e-bfbc83fb8c40",
       "nfr_id": 9,
       "batch": 1,
       "q1_agreement": "Agree",
@@ -106,10 +106,10 @@
       "q2_own_assessment": "",
       "q3_agreement": "Agree",
       "q3_own_assessment": "",
-      "timestamp": "2026-01-13T23:27:46.288Z"
+      "timestamp": "2026-01-13T23:40:32.447Z"
     },
     {
-      "uuid": "edfdca43-fc5d-4e6e-8363-bd45eb856bbf",
+      "uuid": "01a2d2ab-e9ec-4e42-9f0e-bfbc83fb8c40",
       "nfr_id": 10,
       "batch": 1,
       "q1_agreement": "Agree",
@@ -118,7 +118,609 @@
       "q2_own_assessment": "",
       "q3_agreement": "Agree",
       "q3_own_assessment": "",
-      "timestamp": "2026-01-13T23:27:46.288Z"
+      "timestamp": "2026-01-13T23:40:32.447Z"
+    },
+    {
+      "uuid": "01a2d2ab-e9ec-4e42-9f0e-bfbc83fb8c40",
+      "nfr_id": 11,
+      "batch": 2,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:41:21.165Z"
+    },
+    {
+      "uuid": "01a2d2ab-e9ec-4e42-9f0e-bfbc83fb8c40",
+      "nfr_id": 12,
+      "batch": 2,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:41:21.165Z"
+    },
+    {
+      "uuid": "01a2d2ab-e9ec-4e42-9f0e-bfbc83fb8c40",
+      "nfr_id": 13,
+      "batch": 2,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:41:21.165Z"
+    },
+    {
+      "uuid": "01a2d2ab-e9ec-4e42-9f0e-bfbc83fb8c40",
+      "nfr_id": 14,
+      "batch": 2,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:41:21.165Z"
+    },
+    {
+      "uuid": "01a2d2ab-e9ec-4e42-9f0e-bfbc83fb8c40",
+      "nfr_id": 15,
+      "batch": 2,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:41:21.165Z"
+    },
+    {
+      "uuid": "01a2d2ab-e9ec-4e42-9f0e-bfbc83fb8c40",
+      "nfr_id": 16,
+      "batch": 2,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:41:21.165Z"
+    },
+    {
+      "uuid": "01a2d2ab-e9ec-4e42-9f0e-bfbc83fb8c40",
+      "nfr_id": 17,
+      "batch": 2,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:41:21.165Z"
+    },
+    {
+      "uuid": "01a2d2ab-e9ec-4e42-9f0e-bfbc83fb8c40",
+      "nfr_id": 18,
+      "batch": 2,
+      "q1_agreement": "Partially agree",
+      "q1_own_assessment": "Satisfied",
+      "q2_agreement": "Partially agree",
+      "q2_own_assessment": "asd",
+      "q3_agreement": "Partially agree",
+      "q3_own_assessment": "asd",
+      "timestamp": "2026-01-13T23:41:21.165Z"
+    },
+    {
+      "uuid": "01a2d2ab-e9ec-4e42-9f0e-bfbc83fb8c40",
+      "nfr_id": 19,
+      "batch": 2,
+      "q1_agreement": "Partially agree",
+      "q1_own_assessment": "Satisfied",
+      "q2_agreement": "Partially agree",
+      "q2_own_assessment": "ads",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:41:21.165Z"
+    },
+    {
+      "uuid": "01a2d2ab-e9ec-4e42-9f0e-bfbc83fb8c40",
+      "nfr_id": 20,
+      "batch": 2,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:41:21.165Z"
+    },
+    {
+      "uuid": "01a2d2ab-e9ec-4e42-9f0e-bfbc83fb8c40",
+      "nfr_id": 21,
+      "batch": 3,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:42:10.298Z"
+    },
+    {
+      "uuid": "01a2d2ab-e9ec-4e42-9f0e-bfbc83fb8c40",
+      "nfr_id": 22,
+      "batch": 3,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:42:10.298Z"
+    },
+    {
+      "uuid": "01a2d2ab-e9ec-4e42-9f0e-bfbc83fb8c40",
+      "nfr_id": 23,
+      "batch": 3,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:42:10.298Z"
+    },
+    {
+      "uuid": "01a2d2ab-e9ec-4e42-9f0e-bfbc83fb8c40",
+      "nfr_id": 24,
+      "batch": 3,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:42:10.298Z"
+    },
+    {
+      "uuid": "01a2d2ab-e9ec-4e42-9f0e-bfbc83fb8c40",
+      "nfr_id": 25,
+      "batch": 3,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:42:10.298Z"
+    },
+    {
+      "uuid": "01a2d2ab-e9ec-4e42-9f0e-bfbc83fb8c40",
+      "nfr_id": 26,
+      "batch": 3,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:42:10.299Z"
+    },
+    {
+      "uuid": "01a2d2ab-e9ec-4e42-9f0e-bfbc83fb8c40",
+      "nfr_id": 27,
+      "batch": 3,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:42:10.299Z"
+    },
+    {
+      "uuid": "01a2d2ab-e9ec-4e42-9f0e-bfbc83fb8c40",
+      "nfr_id": 28,
+      "batch": 3,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:42:10.299Z"
+    },
+    {
+      "uuid": "01a2d2ab-e9ec-4e42-9f0e-bfbc83fb8c40",
+      "nfr_id": 29,
+      "batch": 3,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:42:10.299Z"
+    },
+    {
+      "uuid": "01a2d2ab-e9ec-4e42-9f0e-bfbc83fb8c40",
+      "nfr_id": 30,
+      "batch": 3,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:42:10.299Z"
+    }
+  ],
+  "fa61251c-4f45-43a4-a49c-6966e7c35f55": [
+    {
+      "uuid": "fa61251c-4f45-43a4-a49c-6966e7c35f55",
+      "nfr_id": 1,
+      "batch": 1,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:44:53.318Z"
+    },
+    {
+      "uuid": "fa61251c-4f45-43a4-a49c-6966e7c35f55",
+      "nfr_id": 2,
+      "batch": 1,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:44:53.318Z"
+    },
+    {
+      "uuid": "fa61251c-4f45-43a4-a49c-6966e7c35f55",
+      "nfr_id": 3,
+      "batch": 1,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:44:53.318Z"
+    },
+    {
+      "uuid": "fa61251c-4f45-43a4-a49c-6966e7c35f55",
+      "nfr_id": 4,
+      "batch": 1,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:44:53.318Z"
+    },
+    {
+      "uuid": "fa61251c-4f45-43a4-a49c-6966e7c35f55",
+      "nfr_id": 5,
+      "batch": 1,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:44:53.318Z"
+    },
+    {
+      "uuid": "fa61251c-4f45-43a4-a49c-6966e7c35f55",
+      "nfr_id": 6,
+      "batch": 1,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:44:53.318Z"
+    },
+    {
+      "uuid": "fa61251c-4f45-43a4-a49c-6966e7c35f55",
+      "nfr_id": 7,
+      "batch": 1,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:44:53.318Z"
+    },
+    {
+      "uuid": "fa61251c-4f45-43a4-a49c-6966e7c35f55",
+      "nfr_id": 8,
+      "batch": 1,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:44:53.318Z"
+    },
+    {
+      "uuid": "fa61251c-4f45-43a4-a49c-6966e7c35f55",
+      "nfr_id": 9,
+      "batch": 1,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:44:53.318Z"
+    },
+    {
+      "uuid": "fa61251c-4f45-43a4-a49c-6966e7c35f55",
+      "nfr_id": 10,
+      "batch": 1,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:44:53.318Z"
+    },
+    {
+      "uuid": "fa61251c-4f45-43a4-a49c-6966e7c35f55",
+      "nfr_id": 11,
+      "batch": 2,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:45:36.151Z"
+    },
+    {
+      "uuid": "fa61251c-4f45-43a4-a49c-6966e7c35f55",
+      "nfr_id": 12,
+      "batch": 2,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:45:36.151Z"
+    },
+    {
+      "uuid": "fa61251c-4f45-43a4-a49c-6966e7c35f55",
+      "nfr_id": 13,
+      "batch": 2,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:45:36.151Z"
+    },
+    {
+      "uuid": "fa61251c-4f45-43a4-a49c-6966e7c35f55",
+      "nfr_id": 14,
+      "batch": 2,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:45:36.151Z"
+    },
+    {
+      "uuid": "fa61251c-4f45-43a4-a49c-6966e7c35f55",
+      "nfr_id": 15,
+      "batch": 2,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:45:36.151Z"
+    },
+    {
+      "uuid": "fa61251c-4f45-43a4-a49c-6966e7c35f55",
+      "nfr_id": 16,
+      "batch": 2,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:45:36.151Z"
+    },
+    {
+      "uuid": "fa61251c-4f45-43a4-a49c-6966e7c35f55",
+      "nfr_id": 17,
+      "batch": 2,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:45:36.151Z"
+    },
+    {
+      "uuid": "fa61251c-4f45-43a4-a49c-6966e7c35f55",
+      "nfr_id": 18,
+      "batch": 2,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:45:36.151Z"
+    },
+    {
+      "uuid": "fa61251c-4f45-43a4-a49c-6966e7c35f55",
+      "nfr_id": 19,
+      "batch": 2,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:45:36.151Z"
+    },
+    {
+      "uuid": "fa61251c-4f45-43a4-a49c-6966e7c35f55",
+      "nfr_id": 20,
+      "batch": 2,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:45:36.151Z"
+    },
+    {
+      "uuid": "fa61251c-4f45-43a4-a49c-6966e7c35f55",
+      "nfr_id": 21,
+      "batch": 3,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:46:19.234Z"
+    },
+    {
+      "uuid": "fa61251c-4f45-43a4-a49c-6966e7c35f55",
+      "nfr_id": 22,
+      "batch": 3,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:46:19.234Z"
+    },
+    {
+      "uuid": "fa61251c-4f45-43a4-a49c-6966e7c35f55",
+      "nfr_id": 23,
+      "batch": 3,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:46:19.235Z"
+    },
+    {
+      "uuid": "fa61251c-4f45-43a4-a49c-6966e7c35f55",
+      "nfr_id": 24,
+      "batch": 3,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:46:19.235Z"
+    },
+    {
+      "uuid": "fa61251c-4f45-43a4-a49c-6966e7c35f55",
+      "nfr_id": 25,
+      "batch": 3,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:46:19.235Z"
+    },
+    {
+      "uuid": "fa61251c-4f45-43a4-a49c-6966e7c35f55",
+      "nfr_id": 26,
+      "batch": 3,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:46:19.235Z"
+    },
+    {
+      "uuid": "fa61251c-4f45-43a4-a49c-6966e7c35f55",
+      "nfr_id": 27,
+      "batch": 3,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:46:19.235Z"
+    },
+    {
+      "uuid": "fa61251c-4f45-43a4-a49c-6966e7c35f55",
+      "nfr_id": 28,
+      "batch": 3,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:46:19.235Z"
+    },
+    {
+      "uuid": "fa61251c-4f45-43a4-a49c-6966e7c35f55",
+      "nfr_id": 29,
+      "batch": 3,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:46:19.235Z"
+    },
+    {
+      "uuid": "fa61251c-4f45-43a4-a49c-6966e7c35f55",
+      "nfr_id": 30,
+      "batch": 3,
+      "q1_agreement": "Agree",
+      "q1_own_assessment": "",
+      "q2_agreement": "Agree",
+      "q2_own_assessment": "",
+      "q3_agreement": "Agree",
+      "q3_own_assessment": "",
+      "timestamp": "2026-01-13T23:46:19.235Z"
     }
   ]
 }

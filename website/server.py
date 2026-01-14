@@ -22,6 +22,7 @@ NFR_RESPONSES_FILE = 'responses/nfr_responses.json'
 SATISFACTION_FILE = 'responses/satisfaction_survey.json'
 PRIZE_FILE = 'responses/prize.json'
 DEMOGRAPHICS_FILE = 'responses/demographics.json'
+BATCH_ASSIGNMENTS_FILE = 'responses/user_batch_assignments.json'
 
 def load_json_file(filepath):
     """Load JSON file, return empty dict if file doesn't exist."""
@@ -35,6 +36,68 @@ def save_json_file(filepath, data):
     os.makedirs(os.path.dirname(filepath) if os.path.dirname(filepath) else '.', exist_ok=True)
     with open(filepath, 'w') as f:
         json.dump(data, f, indent=2)
+
+def assign_batches_to_user(uuid):
+    """Assign 3 batches to a new user, ensuring each batch has exactly 2 users.
+    Assigns first available batches (not randomly)."""
+    assignments = load_json_file(BATCH_ASSIGNMENTS_FILE)
+    
+    # If user already has assignments, return them
+    if uuid in assignments:
+        return assignments[uuid]
+    
+    # Load total number of batches
+    with open(NFR_FILE, 'r') as f:
+        all_batches = json.load(f)
+    total_batches = len(all_batches)
+    
+    # Count how many users are assigned to each batch
+    batch_user_count = {}
+    for user_uuid, user_batches in assignments.items():
+        for batch_num in user_batches:
+            batch_user_count[batch_num] = batch_user_count.get(batch_num, 0) + 1
+    
+    # Find first 3 batches that have less than 2 users (in order)
+    assigned = []
+    for batch_num in range(1, total_batches + 1):
+        if batch_user_count.get(batch_num, 0) < 2:
+            assigned.append(batch_num)
+            if len(assigned) == 3:
+                break
+    
+    # If we don't have enough available batches, assign remaining from the beginning
+    if len(assigned) < 3:
+        for batch_num in range(1, total_batches + 1):
+            if batch_num not in assigned:
+                assigned.append(batch_num)
+                if len(assigned) == 3:
+                    break
+    
+    # Sort assigned batches
+    assigned = sorted(assigned[:3])
+    
+    # Save assignments
+    assignments[uuid] = assigned
+    save_json_file(BATCH_ASSIGNMENTS_FILE, assignments)
+    
+    return assigned
+
+def get_user_assigned_batch(uuid, requested_batch_num):
+    """Get the actual batch number for a user's requested batch (1, 2, or 3)."""
+    assignments = load_json_file(BATCH_ASSIGNMENTS_FILE)
+    
+    if uuid not in assignments:
+        # No assignments yet, assign them
+        assignments[uuid] = assign_batches_to_user(uuid)
+    
+    user_batches = assignments[uuid]
+    
+    # requested_batch_num is 1-indexed (1, 2, or 3)
+    if 1 <= requested_batch_num <= len(user_batches):
+        return user_batches[requested_batch_num - 1]
+    else:
+        # Invalid batch number, return first assigned batch
+        return user_batches[0] if user_batches else 1
 
 def get_chatbot(uuid=None):
     """Get or create chatbot instance. If UUID provided, restore that chatbot."""
@@ -70,7 +133,12 @@ def index():
     with open(consent_file, 'r') as f:
         consent_text = f.read()
     
-    consent_html = markdown.markdown(consent_text)
+    # Convert markdown to HTML with extensions for proper list rendering
+    try:
+        consent_html = markdown.markdown(consent_text, extensions=['extra', 'nl2br'])
+    except:
+        # Fallback if extensions not available
+        consent_html = markdown.markdown(consent_text)
     return render_template('consent.html', consent_html=consent_html, prolific_id=prolific)
 
 @app.route('/consent')
@@ -82,7 +150,12 @@ def consent():
     with open(consent_file, 'r') as f:
         consent_text = f.read()
     
-    consent_html = markdown.markdown(consent_text)
+    # Convert markdown to HTML with extensions for proper list rendering
+    try:
+        consent_html = markdown.markdown(consent_text, extensions=['extra', 'nl2br'])
+    except:
+        # Fallback if extensions not available
+        consent_html = markdown.markdown(consent_text)
     return render_template('consent.html', consent_html=consent_html, prolific_id=prolific)
 
 @app.route('/tutorial')
@@ -115,15 +188,35 @@ def get_nfr_batch_number():
 # API Routes
 @app.route('/api/get_requirements', methods=['GET'])
 def get_requirements():
-    """Get NFRs for a specific batch (batches are already in the JSON)."""
-    batch = int(request.args.get('batch', 1))
+    """Get NFRs for a specific batch. Maps user's requested batch (1-3) to their assigned batch."""
+    requested_batch = int(request.args.get('batch', 1))
+    uuid = request.args.get('uuid')
+    
+    # Get user's assigned batches
+    assignments = load_json_file(BATCH_ASSIGNMENTS_FILE)
+    if uuid:
+        if uuid not in assignments:
+            # Assign batches to new user
+            assign_batches_to_user(uuid)
+            assignments = load_json_file(BATCH_ASSIGNMENTS_FILE)
+        
+        user_batches = assignments.get(uuid, [])
+        
+        # Map requested batch (1-3) to actual assigned batch
+        if 1 <= requested_batch <= len(user_batches):
+            actual_batch = user_batches[requested_batch - 1]
+        else:
+            actual_batch = user_batches[0] if user_batches else 1
+    else:
+        # No UUID provided, use requested batch directly
+        actual_batch = requested_batch
     
     with open(NFR_FILE, 'r') as f:
         all_batches = json.load(f)
     
     # NFR.json is now an array of batches (each batch is an array of NFRs)
-    if batch <= len(all_batches):
-        batch_nfrs = all_batches[batch - 1]
+    if actual_batch <= len(all_batches):
+        batch_nfrs = all_batches[actual_batch - 1]
     else:
         batch_nfrs = []
     
@@ -132,9 +225,11 @@ def get_requirements():
     
     return jsonify({
         'nfrs': batch_nfrs,
-        'batch': batch,
-        'total_batches': len(all_batches),
-        'total_nfrs': total_nfrs
+        'batch': requested_batch,  # Return requested batch (1-3) for display
+        'actual_batch': actual_batch,  # Return actual batch number
+        'total_batches': len(user_batches) if uuid and uuid in assignments else len(all_batches),
+        'total_nfrs': total_nfrs,
+        'assigned_batches': user_batches if uuid and uuid in assignments else []
     })
 
 @app.route('/api/submit_nfr_feedback', methods=['POST'])
@@ -210,7 +305,18 @@ def submit_batch_feedback():
             return jsonify({'status': 'error', 'message': 'UUID is required'}), 400
         
         session_id = get_session_id(uuid)
-        batch = data_list[0].get('batch')
+        requested_batch = data_list[0].get('batch')  # This is 1, 2, or 3
+        
+        # Get actual batch number from assignments
+        assignments = load_json_file(BATCH_ASSIGNMENTS_FILE)
+        if uuid in assignments:
+            user_batches = assignments[uuid]
+            if 1 <= requested_batch <= len(user_batches):
+                actual_batch = user_batches[requested_batch - 1]
+            else:
+                actual_batch = user_batches[0] if user_batches else requested_batch
+        else:
+            actual_batch = requested_batch
         
         # Load existing responses
         responses = load_json_file(NFR_RESPONSES_FILE)
@@ -218,11 +324,15 @@ def submit_batch_feedback():
         if session_id not in responses:
             responses[session_id] = []
         
-        # Remove all existing entries for this batch
+        # Remove all existing entries for this actual batch
         responses[session_id] = [
             r for r in responses[session_id] 
-            if r.get('batch') != batch
+            if r.get('batch') != actual_batch
         ]
+        
+        # Update all entries to use actual batch number
+        for entry in data_list:
+            entry['batch'] = actual_batch
         
         # Add all new entries
         responses[session_id].extend(data_list)
@@ -313,7 +423,7 @@ def submit_demographics():
 
 @app.route('/api/get_or_create_uuid', methods=['GET', 'POST'])
 def get_or_create_uuid():
-    """Get existing UUID from request or create new one."""
+    """Get existing UUID from request or create new one. Assigns batches when creating new UUID."""
     if request.method == 'POST':
         data = request.json
         uuid = data.get('uuid')
@@ -327,6 +437,10 @@ def get_or_create_uuid():
     # Create new UUID (GET request - only called from consent page)
     chatbot = get_chatbot()
     new_uuid = chatbot.get_uuid()
+    
+    # Assign batches to the new user
+    assign_batches_to_user(new_uuid)
+    
     return jsonify({'uuid': new_uuid})
 
 @app.route('/api/load_chat_history', methods=['POST'])
