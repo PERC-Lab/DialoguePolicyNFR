@@ -5,7 +5,8 @@ const PROGRESS_STEPS = {
     TUTORIAL: 'tutorial',
     EVALUATION: 'evaluation',
     SURVEY: 'survey',
-    PRIZE: 'prize'
+    PRIZE: 'prize',
+    COMPLETE: 'complete'
 };
 
 function getCurrentProgress() {
@@ -98,6 +99,15 @@ function redirectToCorrectPage() {
                 if (currentPath !== '/prize') {
                     const prolificId = urlParams.get('id');
                     window.location.href = `/prize${prolificId ? '?id=' + prolificId : ''}`;
+                    return true;
+                }
+                break;
+                
+            case PROGRESS_STEPS.COMPLETE:
+                // Always redirect to completion page if study is complete
+                if (currentPath !== '/complete') {
+                    const prolificId = urlParams.get('id');
+                    window.location.href = `/complete${prolificId ? '?id=' + prolificId : ''}`;
                     return true;
                 }
                 break;

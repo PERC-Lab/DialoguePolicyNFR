@@ -183,6 +183,12 @@ def prize():
     prolific = request.args.get('id') == 'prolific'
     return render_template('prize.html', prolific_id=prolific)
 
+@app.route('/complete')
+def complete():
+    """Study completion page."""
+    prolific = request.args.get('id') == 'prolific'
+    return render_template('completion.html', prolific_id=prolific)
+
 
 def get_nfr_batch_number():
     return 1

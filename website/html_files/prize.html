@@ -117,8 +117,10 @@ document.getElementById('prizeForm').addEventListener('submit', (e) => {
         body: JSON.stringify(prizeData)
     })
     .then(() => {
-        document.getElementById('prizeForm').style.display = 'none';
-        document.getElementById('successMessage').style.display = 'block';
+        // Set progress to complete and redirect to completion page
+        setCurrentProgress(PROGRESS_STEPS.COMPLETE);
+        const prolificId = urlParams.get('id');
+        window.location.href = `/complete${prolificId ? '?id=' + prolificId : ''}`;
     })
     .catch(error => {
         alert('An error occurred. Please try again.');
