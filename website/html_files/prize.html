@@ -56,6 +56,12 @@
         <h1 style="margin-bottom: 10px;">Thank You!</h1>
         <p style="margin-bottom: 30px; color: #666;">Your participation in this study is greatly appreciated.</p>
         
+        {% if prolific_id %}
+            <p style="margin-bottom: 20px; color: #666;">Please provide your Prolific ID to receive your reward.</p>
+        {% else %}
+            <p style="margin-bottom: 20px; color: #666;">Please provide your email address. We will send your Amazon gift card prize to this email.</p>
+        {% endif %}
+        
         <form id="prizeForm">
             <div class="form-group">
                 <label for="identifier">
@@ -80,7 +86,11 @@
         </form>
         
         <div class="success-message" id="successMessage">
-            Thank you! Your information has been recorded. You may now close this page.
+            {% if prolific_id %}
+                Thank you! Your Prolific ID has been recorded. You may now close this page.
+            {% else %}
+                Thank you! Your email has been recorded. We will send your Amazon gift card to this email address. You may now close this page.
+            {% endif %}
         </div>
     </div>
 </div>
