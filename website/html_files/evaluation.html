@@ -171,11 +171,20 @@
         display: flex;
         gap: 10px;
     }
-    .chatbot-input input {
+    .chatbot-input input,
+    .chatbot-input textarea {
         flex: 1;
         padding: 10px;
         border: 1px solid #ddd;
         border-radius: 4px;
+        font-family: inherit;
+        font-size: 14px;
+        resize: vertical;
+        min-height: 40px;
+        max-height: 150px;
+    }
+    .chatbot-input textarea {
+        line-height: 1.5;
     }
     .chatbot-input button {
         padding: 10px 20px;
@@ -343,7 +352,7 @@
         <div class="chatbot-header">Chatbot Assistant</div>
         <div class="chatbot-messages" id="chatMessages"></div>
         <div class="chatbot-input">
-            <input type="text" id="chatInput" placeholder="Type your message..." onkeypress="if(event.key==='Enter') sendMessage()">
+            <textarea id="chatInput" placeholder="Type your message... (Press Enter to send, Shift+Enter for new line)" rows="2" onkeydown="if(event.key==='Enter' && !event.shiftKey) { event.preventDefault(); sendMessage(); }"></textarea>
             <button class="btn" onclick="sendMessage()">Send</button>
         </div>
     </div>
