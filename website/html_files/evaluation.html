@@ -152,6 +152,7 @@
         max-width: 80%;
         white-space: pre-wrap;
         word-wrap: break-word;
+        font-size: 13px;
     }
     .message.user .message-content {
         background: #007bff;
@@ -162,6 +163,82 @@
         background: white;
         color: #333;
         border: 1px solid #ddd;
+    }
+    /* Markdown styling for bot messages */
+    .message.bot .message-content h1,
+    .message.bot .message-content h2,
+    .message.bot .message-content h3,
+    .message.bot .message-content h4 {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+        font-weight: 600;
+    }
+    .message.bot .message-content h1 { font-size: 1.5em; }
+    .message.bot .message-content h2 { font-size: 1.3em; }
+    .message.bot .message-content h3 { font-size: 1.1em; }
+    .message.bot .message-content p {
+        margin: 0.5em 0;
+    }
+    .message.bot .message-content ul,
+    .message.bot .message-content ol {
+        margin: 0.5em 0;
+        padding-left: 1.5em;
+    }
+    .message.bot .message-content li {
+        margin: 0.25em 0;
+    }
+    .message.bot .message-content code {
+        background-color: #f4f4f4;
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-family: 'Courier New', monospace;
+        font-size: 0.9em;
+    }
+    .message.bot .message-content pre {
+        background-color: #f4f4f4;
+        padding: 10px;
+        border-radius: 4px;
+        overflow-x: auto;
+        margin: 0.5em 0;
+    }
+    .message.bot .message-content pre code {
+        background-color: transparent;
+        padding: 0;
+    }
+    .message.bot .message-content blockquote {
+        border-left: 3px solid #ddd;
+        padding-left: 1em;
+        margin: 0.5em 0;
+        color: #666;
+        font-style: italic;
+    }
+    .message.bot .message-content strong {
+        font-weight: 600;
+    }
+    .message.bot .message-content em {
+        font-style: italic;
+    }
+    .message.bot .message-content a {
+        color: #007bff;
+        text-decoration: none;
+    }
+    .message.bot .message-content a:hover {
+        text-decoration: underline;
+    }
+    .message.bot .message-content table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 0.5em 0;
+    }
+    .message.bot .message-content table th,
+    .message.bot .message-content table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+    .message.bot .message-content table th {
+        background-color: #f4f4f4;
+        font-weight: 600;
     }
     .message-time {
         font-size: 11px;
@@ -532,6 +609,8 @@
     </div>
 </div>
 
+<!-- Marked.js for markdown rendering -->
+<script src="https://cdn.jsdelivr.net/npm/marked@12.0.0/marked.min.js"></script>
 <script>
 let currentBatch = {{ batch }};
 let nfrs = [];
@@ -973,16 +1052,53 @@ function addMessage(type, content) {
     const messageDiv = document.createElement('div');
     messageDiv.className = `message ${type}`;
     
-    // Escape HTML to prevent XSS, but preserve line breaks
-    const escapedContent = content
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
+    let renderedContent;
+    if (type === 'bot') {
+        // Render markdown for bot messages
+        if (typeof marked !== 'undefined' && typeof marked.parse === 'function') {
+            try {
+                // Configure marked for safe rendering
+                const options = {
+                    breaks: true, // Convert line breaks to <br>
+                    gfm: true, // GitHub Flavored Markdown
+                    smartLists: true,
+                    smartypants: true
+                };
+                renderedContent = marked.parse(content, options);
+            } catch (e) {
+                console.error('Error rendering markdown:', e);
+                // Fallback: escape HTML if markdown rendering fails
+                renderedContent = content
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#039;')
+                    .replace(/\n/g, '<br>');
+            }
+        } else {
+            // Fallback: escape HTML if marked.js not loaded
+            renderedContent = content
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;')
+                .replace(/\n/g, '<br>');
+        }
+    } else {
+        // User messages: escape HTML to prevent XSS, but preserve line breaks
+        renderedContent = content
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;')
+            .replace(/\n/g, '<br>');
+    }
     
     messageDiv.innerHTML = `
-        <div class="message-content">${escapedContent}</div>
+        <div class="message-content">${renderedContent}</div>
         <div class="message-time">${new Date().toLocaleTimeString()}</div>
     `;
     messagesDiv.appendChild(messageDiv);
