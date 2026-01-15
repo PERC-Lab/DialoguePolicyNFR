@@ -676,7 +676,7 @@ function displayNFRs() {
 function copyAllNFRs() {
     // Format all NFRs as text
     const nfrText = nfrs.map(nfr => {
-        return `NFR ${nfr.id}: ${nfr.title}\n${nfr.description}`;
+        return `NFR ${nfr.id}: ${nfr.description}`;
     }).join('\n\n');
     
     // Copy to clipboard

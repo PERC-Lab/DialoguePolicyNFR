@@ -1,5 +1,6 @@
 import subprocess
 import os
+import shlex
 from datetime import datetime
 from typing import Dict, List, Optional
 
@@ -45,10 +46,14 @@ class Chatbot:
         # Use a dummy prompt if none provided
         prompt = initial_prompt if initial_prompt else "."
         
+        # Properly escape the prompt for shell command
+        escaped_prompt = shlex.quote(prompt)
+        escaped_path = shlex.quote(self.project_path)
+        
         # Create a new session by running a command and extracting the session ID
         shell_command = (
-            f'cd "{self.project_path}" && '
-            f'copilot -p "{prompt}" --model gpt-5.1-codex-max -s --allow-all-tools 2>/dev/null >/dev/null && '
+            f'cd {escaped_path} && '
+            f'copilot -p {escaped_prompt} --model gpt-5.1-codex-max -s --allow-all-tools 2>/dev/null >/dev/null && '
             f'ls -t ~/.copilot/logs/ 2>/dev/null | head -n 1 | sed "s/\\.log$//"'
         )
         
@@ -99,9 +104,15 @@ class Chatbot:
         if not self.uuid:
             raise Exception("UUID not initialized. Cannot ask copilot.")
         
+        # Properly escape the message for shell command
+        # Use shlex.quote to safely escape special characters
+        escaped_message = shlex.quote(message)
+        escaped_uuid = shlex.quote(self.uuid)
+        escaped_path = shlex.quote(self.project_path)
+        
         shell_command = (
-            f'cd "{self.project_path}" && '
-            f'copilot --model gpt-5.1-codex-max --resume "{self.uuid}" -p "{message}" -s --allow-all-tools'
+            f'cd {escaped_path} && '
+            f'copilot --model gpt-5.1-codex-max --resume {escaped_uuid} -p {escaped_message} -s --allow-all-tools'
         )
         
         try:
