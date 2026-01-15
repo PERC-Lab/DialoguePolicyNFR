@@ -150,6 +150,8 @@
         padding: 10px 15px;
         border-radius: 18px;
         max-width: 80%;
+        white-space: pre-wrap;
+        word-wrap: break-word;
     }
     .message.user .message-content {
         background: #007bff;
@@ -913,8 +915,17 @@ function addMessage(type, content) {
     const messagesDiv = document.getElementById('chatMessages');
     const messageDiv = document.createElement('div');
     messageDiv.className = `message ${type}`;
+    
+    // Escape HTML to prevent XSS, but preserve line breaks
+    const escapedContent = content
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    
     messageDiv.innerHTML = `
-        <div class="message-content">${content}</div>
+        <div class="message-content">${escapedContent}</div>
         <div class="message-time">${new Date().toLocaleTimeString()}</div>
     `;
     messagesDiv.appendChild(messageDiv);
