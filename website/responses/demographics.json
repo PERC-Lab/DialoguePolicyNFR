@@ -30,5 +30,13 @@
     "experience": "1",
     "education": "high-school",
     "timestamp": "2026-01-14T14:54:28.566518"
+  },
+  "97459a5a-a963-483d-bbe5-693422e99ffa": {
+    "uuid": "97459a5a-a963-483d-bbe5-693422e99ffa",
+    "age": "1",
+    "gender": "male",
+    "experience": "2",
+    "education": "bachelor",
+    "timestamp": "2026-01-14T22:22:07.591889"
   }
 }

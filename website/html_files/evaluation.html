@@ -203,6 +203,107 @@
     .tutorial-btn:hover {
         background: rgba(255, 255, 255, 0.3);
     }
+    .code-structure-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 10000;
+        display: none;
+        align-items: center;
+        justify-content: center;
+    }
+    .code-structure-modal.active {
+        display: flex;
+    }
+    .code-structure-modal-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 10001;
+    }
+    .code-structure-modal-content {
+        position: relative;
+        background: white;
+        border-radius: 8px;
+        max-width: 1000px;
+        max-height: 90vh;
+        width: 90%;
+        z-index: 10002;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+    .code-structure-modal-header {
+        padding: 20px;
+        border-bottom: 1px solid #ddd;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-shrink: 0;
+    }
+    .code-structure-modal-header h2 {
+        margin: 0;
+        color: #333;
+    }
+    .code-structure-modal-close {
+        background: none;
+        border: none;
+        font-size: 32px;
+        color: #666;
+        cursor: pointer;
+        padding: 0;
+        width: 32px;
+        height: 32px;
+        line-height: 32px;
+        text-align: center;
+    }
+    .code-structure-modal-close:hover {
+        color: #333;
+    }
+    .code-structure-modal-body {
+        padding: 30px;
+        overflow-y: auto;
+        flex: 1;
+    }
+    .code-structure-section {
+        margin-bottom: 30px;
+    }
+    .code-structure-section h3 {
+        margin-top: 0;
+        margin-bottom: 15px;
+        color: #007bff;
+        font-size: 20px;
+    }
+    .code-structure-section p {
+        margin-bottom: 15px;
+        line-height: 1.8;
+    }
+    .code-structure-section ol {
+        margin-left: 20px;
+        line-height: 2;
+        margin-bottom: 30px;
+    }
+    .code-structure-section pre {
+        background: #f5f5f5;
+        padding: 20px;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-size: 12px;
+        line-height: 1.4;
+        margin-bottom: 30px;
+    }
+    .code-structure-modal-footer {
+        padding: 20px;
+        border-top: 1px solid #ddd;
+        display: flex;
+        justify-content: center;
+        flex-shrink: 0;
+    }
 </style>
 {% endblock %}
 
@@ -212,7 +313,10 @@
     <div class="nfr-panel">
         <div class="panel-header">
             NFRs Display
-            <button class="tutorial-btn" onclick="openTutorialModal()" title="View Tutorial">📖 Tutorial</button>
+            <div style="display: flex; gap: 8px;">
+                <button class="tutorial-btn" onclick="openCodeStructureModal()" title="View Code Structure">📋 Code Structure</button>
+                <button class="tutorial-btn" onclick="openTutorialModal()" title="View Tutorial">📖 Tutorial</button>
+            </div>
         </div>
         <div class="panel-content">
             <div class="batch-info">
@@ -241,6 +345,171 @@
         <div class="chatbot-input">
             <input type="text" id="chatInput" placeholder="Type your message..." onkeypress="if(event.key==='Enter') sendMessage()">
             <button class="btn" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+</div>
+
+<!-- Code Structure Modal -->
+<div id="codeStructureModal" class="code-structure-modal">
+    <div class="code-structure-modal-overlay" onclick="closeCodeStructureModal()"></div>
+    <div class="code-structure-modal-content">
+        <div class="code-structure-modal-header">
+            <h2>iTrust Code Structure</h2>
+            <button class="code-structure-modal-close" onclick="closeCodeStructureModal()">&times;</button>
+        </div>
+        <div class="code-structure-modal-body">
+            <div class="code-structure-section">
+                <p style="margin-bottom: 20px; line-height: 1.8;">
+                    iTrust is an educational Electronic Health Record (EHR) system developed at NC State University for teaching software engineering. It's designed to handle patient medical records while maintaining HIPAA privacy standards. The system has been continuously developed since 2005, with undergraduate students adding features each semester.
+                </p>
+                
+                <h3>Who Uses iTrust?</h3>
+                <p style="margin-bottom: 15px;">The system supports 8 different roles:</p>
+                <ol style="margin-left: 20px; line-height: 2; margin-bottom: 30px;">
+                    <li><strong>Patient</strong> - Views own medical records, office visits, takes satisfaction surveys</li>
+                    <li><strong>LHCP (Licensed Health Care Professional)</strong> - Documents office visits, prescribes medications</li>
+                    <li><strong>DLHCP (Designated LHCP)</strong> - Trusted provider with full record access</li>
+                    <li><strong>Administrator</strong> - Manages user accounts</li>
+                    <li><strong>Emergency Responder</strong> - Limited emergency access</li>
+                    <li><strong>UAP (Unlicensed Authorized Personnel)</strong> - Data entry staff</li>
+                    <li><strong>Personal Representative</strong> - Legal guardian/proxy</li>
+                    <li><strong>Public Health Agent</strong> - Views aggregated epidemiological data</li>
+                </ol>
+                
+                <p style="margin-bottom: 20px; line-height: 1.8;">
+                    The system follows a <strong>strict Model-View-Controller (MVC) pattern</strong> with clear separation of concerns across three layers.
+                </p>
+                
+                <h3>Architectural Pattern: Model-View-Controller (MVC)</h3>
+                <pre>┌─────────────────────────────────────────────────────────────┐
+│                         CLIENT BROWSER                        │
+└────────────────────────────┬────────────────────────────────┘
+                             │ HTTP Request
+                             ▼
+┌─────────────────────────────────────────────────────────────┐
+│                    VIEW LAYER (JSPs)                         │
+│  Location: WebRoot/auth/*.jsp                                │
+│  - User interface (HTML, JavaScript)                         │
+│  - Form submission                                           │
+│  - Display data                                              │
+│  - 156 JSP files                                             │
+└────────────────────────────┬────────────────────────────────┘
+                             │
+                             │ Calls Action classes
+                             ▼
+┌─────────────────────────────────────────────────────────────┐
+│                 CONTROLLER LAYER (Actions)                   │
+│  Location: src/main/edu/ncsu/csc/itrust/action/*.java       │
+│  - Business logic coordination                               │
+│  - Input validation (via Validators)                         │
+│  - Transaction logging (HIPAA compliance)                   │
+│  - Error handling                                            │
+│  - 63+ Action classes                                        │
+└────────────────────────────┬────────────────────────────────┘
+                             │
+                             │ Uses DAOs
+                             ▼
+┌─────────────────────────────────────────────────────────────┐
+│                   MODEL LAYER                                │
+│  ┌──────────────────────────────────────────────────────┐   │
+│  │ BEANS (Data Containers)                              │   │
+│  │ Location: model/old/beans/*.java                     │   │
+│  │ - PatientBean, OfficeVisitBean, etc.                 │   │
+│  │ - Simple getters/setters                             │   │
+│  │ - 31+ Bean classes                                   │   │
+│  └──────────────────────────────────────────────────────┘   │
+│  ┌──────────────────────────────────────────────────────┐   │
+│  │ DAOs (Database Access Objects)                       │   │
+│  │ Location: model/old/dao/mysql/*.java                │   │
+│  │ - PatientDAO, OfficeVisitDAO, etc.                    │   │
+│  │ - SQL queries (PreparedStatements)                    │   │
+│  │ - 24+ DAO classes                                     │   │
+│  └──────────────────────────────────────────────────────┘   │
+│  ┌──────────────────────────────────────────────────────┐   │
+│  │ DATABASE (MySQL)                                      │   │
+│  │ - No foreign keys (handled in application code)      │   │
+│  │ - Connection pooling via DAOFactory                  │   │
+│  └──────────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────────┘</pre>
+                
+                <h3>Directory Structure</h3>
+                <pre>iTrust/
+├── WebRoot/                          # Web application root (deployed as WAR)
+│   ├── auth/                         # Protected pages (role-based)
+│   │   ├── hcp/                     # Healthcare Provider only
+│   │   ├── hcp-uap/                 # HCP and UAP shared
+│   │   ├── patient/                 # Patient only
+│   │   ├── admin/                   # Administrator only
+│   │   ├── er/                      # Emergency Responder only
+│   │   ├── pha/                     # Public Health Agent only
+│   │   └── staff/                   # All staff (HCP, UAP, Admin, LT)
+│   ├── errors/                      # Error pages (403, 404, 503)
+│   ├── util/                        # Utility JSPs
+│   ├── css/                         # Stylesheets
+│   ├── js/                          # JavaScript files
+│   ├── image/                       # Images
+│   ├── login.jsp                    # Login page
+│   ├── global.jsp                   # Global initialization (DAO, session)
+│   ├── header.jsp                   # Common header
+│   ├── footer.jsp                   # Common footer
+│   └── WEB-INF/
+│       ├── web.xml                  # Servlet configuration, security constraints
+│       ├── tags.tld                 # Custom tag library
+│       └── lib/                     # JAR dependencies
+│
+├── src/main/
+│   └── edu/ncsu/csc/itrust/
+│       ├── action/                  # CONTROLLER LAYER
+│       │   ├── AddPatientAction.java
+│       │   ├── EditPatientAction.java
+│       │   ├── ViewMyRecordsAction.java
+│       │   └── ... (63+ action classes)
+│       │
+│       ├── model/                   # MODEL LAYER
+│       │   ├── old/
+│       │   │   ├── beans/           # Data containers
+│       │   │   │   ├── PatientBean.java
+│       │   │   │   ├── OfficeVisitBean.java
+│       │   │   │   └── ... (31+ bean classes)
+│       │   │   │
+│       │   │   ├── dao/            # Database access
+│       │   │   │   ├── DAOFactory.java      # Singleton factory
+│       │   │   │   └── mysql/
+│       │   │   │       ├── PatientDAO.java
+│       │   │   │       ├── OfficeVisitDAO.java
+│       │   │   │       └── ... (24+ DAO classes)
+│       │   │   │
+│       │   │   └── validate/       # Input validation
+│       │   │       ├── AddPatientValidator.java
+│       │   │       └── ... (validator classes)
+│       │   │
+│       │   └── [newer models]      # Some newer features use different structure
+│       │
+│       ├── logger/                  # Transaction logging (HIPAA)
+│       │   └── TransactionLogger.java
+│       │
+│       ├── server/                 # Servlets
+│       │   ├── PatientSearchServlet.java
+│       │   └── ...
+│       │
+│       └── exception/              # Custom exceptions
+│           ├── FormValidationException.java
+│           └── ITrustException.java
+│
+├── src/test/java/                  # Test code
+│   └── edu/ncsu/csc/itrust/
+│       ├── unit/                   # Unit tests (JUnit)
+│       └── selenium/               # Integration tests
+│
+├── sql/                            # Database scripts
+│   ├── createTables.sql            # Schema definition
+│   └── data/                       # Test data
+│
+└── pom.xml                         # Maven configuration</pre>
+            </div>
+        </div>
+        <div class="code-structure-modal-footer">
+            <button class="btn" onclick="closeCodeStructureModal()">Close</button>
         </div>
     </div>
 </div>
@@ -677,5 +946,28 @@ function saveNfrProgress() {
     localStorage.setItem('evaluation_batch', currentBatch.toString());
     localStorage.setItem('submitted_nfrs', JSON.stringify(Array.from(submittedNfrs)));
 }
+
+function openCodeStructureModal() {
+    const modal = document.getElementById('codeStructureModal');
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    }
+}
+
+function closeCodeStructureModal() {
+    const modal = document.getElementById('codeStructureModal');
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = ''; // Restore scrolling
+    }
+}
+
+// Close modal on Escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeCodeStructureModal();
+    }
+});
 </script>
 {% endblock %}
