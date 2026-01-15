@@ -1,0 +1,875 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block extra_css %}
+<style>
+    .admin-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    
+    .admin-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 30px;
+        border-radius: 8px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .admin-header h1 {
+        margin: 0;
+        font-size: 2.5em;
+    }
+    
+    .admin-header-content {
+        flex: 1;
+    }
+    
+    .admin-header-actions {
+        display: flex;
+        gap: 10px;
+    }
+    
+    .btn-logout {
+        background-color: rgba(255, 255, 255, 0.2);
+        color: white;
+        padding: 10px 20px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        transition: background-color 0.3s;
+    }
+    
+    .btn-logout:hover {
+        background-color: rgba(255, 255, 255, 0.3);
+    }
+    
+    .btn-clear-all {
+        background-color: #dc3545;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        transition: background-color 0.3s;
+    }
+    
+    .btn-clear-all:hover {
+        background-color: #c82333;
+    }
+    
+    .modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .modal-overlay.show {
+        display: flex;
+    }
+    
+    .modal {
+        background: white;
+        padding: 30px;
+        border-radius: 8px;
+        max-width: 500px;
+        width: 90%;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    
+    .modal h3 {
+        margin-top: 0;
+        color: #dc3545;
+        font-size: 1.5em;
+    }
+    
+    .modal p {
+        color: #666;
+        line-height: 1.6;
+        margin: 15px 0;
+    }
+    
+    .modal-actions {
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+        margin-top: 25px;
+    }
+    
+    .btn-modal {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+    }
+    
+    .btn-modal-cancel {
+        background-color: #6c757d;
+        color: white;
+    }
+    
+    .btn-modal-cancel:hover {
+        background-color: #5a6268;
+    }
+    
+    .btn-modal-confirm {
+        background-color: #dc3545;
+        color: white;
+    }
+    
+    .btn-modal-confirm:hover {
+        background-color: #c82333;
+    }
+    
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+    
+    .stat-card {
+        background: white;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        text-align: center;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    
+    .stat-card .stat-value {
+        font-size: 3em;
+        font-weight: bold;
+        color: #667eea;
+        margin: 10px 0;
+    }
+    
+    .stat-card .stat-label {
+        font-size: 1.1em;
+        color: #666;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    
+    .section {
+        background: white;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        margin-bottom: 30px;
+    }
+    
+    .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid #f0f0f0;
+    }
+    
+    .section-header h2 {
+        margin: 0;
+        color: #333;
+        font-size: 1.8em;
+    }
+    
+    .section-controls {
+        display: flex;
+        gap: 10px;
+    }
+    
+    .btn-export {
+        background-color: #28a745;
+        color: white;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.3s;
+    }
+    
+    .btn-export:hover {
+        background-color: #218838;
+    }
+    
+    .search-box {
+        padding: 8px 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+        width: 250px;
+    }
+    
+    .data-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+    }
+    
+    .data-table th {
+        background-color: #f8f9fa;
+        padding: 12px;
+        text-align: left;
+        font-weight: 600;
+        color: #333;
+        border-bottom: 2px solid #dee2e6;
+    }
+    
+    .data-table td {
+        padding: 12px;
+        border-bottom: 1px solid #dee2e6;
+    }
+    
+    .data-table tr:hover {
+        background-color: #f8f9fa;
+    }
+    
+    .badge {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: 0.85em;
+        font-weight: 600;
+    }
+    
+    .badge-success {
+        background-color: #d4edda;
+        color: #155724;
+    }
+    
+    .badge-info {
+        background-color: #d1ecf1;
+        color: #0c5460;
+    }
+    
+    .badge-warning {
+        background-color: #fff3cd;
+        color: #856404;
+    }
+    
+    .uuid-cell {
+        font-family: monospace;
+        font-size: 0.9em;
+        color: #666;
+        max-width: 200px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    
+    .expandable-content {
+        max-height: 200px;
+        overflow-y: auto;
+        padding: 10px;
+        background-color: #f8f9fa;
+        border-radius: 4px;
+        font-size: 0.9em;
+    }
+    
+    .loading {
+        text-align: center;
+        padding: 40px;
+        color: #666;
+    }
+    
+    .error {
+        background-color: #f8d7da;
+        color: #721c24;
+        padding: 15px;
+        border-radius: 4px;
+        margin: 15px 0;
+    }
+    
+    .empty-state {
+        text-align: center;
+        padding: 40px;
+        color: #999;
+    }
+    
+    .batch-assignment {
+        display: inline-block;
+        padding: 4px 8px;
+        margin: 2px;
+        background-color: #e7f3ff;
+        color: #0066cc;
+        border-radius: 4px;
+        font-size: 0.9em;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="admin-container">
+    <div class="admin-header">
+        <div class="admin-header-content">
+            <h1>📊 Admin Dashboard</h1>
+            <p>Monitor and manage study data</p>
+        </div>
+        <div class="admin-header-actions">
+            <button type="button" class="btn-clear-all" onclick="showClearDataConfirmation()">Clear All Data</button>
+            <form method="POST" action="{{ url_for('admin_logout') }}" style="margin: 0;">
+                <button type="submit" class="btn-logout">Logout</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Clear Data Confirmation Modal -->
+    <div class="modal-overlay" id="clearDataModal">
+        <div class="modal">
+            <h3>⚠️ Warning: Clear All Data</h3>
+            <p><strong>This action cannot be undone!</strong></p>
+            <p>This will permanently delete all:</p>
+            <ul style="margin: 15px 0; padding-left: 20px; color: #666;">
+                <li>Conversations</li>
+                <li>NFR Responses</li>
+                <li>Satisfaction Surveys</li>
+                <li>Demographics</li>
+                <li>Prize Submissions</li>
+                <li>Batch Assignments</li>
+            </ul>
+            <p style="color: #dc3545; font-weight: bold;">Are you absolutely sure you want to proceed?</p>
+            <div class="modal-actions">
+                <button class="btn-modal btn-modal-cancel" onclick="hideClearDataConfirmation()">Cancel</button>
+                <button class="btn-modal btn-modal-confirm" onclick="confirmClearAllData()">Yes, Clear All Data</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Statistics Overview -->
+    <div class="stats-grid" id="statsGrid">
+        <div class="stat-card">
+            <div class="stat-label">Total Participants</div>
+            <div class="stat-value" id="totalParticipants">-</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Conversations</div>
+            <div class="stat-value" id="totalConversations">-</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">NFR Responses</div>
+            <div class="stat-value" id="totalNfrResponses">-</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Surveys Completed</div>
+            <div class="stat-value" id="totalSurveys">-</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Demographics</div>
+            <div class="stat-value" id="totalDemographics">-</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Prize Submissions</div>
+            <div class="stat-value" id="totalPrizes">-</div>
+        </div>
+    </div>
+    
+    <!-- User Batch Assignments -->
+    <div class="section">
+        <div class="section-header">
+            <h2>User Batch Assignments</h2>
+            <div class="section-controls">
+                <input type="text" class="search-box" id="batchSearch" placeholder="Search UUID...">
+                <button class="btn-export" onclick="exportData('batch_assignments')">Export JSON</button>
+            </div>
+        </div>
+        <div id="batchAssignmentsContent">
+            <div class="loading">Loading...</div>
+        </div>
+    </div>
+    
+    <!-- Conversations -->
+    <div class="section">
+        <div class="section-header">
+            <h2>Conversations</h2>
+            <div class="section-controls">
+                <input type="text" class="search-box" id="conversationSearch" placeholder="Search UUID...">
+                <button class="btn-export" onclick="exportData('conversations')">Export JSON</button>
+            </div>
+        </div>
+        <div id="conversationsContent">
+            <div class="loading">Loading...</div>
+        </div>
+    </div>
+    
+    <!-- NFR Responses -->
+    <div class="section">
+        <div class="section-header">
+            <h2>NFR Responses</h2>
+            <div class="section-controls">
+                <input type="text" class="search-box" id="nfrSearch" placeholder="Search UUID or Batch...">
+                <button class="btn-export" onclick="exportData('nfr_responses')">Export JSON</button>
+            </div>
+        </div>
+        <div id="nfrResponsesContent">
+            <div class="loading">Loading...</div>
+        </div>
+    </div>
+    
+    <!-- Satisfaction Surveys -->
+    <div class="section">
+        <div class="section-header">
+            <h2>Satisfaction Surveys</h2>
+            <div class="section-controls">
+                <input type="text" class="search-box" id="surveySearch" placeholder="Search UUID...">
+                <button class="btn-export" onclick="exportData('surveys')">Export JSON</button>
+            </div>
+        </div>
+        <div id="surveysContent">
+            <div class="loading">Loading...</div>
+        </div>
+    </div>
+    
+    <!-- Demographics -->
+    <div class="section">
+        <div class="section-header">
+            <h2>Demographics</h2>
+            <div class="section-controls">
+                <input type="text" class="search-box" id="demographicsSearch" placeholder="Search UUID...">
+                <button class="btn-export" onclick="exportData('demographics')">Export JSON</button>
+            </div>
+        </div>
+        <div id="demographicsContent">
+            <div class="loading">Loading...</div>
+        </div>
+    </div>
+    
+    <!-- Prize Submissions -->
+    <div class="section">
+        <div class="section-header">
+            <h2>Prize Submissions</h2>
+            <div class="section-controls">
+                <input type="text" class="search-box" id="prizeSearch" placeholder="Search UUID...">
+                <button class="btn-export" onclick="exportData('prizes')">Export JSON</button>
+            </div>
+        </div>
+        <div id="prizesContent">
+            <div class="loading">Loading...</div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+let adminData = null;
+
+// Load admin data on page load
+window.addEventListener('load', async () => {
+    try {
+        const response = await fetch('/api/admin/data');
+        
+        if (response.status === 401) {
+            // Unauthorized - redirect to login
+            window.location.href = '/admin/login';
+            return;
+        }
+        
+        adminData = await response.json();
+        
+        if (adminData.status === 'success') {
+            updateStats(adminData.stats);
+            renderBatchAssignments(adminData.batch_assignments);
+            renderConversations(adminData.conversations);
+            renderNfrResponses(adminData.nfr_responses);
+            renderSurveys(adminData.surveys);
+            renderDemographics(adminData.demographics);
+            renderPrizes(adminData.prizes);
+            
+            // Setup search functionality
+            setupSearch();
+        } else {
+            showError('Failed to load admin data: ' + (adminData.message || 'Unknown error'));
+        }
+    } catch (error) {
+        console.error('Error loading admin data:', error);
+        if (error.message.includes('401') || error.message.includes('Unauthorized')) {
+            window.location.href = '/admin/login';
+        } else {
+            showError('Error loading admin data: ' + error.message);
+        }
+    }
+});
+
+function updateStats(stats) {
+    document.getElementById('totalParticipants').textContent = stats.total_participants || 0;
+    document.getElementById('totalConversations').textContent = stats.total_conversations || 0;
+    document.getElementById('totalNfrResponses').textContent = stats.total_nfr_responses || 0;
+    document.getElementById('totalSurveys').textContent = stats.total_surveys || 0;
+    document.getElementById('totalDemographics').textContent = stats.total_demographics || 0;
+    document.getElementById('totalPrizes').textContent = stats.total_prizes || 0;
+}
+
+function renderBatchAssignments(data) {
+    const container = document.getElementById('batchAssignmentsContent');
+    
+    if (!data || Object.keys(data).length === 0) {
+        container.innerHTML = '<div class="empty-state">No batch assignments found</div>';
+        return;
+    }
+    
+    let html = '<table class="data-table"><thead><tr><th>UUID</th><th>Assigned Batches</th></tr></thead><tbody>';
+    
+    for (const [uuid, batches] of Object.entries(data)) {
+        const batchBadges = batches.map(b => `<span class="batch-assignment">Batch ${b}</span>`).join('');
+        html += `<tr><td class="uuid-cell">${uuid}</td><td>${batchBadges}</td></tr>`;
+    }
+    
+    html += '</tbody></table>';
+    container.innerHTML = html;
+}
+
+function renderConversations(data) {
+    const container = document.getElementById('conversationsContent');
+    
+    if (!data || Object.keys(data).length === 0) {
+        container.innerHTML = '<div class="empty-state">No conversations found</div>';
+        return;
+    }
+    
+    let html = '<table class="data-table"><thead><tr><th>UUID</th><th>Message Count</th><th>First Message</th><th>Last Message</th><th>Actions</th></tr></thead><tbody>';
+    
+    for (const [uuid, messages] of Object.entries(data)) {
+        const count = messages.length;
+        const firstMsg = messages[0]?.user_time || 'N/A';
+        const lastMsg = messages[messages.length - 1]?.user_time || 'N/A';
+        
+        html += `
+            <tr>
+                <td class="uuid-cell">${uuid}</td>
+                <td>${count}</td>
+                <td>${formatDate(firstMsg)}</td>
+                <td>${formatDate(lastMsg)}</td>
+                <td><button class="btn btn-secondary" onclick="showConversation('${uuid}')">View</button></td>
+            </tr>
+        `;
+    }
+    
+    html += '</tbody></table>';
+    container.innerHTML = html;
+}
+
+function renderNfrResponses(data) {
+    const container = document.getElementById('nfrResponsesContent');
+    
+    if (!data || Object.keys(data).length === 0) {
+        container.innerHTML = '<div class="empty-state">No NFR responses found</div>';
+        return;
+    }
+    
+    let html = '<table class="data-table"><thead><tr><th>UUID</th><th>Batch</th><th>NFR ID</th><th>Q1</th><th>Q2</th><th>Q3</th><th>Timestamp</th></tr></thead><tbody>';
+    
+    for (const [uuid, responses] of Object.entries(data)) {
+        for (const response of responses) {
+            html += `
+                <tr>
+                    <td class="uuid-cell">${response.uuid || uuid}</td>
+                    <td><span class="batch-assignment">${response.batch}</span></td>
+                    <td>${response.nfr_id}</td>
+                    <td>${response.q1_agreement || 'N/A'}</td>
+                    <td>${response.q2_agreement || 'N/A'}</td>
+                    <td>${response.q3_agreement || 'N/A'}</td>
+                    <td>${formatDate(response.timestamp)}</td>
+                </tr>
+            `;
+        }
+    }
+    
+    html += '</tbody></table>';
+    container.innerHTML = html;
+}
+
+function renderSurveys(data) {
+    const container = document.getElementById('surveysContent');
+    
+    if (!data || Object.keys(data).length === 0) {
+        container.innerHTML = '<div class="empty-state">No surveys found</div>';
+        return;
+    }
+    
+    let html = '<table class="data-table"><thead><tr><th>UUID</th><th>Responses</th><th>Timestamp</th><th>Actions</th></tr></thead><tbody>';
+    
+    for (const [uuid, survey] of Object.entries(data)) {
+        const responses = Object.entries(survey)
+            .filter(([k]) => k !== 'uuid' && k !== 'timestamp')
+            .map(([k, v]) => `${k}: ${v}`)
+            .join(', ');
+        
+        html += `
+            <tr>
+                <td class="uuid-cell">${uuid}</td>
+                <td>${responses}</td>
+                <td>${formatDate(survey.timestamp)}</td>
+                <td><button class="btn btn-secondary" onclick="showSurvey('${uuid}')">View</button></td>
+            </tr>
+        `;
+    }
+    
+    html += '</tbody></table>';
+    container.innerHTML = html;
+}
+
+function renderDemographics(data) {
+    const container = document.getElementById('demographicsContent');
+    
+    if (!data || Object.keys(data).length === 0) {
+        container.innerHTML = '<div class="empty-state">No demographics found</div>';
+        return;
+    }
+    
+    let html = '<table class="data-table"><thead><tr><th>UUID</th><th>Data</th><th>Timestamp</th><th>Actions</th></tr></thead><tbody>';
+    
+    for (const [uuid, demo] of Object.entries(data)) {
+        const dataStr = Object.entries(demo)
+            .filter(([k]) => k !== 'timestamp')
+            .map(([k, v]) => `${k}: ${v}`)
+            .join(', ');
+        
+        html += `
+            <tr>
+                <td class="uuid-cell">${uuid}</td>
+                <td>${dataStr}</td>
+                <td>${formatDate(demo.timestamp)}</td>
+                <td><button class="btn btn-secondary" onclick="showDemographics('${uuid}')">View</button></td>
+            </tr>
+        `;
+    }
+    
+    html += '</tbody></table>';
+    container.innerHTML = html;
+}
+
+function renderPrizes(data) {
+    const container = document.getElementById('prizesContent');
+    
+    if (!data || Object.keys(data).length === 0) {
+        container.innerHTML = '<div class="empty-state">No prize submissions found</div>';
+        return;
+    }
+    
+    let html = '<table class="data-table"><thead><tr><th>UUID</th><th>Data</th><th>Actions</th></tr></thead><tbody>';
+    
+    for (const [uuid, prize] of Object.entries(data)) {
+        const dataStr = Object.entries(prize)
+            .filter(([k]) => k !== 'uuid')
+            .map(([k, v]) => `${k}: ${v}`)
+            .join(', ');
+        
+        html += `
+            <tr>
+                <td class="uuid-cell">${uuid}</td>
+                <td>${dataStr}</td>
+                <td><button class="btn btn-secondary" onclick="showPrize('${uuid}')">View</button></td>
+            </tr>
+        `;
+    }
+    
+    html += '</tbody></table>';
+    container.innerHTML = html;
+}
+
+function formatDate(dateStr) {
+    if (!dateStr || dateStr === 'N/A') return 'N/A';
+    try {
+        const date = new Date(dateStr);
+        return date.toLocaleString();
+    } catch (e) {
+        return dateStr;
+    }
+}
+
+function showConversation(uuid) {
+    if (!adminData || !adminData.conversations[uuid]) return;
+    const messages = adminData.conversations[uuid];
+    const content = messages.map(m => 
+        `<div><strong>User:</strong> ${m.user_message}</div><div><strong>Bot:</strong> ${m.bot_reply}</div><hr>`
+    ).join('');
+    alert(content.substring(0, 1000) + (content.length > 1000 ? '...' : ''));
+}
+
+function showSurvey(uuid) {
+    if (!adminData || !adminData.surveys[uuid]) return;
+    const survey = adminData.surveys[uuid];
+    const content = JSON.stringify(survey, null, 2);
+    alert(content);
+}
+
+function showDemographics(uuid) {
+    if (!adminData || !adminData.demographics[uuid]) return;
+    const demo = adminData.demographics[uuid];
+    const content = JSON.stringify(demo, null, 2);
+    alert(content);
+}
+
+function showPrize(uuid) {
+    if (!adminData || !adminData.prizes[uuid]) return;
+    const prize = adminData.prizes[uuid];
+    const content = JSON.stringify(prize, null, 2);
+    alert(content);
+}
+
+function setupSearch() {
+    document.getElementById('batchSearch').addEventListener('input', (e) => {
+        filterTable(e.target.value, 'batchAssignmentsContent');
+    });
+    
+    document.getElementById('conversationSearch').addEventListener('input', (e) => {
+        filterTable(e.target.value, 'conversationsContent');
+    });
+    
+    document.getElementById('nfrSearch').addEventListener('input', (e) => {
+        filterTable(e.target.value, 'nfrResponsesContent');
+    });
+    
+    document.getElementById('surveySearch').addEventListener('input', (e) => {
+        filterTable(e.target.value, 'surveysContent');
+    });
+    
+    document.getElementById('demographicsSearch').addEventListener('input', (e) => {
+        filterTable(e.target.value, 'demographicsContent');
+    });
+    
+    document.getElementById('prizeSearch').addEventListener('input', (e) => {
+        filterTable(e.target.value, 'prizesContent');
+    });
+}
+
+function filterTable(searchTerm, containerId) {
+    const container = document.getElementById(containerId);
+    const table = container.querySelector('table');
+    if (!table) return;
+    
+    const rows = table.querySelectorAll('tbody tr');
+    const term = searchTerm.toLowerCase();
+    
+    rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(term) ? '' : 'none';
+    });
+}
+
+async function exportData(type) {
+    if (!adminData) return;
+    
+    let data;
+    let filename;
+    
+    switch(type) {
+        case 'batch_assignments':
+            data = adminData.batch_assignments;
+            filename = 'batch_assignments.json';
+            break;
+        case 'conversations':
+            data = adminData.conversations;
+            filename = 'conversations.json';
+            break;
+        case 'nfr_responses':
+            data = adminData.nfr_responses;
+            filename = 'nfr_responses.json';
+            break;
+        case 'surveys':
+            data = adminData.surveys;
+            filename = 'surveys.json';
+            break;
+        case 'demographics':
+            data = adminData.demographics;
+            filename = 'demographics.json';
+            break;
+        case 'prizes':
+            data = adminData.prizes;
+            filename = 'prizes.json';
+            break;
+        default:
+            return;
+    }
+    
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+function showError(message) {
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'error';
+    errorDiv.textContent = message;
+    document.querySelector('.admin-container').insertBefore(errorDiv, document.querySelector('.admin-container').firstChild);
+}
+
+function showClearDataConfirmation() {
+    document.getElementById('clearDataModal').classList.add('show');
+}
+
+function hideClearDataConfirmation() {
+    document.getElementById('clearDataModal').classList.remove('show');
+}
+
+async function confirmClearAllData() {
+    try {
+        const response = await fetch('/api/admin/clear_all_data', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        
+        if (response.status === 401) {
+            window.location.href = '/admin/login';
+            return;
+        }
+        
+        const result = await response.json();
+        
+        if (result.status === 'success') {
+            hideClearDataConfirmation();
+            alert('All data has been cleared successfully!');
+            // Reload the page to refresh statistics
+            window.location.reload();
+        } else {
+            alert('Error clearing data: ' + (result.message || 'Unknown error'));
+        }
+    } catch (error) {
+        console.error('Error clearing data:', error);
+        alert('Error clearing data: ' + error.message);
+    }
+}
+
+// Close modal when clicking outside
+document.addEventListener('click', (e) => {
+    const modal = document.getElementById('clearDataModal');
+    if (e.target === modal) {
+        hideClearDataConfirmation();
+    }
+});
+</script>
+{% endblock %}

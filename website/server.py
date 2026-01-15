@@ -1,10 +1,12 @@
-from flask import Flask, render_template, request, jsonify, session
+from flask import Flask, render_template, request, jsonify, session, redirect, url_for
 from flask_caching import Cache
 import json
 import os
 import markdown
 from chatbot import Chatbot
 from datetime import datetime
+import hashlib
+from functools import wraps
 
 app = Flask(__name__, template_folder='html_files', static_folder='static')
 app.secret_key = 'your-secret-key-change-in-production'  # Change this in production
@@ -14,6 +16,22 @@ cache = Cache(app, config={'CACHE_TYPE': 'simple'})
 
 # Initialize chatbot instances (stored by session ID)
 chatbots = {}
+
+# Admin authentication
+# Get admin password from environment variable or use default (CHANGE IN PRODUCTION!)
+ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'admin123')  # Change this default!
+ADMIN_PASSWORD_HASH = hashlib.sha256(ADMIN_PASSWORD.encode()).hexdigest()
+
+def require_admin(f):
+    """Decorator to require admin authentication."""
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not session.get('admin_authenticated'):
+            if request.path.startswith('/api/'):
+                return jsonify({'status': 'error', 'message': 'Unauthorized'}), 401
+            return redirect(url_for('admin_login', next=request.url))
+        return f(*args, **kwargs)
+    return decorated_function
 
 # File paths
 NFR_FILE = 'NFR.json'
@@ -188,6 +206,38 @@ def complete():
     """Study completion page."""
     prolific = request.args.get('id') == 'prolific'
     return render_template('completion.html', prolific_id=prolific)
+
+@app.route('/admin/login', methods=['GET', 'POST'])
+def admin_login():
+    """Admin login page."""
+    if request.method == 'POST':
+        password = request.form.get('password', '')
+        password_hash = hashlib.sha256(password.encode()).hexdigest()
+        
+        if password_hash == ADMIN_PASSWORD_HASH:
+            session['admin_authenticated'] = True
+            next_url = request.args.get('next', url_for('admin'))
+            return redirect(next_url)
+        else:
+            return render_template('admin_login.html', error='Invalid password')
+    
+    # If already authenticated, redirect to admin
+    if session.get('admin_authenticated'):
+        return redirect(url_for('admin'))
+    
+    return render_template('admin_login.html')
+
+@app.route('/admin/logout', methods=['POST'])
+def admin_logout():
+    """Admin logout."""
+    session.pop('admin_authenticated', None)
+    return redirect(url_for('admin_login'))
+
+@app.route('/admin')
+@require_admin
+def admin():
+    """Admin dashboard page."""
+    return render_template('admin.html')
 
 
 def get_nfr_batch_number():
@@ -462,6 +512,85 @@ def load_chat_history():
     conversations = load_json_file(CONVERSATION_FILE)
     history = conversations.get(uuid, [])
     return jsonify({'history': history})
+
+@app.route('/api/admin/data', methods=['GET'])
+@require_admin
+def get_admin_data():
+    """Get all admin data for the dashboard."""
+    try:
+        # Load all data files
+        conversations = load_json_file(CONVERSATION_FILE)
+        nfr_responses = load_json_file(NFR_RESPONSES_FILE)
+        surveys = load_json_file(SATISFACTION_FILE)
+        demographics = load_json_file(DEMOGRAPHICS_FILE)
+        prizes = load_json_file(PRIZE_FILE)
+        batch_assignments = load_json_file(BATCH_ASSIGNMENTS_FILE)
+        
+        # Calculate statistics
+        # Get unique participants from all data sources
+        all_uuids = set()
+        all_uuids.update(conversations.keys())
+        all_uuids.update(nfr_responses.keys())
+        all_uuids.update(surveys.keys())
+        all_uuids.update(demographics.keys())
+        all_uuids.update(prizes.keys())
+        all_uuids.update(batch_assignments.keys())
+        
+        total_conversations = sum(len(msgs) for msgs in conversations.values())
+        total_nfr_responses = sum(len(responses) for responses in nfr_responses.values())
+        
+        stats = {
+            'total_participants': len(all_uuids),
+            'total_conversations': len(conversations),
+            'total_conversation_messages': total_conversations,
+            'total_nfr_responses': total_nfr_responses,
+            'total_surveys': len(surveys),
+            'total_demographics': len(demographics),
+            'total_prizes': len(prizes),
+            'total_batch_assignments': len(batch_assignments)
+        }
+        
+        return jsonify({
+            'status': 'success',
+            'stats': stats,
+            'conversations': conversations,
+            'nfr_responses': nfr_responses,
+            'surveys': surveys,
+            'demographics': demographics,
+            'prizes': prizes,
+            'batch_assignments': batch_assignments
+        })
+    except Exception as e:
+        print(f"Error in get_admin_data: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
+@app.route('/api/admin/clear_all_data', methods=['POST'])
+@require_admin
+def clear_all_data():
+    """Clear all response data files. This is a destructive operation."""
+    try:
+        # Clear all response files by saving empty dictionaries
+        save_json_file(CONVERSATION_FILE, {})
+        save_json_file(NFR_RESPONSES_FILE, {})
+        save_json_file(SATISFACTION_FILE, {})
+        save_json_file(DEMOGRAPHICS_FILE, {})
+        save_json_file(PRIZE_FILE, {})
+        save_json_file(BATCH_ASSIGNMENTS_FILE, {})
+        
+        # Clear in-memory chatbot instances
+        chatbots.clear()
+        
+        return jsonify({
+            'status': 'success',
+            'message': 'All data has been cleared successfully'
+        })
+    except Exception as e:
+        print(f"Error in clear_all_data: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({'status': 'error', 'message': str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
