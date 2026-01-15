@@ -49,6 +49,10 @@
 </head>
 <body>
     {% block content %}{% endblock %}
+    
+    <!-- Reusable Tutorial Modal - Include in all pages -->
+    {% include 'tutorial_modal.html' %}
+    
     <script src="/static/progress.js"></script>
     {% block extra_js %}{% endblock %}
 </body>

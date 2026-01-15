@@ -70,14 +70,12 @@
         <!-- Page 1: Instructions -->
         <div class="tutorial-page active" id="page1">
             <h2>Welcome to the Tutorial</h2>
-            <p>This tutorial will guide you through the evaluation process. Please read each section carefully.</p>
-            <p><strong>Overview:</strong></p>
-            <ul style="margin-left: 20px; line-height: 2;">
-                <li>You will evaluate AI-generated assessments of Non-Functional Requirements (NFRs)</li>
-                <li>You can interact with a chatbot to ask questions</li>
-                <li>You will provide feedback on the AI's assessments</li>
-                <li>The study consists of 30 NFRs divided into 3 batches of 10</li>
-            </ul>
+            <p style="margin-bottom: 30px; line-height: 1.8;">
+                Please press the button below and review the tutorial carefully. The tutorial contains important information about how to use the evaluation tool and interact with the chatbot.
+            </p>
+            <p style="margin-top: 40px; text-align: center;">
+                <button class="btn" onclick="openTutorialModal()" style="width: 100%; max-width: 400px; padding: 15px 30px; font-size: 18px;">View Detailed Tutorial</button>
+            </p>
         </div>
         
         <!-- Page 2: Download Code -->
@@ -86,14 +84,15 @@
             <p>Please download the code repository and open it in your code editor.</p>
             <p><strong>Instructions:</strong></p>
             <ol style="margin-left: 20px; line-height: 2;">
-                <li>Download the code package provided</li>
+                <li>Download the code package provided below</li>
                 <li>Extract the files to a location on your computer</li>
                 <li>Open the project in your preferred code editor (VS Code, IntelliJ, etc.)</li>
-                <li>Familiarize yourself with the code structure</li>
             </ol>
-            <p style="margin-top: 20px; padding: 15px; background: #f0f0f0; border-radius: 4px;">
-                <em>Note: This is a placeholder. In the actual study, you would download real code here.</em>
-            </p>
+            <div style="margin-top: 30px; text-align: center;">
+                <a href="/static/iTrust.zip" download="iTrust.zip" class="btn" style="display: inline-block; text-decoration: none;">
+                    📦 Download iTrust.zip
+                </a>
+            </div>
         </div>
         
         <!-- Page 3: Code Structure -->
@@ -201,6 +200,12 @@ window.addEventListener('load', () => {
         // UUID should exist - if not, redirect back to consent
         console.warn('No UUID found, redirecting to consent');
         window.location.href = '/';
+    }
+    
+    // Check if modal should be opened
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('modal') === 'true') {
+        setTimeout(() => openTutorialModal(), 500);
     }
 });
 

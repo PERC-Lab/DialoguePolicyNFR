@@ -1,0 +1,287 @@
+<!-- Reusable Tutorial Modal -->
+<div id="tutorialModal" class="tutorial-modal" style="display: none;">
+    <div class="tutorial-modal-overlay" onclick="closeTutorialModal()"></div>
+    <div class="tutorial-modal-content">
+        <div class="tutorial-modal-header">
+            <h2>Tutorial</h2>
+            <button class="tutorial-modal-close" onclick="closeTutorialModal()">&times;</button>
+        </div>
+        <div class="tutorial-modal-body">
+            <div class="tutorial-section">
+                <h3>Overview</h3>
+                <p>This tool facilitates the evaluation of Non-Functional Requirements (NFRs) from HIPAA through interactive dialogue with a chatbot. You will work through batches of NFRs, engage with the chatbot to obtain assessments, and provide feedback on the chatbot's evaluations.</p>
+            </div>
+            <div class="tutorial-section">
+                <h3>What are Non-Functional Requirements (NFRs)?</h3>
+                <p>
+                    Non-Functional Requirements (NFRs) specify how a system should perform rather than what it should do. While functional requirements define specific behaviors or functions (for example, <em>"User can reset password"</em>), NFRs establish quality attributes and constraints such as security, performance, reliability, usability, and compliance (for example, <em>"System must reset password within 3 seconds."</em>).
+                </p>
+            </div>
+            <div class="tutorial-section">
+                <h3>What is HIPAA?</h3>
+                <p>
+                    HIPAA (<strong>Health Insurance Portability and Accountability Act</strong>) is a U.S. federal law that establishes privacy and security standards for the protection of sensitive patient health information. It requires healthcare providers, insurers, and their business associates to implement safeguards to ensure that <strong>Protected Health Information (PHI)</strong> remains confidential, secure, and accessible only to authorized individuals.
+                </p>
+            </div>
+
+            <div class="tutorial-section">
+                <h3>Tool Structure</h3>
+                <p>The interface consists of three panels:</p>
+                <ol>
+                    <li><strong>NFRs Display (Left Panel):</strong> Shows NFRs in batches of 10</li>
+                    <li><strong>Feedback Form (Middle Panel):</strong> Contains evaluation questions for each NFR</li>
+                    <li><strong>Chatbot Assistant (Right Panel):</strong> Interactive AI assistant for NFR assessment</li>
+                </ol>
+            <!-- INSERT_YOUR_CODE -->
+            <div class="tutorial-section">
+                <div style="text-align: center;">
+                    <img src="/static/images/website_overview.png" alt="Website Interface Overview" style="max-width:100%; border: 1px solid #ccc; border-radius: 6px; background: #f8f8f8;">
+                </div>
+                <p style="text-align: center; color: #888; margin-top: 8px;">(Website overview.)</p>
+            </div>
+            </div>
+
+            <div class="tutorial-section">
+                <h3>Process Workflow</h3>
+                
+                <h4>Step 1: Review NFRs (Left Panel)</h4>
+                <ul>
+                    <li>You will see 10 NFRs displayed at a time</li>
+                    <li>There are up to 30 NFRs total, organized in batches of 10</li>
+                    <li>Use the copy button to copy all 10 NFRs at once for easier interaction with the chatbot</li>
+                </ul>
+
+                <h4>Step 2: Interact with the Chatbot (Right Panel)</h4>
+                <p><strong>Initial Query:</strong></p>
+                <ul>
+                    <li>Start by asking the chatbot to evaluate all 10 NFRs together</li>
+                    <li>Paste the copied NFRs into the chat</li>
+                </ul>
+                <p><strong>Example prompt:</strong></p>
+                <div class="example-box">
+                    "Please evaluate the following 10 NFRs. For each NFR, provide:<br>
+                    • Level of satisfaction<br>
+                    • Reasoning<br>
+                    • Relevant code locations (if applicable)."
+                </div>
+
+                <p><strong>Follow-up Dialogue:</strong> Engage with the chatbot as a developer would when working to understand and implement requirements. Your dialogue should include:</p>
+                <ul>
+                    <li>Asking clarifying questions about unclear requirements</li>
+                    <li>Seeking additional information about implementation details</li>
+                    <li>Requesting specific code locations or examples</li>
+                    <li>Discussing potential approaches to satisfy the requirements</li>
+                    <li>Providing context about the system architecture when needed</li>
+                    <li>Challenging or validating the chatbot's assessments</li>
+                </ul>
+
+                <p><strong>Important Notes:</strong></p>
+                <ul>
+                    <li>The chatbot will provide the final evaluation for each NFR</li>
+                    <li>Continue the dialogue until you have a complete understanding of the chatbot's assessment</li>
+                    <li>The chatbot should evaluate each NFR on three dimensions:</li>
+                    <ul>
+                        <li><strong>Satisfaction Level:</strong> Satisfied, Weakly Satisfied, Weakly Denied, Denied, or Not Applicable</li>
+                        <li><strong>Reasoning:</strong> Explanation for the satisfaction level</li>
+                        <li><strong>Code Locations:</strong> Specific places in the code where the NFR is addressed</li>
+                    </ul>
+                </ul>
+
+                <h4>Step 3: Complete the Feedback Form (Middle Panel)</h4>
+                <p>Once you are fully convinced that the chatbot has comprehensively assessed the NFRs, complete the feedback form for each NFR.</p>
+                <p><strong>For each NFR, answer three questions:</strong></p>
+                <ul>
+                    <li><strong>Question 1:</strong> Do you agree with the chatbot's satisfaction level assessment?<br>
+                        <em>Options: Agree | Partially agree | Partially disagree | Disagree</em></li>
+                    <li><strong>Question 2:</strong> Do you agree with the chatbot's reasoning?<br>
+                        <em>Options: Agree | Partially agree | Partially disagree | Disagree</em></li>
+                    <li><strong>Question 3:</strong> Do you agree with the chatbot's identified code locations?<br>
+                        <em>Options: Agree | Partially agree | Partially disagree | Disagree</em></li>
+                </ul>
+                <p><strong>If you select "Partially agree", "Partially disagree" or "Disagree":</strong></p>
+                <ul>
+                    <li><strong>Question 4:</strong> You must provide your own assessment</li>
+                </ul>
+            </div>
+
+            <div class="tutorial-section">
+                <h3>Tips for Effective Evaluation</h3>
+                <ol>
+                    <li><strong>Be thorough in your dialogue:</strong> Don't rush to the feedback form. Ensure you fully understand the chatbot's reasoning before evaluating it.</li>
+                    <li><strong>Think like a developer:</strong> Consider practical implementation challenges, edge cases, and system constraints.</li>
+                    <li><strong>Complete all NFRs in a batch:</strong> Work through all 10 NFRs in a batch before moving to the next batch.</li>
+                    <li><strong>Pay attention to satisfaction level:</strong> The satisfaction level can be either of Satisfied, Weakly Satisfied, Weakly Denied, Denied, or Not Applicable</li>
+                </ol>
+            </div>
+        </div>
+        <div class="tutorial-modal-footer">
+            <button class="btn" onclick="closeTutorialModal()">Got it!</button>
+        </div>
+    </div>
+</div>
+
+<style>
+.tutorial-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tutorial-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 10001;
+}
+
+.tutorial-modal-content {
+    position: relative;
+    background: white;
+    border-radius: 8px;
+    max-width: 900px;
+    max-height: 90vh;
+    width: 90%;
+    z-index: 10002;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.tutorial-modal-header {
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.tutorial-modal-header h2 {
+    margin: 0;
+    color: #333;
+}
+
+.tutorial-modal-close {
+    background: none;
+    border: none;
+    font-size: 32px;
+    color: #666;
+    cursor: pointer;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+}
+
+.tutorial-modal-close:hover {
+    color: #333;
+}
+
+.tutorial-modal-body {
+    padding: 30px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.tutorial-section {
+    margin-bottom: 30px;
+}
+
+.tutorial-section h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #007bff;
+    font-size: 20px;
+}
+
+.tutorial-section h4 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: #333;
+    font-size: 16px;
+}
+
+.tutorial-section p {
+    margin-bottom: 15px;
+    line-height: 1.8;
+}
+
+.tutorial-section ul,
+.tutorial-section ol {
+    margin-bottom: 15px;
+    margin-left: 30px;
+    padding-left: 20px;
+}
+
+.tutorial-section li {
+    margin-bottom: 8px;
+    line-height: 1.6;
+}
+
+.tutorial-section ul {
+    list-style-type: disc;
+}
+
+.tutorial-section ol {
+    list-style-type: decimal;
+}
+
+.tutorial-section ul ul {
+    list-style-type: circle;
+    margin-top: 5px;
+}
+
+.example-box {
+    background: #f8f9fa;
+    border-left: 4px solid #007bff;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.tutorial-modal-footer {
+    padding: 20px;
+    border-top: 1px solid #ddd;
+    display: flex;
+    justify-content: center;
+    flex-shrink: 0;
+}
+</style>
+
+<script>
+function openTutorialModal() {
+    const modal = document.getElementById('tutorialModal');
+    if (modal) {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    }
+}
+
+function closeTutorialModal() {
+    const modal = document.getElementById('tutorialModal');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = ''; // Restore scrolling
+    }
+}
+
+// Close modal on Escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeTutorialModal();
+    }
+});
+</script>

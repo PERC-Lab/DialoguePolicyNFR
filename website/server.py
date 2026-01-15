@@ -162,7 +162,9 @@ def consent():
 def tutorial():
     """Tutorial page."""
     page = request.args.get('page', '1')
-    return render_template('tutorial.html', page=page)
+    # Open tutorial modal if requested
+    show_modal = request.args.get('modal') == 'true'
+    return render_template('tutorial.html', page=page, show_modal=show_modal)
 
 @app.route('/evaluation')
 def evaluation():
