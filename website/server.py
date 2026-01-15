@@ -19,7 +19,7 @@ chatbots = {}
 
 # Admin authentication
 # Get admin password from environment variable or use default (CHANGE IN PRODUCTION!)
-ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'admin123')  # Change this default!
+ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'perc123Perclab')  # Change this default!
 ADMIN_PASSWORD_HASH = hashlib.sha256(ADMIN_PASSWORD.encode()).hexdigest()
 
 def require_admin(f):
