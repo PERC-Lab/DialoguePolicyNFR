@@ -104,8 +104,8 @@ def get_chatbot(uuid=None):
     if uuid:
         # Restore chatbot with provided UUID
         if uuid not in chatbots:
-            chatbot = Chatbot()
-            chatbot.uuid = uuid  # Set the UUID to the provided one
+            # Pass UUID to constructor to resume the existing copilot session
+            chatbot = Chatbot(uuid=uuid)
             chatbots[uuid] = chatbot
             # Load chat history from JSON file
             conversations = load_json_file(CONVERSATION_FILE)

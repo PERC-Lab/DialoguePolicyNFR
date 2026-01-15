@@ -1,25 +1,138 @@
-import uuid
+import subprocess
+import os
 from datetime import datetime
 from typing import Dict, List, Optional
 
+STATIC_PROJECT_PATH = "/Users/neo/Desktop/NFR/new/website-server-copy/iTrust/iTrust"
+
 class Chatbot:
-    def __init__(self):
-        print("Chatbot initialized")
-        self.uuid = str(uuid.uuid4())
+    def __init__(self, project_path: str = STATIC_PROJECT_PATH, uuid: Optional[str] = None):
+        """
+        Initialize the chatbot with copilot CLI integration.
+        
+        Args:
+            project_path: Path to the project directory
+            uuid: Optional existing UUID to resume a session
+        """
+        print(f"Initializing chatbot with project path: {project_path} and uuid: {uuid}")
+        self.project_path = project_path
+        self.uuid = uuid
         self.chat_history: List[Dict] = []
+        
+        # Load initial prompt if it exists
+        initial_prompt = None
+        prompt_file = os.path.join(os.path.dirname(__file__), 'instruction_prompt.txt')
+        if os.path.exists(prompt_file):
+            with open(prompt_file, 'r') as file:
+                initial_prompt = file.read()
+        
+        # If no UUID provided, create a new chat session
+        # todo check uuid is valid
+        if not self.uuid:
+            self.uuid = self.create_chat(initial_prompt=initial_prompt)
+    
+    def create_chat(self, initial_prompt: Optional[str] = None, timeout: int = 180) -> str:
+        """
+        Create a new chat session with copilot CLI and return the UUID.
+        
+        Args:
+            initial_prompt: Optional initial prompt/instructions to send when creating the session
+            timeout: Maximum time to wait for session creation
+            
+        Returns:
+            The session UUID from copilot
+        """
+        # Use a dummy prompt if none provided
+        prompt = initial_prompt if initial_prompt else "."
+        
+        # Create a new session by running a command and extracting the session ID
+        shell_command = (
+            f'cd "{self.project_path}" && '
+            f'copilot -p "{prompt}" --model gpt-5.1-codex-max -s --allow-all-tools 2>/dev/null >/dev/null && '
+            f'ls -t ~/.copilot/logs/ 2>/dev/null | head -n 1 | sed "s/\\.log$//"'
+        )
+        
+        try:
+            result = subprocess.run(
+                shell_command,
+                shell=True,
+                capture_output=True,
+                text=True,
+                cwd=self.project_path,
+                env={**os.environ, 'PATH': f"{os.path.expanduser('~')}/.local/bin:{os.environ.get('PATH', '')}"},
+                timeout=timeout
+            )
+            
+            if result.returncode == 0:
+                output = result.stdout.strip()
+                if output:
+                    # Extract UUID from the log filename
+                    # Format could be: session-{uuid} or just {uuid}
+                    if output.startswith('session-'):
+                        uuid = output[8:]  # Remove 'session-' prefix
+                    else:
+                        uuid = output
+                    self.chat_history = []
+                    return uuid
+                else:
+                    raise Exception("Failed to retrieve session ID from copilot logs")
+            else:
+                error_msg = result.stderr if result.stderr else "Unknown error"
+                raise Exception(f"Failed to create chat: {error_msg}")
+        
+        except subprocess.TimeoutExpired:
+            raise Exception(f"Timeout: copilot create-chat took longer than {timeout} seconds")
+        except Exception as e:
+            raise Exception(f"Error creating copilot chat: {str(e)}")
+    
+    def ask_cursor_agent(self, message: str, timeout: int = 600) -> str:
+        """
+        Ask a question to copilot CLI using the current session UUID.
+        
+        Args:
+            message: The message/question to ask
+            timeout: Maximum time to wait for response
+            
+        Returns:
+            The response from copilot
+        """
+        if not self.uuid:
+            raise Exception("UUID not initialized. Cannot ask copilot.")
+        
+        shell_command = (
+            f'cd "{self.project_path}" && '
+            f'copilot --model gpt-5.1-codex-max --resume "{self.uuid}" -p "{message}" -s --allow-all-tools'
+        )
+        
+        try:
+            result = subprocess.run(
+                shell_command,
+                shell=True,
+                capture_output=True,
+                text=True,
+                cwd=self.project_path,
+                env={**os.environ, 'PATH': f"{os.path.expanduser('~')}/.local/bin:{os.environ.get('PATH', '')}"},
+                timeout=timeout
+            )
+            
+            if result.returncode == 0:
+                return result.stdout
+            else:
+                error_msg = result.stderr if result.stderr else "Unknown error"
+                raise Exception(f"Failed to ask copilot: {error_msg}")
+        
+        except subprocess.TimeoutExpired:
+            raise Exception(f"Timeout: copilot took longer than {timeout} seconds to respond")
+        except Exception as e:
+            raise Exception(f"Error asking copilot: {str(e)}")
     
     def get_uuid(self) -> str:
         """Return the unique identifier for this chatbot instance."""
         return self.uuid
     
-    def create_chat(self) -> str:
-        """Initialize a new chat session and return the UUID."""
-        self.chat_history = []
-        return self.uuid
-    
     def ask_chatbot(self, request: str) -> Dict:
         """
-        Process a user request and return a mock response.
+        Process a user request and return the response from copilot.
         
         Args:
             request: The user's message/question
@@ -29,10 +142,12 @@ class Chatbot:
         """
         user_time = datetime.now().isoformat()
         
-        
-        # Simple mock: cycle through responses or provide a generic one
-        import random
-        bot_reply = f"You said: {request}"
+        try:
+            # Ask copilot CLI
+            bot_reply = self.ask_cursor_agent(request)
+            bot_reply = bot_reply.strip()
+        except Exception as e:
+            bot_reply = f"Error: {str(e)}"
         
         bot_time = datetime.now().isoformat()
         

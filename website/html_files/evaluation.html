@@ -186,6 +186,12 @@
         min-height: 40px;
         max-height: 150px;
     }
+    .chatbot-input input:disabled,
+    .chatbot-input textarea:disabled {
+        background-color: #f5f5f5;
+        cursor: not-allowed;
+        opacity: 0.6;
+    }
     .chatbot-input textarea {
         line-height: 1.5;
     }
@@ -355,7 +361,7 @@
         <div class="chatbot-header">Chatbot Assistant</div>
         <div class="chatbot-messages" id="chatMessages"></div>
         <div class="chatbot-input">
-            <textarea id="chatInput" placeholder="Type your message... (Press Enter to send, Shift+Enter for new line)" rows="2" onkeydown="if(event.key==='Enter' && !event.shiftKey) { event.preventDefault(); sendMessage(); }"></textarea>
+            <textarea id="chatInput" placeholder="Type your message... (Press Enter to send, Shift+Enter for new line)" rows="2" onkeydown="if(event.key==='Enter' && !event.shiftKey && !this.disabled) { event.preventDefault(); sendMessage(); }"></textarea>
             <button class="btn" onclick="sendMessage()">Send</button>
         </div>
     </div>
@@ -888,12 +894,24 @@ function nextBatch() {
 
 function sendMessage() {
     const input = document.getElementById('chatInput');
+    const sendButton = input.nextElementSibling; // Get the send button
     const message = input.value.trim();
-    if (!message || !uuid) return;
+    
+    // Prevent sending if already waiting for response or if message is empty
+    if (!message || !uuid || input.disabled) return;
+    
+    // Disable input and button to prevent multiple submissions
+    input.disabled = true;
+    if (sendButton) sendButton.disabled = true;
+    const originalButtonText = sendButton ? sendButton.textContent : '';
+    if (sendButton) sendButton.textContent = 'Sending...';
     
     // Display user message
     addMessage('user', message);
     input.value = '';
+    
+    // Show loading indicator
+    const loadingId = showLoadingMessage();
     
     // Send to chatbot with UUID
     fetch('/api/ask_chatbot', {
@@ -903,13 +921,51 @@ function sendMessage() {
     })
     .then(r => r.json())
     .then(data => {
+        // Remove loading indicator
+        removeLoadingMessage(loadingId);
         addMessage('bot', data.response);
         // Update UUID if returned
         if (data.uuid) {
             uuid = data.uuid;
             localStorage.setItem('chatbot_uuid', uuid);
         }
+    })
+    .catch(error => {
+        console.error('Error sending message:', error);
+        // Remove loading indicator
+        removeLoadingMessage(loadingId);
+        addMessage('bot', 'Error: Failed to send message. Please try again.');
+    })
+    .finally(() => {
+        // Re-enable input and button after response is received
+        input.disabled = false;
+        if (sendButton) {
+            sendButton.disabled = false;
+            sendButton.textContent = originalButtonText;
+        }
+        input.focus(); // Focus back on input for next message
     });
+}
+
+function showLoadingMessage() {
+    const messagesDiv = document.getElementById('chatMessages');
+    const loadingDiv = document.createElement('div');
+    const loadingId = 'loading-' + Date.now();
+    loadingDiv.id = loadingId;
+    loadingDiv.className = 'message bot';
+    loadingDiv.innerHTML = `
+        <div class="message-content" style="font-style: italic; color: #666;">Thinking...</div>
+    `;
+    messagesDiv.appendChild(loadingDiv);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    return loadingId;
+}
+
+function removeLoadingMessage(loadingId) {
+    const loadingDiv = document.getElementById(loadingId);
+    if (loadingDiv) {
+        loadingDiv.remove();
+    }
 }
 
 function addMessage(type, content) {

@@ -59,7 +59,7 @@
         </div>
         
         <div style="margin-top: 40px; display: flex; gap: 20px; justify-content: center;">
-            <button class="btn" onclick="agreeToConsent()">I Agree</button>
+            <button id="agreeBtn" class="btn" onclick="agreeToConsent()">I Agree</button>
             <button class="btn btn-secondary" onclick="window.location.href='/'">Cancel</button>
         </div>
     </div>
@@ -72,6 +72,14 @@ window.addEventListener('load', () => {
 });
 
 function agreeToConsent() {
+    // Get the button element
+    const agreeBtn = document.getElementById('agreeBtn');
+    const originalText = agreeBtn.textContent;
+    
+    // Set loading state
+    agreeBtn.disabled = true;
+    agreeBtn.textContent = 'Loading...';
+    
     // Check if UUID already exists in localStorage
     let uuid = localStorage.getItem('chatbot_uuid');
     
@@ -87,6 +95,13 @@ function agreeToConsent() {
             localStorage.setItem('chatbot_uuid', data.uuid);
             setCurrentProgress(PROGRESS_STEPS.TUTORIAL, {page: 1});
             window.location.href = '/tutorial?page=1';
+        })
+        .catch(error => {
+            console.error('Error validating UUID:', error);
+            // Reset button state on error
+            agreeBtn.disabled = false;
+            agreeBtn.textContent = originalText;
+            alert('An error occurred. Please try again.');
         });
     } else {
         // Create new UUID when user agrees to consent
@@ -100,6 +115,9 @@ function agreeToConsent() {
             })
             .catch(error => {
                 console.error('Error creating UUID:', error);
+                // Reset button state on error
+                agreeBtn.disabled = false;
+                agreeBtn.textContent = originalText;
                 alert('An error occurred. Please try again.');
             });
     }
