@@ -679,21 +679,62 @@ function copyAllNFRs() {
         return `NFR ${nfr.id}: ${nfr.description}`;
     }).join('\n\n');
     
-    // Copy to clipboard
-    navigator.clipboard.writeText(nfrText).then(() => {
-        // Show feedback
-        const btn = document.querySelector('.copy-nfrs-btn');
-        const originalText = btn.textContent;
-        btn.textContent = '✓ Copied!';
-        btn.style.background = '#28a745';
-        setTimeout(() => {
-            btn.textContent = originalText;
-            btn.style.background = '#007bff';
-        }, 2000);
-    }).catch(err => {
-        console.error('Failed to copy:', err);
+    const btn = document.querySelector('.copy-nfrs-btn');
+    const originalText = btn ? btn.textContent : '';
+
+    // Modern async clipboard API (only works on secure contexts / some browsers)
+    if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+        navigator.clipboard.writeText(nfrText).then(() => {
+            if (btn) {
+                btn.textContent = '✓ Copied!';
+                btn.style.background = '#28a745';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = '#007bff';
+                }, 2000);
+            } else {
+                alert('All NFRs copied to clipboard.');
+            }
+        }).catch(err => {
+            console.error('Failed to copy with Clipboard API:', err);
+            fallbackCopyText(nfrText, btn, originalText);
+        });
+    } else {
+        // Fallback for HTTP / older browsers
+        fallbackCopyText(nfrText, btn, originalText);
+    }
+}
+
+function fallbackCopyText(text, btn, originalText) {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.top = '-1000px';
+    document.body.appendChild(textarea);
+    textarea.select();
+
+    try {
+        const successful = document.execCommand('copy');
+        if (successful) {
+            if (btn) {
+                btn.textContent = '✓ Copied!';
+                btn.style.background = '#28a745';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = '#007bff';
+                }, 2000);
+            } else {
+                alert('All NFRs copied to clipboard.');
+            }
+        } else {
+            throw new Error('execCommand returned false');
+        }
+    } catch (err) {
+        console.error('Failed to copy with fallback:', err);
         alert('Failed to copy. Please select and copy manually.');
-    });
+    } finally {
+        document.body.removeChild(textarea);
+    }
 }
 
 function displayForms() {
