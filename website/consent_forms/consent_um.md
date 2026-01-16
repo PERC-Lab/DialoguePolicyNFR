@@ -22,7 +22,7 @@ In this study, you will work with our chatbot that evaluates whether the given a
 
 - Question 1: Whether you agree with the chatbot's satisfaction level assessment
 - Question 2: Whether you agree with the chatbot's reasoning
-- Question 3: Whether you agree with the chatbot's code locations
+- Question 3: Whether you agree with the chatbot's identified code locations
 
 Options: Agree, Partially agree, Partially disagree, and Disagree.
 

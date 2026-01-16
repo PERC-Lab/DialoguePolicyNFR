@@ -1,11 +1,12 @@
 import subprocess
 import os
 import shlex
+import re
 from datetime import datetime
 from typing import Dict, List, Optional
 
 STATIC_PROJECT_PATH = "/Users/neo/Desktop/NFR/new/website-server-copy/iTrust/iTrust"
-
+#STATIC_PROJECT_PATH = "/root/iTrust/iTrust"
 class Chatbot:
     def __init__(self, project_path: str = STATIC_PROJECT_PATH, uuid: Optional[str] = None):
         """
@@ -32,6 +33,43 @@ class Chatbot:
         if not self.uuid:
             self.uuid = self.create_chat(initial_prompt=initial_prompt)
     
+    def _extract_uuid_from_text(self, text: str) -> Optional[str]:
+        uuid_match = re.search(r'[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}', text)
+        return uuid_match.group(0) if uuid_match else None
+
+    def _latest_session_state_uuid(self) -> Optional[str]:
+        # ls -t ~/.copilot/session-state | head -n1
+        session_state_dir = os.path.expanduser('~/.copilot/session-state')
+        if not os.path.isdir(session_state_dir):
+            return None
+        entries = [os.path.join(session_state_dir, name) for name in os.listdir(session_state_dir)]
+        entries = [e for e in entries if os.path.isfile(e) or os.path.isdir(e)]
+        if not entries:
+            return None
+        latest = max(entries, key=os.path.getmtime)
+        base = os.path.basename(latest)
+        if base.endswith('.jsonl'):
+            base = base[:-6]
+        return base
+
+    def _latest_process_log_uuid(self) -> Optional[str]:
+        logs_dir = os.path.expanduser('~/.copilot/logs')
+        if not os.path.isdir(logs_dir):
+            return None
+        logs = [os.path.join(logs_dir, name) for name in os.listdir(logs_dir) if name.startswith('process-')]
+        if not logs:
+            return None
+        latest = max(logs, key=os.path.getmtime)
+        try:
+            with open(latest, 'r') as f:
+                content = f.read()
+            uuid = self._extract_uuid_from_text(content)
+            if uuid and uuid.startswith('session-'):
+                uuid = uuid[8:]
+            return uuid
+        except Exception:
+            return None
+
     def create_chat(self, initial_prompt: Optional[str] = None, timeout: int = 180) -> str:
         """
         Create a new chat session with copilot CLI and return the UUID.
@@ -53,8 +91,7 @@ class Chatbot:
         # Create a new session by running a command and extracting the session ID
         shell_command = (
             f'cd {escaped_path} && '
-            f'copilot -p {escaped_prompt} --model gpt-5.1-codex-max -s --allow-all-tools 2>/dev/null >/dev/null && '
-            f'ls -t ~/.copilot/logs/ 2>/dev/null | head -n 1 | sed "s/\\.log$//"'
+            f'copilot -p {escaped_prompt} --model gpt-5.1-codex-max -s --allow-all-tools'
         )
         
         try:
@@ -67,20 +104,24 @@ class Chatbot:
                 env={**os.environ, 'PATH': f"{os.path.expanduser('~')}/.local/bin:{os.environ.get('PATH', '')}"},
                 timeout=timeout
             )
+            print('here')
             
             if result.returncode == 0:
-                output = result.stdout.strip()
-                if output:
-                    # Extract UUID from the log filename
-                    # Format could be: session-{uuid} or just {uuid}
-                    if output.startswith('session-'):
-                        uuid = output[8:]  # Remove 'session-' prefix
-                    else:
-                        uuid = output
+                # Prefer UUID from CLI output if available
+                print('here1')
+                uuid = self._extract_uuid_from_text(result.stdout or '') or self._extract_uuid_from_text(result.stderr or '')
+                if not uuid:
+                    # Fallback to session-state (works on both folder and .jsonl formats)
+                    uuid = self._latest_session_state_uuid()
+                print('here2')
+                if not uuid:
+                    # Final fallback: scrape newest process log
+                    uuid = self._latest_process_log_uuid()
+                print('here3')
+                if uuid:
                     self.chat_history = []
                     return uuid
-                else:
-                    raise Exception("Failed to retrieve session ID from copilot logs")
+                raise Exception("Failed to retrieve session ID from copilot")
             else:
                 error_msg = result.stderr if result.stderr else "Unknown error"
                 raise Exception(f"Failed to create chat: {error_msg}")
@@ -109,6 +150,8 @@ class Chatbot:
         escaped_message = shlex.quote(message)
         escaped_uuid = shlex.quote(self.uuid)
         escaped_path = shlex.quote(self.project_path)
+        print(f"Executing copilot command with session UUID: {self.uuid}")
+        print(f"Executing copilot command with session UUID: {escaped_uuid}")
         
         shell_command = (
             f'cd {escaped_path} && '
