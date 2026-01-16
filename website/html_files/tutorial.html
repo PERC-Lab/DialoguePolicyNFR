@@ -74,7 +74,7 @@
                 Please press the button below and review the tutorial carefully. The tutorial contains important information about how to use the evaluation tool and interact with the chatbot.
             </p>
             <p style="margin-top: 40px; text-align: center;">
-                <button class="btn" onclick="openTutorialModal()" style="width: 100%; max-width: 400px; padding: 15px 30px; font-size: 18px;">View Detailed Tutorial</button>
+                <button class="btn" onclick="openTutorialModal()" style="width: 100%; max-width: 400px; padding: 15px 30px; font-size: 18px;">View Tutorial</button>
             </p>
         </div>
         
@@ -100,7 +100,7 @@
             <h2>Code Structure Explanation</h2>
             
             <p style="margin-bottom: 20px; line-height: 1.8;">
-                iTrust is an educational Electronic Health Record (EHR) system developed at NC State University for teaching software engineering. It's designed to handle patient medical records while maintaining HIPAA privacy standards. The system has been continuously developed since 2005, with undergraduate students adding features each semester.
+                iTrust is an Electronic Health Record (EHR) system developed at NC State University for teaching software engineering. It's designed to handle patient medical records while maintaining HIPAA privacy standards.
             </p>
             
             <h3 style="margin-top: 30px; margin-bottom: 15px; color: #333;">Who Uses iTrust?</h3>
@@ -117,7 +117,7 @@
             </ol>
             
             <p style="margin-bottom: 20px; line-height: 1.8;">
-                The system follows a <strong>strict Model-View-Controller (MVC) pattern</strong> with clear separation of concerns across three layers.
+                The system follows a <strong>Model-View-Controller (MVC) pattern</strong> with clear separation of concerns across three layers.
             </p>
             
             <h3 style="margin-top: 30px; margin-bottom: 15px; color: #333;">Architectural Pattern: Model-View-Controller (MVC)</h3>
@@ -386,11 +386,12 @@
         
         <!-- Page 5: Password -->
         <div class="tutorial-page" id="page5">
-            <h2>Password Entry</h2>
-            <p>Please enter the password to proceed to the evaluation phase.</p>
+            <h2>Verification Entry</h2>
+            <p>Before beginning the experiment, please confirm you have successfully downloaded and extracted the code.</p>
+            <p>In the downloaded folder, open the file named "verification.txt" </p>
             
             <div class="form-group">
-                <label for="password">Password:</label>
+                <label for="password">What is the verification password written in this "verification.txt"?</label>
                 <input type="text" id="password" placeholder="Enter password">
             </div>
             

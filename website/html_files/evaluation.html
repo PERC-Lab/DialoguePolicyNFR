@@ -1033,13 +1033,23 @@ function sendMessage() {
     // Show loading indicator
     const loadingId = showLoadingMessage();
     
-    // Send to chatbot with UUID
+    // Send to chatbot with UUID with extended timeout (10 minutes to match gunicorn)
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 600000); // 600 seconds = 10 minutes
+    
     fetch('/api/ask_chatbot', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({uuid: uuid, message: message})
+        body: JSON.stringify({uuid: uuid, message: message}),
+        signal: controller.signal
     })
-    .then(r => r.json())
+    .then(r => {
+        clearTimeout(timeoutId);
+        if (!r.ok) {
+            throw new Error(`Server error: ${r.status} ${r.statusText}`);
+        }
+        return r.json();
+    })
     .then(data => {
         // Remove loading indicator
         removeLoadingMessage(loadingId);
@@ -1051,10 +1061,15 @@ function sendMessage() {
         }
     })
     .catch(error => {
+        clearTimeout(timeoutId);
         console.error('Error sending message:', error);
         // Remove loading indicator
         removeLoadingMessage(loadingId);
-        addMessage('bot', 'Error: Failed to send message. Please try again.');
+        if (error.name === 'AbortError') {
+            addMessage('bot', 'Error: Request timed out. The response is taking longer than expected. Please try again.');
+        } else {
+            addMessage('bot', 'Error: Failed to send message. Please try again.');
+        }
     })
     .finally(() => {
         // Re-enable input and button after response is received
