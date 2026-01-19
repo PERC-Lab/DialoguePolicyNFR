@@ -107,8 +107,8 @@ class Chatbot:
             print('here')
             
             if result.returncode == 0:
+                '''
                 # Prefer UUID from CLI output if available
-                print('here1')
                 uuid = self._extract_uuid_from_text(result.stdout or '') or self._extract_uuid_from_text(result.stderr or '')
                 if not uuid:
                     # Fallback to session-state (works on both folder and .jsonl formats)
@@ -118,6 +118,8 @@ class Chatbot:
                     # Final fallback: scrape newest process log
                     uuid = self._latest_process_log_uuid()
                 print('here3')
+                '''
+                uuid = self._latest_session_state_uuid()
                 if uuid:
                     self.chat_history = []
                     return uuid
