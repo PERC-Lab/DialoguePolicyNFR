@@ -757,6 +757,7 @@ let nfrs = [];
 let batchData = null;
 let uuid = null;
 let submittedNfrs = new Set();
+let forcedNfrs = [];
 
 // Load UUID and chat history on page load
 window.addEventListener('load', () => {
@@ -796,6 +797,7 @@ function loadNFRs() {
         .then(data => {
             batchData = data;
             nfrs = data.nfrs;
+            forcedNfrs = data.forced_nfrs || [];
             document.getElementById('currentBatch').textContent = data.batch;
             document.getElementById('totalBatches').textContent = data.total_batches;
             displayNFRs();
@@ -879,7 +881,9 @@ function fallbackCopyText(text, btn, originalText) {
 
 function displayForms() {
     const container = document.getElementById('nfrFormsContainer');
-    container.innerHTML = nfrs.map(nfr => `
+    container.innerHTML = nfrs.map(nfr => {
+        const isForced = forcedNfrs.includes(nfr.id);
+        return `
         <div class="nfr-form-section" id="nfr-form-${nfr.id}">
             <h4>NFR ${nfr.id}: ${nfr.title}</h4>
             
@@ -891,9 +895,9 @@ function displayForms() {
                     <label><input type="radio" name="q1_${nfr.id}" value="Partially disagree"> Partially disagree</label>
                     <label><input type="radio" name="q1_${nfr.id}" value="Disagree"> Disagree</label>
                 </div>
-                <div class="form-group" id="q1_assessment_${nfr.id}" style="display: none; margin-top: 10px;">
+                <div class="form-group" id="q1_assessment_${nfr.id}" style="margin-top: 10px;">
                     <label>Provide your own assessment:</label>
-                    <select name="q1_own_assessment_${nfr.id}" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                    <select name="q1_own_assessment_${nfr.id}" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
                         <option value="">Select...</option>
                         <option value="Satisfied">Satisfied</option>
                         <option value="Weakly Satisfied">Weakly Satisfied</option>
@@ -912,10 +916,13 @@ function displayForms() {
                     <label><input type="radio" name="q2_${nfr.id}" value="Partially disagree"> Partially disagree</label>
                     <label><input type="radio" name="q2_${nfr.id}" value="Disagree"> Disagree</label>
                 </div>
-                <div class="form-group" id="q2_assessment_${nfr.id}" style="display: none; margin-top: 10px;">
+                ${isForced ? `
+                <div class="form-group" id="q2_assessment_${nfr.id}" style="margin-top: 10px;">
                     <label>Provide your own assessment:</label>
-                    <textarea name="q2_own_assessment_${nfr.id}" placeholder="Enter your own assessment..." style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; min-height: 80px;"></textarea>
+                    <textarea name="q2_own_assessment_${nfr.id}" placeholder="Enter your own assessment..." style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; min-height: 80px;" required></textarea>
+                    <div style="font-size: 12px; color: #c00; margin-top: 4px;">Required for this NFR.</div>
                 </div>
+                ` : ''}
             </div>
             
             <div class="form-group">
@@ -926,31 +933,15 @@ function displayForms() {
                     <label><input type="radio" name="q3_${nfr.id}" value="Partially disagree"> Partially disagree</label>
                     <label><input type="radio" name="q3_${nfr.id}" value="Disagree"> Disagree</label>
                 </div>
-                <div class="form-group" id="q3_assessment_${nfr.id}" style="display: none; margin-top: 10px;">
+                <div class="form-group" id="q3_assessment_${nfr.id}" style="margin-top: 10px;">
                     <label>Provide your own assessment:</label>
-                    <textarea name="q3_own_assessment_${nfr.id}" placeholder="Enter your own assessment..." style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; min-height: 80px;"></textarea>
+                    <textarea name="q3_own_assessment_${nfr.id}" placeholder="Enter your own assessment..." style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; min-height: 80px;" ${isForced ? 'required' : ''}></textarea>
+                    ${isForced ? '<div style="font-size: 12px; color: #c00; margin-top: 4px;">Required for this NFR.</div>' : ''}
                 </div>
             </div>
         </div>
-    `).join('');
-    
-    // Add event listeners for disagreement detection
-    nfrs.forEach(nfr => {
-        const q1Radios = document.querySelectorAll(`input[name="q1_${nfr.id}"]`);
-        const q2Radios = document.querySelectorAll(`input[name="q2_${nfr.id}"]`);
-        const q3Radios = document.querySelectorAll(`input[name="q3_${nfr.id}"]`);
-        
-        q1Radios.forEach(radio => {
-            radio.addEventListener('change', () => checkDisagreement(nfr.id, 1));
-        });
-        q2Radios.forEach(radio => {
-            radio.addEventListener('change', () => checkDisagreement(nfr.id, 2));
-        });
-        q3Radios.forEach(radio => {
-            radio.addEventListener('change', () => checkDisagreement(nfr.id, 3));
-        });
-    });
-    
+    `}).join('');
+
     // Mark completed NFRs
     submittedNfrs.forEach(nfrId => {
         const formSection = document.getElementById(`nfr-form-${nfrId}`);
@@ -958,41 +949,6 @@ function displayForms() {
             formSection.classList.add('completed');
         }
     });
-}
-
-function checkDisagreement(nfrId, questionNum) {
-    const selectedValue = document.querySelector(`input[name="q${questionNum}_${nfrId}"]:checked`)?.value;
-    const assessmentDiv = document.getElementById(`q${questionNum}_assessment_${nfrId}`);
-    
-    if (assessmentDiv) {
-        if (selectedValue && selectedValue !== 'Agree') {
-            assessmentDiv.style.display = 'block';
-            // Make the assessment field required
-            if (questionNum === 1) {
-                const select = document.querySelector(`select[name="q${questionNum}_own_assessment_${nfrId}"]`);
-                if (select) select.required = true;
-            } else {
-                const textarea = document.querySelector(`textarea[name="q${questionNum}_own_assessment_${nfrId}"]`);
-                if (textarea) textarea.required = true;
-            }
-        } else {
-            assessmentDiv.style.display = 'none';
-            // Remove required attribute
-            if (questionNum === 1) {
-                const select = document.querySelector(`select[name="q${questionNum}_own_assessment_${nfrId}"]`);
-                if (select) {
-                    select.required = false;
-                    select.value = '';
-                }
-            } else {
-                const textarea = document.querySelector(`textarea[name="q${questionNum}_own_assessment_${nfrId}"]`);
-                if (textarea) {
-                    textarea.required = false;
-                    textarea.value = '';
-                }
-            }
-        }
-    }
 }
 
 document.getElementById('batchForm').addEventListener('submit', (e) => {
@@ -1020,22 +976,20 @@ document.getElementById('batchForm').addEventListener('submit', (e) => {
             missingFields.push(`NFR ${nfr.id}: Question 3`);
         }
         
-        // Check if own assessments are required (when not Agree)
-        if (q1 && q1 !== 'Agree') {
-            const q1Assessment = document.querySelector(`select[name="q1_own_assessment_${nfr.id}"]`)?.value || '';
-            if (!q1Assessment) {
-                allValid = false;
-                missingFields.push(`NFR ${nfr.id}: Your own assessment for Question 1`);
-            }
+        // Own assessment for Q1 is always required
+        const q1Assessment = document.querySelector(`select[name="q1_own_assessment_${nfr.id}"]`)?.value || '';
+        if (!q1Assessment) {
+            allValid = false;
+            missingFields.push(`NFR ${nfr.id}: Your own assessment for Question 1`);
         }
-        if (q2 && q2 !== 'Agree') {
+
+        const isForced = forcedNfrs.includes(nfr.id);
+        if (isForced) {
             const q2Assessment = document.querySelector(`textarea[name="q2_own_assessment_${nfr.id}"]`)?.value || '';
             if (!q2Assessment.trim()) {
                 allValid = false;
                 missingFields.push(`NFR ${nfr.id}: Your own assessment for Question 2`);
             }
-        }
-        if (q3 && q3 !== 'Agree') {
             const q3Assessment = document.querySelector(`textarea[name="q3_own_assessment_${nfr.id}"]`)?.value || '';
             if (!q3Assessment.trim()) {
                 allValid = false;
@@ -1057,10 +1011,10 @@ document.getElementById('batchForm').addEventListener('submit', (e) => {
         const q2 = document.querySelector(`input[name="q2_${nfr.id}"]:checked`).value;
         const q3 = document.querySelector(`input[name="q3_${nfr.id}"]:checked`).value;
         
-        // Get own assessments (only if not Agree)
-        const q1_own_assessment = q1 !== 'Agree' ? (document.querySelector(`select[name="q1_own_assessment_${nfr.id}"]`)?.value || '') : '';
-        const q2_own_assessment = q2 !== 'Agree' ? (document.querySelector(`textarea[name="q2_own_assessment_${nfr.id}"]`)?.value || '') : '';
-        const q3_own_assessment = q3 !== 'Agree' ? (document.querySelector(`textarea[name="q3_own_assessment_${nfr.id}"]`)?.value || '') : '';
+        // Own assessments are collected always; Q2/Q3 become required only for forced NFRs
+        const q1_own_assessment = document.querySelector(`select[name="q1_own_assessment_${nfr.id}"]`)?.value || '';
+        const q2_own_assessment = document.querySelector(`textarea[name="q2_own_assessment_${nfr.id}"]`)?.value || '';
+        const q3_own_assessment = document.querySelector(`textarea[name="q3_own_assessment_${nfr.id}"]`)?.value || '';
         
         formDataArray.push({
             uuid: uuid,

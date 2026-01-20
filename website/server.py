@@ -6,6 +6,8 @@ import markdown
 from chatbot import Chatbot
 from datetime import datetime
 import hashlib
+import math
+import random
 from functools import wraps
 
 app = Flask(__name__, template_folder='html_files', static_folder='static')
@@ -41,6 +43,73 @@ SATISFACTION_FILE = 'responses/satisfaction_survey.json'
 PRIZE_FILE = 'responses/prize.json'
 DEMOGRAPHICS_FILE = 'responses/demographics.json'
 BATCH_ASSIGNMENTS_FILE = 'responses/user_batch_assignments.json'
+FORCED_NFRS_FILE = 'forced.json'
+
+# How many NFRs should force an independent assessment per participant
+FORCED_ASSESSMENT_RATIO = 0.2  # 40% of NFRs in the batch
+MIN_FORCED_ASSESSMENTS = 1     # Always force at least one
+
+
+def build_batch_participants(assignments):
+    """Return mapping of actual batch -> ordered list of participant UUIDs."""
+    participants_by_batch = {}
+    for user_uuid, batches in assignments.items():
+        for batch_num in batches:
+            participants_by_batch.setdefault(batch_num, [])
+            if user_uuid not in participants_by_batch[batch_num]:
+                participants_by_batch[batch_num].append(user_uuid)
+    return participants_by_batch
+
+
+def get_participant_index(uuid, actual_batch, assignments):
+    """Return 1-based participant index (1 or 2) within a batch for a UUID."""
+    participants_by_batch = build_batch_participants(assignments)
+    participants = participants_by_batch.get(actual_batch, [])
+    if uuid in participants:
+        return participants.index(uuid) + 1
+    return None
+
+
+def compute_forced_assessment_nfrs(nfr_list, actual_batch, uuid, participant_index):
+    """Deterministically pick a subset of NFR IDs that must include independent assessments."""
+    if not nfr_list or not uuid:
+        return []
+    idx = participant_index or 1
+    rng = random.Random()
+    rng.seed(f"force-{actual_batch}-{idx}-{uuid}")
+    desired = max(MIN_FORCED_ASSESSMENTS, math.ceil(len(nfr_list) * FORCED_ASSESSMENT_RATIO))
+    desired = min(desired, len(nfr_list))
+    selected = rng.sample(nfr_list, k=desired)
+    return [nfr.get('id') for nfr in selected if isinstance(nfr, dict) and 'id' in nfr]
+
+
+def compute_peer_required_nfrs(actual_batch, participant_index, assignments):
+    """If current user is participant 2, find NFRs where participant 1 disagreed but gave no assessment."""
+    empty = {'q1': [], 'q2': [], 'q3': []}
+    if participant_index != 2:
+        return empty
+
+    participants_by_batch = build_batch_participants(assignments)
+    participants = participants_by_batch.get(actual_batch, [])
+    if not participants:
+        return empty
+
+    primary_uuid = participants[0]
+    responses = load_json_file(NFR_RESPONSES_FILE)
+    peer_responses = responses.get(primary_uuid, [])
+    peer_required = {'q1': set(), 'q2': set(), 'q3': set()}
+
+    for entry in peer_responses:
+        if entry.get('batch') != actual_batch:
+            continue
+        nfr_id = entry.get('nfr_id')
+        for q_key in ('q1', 'q2', 'q3'):
+            agreement = entry.get(f"{q_key}_agreement")
+            own_assessment = (entry.get(f"{q_key}_own_assessment") or '').strip()
+            if agreement and agreement != 'Agree' and not own_assessment:
+                peer_required[q_key].add(nfr_id)
+
+    return {k: sorted([n for n in v if n is not None]) for k, v in peer_required.items()}
 
 def load_json_file(filepath):
     """Load JSON file, return empty dict if file doesn't exist."""
@@ -277,6 +346,13 @@ def get_requirements():
         batch_nfrs = all_batches[actual_batch - 1]
     else:
         batch_nfrs = []
+
+    participant_index = get_participant_index(uuid, actual_batch, assignments) if uuid else None
+    forced_assessment_nfr_ids = compute_forced_assessment_nfrs(batch_nfrs, actual_batch, uuid, participant_index)
+    peer_required_by_question = compute_peer_required_nfrs(actual_batch, participant_index, assignments) if uuid else {'q1': [], 'q2': [], 'q3': []}
+    forced_nfrs = load_json_file(FORCED_NFRS_FILE)
+    if not isinstance(forced_nfrs, list):
+        forced_nfrs = []
     
     # Calculate total NFRs
     total_nfrs = sum(len(b) for b in all_batches)
@@ -287,7 +363,11 @@ def get_requirements():
         'actual_batch': actual_batch,  # Return actual batch number
         'total_batches': len(user_batches) if uuid and uuid in assignments else len(all_batches),
         'total_nfrs': total_nfrs,
-        'assigned_batches': user_batches if uuid and uuid in assignments else []
+        'assigned_batches': user_batches if uuid and uuid in assignments else [],
+        'participant_index': participant_index,
+        'force_assessment_nfr_ids': forced_assessment_nfr_ids,
+        'peer_required_by_question': peer_required_by_question,
+        'forced_nfrs': forced_nfrs
     })
 
 @app.route('/api/submit_nfr_feedback', methods=['POST'])
@@ -395,6 +475,47 @@ def submit_batch_feedback():
         # Add all new entries
         responses[session_id].extend(data_list)
         save_json_file(NFR_RESPONSES_FILE, responses)
+
+        # Update forced NFRs: force when user disagrees on Q2 or Q3 and leaves that question without an assessment
+        #TODO
+        '''
+        loaded_forced = load_json_file(FORCED_NFRS_FILE)
+        forced_nfrs = set(loaded_forced) if isinstance(loaded_forced, list) else set()
+        additions = 0
+
+        for entry in data_list:
+            nfr_id = entry.get('nfr_id')
+            if nfr_id is None:
+                continue
+
+            q2_agree = entry.get('q2_agreement')
+            q3_agree = entry.get('q3_agreement')
+            q2_own = (entry.get('q2_own_assessment') or '').strip()
+            q3_own = (entry.get('q3_own_assessment') or '').strip()
+
+            disagree_q2 = bool(q2_agree and q2_agree != 'Agree')
+            disagree_q3 = bool(q3_agree and q3_agree != 'Agree')
+            disagrees = disagree_q2 or disagree_q3
+            misssing = not q2_own or not q3_own
+            #missing_q2 = disagree_q2 and not q2_own
+            #missing_q3 = disagree_q3 and not q3_own
+
+            should_force = disagrees and misssing
+
+            if should_force:
+                if additions < 2 and nfr_id not in forced_nfrs:
+                    forced_nfrs.add(nfr_id)
+                    additions += 1
+            else:
+                forced_nfrs.discard(nfr_id)
+
+        # Enforce a hard cap of 2 forced NFRs
+        if len(forced_nfrs) > 2:
+            forced_nfrs = set(sorted(forced_nfrs)[:2])
+
+        save_json_file(FORCED_NFRS_FILE, sorted(forced_nfrs))
+        '''
+        
         
         return jsonify({'status': 'success', 'count': len(data_list)})
     except Exception as e:
