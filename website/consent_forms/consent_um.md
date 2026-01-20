@@ -26,7 +26,7 @@ In this study, you will work with our chatbot that evaluates whether the given a
 
 Options: Agree, Partially agree, Partially disagree, and Disagree.
 
-If you do not agree, you will provide your own assessment.
+- Question 4: Provide your own assessment. (optional, but may be randomly required for some NFRs)
 
 After completing the experiment, you will complete a brief survey about your satisfaction with the chatbot.
 
