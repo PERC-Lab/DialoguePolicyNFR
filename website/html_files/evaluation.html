@@ -298,6 +298,109 @@
     .tutorial-btn:hover {
         background: rgba(255, 255, 255, 0.3);
     }
+    .panel-step {
+        background: #f1f7ff;
+        border: 1px solid #cfe2ff;
+        border-left: 4px solid #007bff;
+        border-radius: 6px;
+        padding: 10px 12px;
+        margin-bottom: 12px;
+        font-size: 13px;
+        color: #0b2e4c;
+        line-height: 1.5;
+    }
+    .panel-step strong {
+        font-weight: 700;
+    }
+    .panel-step.chat-step {
+        margin: 20px;
+    }
+    .panel-step ul {
+        margin: 6px 0 0 16px;
+        padding-left: 16px;
+    }
+    .panel-step li {
+        margin: 4px 0;
+    }
+    .step-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    .step-body {
+        margin-top: 4px;
+    }
+    .panel-step.collapsed .step-body {
+        display: none;
+    }
+    .step-toggle {
+        background: none;
+        border: none;
+        color: #0b2e4c;
+        font-size: 12px;
+        cursor: pointer;
+        padding: 2px 6px;
+    }
+    .step-toggle:hover {
+        text-decoration: underline;
+    }
+    .step-toggle:focus {
+        outline: none;
+    }
+    .slow-notice {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        max-width: 360px;
+        background: #0b5ed7;
+        color: #fff;
+        padding: 12px 14px;
+        border-radius: 8px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+        opacity: 0;
+        transform: translateY(8px);
+        transition: opacity 0.2s ease, transform 0.2s ease;
+        z-index: 9999;
+        font-size: 13px;
+        line-height: 1.4;
+        pointer-events: auto;
+        position: fixed;
+    }
+    .slow-notice button {
+        position: absolute;
+        top: 6px;
+        right: 6px;
+        background: rgba(255, 255, 255, 0.15);
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        padding: 2px 8px;
+        cursor: pointer;
+        font-size: 12px;
+        line-height: 1.2;
+    }
+    .slow-notice button:hover {
+        background: rgba(255, 255, 255, 0.25);
+    }
+    .slow-notice.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    .panel-step {
+        background: #f1f7ff;
+        border: 1px solid #cfe2ff;
+        border-left: 4px solid #007bff;
+        border-radius: 6px;
+        padding: 10px 12px;
+        margin-bottom: 12px;
+        font-size: 13px;
+        color: #0b2e4c;
+        line-height: 1.5;
+    }
+    .panel-step strong {
+        font-weight: 700;
+    }
     .code-structure-modal {
         position: fixed;
         top: 0;
@@ -414,6 +517,18 @@
             </div>
         </div>
         <div class="panel-content">
+            <div class="panel-step" id="step1">
+                <div class="step-header">
+                    <strong>Step 1:</strong>
+                    <button type="button" class="step-toggle" onclick="toggleStep('step1', this)">Hide</button>
+                </div>
+                <div class="step-body">
+                    <ul>
+                        <li>Ask the following NFRs from the chatbot.</li>
+                        <li>Press "Copy All NFRs" to ask them in one prompt, then start the conversation.</li>
+                    </ul>
+                </div>
+            </div>
             <div class="batch-info">
                 Batch <span id="currentBatch">1</span> of <span id="totalBatches">3</span>
                 <button class="copy-nfrs-btn" onclick="copyAllNFRs()" title="Copy all NFRs to clipboard">📋 Copy All NFRs</button>
@@ -422,24 +537,49 @@
         </div>
     </div>
     
-    <!-- Form Panel -->
-    <div class="form-panel">
-        <div class="panel-header">Feedback Form</div>
-        <div class="panel-content">
-            <form id="batchForm">
-                <div id="nfrFormsContainer"></div>
-                <button type="submit" class="btn submit-batch-btn" id="submitBatchBtn">Submit All Feedback</button>
-            </form>
-        </div>
-    </div>
-    
     <!-- Chatbot Panel -->
     <div class="chatbot-panel">
         <div class="chatbot-header">Chatbot Assistant</div>
+        <div class="panel-step chat-step" id="step2">
+            <div class="step-header">
+                <strong>Step 2:</strong>
+                <button type="button" class="step-toggle" onclick="toggleStep('step2', this)">Hide</button>
+            </div>
+            <div class="step-body">
+                Interact with the chatbot to get the following for each NFR:
+                <ul>
+                    <li>Satisfaction Level (Satisfied, Weakly Satisfied, Weakly Denied, Denied, or Not Applicable)</li>
+                    <li>Reasoning for that level</li>
+                    <li>Specific Code Locations that address the NFR</li>
+                </ul>
+            </div>
+        </div>
         <div class="chatbot-messages" id="chatMessages"></div>
         <div class="chatbot-input">
             <textarea id="chatInput" placeholder="Type your message... (Press Enter to send, Shift+Enter for new line)" rows="2" onkeydown="if(event.key==='Enter' && !event.shiftKey && !this.disabled) { event.preventDefault(); sendMessage(); }"></textarea>
             <button class="btn" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <!-- Form Panel -->
+    <div class="form-panel">
+        <div class="panel-header">Feedback Form</div>
+        <div class="panel-content">
+            <div class="panel-step" id="step3">
+                <div class="step-header">
+                    <strong>Step 3:</strong>
+                    <button type="button" class="step-toggle" onclick="toggleStep('step3', this)">Hide</button>
+                </div>
+                <div class="step-body">
+                    <ul>
+                        <li>Once you're convinced the chatbot has fully assessed the NFRs, complete this feedback form for each NFR.</li>
+                    </ul>
+                </div>
+            </div>
+            <form id="batchForm">
+                <div id="nfrFormsContainer"></div>
+                <button type="submit" class="btn submit-batch-btn" id="submitBatchBtn">Submit All Feedback</button>
+            </form>
         </div>
     </div>
 </div>
@@ -477,35 +617,35 @@
                 
                 <h3>Architectural Pattern: Model-View-Controller (MVC)</h3>
                 <pre>┌─────────────────────────────────────────────────────────────┐
-│                         CLIENT BROWSER                        │
+│                         CLIENT BROWSER                      │
 └────────────────────────────┬────────────────────────────────┘
                              │ HTTP Request
                              ▼
 ┌─────────────────────────────────────────────────────────────┐
-│                    VIEW LAYER (JSPs)                         │
-│  Location: WebRoot/auth/*.jsp                                │
-│  - User interface (HTML, JavaScript)                         │
-│  - Form submission                                           │
-│  - Display data                                              │
-│  - 156 JSP files                                             │
+│                    VIEW LAYER (JSPs)                        │
+│  Location: WebRoot/auth/*.jsp                               │
+│  - User interface (HTML, JavaScript)                        │
+│  - Form submission                                          │
+│  - Display data                                             │
+│  - 156 JSP files                                            │
 └────────────────────────────┬────────────────────────────────┘
                              │
                              │ Calls Action classes
                              ▼
 ┌─────────────────────────────────────────────────────────────┐
-│                 CONTROLLER LAYER (Actions)                   │
+│                 CONTROLLER LAYER (Actions)                  │
 │  Location: src/main/edu/ncsu/csc/itrust/action/*.java       │
-│  - Business logic coordination                               │
-│  - Input validation (via Validators)                         │
+│  - Business logic coordination                              │
+│  - Input validation (via Validators)                        │
 │  - Transaction logging (HIPAA compliance)                   │
-│  - Error handling                                            │
-│  - 63+ Action classes                                        │
+│  - Error handling                                           │
+│  - 63+ Action classes                                       │
 └────────────────────────────┬────────────────────────────────┘
                              │
                              │ Uses DAOs
                              ▼
 ┌─────────────────────────────────────────────────────────────┐
-│                   MODEL LAYER                                │
+│                   MODEL LAYER                               │
 │  ┌──────────────────────────────────────────────────────┐   │
 │  │ BEANS (Data Containers)                              │   │
 │  │ Location: model/old/beans/*.java                     │   │
@@ -515,13 +655,13 @@
 │  └──────────────────────────────────────────────────────┘   │
 │  ┌──────────────────────────────────────────────────────┐   │
 │  │ DAOs (Database Access Objects)                       │   │
-│  │ Location: model/old/dao/mysql/*.java                │   │
-│  │ - PatientDAO, OfficeVisitDAO, etc.                    │   │
-│  │ - SQL queries (PreparedStatements)                    │   │
-│  │ - 24+ DAO classes                                     │   │
+│  │ Location: model/old/dao/mysql/*.java                 │   │
+│  │ - PatientDAO, OfficeVisitDAO, etc.                   │   │
+│  │ - SQL queries (PreparedStatements)                   │   │
+│  │ - 24+ DAO classes                                    │   │
 │  └──────────────────────────────────────────────────────┘   │
 │  ┌──────────────────────────────────────────────────────┐   │
-│  │ DATABASE (MySQL)                                      │   │
+│  │ DATABASE (MySQL)                                     │   │
 │  │ - No foreign keys (handled in application code)      │   │
 │  │ - Connection pooling via DAOFactory                  │   │
 │  └──────────────────────────────────────────────────────┘   │
@@ -1032,6 +1172,12 @@ function sendMessage() {
     
     // Show loading indicator
     const loadingId = showLoadingMessage();
+
+    // Hide any lingering slow notice and schedule a new one
+    hideSlowNotice();
+    const slowNoticeTimeout = setTimeout(() => {
+        showSlowNotice();
+    }, 30000);
     
     // Send to chatbot with UUID with extended timeout (10 minutes to match gunicorn)
     const controller = new AbortController();
@@ -1045,6 +1191,8 @@ function sendMessage() {
     })
     .then(r => {
         clearTimeout(timeoutId);
+        clearTimeout(slowNoticeTimeout);
+        hideSlowNotice();
         if (!r.ok) {
             throw new Error(`Server error: ${r.status} ${r.statusText}`);
         }
@@ -1062,6 +1210,8 @@ function sendMessage() {
     })
     .catch(error => {
         clearTimeout(timeoutId);
+        clearTimeout(slowNoticeTimeout);
+        hideSlowNotice();
         console.error('Error sending message:', error);
         // Remove loading indicator
         removeLoadingMessage(loadingId);
@@ -1072,6 +1222,8 @@ function sendMessage() {
         }
     })
     .finally(() => {
+        clearTimeout(slowNoticeTimeout);
+        hideSlowNotice();
         // Re-enable input and button after response is received
         input.disabled = false;
         if (sendButton) {
@@ -1194,6 +1346,42 @@ function loadProgress() {
 function saveNfrProgress() {
     localStorage.setItem('evaluation_batch', currentBatch.toString());
     localStorage.setItem('submitted_nfrs', JSON.stringify(Array.from(submittedNfrs)));
+}
+
+function toggleStep(stepId, btn) {
+    const step = document.getElementById(stepId);
+    if (!step) return;
+    const isCollapsed = step.classList.toggle('collapsed');
+    if (btn) {
+        btn.textContent = isCollapsed ? 'Show' : 'Hide';
+    }
+}
+
+function ensureSlowNoticeElement() {
+    let notice = document.getElementById('slowNotice');
+    if (!notice) {
+        notice = document.createElement('div');
+        notice.id = 'slowNotice';
+        notice.className = 'slow-notice';
+        notice.setAttribute('aria-live', 'polite');
+        notice.setAttribute('role', 'status');
+        notice.innerHTML = '<div style="padding-right: 32px;">The chatbot is still analyzing your response. It might take up to 8 minutes to answer. The first message usually takes longer as the chatbot reviews and understands the code, but subsequent responses will be quick.</div>' +
+            '<button type="button" aria-label="Close" onclick="hideSlowNotice()">Close</button>';
+        document.body.appendChild(notice);
+    }
+    return notice;
+}
+
+function showSlowNotice() {
+    const notice = ensureSlowNoticeElement();
+    notice.classList.add('visible');
+}
+
+function hideSlowNotice() {
+    const notice = document.getElementById('slowNotice');
+    if (notice) {
+        notice.classList.remove('visible');
+    }
 }
 
 function openCodeStructureModal() {

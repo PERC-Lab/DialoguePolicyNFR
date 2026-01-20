@@ -122,35 +122,35 @@
             
             <h3 style="margin-top: 30px; margin-bottom: 15px; color: #333;">Architectural Pattern: Model-View-Controller (MVC)</h3>
             <pre style="background: #f5f5f5; padding: 20px; border-radius: 4px; overflow-x: auto; font-size: 12px; line-height: 1.4; margin-bottom: 30px;">┌─────────────────────────────────────────────────────────────┐
-│                         CLIENT BROWSER                        │
+│                         CLIENT BROWSER                      │
 └────────────────────────────┬────────────────────────────────┘
                              │ HTTP Request
                              ▼
 ┌─────────────────────────────────────────────────────────────┐
-│                    VIEW LAYER (JSPs)                         │
-│  Location: WebRoot/auth/*.jsp                                │
-│  - User interface (HTML, JavaScript)                         │
-│  - Form submission                                           │
-│  - Display data                                              │
-│  - 156 JSP files                                             │
+│                    VIEW LAYER (JSPs)                        │
+│  Location: WebRoot/auth/*.jsp                               │
+│  - User interface (HTML, JavaScript)                        │
+│  - Form submission                                          │
+│  - Display data                                             │
+│  - 156 JSP files                                            │
 └────────────────────────────┬────────────────────────────────┘
                              │
                              │ Calls Action classes
                              ▼
 ┌─────────────────────────────────────────────────────────────┐
-│                 CONTROLLER LAYER (Actions)                   │
+│                 CONTROLLER LAYER (Actions)                  │
 │  Location: src/main/edu/ncsu/csc/itrust/action/*.java       │
-│  - Business logic coordination                               │
-│  - Input validation (via Validators)                         │
+│  - Business logic coordination                              │
+│  - Input validation (via Validators)                        │
 │  - Transaction logging (HIPAA compliance)                   │
-│  - Error handling                                            │
-│  - 63+ Action classes                                        │
+│  - Error handling                                           │
+│  - 63+ Action classes                                       │
 └────────────────────────────┬────────────────────────────────┘
                              │
                              │ Uses DAOs
                              ▼
 ┌─────────────────────────────────────────────────────────────┐
-│                   MODEL LAYER                                │
+│                   MODEL LAYER                               │
 │  ┌──────────────────────────────────────────────────────┐   │
 │  │ BEANS (Data Containers)                              │   │
 │  │ Location: model/old/beans/*.java                     │   │
@@ -160,13 +160,13 @@
 │  └──────────────────────────────────────────────────────┘   │
 │  ┌──────────────────────────────────────────────────────┐   │
 │  │ DAOs (Database Access Objects)                       │   │
-│  │ Location: model/old/dao/mysql/*.java                │   │
-│  │ - PatientDAO, OfficeVisitDAO, etc.                    │   │
-│  │ - SQL queries (PreparedStatements)                    │   │
-│  │ - 24+ DAO classes                                     │   │
+│  │ Location: model/old/dao/mysql/*.java                 │   │
+│  │ - PatientDAO, OfficeVisitDAO, etc.                   │   │
+│  │ - SQL queries (PreparedStatements)                   │   │
+│  │ - 24+ DAO classes                                    │   │
 │  └──────────────────────────────────────────────────────┘   │
 │  ┌──────────────────────────────────────────────────────┐   │
-│  │ DATABASE (MySQL)                                      │   │
+│  │ DATABASE (MySQL)                                     │   │
 │  │ - No foreign keys (handled in application code)      │   │
 │  │ - Connection pooling via DAOFactory                  │   │
 │  └──────────────────────────────────────────────────────┘   │
