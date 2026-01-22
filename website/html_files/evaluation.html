@@ -98,6 +98,10 @@
         font-weight: 600;
         font-size: 13px;
     }
+    .required-star {
+        color: #c00;
+        margin-left: 4px;
+    }
     .form-group textarea {
         width: 100%;
         padding: 8px;
@@ -888,57 +892,46 @@ function displayForms() {
             <h4>NFR ${nfr.id}: ${nfr.title}</h4>
             
             <div class="form-group">
-                <label>Question 1: Do you agree with the chatbot's satisfaction level assessment?</label>
+                <label>Question 1: Do you agree with the chatbot's satisfaction level assessment?<span class="required-star">*</span></label>
                 <div class="radio-group">
                     <label><input type="radio" name="q1_${nfr.id}" value="Agree" required> Agree</label>
                     <label><input type="radio" name="q1_${nfr.id}" value="Partially agree"> Partially agree</label>
                     <label><input type="radio" name="q1_${nfr.id}" value="Partially disagree"> Partially disagree</label>
                     <label><input type="radio" name="q1_${nfr.id}" value="Disagree"> Disagree</label>
                 </div>
-                <div class="form-group" id="q1_assessment_${nfr.id}" style="margin-top: 10px;">
-                    <label>Provide your own assessment:</label>
-                    <select name="q1_own_assessment_${nfr.id}" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
-                        <option value="">Select...</option>
-                        <option value="Satisfied">Satisfied</option>
-                        <option value="Weakly Satisfied">Weakly Satisfied</option>
-                        <option value="Weakly Denied">Weakly Denied</option>
-                        <option value="Denied">Denied</option>
-                        <option value="NA">NA</option>
-                    </select>
-                </div>
             </div>
             
             <div class="form-group">
-                <label>Question 2: Do you agree with the chatbot's reasoning?</label>
+                <label>Question 2: Do you agree with the chatbot's reasoning?<span class="required-star">*</span></label>
                 <div class="radio-group">
                     <label><input type="radio" name="q2_${nfr.id}" value="Agree" required> Agree</label>
                     <label><input type="radio" name="q2_${nfr.id}" value="Partially agree"> Partially agree</label>
                     <label><input type="radio" name="q2_${nfr.id}" value="Partially disagree"> Partially disagree</label>
                     <label><input type="radio" name="q2_${nfr.id}" value="Disagree"> Disagree</label>
                 </div>
-                ${isForced ? `
-                <div class="form-group" id="q2_assessment_${nfr.id}" style="margin-top: 10px;">
-                    <label>Provide your own assessment:</label>
-                    <textarea name="q2_own_assessment_${nfr.id}" placeholder="Enter your own assessment..." style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; min-height: 80px;" required></textarea>
-                    <div style="font-size: 12px; color: #c00; margin-top: 4px;">Required for this NFR.</div>
-                </div>
-                ` : ''}
             </div>
             
             <div class="form-group">
-                <label>Question 3: Do you agree with the chatbot's identified code locations?</label>
+                <label>Question 3: Do you agree with the chatbot's identified code locations?<span class="required-star">*</span></label>
                 <div class="radio-group">
                     <label><input type="radio" name="q3_${nfr.id}" value="Agree" required> Agree</label>
                     <label><input type="radio" name="q3_${nfr.id}" value="Partially agree"> Partially agree</label>
                     <label><input type="radio" name="q3_${nfr.id}" value="Partially disagree"> Partially disagree</label>
                     <label><input type="radio" name="q3_${nfr.id}" value="Disagree"> Disagree</label>
                 </div>
-                <div class="form-group" id="q3_assessment_${nfr.id}" style="margin-top: 10px;">
-                    <label>Provide your own assessment:</label>
-                    <textarea name="q3_own_assessment_${nfr.id}" placeholder="Enter your own assessment..." style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; min-height: 80px;" ${isForced ? 'required' : ''}></textarea>
-                    ${isForced ? '<div style="font-size: 12px; color: #c00; margin-top: 4px;">Required for this NFR.</div>' : ''}
-                </div>
             </div>
+
+            <div class="form-group">
+                <label>Undecided? Explain why:</label>
+                <textarea name="undecided_reason_${nfr.id}" placeholder="Incase you cannot choose any of the above, explain why." style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; min-height: 80px;"></textarea>
+            </div>
+
+            ${isForced ? `
+            <div class="form-group" id="forced_assessment_${nfr.id}" style="margin-top: 10px;">
+                <label>Provide your own assessment:<span class="required-star">*</span></label>
+                <textarea name="forced_own_assessment_${nfr.id}" placeholder="Enter your own assessment on satisfaction level, reasoning and code location" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; min-height: 80px;" required></textarea>
+            </div>
+            ` : ''}
         </div>
     `}).join('');
 
@@ -962,6 +955,7 @@ document.getElementById('batchForm').addEventListener('submit', (e) => {
         const q1 = document.querySelector(`input[name="q1_${nfr.id}"]:checked`)?.value;
         const q2 = document.querySelector(`input[name="q2_${nfr.id}"]:checked`)?.value;
         const q3 = document.querySelector(`input[name="q3_${nfr.id}"]:checked`)?.value;
+        const isForced = forcedNfrs.includes(nfr.id);
         
         if (!q1) {
             allValid = false;
@@ -975,25 +969,12 @@ document.getElementById('batchForm').addEventListener('submit', (e) => {
             allValid = false;
             missingFields.push(`NFR ${nfr.id}: Question 3`);
         }
-        
-        // Own assessment for Q1 is always required
-        const q1Assessment = document.querySelector(`select[name="q1_own_assessment_${nfr.id}"]`)?.value || '';
-        if (!q1Assessment) {
-            allValid = false;
-            missingFields.push(`NFR ${nfr.id}: Your own assessment for Question 1`);
-        }
 
-        const isForced = forcedNfrs.includes(nfr.id);
         if (isForced) {
-            const q2Assessment = document.querySelector(`textarea[name="q2_own_assessment_${nfr.id}"]`)?.value || '';
-            if (!q2Assessment.trim()) {
+            const forcedAssessment = document.querySelector(`textarea[name="forced_own_assessment_${nfr.id}"]`)?.value || '';
+            if (!forcedAssessment.trim()) {
                 allValid = false;
-                missingFields.push(`NFR ${nfr.id}: Your own assessment for Question 2`);
-            }
-            const q3Assessment = document.querySelector(`textarea[name="q3_own_assessment_${nfr.id}"]`)?.value || '';
-            if (!q3Assessment.trim()) {
-                allValid = false;
-                missingFields.push(`NFR ${nfr.id}: Your own assessment for Question 3`);
+                missingFields.push(`NFR ${nfr.id}: Provide your own assessment`);
             }
         }
     });
@@ -1010,22 +991,23 @@ document.getElementById('batchForm').addEventListener('submit', (e) => {
         const q1 = document.querySelector(`input[name="q1_${nfr.id}"]:checked`).value;
         const q2 = document.querySelector(`input[name="q2_${nfr.id}"]:checked`).value;
         const q3 = document.querySelector(`input[name="q3_${nfr.id}"]:checked`).value;
-        
-        // Own assessments are collected always; Q2/Q3 become required only for forced NFRs
-        const q1_own_assessment = document.querySelector(`select[name="q1_own_assessment_${nfr.id}"]`)?.value || '';
-        const q2_own_assessment = document.querySelector(`textarea[name="q2_own_assessment_${nfr.id}"]`)?.value || '';
-        const q3_own_assessment = document.querySelector(`textarea[name="q3_own_assessment_${nfr.id}"]`)?.value || '';
+        const isForced = forcedNfrs.includes(nfr.id);
+        const undecided_reason = document.querySelector(`textarea[name="undecided_reason_${nfr.id}"]`)?.value || '';
+        const forced_own_assessment = document.querySelector(`textarea[name="forced_own_assessment_${nfr.id}"]`)?.value || '';
+        // Populate legacy per-question assessment fields to keep downstream logic working
+        const q1_own_assessment = isForced ? forced_own_assessment : '';
+        const q2_own_assessment = isForced ? forced_own_assessment : '';
+        const q3_own_assessment = isForced ? forced_own_assessment : '';
         
         formDataArray.push({
             uuid: uuid,
             nfr_id: nfr.id,
             batch: currentBatch,
             q1_agreement: q1,
-            q1_own_assessment: q1_own_assessment,
             q2_agreement: q2,
-            q2_own_assessment: q2_own_assessment,
             q3_agreement: q3,
-            q3_own_assessment: q3_own_assessment,
+            undecided_reason: undecided_reason,
+            forced_own_assessment: forced_own_assessment,
             timestamp: new Date().toISOString()
         });
     });
