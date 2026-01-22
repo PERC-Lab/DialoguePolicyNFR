@@ -7,6 +7,8 @@ from typing import Dict, List, Optional
 
 STATIC_PROJECT_PATH = "/Users/neo/Desktop/NFR/new/website-server-copy/iTrust/iTrust"
 #STATIC_PROJECT_PATH = "/root/iTrust/iTrust"
+MODEL = f"gpt-5.1-codex-max"
+MODEL = f"gpt-5-mini"
 class Chatbot:
     def __init__(self, project_path: str = STATIC_PROJECT_PATH, uuid: Optional[str] = None):
         """
@@ -91,7 +93,7 @@ class Chatbot:
         # Create a new session by running a command and extracting the session ID
         shell_command = (
             f'cd {escaped_path} && '
-            f'copilot -p {escaped_prompt} --model gpt-5.1-codex-max -s --allow-all-tools'
+            f'copilot -p {escaped_prompt} --model {MODEL} -s --allow-all-tools'
         )
         
         try:
@@ -157,7 +159,7 @@ class Chatbot:
         
         shell_command = (
             f'cd {escaped_path} && '
-            f'copilot --model gpt-5.1-codex-max --resume {escaped_uuid} -p {escaped_message} -s --allow-all-tools'
+            f'copilot --model {MODEL} --resume {escaped_uuid} -p {escaped_message} -s --allow-all-tools'
         )
         
         try:
