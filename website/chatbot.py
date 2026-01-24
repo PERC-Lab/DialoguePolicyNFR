@@ -44,7 +44,8 @@ class Chatbot:
         session_state_dir = os.path.expanduser('~/.copilot/session-state')
         if not os.path.isdir(session_state_dir):
             return None
-        entries = [os.path.join(session_state_dir, name) for name in os.listdir(session_state_dir)]
+        entries = [os.path.join(session_state_dir, name) for name in os.listdir(session_state_dir)
+                   if not name.startswith('process')]
         entries = [e for e in entries if os.path.isfile(e) or os.path.isdir(e)]
         if not entries:
             return None
