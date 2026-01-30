@@ -363,6 +363,41 @@
         overflow: visible !important;
     }
     
+    /* Step 1.1 Code Navigation */
+    .mvc-diagram {
+        background: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 6px;
+        padding: 20px;
+        font-size: 12px;
+        overflow-x: auto;
+    }
+    .code-layer-card {
+        background: #f8f9fa;
+        border-left: 4px solid #007bff;
+        padding: 15px 20px;
+        margin-bottom: 15px;
+        border-radius: 4px;
+    }
+    .code-layer-card h4 {
+        margin-bottom: 10px;
+        color: #333;
+    }
+    .code-layer-card code {
+        background: #e9ecef;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 13px;
+    }
+    .nfr-highlight-box {
+        background: #fff3cd;
+        border: 2px solid #ffc107;
+        border-radius: 8px;
+        padding: 20px;
+        margin: 20px 0;
+        font-size: 16px;
+    }
+    
     /* Red box around buttons */
     .highlight-buttons-box {
         border: 3px solid #dc3545 !important;
@@ -450,7 +485,7 @@
             
             <h3 style="margin-top: 30px; margin-bottom: 15px; color: #333;">Examples of NFRs:</h3>
             <ul style="margin-left: 20px; line-height: 2; margin-bottom: 20px;">
-                <li><strong>Security:</strong> "Users should be able to change their password that meets security requirements."</li>
+                <li><strong>Security:</strong> "The system must allow users to change passwords using secure storage methods"</li>
                 <li><strong>Performance:</strong> "The system must load patient records within 2 seconds."</li>
                 <li><strong>Usability:</strong> "The interface must be accessible to users with visual impairments."</li>
                 <li><strong>Reliability:</strong> "The system must have 99.9% uptime."</li>
@@ -462,7 +497,7 @@
         <div class="tutorial-page" id="page3">
             <h2>What is HIPAA?</h2>
             <p style="line-height: 1.8; margin-bottom: 20px;">
-                HIPAA (Health Insurance Portability and Accountability Act) is a U.S. federal law that establishes privacy and security standards for the protection of sensitive patient health information. It requires healthcare providers, insurers, and their business associates to implement safeguards to ensure that Protected Health Information (PHI) remains confidential, secure, and accessible only to authorized individuals.
+                <a href="https://www.ecfr.gov/current/title-45/subtitle-A/subchapter-C/part-164" target="_blank" rel="noopener noreferrer">HIPAA</a> (Health Insurance Portability and Accountability Act) is a U.S. federal law that establishes privacy and security standards for the protection of sensitive patient health information. It requires healthcare providers, insurers, and their business associates to implement safeguards to ensure that Protected Health Information (PHI) remains confidential, secure, and accessible only to authorized individuals.
             </p>
         </div>
         
@@ -489,7 +524,7 @@
         <div class="tutorial-page" id="page5">
             <h2>Verification Entry</h2>
             <p style="line-height: 1.8; margin-bottom: 15px;">
-                Before beginning the experiment, please confirm you have successfully downloaded and extracted the code.
+                Please confirm you have successfully downloaded and extracted the code.
             </p>
             <p style="line-height: 1.8; margin-bottom: 20px;">
                 In the downloaded folder, open the file named <strong>"verification.txt"</strong>
@@ -737,7 +772,7 @@
                         <!-- Sample NFR 1 -->
                         <div class="mock-nfr-item">
                             <h4>NFR 1: Password Security</h4>
-                            <p>Users should be able to change their password that meets security requirements.</p>
+                            <p>The system must allow users to change passwords using secure storage methods.</p>
                             <label class="mock-checkbox-label">
                                 <input type="checkbox" id="mock_nfr_read_1" onchange="checkMockNfrBoxes()">
                                 I have read and understood this NFR
@@ -746,8 +781,8 @@
                         
                         <!-- Sample NFR 2 -->
                         <div class="mock-nfr-item">
-                            <h4>NFR 2: Data Encryption</h4>
-                            <p>All patient data must be encrypted according to HIPAA standards.</p>
+                            <h4>NFR 2: Performance</h4>
+                            <p>The system must load patient records within 2 seconds.</p>
                             <label class="mock-checkbox-label">
                                 <input type="checkbox" id="mock_nfr_read_2" onchange="checkMockNfrBoxes()">
                                 I have read and understood this NFR
@@ -756,8 +791,8 @@
                         
                         <!-- Sample NFR 3 -->
                         <div class="mock-nfr-item">
-                            <h4>NFR 3: Access Control</h4>
-                            <p>The system must restrict access to patient records based on user roles and permissions.</p>
+                            <h4>NFR 3: Usability</h4>
+                            <p>The interface must be accessible to users with visual impairments.</p>
                             <label class="mock-checkbox-label">
                                 <input type="checkbox" id="mock_nfr_read_3" onchange="checkMockNfrBoxes()">
                                 I have read and understood this NFR
@@ -771,8 +806,8 @@
                                 Please check all boxes above, then explain this NFR in your own words:
                             </p>
                             <div class="mock-gate-nfr">
-                                <strong>NFR 2: Data Encryption</strong><br>
-                                All patient data must be encrypted according to HIPAA standards.
+                                <strong>NFR 2: Performance</strong><br>
+                                The system must load patient records within 2 seconds.
                             </div>
                             <textarea class="mock-gate-textarea" id="mockGateAnswer" placeholder="Write your explanation here..."></textarea>
                             <div class="validation-error" id="mockGateError">Please check all boxes and provide an explanation to continue.</div>
@@ -822,8 +857,240 @@
             </div>
         </div>
         
-        <!-- Page 9: Interactive Practice - Step 2 (Chatbot) -->
+        <!-- Page 9: Step 1.1 - MVC Structure -->
         <div class="tutorial-page" id="page9">
+            <h2>Step 1.1: Understanding the Code Structure</h2>
+            <span class="practice-label">CODE NAVIGATION</span>
+            
+            <p style="line-height: 1.8; margin-bottom: 20px;">
+                The iTrust codebase follows a <strong>Model-View-Controller (MVC)</strong> architecture. Understanding this structure will help you locate the relevant code when evaluating NFRs.
+            </p>
+            
+            <p style="line-height: 1.8; margin-bottom: 15px;">
+                In MVC, the application is divided into three layers that separate concerns:
+            </p>
+            <ul style="margin-left: 20px; line-height: 2; margin-bottom: 20px;">
+                <li><strong>Model</strong> — Data and business logic (database operations)</li>
+                <li><strong>View</strong> — What the user sees and interacts with (UI)</li>
+                <li><strong>Controller</strong> — Handles user input and coordinates between Model and View</li>
+            </ul>
+            
+            <h3 style="margin-bottom: 15px;">MVC Structure in iTrust</h3>
+            <pre class="mvc-diagram">┌─────────────────────────────────────────────────────────────┐
+│                         CLIENT BROWSER                      │
+└────────────────────────────┬────────────────────────────────┘
+                             │ HTTP Request
+                             ▼
+┌─────────────────────────────────────────────────────────────┐
+│                    VIEW LAYER (JSPs)                        │
+│  Location: WebRoot/auth/*.jsp                               │
+│  - User interface (HTML, JavaScript)                        │
+│  - Form submission                                          │
+│  - Display data                                             │
+└────────────────────────────┬────────────────────────────────┘
+                             │ Calls Action classes
+                             ▼
+┌─────────────────────────────────────────────────────────────┐
+│                 CONTROLLER LAYER (Actions)                  │
+│  Location: src/main/edu/ncsu/csc/itrust/action/*.java       │
+│  - Business logic coordination                              │
+│  - Input validation                                         │
+└────────────────────────────┬────────────────────────────────┘
+                             │ Uses DAOs
+                             ▼
+┌─────────────────────────────────────────────────────────────┐
+│                   MODEL LAYER                               │
+│  Location: model/old/dao/mysql/*.java                       │
+│  - Database operations (SQL queries)                        │
+│  - Data access                                              │
+└─────────────────────────────────────────────────────────────┘</pre>
+        </div>
+        
+        <!-- Page 10: Step 1.1 - Layer Locations -->
+        <div class="tutorial-page" id="page10">
+            <h2>Step 1.1: Where to Find Each Layer</h2>
+            <span class="practice-label">CODE NAVIGATION</span>
+            
+            <p style="line-height: 1.8; margin-bottom: 25px;">
+                Each layer has a specific location in the iTrust project. Knowing these paths will help you navigate to the relevant code for any NFR.
+            </p>
+            
+            <div class="code-layer-card">
+                <h4>View Layer</h4>
+                <p><strong>What it does:</strong> What the user sees and interacts with.</p>
+                <p><strong>Location:</strong> <code>WebRoot/*.jsp</code></p>
+            </div>
+            
+            <div class="code-layer-card">
+                <h4>Controller Layer</h4>
+                <p><strong>What it does:</strong> Logic and validation.</p>
+                <p><strong>Location:</strong> <code>src/main/edu/ncsu/csc/itrust/action/*.java</code></p>
+            </div>
+            
+            <div class="code-layer-card">
+                <h4>Model Layer</h4>
+                <p><strong>What it does:</strong> Database operations.</p>
+                <p><strong>Location:</strong> <code>model/old/dao/mysql/*.java</code></p>
+            </div>
+        </div>
+        
+        <!-- Page 11: Step 1.1 - Finding codes for NFR1 -->
+        <div class="tutorial-page" id="page11">
+            <h2>Step 1.1: Finding Relevant Code</h2>
+            <span class="practice-label">CODE NAVIGATION</span>
+            
+            <p style="line-height: 1.8; margin-bottom: 20px;">
+                Let's find the relevant code for this NFR:
+            </p>
+            
+            <div class="nfr-highlight-box">
+                <strong>NFR 1:</strong> "The system must allow users to change passwords using secure storage methods"
+            </div>
+            
+            <p style="line-height: 1.8; margin-bottom: 20px; margin-top: 20px;">
+                We need to locate where password change functionality is implemented. We'll search through each layer — View, Controller, and Model — to find the relevant files.
+            </p>
+        </div>
+        
+        <!-- Page 12: Step 1.1 - View Layer Quiz -->
+        <div class="tutorial-page" id="page12">
+            <h2>Step 1.1: Finding the View Layer</h2>
+            <span class="practice-label">CODE NAVIGATION</span>
+            
+            <p style="line-height: 1.8; margin-bottom: 15px;">
+                <strong>Finding the View Layer:</strong> Located at <code>WebRoot/auth/*.jsp</code>. By looking at the files in this section, you can see many related files, such as the login page (<code>login.jsp</code>). The auth folder contains authenticated pages organized by user role (e.g., patient, hcp) with general pages directly in the auth folder.
+            </p>
+            
+            <pre class="mvc-diagram">├── WebRoot/                         # Web application root (deployed as WAR)
+│   ├── auth/                        # Protected pages (role-based)
+│   │   ├── hcp/                     # Healthcare Provider only
+│   │   ├── hcp-uap/                 # HCP and UAP shared
+│   │   ├── patient/                 # Patient only
+│   │   ├── admin/                   # Administrator only
+│   │   ├── er/                      # Emergency Responder only
+│   │   ├── pha/                     # Public Health Agent only
+│   │   └── staff/                   # All staff (HCP, UAP, Admin, LT)
+│   ├── errors/                      # Error pages (403, 404, 503)
+│   ├── util/                        # Utility JSPs
+│   ├── css/                         # Stylesheets
+│   ├── js/                          # JavaScript files
+│   ├── image/                       # Images
+│   ├── login.jsp                    # Login page
+│   ├── global.jsp                   # Global initialization (DAO, session)
+│   ├── header.jsp                   # Common header
+│   ├── footer.jsp                   # Common footer</pre>
+            
+            <div class="nfr-highlight-box">
+                <strong>NFR 1:</strong> "The system must allow users to change passwords using secure storage methods"
+            </div>
+
+            <p style="line-height: 1.8; margin-bottom: 15px;">
+                For this NFR, which file in View Layer is relevant?
+            </p>
+            
+            <div class="form-group">
+                <label>WebRoot/auth/ <input type="text" id="viewLayerAnswer" placeholder="______" style="width: 150px; display: inline-block; margin: 0 4px;"> .jsp</label>
+            </div>
+            
+            <div id="viewLayerError" style="color: red; margin-top: 10px; display: none;">
+                Incorrect. Try again. Hint: think about what the file in this folder changes the password.
+            </div>
+            
+            <div id="viewLayerSuccess" style="display: none; margin-top: 20px;">
+                <p style="color: #198754; font-weight: 600; margin-bottom: 15px;">✓ Correct! The relevant file is changePassword.jsp</p>
+                <img src="/static/images/code1.png" alt="Code view for changePassword" style="max-width: 100%; border: 1px solid #ddd; border-radius: 4px;">
+            </div>
+        </div>
+        
+        <!-- Page 13: Step 1.1 - Controller/Action Layer -->
+        <div class="tutorial-page" id="page13">
+            <h2>Step 1.1: Finding the Controller/Action Layer</h2>
+            <span class="practice-label">CODE NAVIGATION</span>
+            
+            <p style="line-height: 1.8; margin-bottom: 15px;">
+                <strong>Finding the Controller/Action Layer:</strong> Located at <code>src/main/edu/ncsu/csc/itrust/action/*.java</code>. By reviewing the files in this section, you can see all the actions available in the format of [Feature]Action.java. In changePassword.jsp line 1, you'll see it imports an Action class.
+            </p>
+            
+            <pre class="mvc-diagram">├── src/main/
+│   └── edu/ncsu/csc/itrust/
+│       ├── action/                  # CONTROLLER LAYER
+│       │   ├── AddPatientAction.java
+│       │   ├── EditPatientAction.java
+│       │   ├── ViewMyRecordsAction.java
+│       │   └── ... (63+ action classes)</pre>
+
+            <div class="nfr-highlight-box">
+                <strong>NFR 1:</strong> "The system must allow users to change passwords using secure storage methods"
+            </div>
+            <p style="line-height: 1.8; margin-bottom: 15px;">
+                For this NFR, which file in Controller Layer is relevant?
+            </p>
+            
+            <div class="form-group">
+                <label>src/main/edu/ncsu/csc/itrust/action/ <input type="text" id="controllerLayerAnswer" placeholder="______" style="width: 220px; display: inline-block; margin: 0 4px;"> .java</label>
+            </div>
+            
+            <div id="controllerLayerError" style="color: red; margin-top: 10px; display: none;">
+                Incorrect. Try again. Hint: check which action is imported from previous layer.
+            </div>
+            
+            <div id="controllerLayerSuccess" style="display: none; margin-top: 20px;">
+                <p style="color: #198754; font-weight: 600; margin-bottom: 15px;">✓ Correct! The relevant file is ChangePasswordAction.java</p>
+                <img src="/static/images/code2.png" alt="ChangePasswordAction code" style="max-width: 100%; border: 1px solid #ddd; border-radius: 4px;">
+            </div>
+        </div>
+        
+        <!-- Page 14: Step 1.1 - Model Layer -->
+        <div class="tutorial-page" id="page14">
+            <h2>Step 1.1: Finding the Model Layer</h2>
+            <span class="practice-label">CODE NAVIGATION</span>
+            
+            <p style="line-height: 1.8; margin-bottom: 15px;">
+                <strong>Finding the Model Layer:</strong> Located at <code>model/old/dao/mysql/*.java</code>. By looking at the Action class imports to find the DAO. ChangePasswordAction.java imports and uses a DAO for authentication operations.
+            </p>
+            
+            <pre class="mvc-diagram">│       ├── model/                   # MODEL LAYER
+│       │   ├── old/
+│       │   │   ├── beans/           # Data containers
+│       │   │   │   ├── PatientBean.java
+│       │   │   │   ├── OfficeVisitBean.java
+│       │   │   │   └── ... (31+ bean classes)
+│       │   │   │
+│       │   │   ├── dao/             # Database access
+│       │   │   │   ├── DAOFactory.java      # Singleton factory
+│       │   │   │   └── mysql/
+│       │   │   │       ├── PatientDAO.java
+│       │   │   │       ├── OfficeVisitDAO.java
+│       │   │   │       └── ... (24+ DAO classes)
+│       │   │   │
+│       │   │   └── validate/        # Input validation
+│       │   │       ├── AddPatientValidator.java
+│       │   │       └── ... (validator classes)</pre>
+         
+
+            <div class="nfr-highlight-box">
+                <strong>NFR 1:</strong> "The system must allow users to change passwords using secure storage methods"
+            </div>
+            <p style="line-height: 1.8; margin-bottom: 15px;">
+                For this NFR, which file in Model Layer is relevant?
+            </p>
+            
+            <div class="form-group">
+                <label>src/main/edu/ncsu/csc/itrust/model/old/dao/mysql/ <input type="text" id="modelLayerAnswer" placeholder="______" style="width: 120px; display: inline-block; margin: 0 4px;"> .java</label>
+            </div>
+            
+            <div id="modelLayerError" style="color: red; margin-top: 10px; display: none;">
+                Incorrect. Try again. Hint: think about authentication.
+            </div>
+            
+            <div id="modelLayerSuccess" style="display: none; margin-top: 20px;">
+                <p style="color: #198754; font-weight: 600; margin-bottom: 15px;">✓ Correct! The relevant file is AuthDAO.java</p>
+                <img src="/static/images/code3.png" alt="AuthDAO code" style="max-width: 100%; border: 1px solid #ddd; border-radius: 4px;">
+            </div>
+        </div>
+        
+        <!-- Page 15: Interactive Practice - Step 2 (Chatbot) -->
+        <div class="tutorial-page" id="page15">
             <h2>Step 2: Interact with the Chatbot</h2>
             <span class="practice-label">PRACTICE MODE</span>
             <span class="step-indicator">Step 2 of 3</span>
@@ -852,16 +1119,16 @@
                             <button class="mock-btn" style="background: #007bff; color: white; border: none; padding: 6px 12px; font-size: 12px;">📋 Copy All NFRs</button>
                         </div>
                         <div class="mock-nfr-item" style="opacity: 0.7;">
-                            <h4>NFR 1: Password Security ✓</h4>
-                            <p>Users should be able to change their password...</p>
+                            <h4>NFR 1 ✓</h4>
+                            <p>The system must allow users to change passwords using secure storage methods</p>
                         </div>
                         <div class="mock-nfr-item" style="opacity: 0.7;">
-                            <h4>NFR 2: Data Encryption ✓</h4>
-                            <p>All patient data must be encrypted...</p>
+                            <h4>NFR 2 ✓</h4>
+                            <p>The system must load patient records within 2 seconds.</p>
                         </div>
                         <div class="mock-nfr-item" style="opacity: 0.7;">
-                            <h4>NFR 3: Access Control ✓</h4>
-                            <p>The system must restrict access...</p>
+                            <h4>NFR 3 ✓</h4>
+                            <p>The interface must be accessible to users with visual impairments.</p>
                         </div>
                     </div>
                 </div>
@@ -882,31 +1149,35 @@
                         <div class="mock-message bot">
                             <div class="mock-message-content">Hello! I can help you evaluate NFRs. Paste the NFRs and I'll provide assessments.</div>
                         </div>
+                        <div class="mock-chat-instruction" style="background: #fff3cd; border: 2px solid #ffc107; border-radius: 6px; padding: 12px 15px; margin: 10px 0; font-size: 12px; color: #856404;">
+                            <strong>Start by asking the chatbot to evaluate all NFRs together</strong><br>
+                            Paste the copied NFRs into the chat
+                        </div>
                         <div class="mock-message user">
-                            <div class="mock-message-content" style="white-space: pre-line;">Please evaluate the following 3 NFRs. For each NFR, provide:
+                            <div class="mock-message-content" style="white-space: pre-line;">Please evaluate the following NFR. Provide:
 • Level of satisfaction
 • Reasoning
 • Relevant code locations (if applicable).
 
-NFR 1: Password Security - Users should be able to change their password that meets security requirements.
-NFR 2: Data Encryption - All patient data must be encrypted according to HIPAA standards.
-NFR 3: Access Control - The system must restrict access to patient records based on user roles and permissions.</div>
+NFR1: The system must allow users to change passwords using secure storage methods
+NFR2: The system must load patient records within 2 seconds.
+NFR3: The interface must be accessible to users with visual impairments.</div>
                         </div>
                         <div class="mock-message bot">
-                            <div class="mock-message-content">
-                                <strong>NFR 1: Password Security</strong><br>
-                                <strong>Level of satisfaction:</strong> Satisfied<br>
-                                <strong>Reasoning:</strong> The iTrust system implements password change functionality with security requirements including minimum length, complexity rules, and password history checks.<br>
-                                <strong>Relevant code locations:</strong> auth/ChangePasswordAction.java, validators/PasswordValidator.java<br><br>
-                                <strong>NFR 2: Data Encryption</strong><br>
-                                <strong>Level of satisfaction:</strong> Satisfied<br>
-                                <strong>Reasoning:</strong> Patient data encryption is implemented through database encryption and secure transmission protocols.<br>
-                                <strong>Relevant code locations:</strong> database/EncryptionUtil.java, security/HIPAACompliance.java<br><br>
-                                <strong>NFR 3: Access Control</strong><br>
-                                <strong>Level of satisfaction:</strong> Satisfied<br>
-                                <strong>Reasoning:</strong> Role-based access control is enforced through authentication middleware and permission checks.<br>
-                                <strong>Relevant code locations:</strong> auth/RoleBasedAccessControl.java, security/PermissionValidator.java
-                            </div>
+                            <div class="mock-message-content" style="white-space: pre-line;"><strong>NFR 1: Secure password storage</strong>
+Level of satisfaction: Satisfied
+Reasoning: Passwords are hashed with SHA-256 and a per-user salt before storage. The resetPassword method in AuthDAO uses DigestUtils.sha256Hex() and stores salt in the database.
+Relevant code locations: AuthDAO.java (resetPassword), ChangePasswordAction.java
+
+<strong>NFR 2: Load patient records within 2 seconds</strong>
+Level of satisfaction: Weakly Denied
+Reasoning: ...
+Relevant code locations: ...
+
+<strong>NFR 3: Accessibility for users with visual impairments</strong>
+Level of satisfaction: Weakly Satisfied
+Reasoning: ...
+Relevant code locations: ...</div>
                         </div>
                     </div>
                     <div class="mock-chat-input">
@@ -934,7 +1205,200 @@ NFR 3: Access Control - The system must restrict access to patient records based
             </div>
             
             <p style="margin-top: 20px; font-size: 14px; color: #333;">
-                In the actual evaluation, you will interact with the chatbot to get assessments for each NFR. Press <strong>Next</strong> to see Step 3.
+                Press <strong>Next</strong> to see how to engage with the chatbot.
+            </p>
+        </div>
+        
+        <!-- Page 16: Step 2 - Follow-up Dialogue -->
+        <div class="tutorial-page" id="page16">
+            <h2>Step 2: Engaging with the Chatbot</h2>
+            <span class="practice-label">PRACTICE MODE</span>
+            <span class="step-indicator">Step 2 of 3</span>
+            
+            <p style="line-height: 1.8; margin-bottom: 20px;">
+                Engage with the chatbot as a developer would when working to understand and implement requirements. Your dialogue should include:
+            </p>
+            <ul style="margin-left: 20px; line-height: 2; margin-bottom: 25px;">
+                <li>Asking clarifying questions about unclear requirements</li>
+                <li>Seeking additional information about implementation details</li>
+                <li>Requesting specific code locations or examples</li>
+                <li>Discussing potential approaches to satisfy the requirements</li>
+                <li>Providing context about the system architecture when needed</li>
+                <li>Challenging or validating the chatbot's assessments</li>
+            </ul>
+            
+            <div class="code-layer-card" style="margin-bottom: 25px;">
+                <h4>Important Notes:</h4>
+                <ul style="margin: 10px 0 0 20px; line-height: 1.8;">
+                    <li>The chatbot will provide the final evaluation for each NFR</li>
+                    <li>Continue the dialogue until you have a complete understanding of the chatbot's assessment</li>
+                    <li>The chatbot should evaluate each NFR on three dimensions:
+                        <ul style="margin-top: 8px;">
+                            <li><strong>Satisfaction Level:</strong> Satisfied, Weakly Satisfied, Weakly Denied, Denied, or Not Applicable</li>
+                            <li><strong>Reasoning:</strong> Explanation for the satisfaction level</li>
+                            <li><strong>Code Locations:</strong> Specific places in the code where the NFR is addressed</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            
+            <p style="line-height: 1.8; margin-bottom: 15px;">
+                Example: a follow-up question for NFR 1 (Secure password storage):
+            </p>
+            
+            <!-- Three Panel Layout -->
+            <div class="mock-three-panel">
+                <!-- Left Panel: NFRs (Completed) -->
+                <div class="mock-panel" style="opacity: 0.7;">
+                    <div class="mock-panel-header" style="background: #6c757d;">NFRs Display ✓</div>
+                    <div class="mock-panel-content">
+                        <div class="mock-nfr-item" style="opacity: 0.7;">
+                            <h4>NFR 1: Secure password storage ✓</h4>
+                            <p>The system must allow users to change passwords using secure storage methods</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Middle Panel: Chatbot with follow-up -->
+                <div class="mock-panel" style="border: 3px solid #198754;">
+                    <div class="mock-panel-header" style="background: #198754;">Chatbot Assistant</div>
+                    <div class="mock-chat-messages">
+                        <div class="mock-message bot">
+                            <div class="mock-message-content">
+                                <strong>NFR 1: Secure password storage</strong><br>
+                                <strong>Level of satisfaction:</strong> Satisfied<br>
+                                <strong>Reasoning:</strong> Passwords are hashed with SHA-256 and a per-user salt before storage. The resetPassword method in AuthDAO uses DigestUtils.sha256Hex() and stores the salt in the database.<br>
+                                <strong>Relevant code locations:</strong> AuthDAO.java (resetPassword), ChangePasswordAction.java
+                            </div>
+                        </div>
+                        <div class="mock-message user">
+                            <div class="mock-message-content">I see SHA-256 is being used for password hashing. Isn't SHA-256 vulnerable to brute-force attacks?</div>
+                        </div>
+                        <div class="mock-message bot">
+                            <div class="mock-message-content">
+                                You're right. SHA-256 is designed to be fast, which makes it susceptible to brute-force attacks. There's no key stretching or iteration count in the current implementation. For the actual evaluation, this would warrant a <strong>Weakly Satisfied</strong> assessment — the system does use salted hashing (which is better than plain storage), but it falls short of modern best practices like bcrypt or Argon2.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mock-chat-input">
+                        <input type="text" placeholder="This is a demo - chatbot is not active" disabled>
+                        <button class="btn" disabled>Send</button>
+                    </div>
+                </div>
+                
+                <!-- Right Panel: Feedback (Locked) -->
+                <div class="mock-panel" style="opacity: 0.5; filter: blur(1px);">
+                    <div class="mock-panel-header">Feedback Form</div>
+                    <div class="mock-panel-content white-bg">
+                        <p style="font-size: 12px; color: #666;">Complete Step 2 to unlock.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <p style="margin-top: 20px; font-size: 14px; color: #333;">
+                In the actual evaluation, continue the conversation until you're satisfied with the chatbot's assessments, then proceed to Step 3. Press <strong>Next</strong> to see Step 3.
+            </p>
+        </div>
+        
+        <!-- Page 17: Step 3 - Complete the Feedback Form -->
+        <div class="tutorial-page" id="page17">
+            <h2>Step 3: Complete the Feedback Form</h2>
+            <span class="practice-label">PRACTICE MODE</span>
+            <span class="step-indicator">Step 3 of 3</span>
+            
+            <p style="line-height: 1.8; margin-bottom: 25px;">
+                <strong>Step 3: Complete the Feedback Form (Right Panel)</strong>
+            </p>
+            <p style="line-height: 1.8; margin-bottom: 25px;">
+                Once you are fully convinced that the chatbot has comprehensively assessed the NFRs, complete the feedback form for each NFR.
+            </p>
+            
+            <!-- Three Panel Layout - Feedback Form highlighted -->
+            <div class="mock-three-panel">
+                <!-- Left Panel: NFRs (Completed) -->
+                <div class="mock-panel" style="opacity: 0.7;">
+                    <div class="mock-panel-header" style="background: #6c757d;">NFRs Display ✓</div>
+                    <div class="mock-panel-content">
+                        <div class="mock-nfr-item" style="opacity: 0.7;">
+                            <h4>NFR 1: Password Security ✓</h4>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Middle Panel: Chatbot (Completed) -->
+                <div class="mock-panel" style="opacity: 0.7;">
+                    <div class="mock-panel-header" style="background: #6c757d;">Chatbot Assistant ✓</div>
+                    <div class="mock-chat-messages">
+                        <div class="mock-message bot">
+                            <div class="mock-message-content">Assessment complete. Ready for feedback.</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right Panel: Feedback Form (Active) -->
+                <div class="mock-panel" style="border: 3px solid #198754;">
+                    <div class="mock-panel-header" style="background: #198754;">Feedback Form</div>
+                    <div class="mock-panel-content white-bg">
+                        <div class="mock-panel-step">
+                            <strong>Step 3:</strong>
+                            <ul style="margin: 6px 0 0 16px; padding-left: 16px;">
+                                <li>Once you're convinced the chatbot has fully assessed the NFRs, complete this feedback form for each NFR.</li>
+                            </ul>
+                        </div>
+                        <div class="mock-form-section">
+                            <h4>NFR 1: Password Security</h4>
+                            
+                            <div class="mock-form-group">
+                                <label>Question 1: Do you agree with the chatbot's satisfaction level assessment?<span style="color: #c00;">*</span></label>
+                                <div class="mock-radio-group">
+                                    <label><input type="radio" name="tutorial_q1" disabled> Agree</label>
+                                    <label><input type="radio" name="tutorial_q1" disabled> Partially agree</label>
+                                    <label><input type="radio" name="tutorial_q1" disabled> Partially disagree</label>
+                                    <label><input type="radio" name="tutorial_q1" disabled> Disagree</label>
+                                </div>
+                            </div>
+                            
+                            <div class="mock-form-group">
+                                <label>Question 2: Do you agree with the chatbot's reasoning?<span style="color: #c00;">*</span></label>
+                                <div class="mock-radio-group">
+                                    <label><input type="radio" name="tutorial_q2" disabled> Agree</label>
+                                    <label><input type="radio" name="tutorial_q2" disabled> Partially agree</label>
+                                    <label><input type="radio" name="tutorial_q2" disabled> Partially disagree</label>
+                                    <label><input type="radio" name="tutorial_q2" disabled> Disagree</label>
+                                </div>
+                            </div>
+                            
+                            <div class="mock-form-group">
+                                <label>Question 3: Do you agree with the chatbot's identified code locations?<span style="color: #c00;">*</span></label>
+                                <div class="mock-radio-group">
+                                    <label><input type="radio" name="tutorial_q3" disabled> Agree</label>
+                                    <label><input type="radio" name="tutorial_q3" disabled> Partially agree</label>
+                                    <label><input type="radio" name="tutorial_q3" disabled> Partially disagree</label>
+                                    <label><input type="radio" name="tutorial_q3" disabled> Disagree</label>
+                                </div>
+                            </div>
+                            
+                            <div class="mock-form-group">
+                                <label>Undecided? Explain why:</label>
+                                <textarea disabled placeholder="Incase you cannot choose any of the above, explain why." style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; min-height: 60px; font-size: 11px;"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Page 18: Ready for Evaluation -->
+        <div class="tutorial-page" id="page18">
+            <h2>You're Ready!</h2>
+            <span class="practice-label">PRACTICE COMPLETE</span>
+            
+            <p style="line-height: 1.8; margin-bottom: 25px; font-size: 18px;">
+                Now you are ready to enter the actual evaluation.
+            </p>
+            
+            <p style="line-height: 1.8; margin-bottom: 20px;">
+                You've completed the tutorial and practiced the evaluation workflow. Click <strong>Start Evaluation</strong> to begin.
             </p>
         </div>
         
@@ -948,7 +1412,7 @@ NFR 3: Access Control - The system must restrict access to patient records based
 <script>
 const STATIC_PASSWORD = 'perc2026'; // Static password
 let currentPage = 1;
-const totalPages = 9;
+const totalPages = 18;
 let uuid = null;
 
 // Get UUID from localStorage (should already exist from consent page)
@@ -1012,9 +1476,9 @@ function showPage(page) {
     document.getElementById('prevBtn').style.display = page === 1 ? 'none' : 'block';
     document.getElementById('nextBtn').textContent = page === totalPages ? 'Start Evaluation' : 'Next';
     
-    // Make container wider for practice pages (6, 7, etc.)
+    // Make container wider for practice pages (three-panel layout)
     const container = document.querySelector('.tutorial-container');
-    if (page >= 6) {
+    if ((page >= 6 && page <= 8) || page === 15 || page === 16 || page === 17) {
         container.classList.add('wide');
     } else {
         container.classList.remove('wide');
@@ -1029,6 +1493,60 @@ function changePage(direction) {
             const password = document.getElementById('password').value;
             if (password !== STATIC_PASSWORD) {
                 document.getElementById('passwordError').style.display = 'block';
+                return;
+            }
+        }
+        
+        // Validate page 12 - view layer quiz (changePassword)
+        if (currentPage === 12) {
+            const successEl = document.getElementById('viewLayerSuccess');
+            if (successEl.style.display === 'block') {
+                // Already passed - allow proceeding
+            } else {
+                const answer = document.getElementById('viewLayerAnswer').value.trim().toLowerCase().replace(/\s/g, '');
+                const correctAnswer = 'changepassword';
+                if (answer !== correctAnswer) {
+                    document.getElementById('viewLayerError').style.display = 'block';
+                    return;
+                }
+                document.getElementById('viewLayerError').style.display = 'none';
+                successEl.style.display = 'block';
+                return; // Stay on page to show image; user clicks Next again to proceed
+            }
+        }
+        
+        // Validate page 13 - controller layer quiz (ChangePasswordAction)
+        if (currentPage === 13) {
+            const successEl = document.getElementById('controllerLayerSuccess');
+            if (successEl.style.display === 'block') {
+                // Already passed - allow proceeding
+            } else {
+                const answer = document.getElementById('controllerLayerAnswer').value.trim().replace(/\s/g, '');
+                const correctAnswer = 'ChangePasswordAction';
+                if (answer !== correctAnswer && answer.toLowerCase() !== 'changepasswordaction') {
+                    document.getElementById('controllerLayerError').style.display = 'block';
+                    return;
+                }
+                document.getElementById('controllerLayerError').style.display = 'none';
+                successEl.style.display = 'block';
+                return;
+            }
+        }
+        
+        // Validate page 14 - model layer quiz (AuthDAO)
+        if (currentPage === 14) {
+            const successEl = document.getElementById('modelLayerSuccess');
+            if (successEl.style.display === 'block') {
+                // Already passed - allow proceeding
+            } else {
+                const answer = document.getElementById('modelLayerAnswer').value.trim().replace(/\s/g, '');
+                const correctAnswer = 'AuthDAO';
+                if (answer !== correctAnswer && answer.toLowerCase() !== 'authdao') {
+                    document.getElementById('modelLayerError').style.display = 'block';
+                    return;
+                }
+                document.getElementById('modelLayerError').style.display = 'none';
+                successEl.style.display = 'block';
                 return;
             }
         }
