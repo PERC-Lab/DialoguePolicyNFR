@@ -293,17 +293,10 @@
         pointer-events: none;
         user-select: none;
     }
-    .gate-overlay {
-        position: absolute;
-        inset: 0;
-        z-index: 50;
-        display: none;
-        align-items: flex-start;
-        justify-content: center;
-        padding: 18px;
-    }
-    .right-panels.locked .gate-overlay {
-        display: flex;
+    /* Gate section: below NFRs in left panel (like tutorial) */
+    .gate-section {
+        margin-top: 16px;
+        display: block;
     }
     .gate-card {
         width: min(900px, 100%);
@@ -613,7 +606,9 @@
                 </div>
                 <div class="step-body">
                     <ul>
-                        <li>Ask the following NFRs from the chatbot.</li>
+                        <li>Review each NFR.</li>
+                        <li>Check the acknowledgement box for each NFR.</li>
+                        <li>Explain one randomly selected NFR to unlock steps 2 and 3.</li>
                         <li>Press "Copy All NFRs" to ask them in one prompt, then start the conversation.</li>
                     </ul>
                 </div>
@@ -623,28 +618,29 @@
                 <button class="copy-nfrs-btn" onclick="copyAllNFRs()" title="Copy all NFRs to clipboard">📋 Copy All NFRs</button>
             </div>
             <div id="nfrList"></div>
+
+            <!-- Gate: below NFRs (like tutorial) -->
+            <div class="gate-section" id="gateOverlay" aria-live="polite">
+                <div class="gate-card">
+                    <div class="gate-title">Before you continue (Steps 2 & 3)</div>
+                    <div class="gate-subtitle">
+                        Please check all boxes above, then explain this NFR in your own words:
+                    </div>
+                    <div class="gate-nfr" id="gateNfrText">Loading question…</div>
+                    <div class="gate-answer">
+                        <textarea id="gateAnswerInput" placeholder="Write your answer here…"></textarea>
+                    </div>
+                    <div class="gate-actions">
+                        <button class="btn" type="button" id="gateSubmitBtn">Submit answer</button>
+                        <div class="gate-status" id="gateStatusText"></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- Steps 2 + 3 locked together -->
     <div class="right-panels locked" id="rightPanels">
-        <div class="gate-overlay" id="gateOverlay" aria-live="polite">
-            <div class="gate-card">
-                <div class="gate-title">Before you continue (Steps 2 & 3)</div>
-                <div class="gate-subtitle">
-                    Please (1) check <strong>all</strong> “I have read and understood this NFR” boxes in Step 1, and (2) answer the question below.
-                </div>
-                <div class="gate-nfr" id="gateNfrText">Loading question…</div>
-                <div class="gate-answer">
-                    <textarea id="gateAnswerInput" placeholder="Write your answer here…"></textarea>
-                </div>
-                <div class="gate-actions">
-                    <button class="btn" type="button" id="gateSubmitBtn">Submit answer</button>
-                    <div class="gate-status" id="gateStatusText"></div>
-                </div>
-            </div>
-        </div>
-
         <!-- Chatbot Panel -->
         <div class="chatbot-panel">
             <div class="chatbot-header">Chatbot Assistant</div>
@@ -976,8 +972,9 @@ function isGateAnswered() {
 
 function setGateLocked(locked) {
     const right = document.getElementById('rightPanels');
-    if (!right) return;
-    right.classList.toggle('locked', locked);
+    const gateSection = document.getElementById('gateOverlay');
+    if (right) right.classList.toggle('locked', locked);
+    if (gateSection) gateSection.style.display = locked ? 'block' : 'none';
 }
 
 function updateGateStatus() {
