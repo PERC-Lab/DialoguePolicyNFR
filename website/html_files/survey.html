@@ -316,9 +316,141 @@
                     </label>
                 </div>
             </div>
+
+            <!-- Demographics Section -->
+            <div style="margin-top: 60px; padding-top: 40px; border-top: 3px solid #007bff;">
+                <h2 style="margin-bottom: 30px;">Demographic Information</h2>
+                <p style="margin-bottom: 30px; color: #666;">Please provide the following information:</p>
+                
+                <div class="survey-item">
+                    <h3>What is your age?</h3>
+                    <select id="age" name="age" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;" required>
+                        <option value="">Select...</option>
+                        <option value="18-25">18-25</option>
+                        <option value="26-35">26-35</option>
+                        <option value="36-45">36-45</option>
+                        <option value="46-55">46-55</option>
+                        <option value="56-and-above">56 and above</option>
+                        <option value="prefer-not-to-say">Prefer not to say</option>
+                    </select>
+                </div>
+                
+                <div class="survey-item">
+                    <h3>What is your gender?</h3>
+                    <select id="gender" name="gender" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;" required>
+                        <option value="">Select...</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="non-binary">Non-binary / third gender</option>
+                        <option value="prefer-not-to-say">Prefer not to say</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="survey-item">
+                    <h3>What is your highest level of education?</h3>
+                    <select id="education" name="education" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;" required>
+                        <option value="">Select...</option>
+                        <option value="high-school">High School Diploma or equivalent</option>
+                        <option value="bachelor">Bachelor's Degree</option>
+                        <option value="master">Master's Degree</option>
+                        <option value="phd">Doctorate (PhD)</option>
+                        <option value="prefer-not-to-say">Prefer not to say</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="survey-item" id="educationOtherGroup" style="display: none;">
+                    <h3>Please specify your education level:</h3>
+                    <input type="text" id="educationOther" placeholder="Enter your education level" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
+                </div>
+                
+                <div class="survey-item">
+                    <h3>How many years of professional experience do you have in software development?</h3>
+                    <select id="experience" name="experience" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;" required>
+                        <option value="">Select...</option>
+                        <option value="less-than-1">Less than 1 year</option>
+                        <option value="1-3">1-3 years</option>
+                        <option value="4-6">4-6 years</option>
+                        <option value="7-10">7-10 years</option>
+                        <option value="more-than-10">More than 10 years</option>
+                    </select>
+                </div>
+                
+                <div class="survey-item">
+                    <h3>Which programming languages do you use most frequently in your work? (Select all that apply):</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin-top: 15px;">
+                        <label style="display: flex; align-items: center; font-weight: normal; cursor: pointer;">
+                            <input type="checkbox" name="languages" value="python" style="width: auto; margin-right: 8px;"> Python
+                        </label>
+                        <label style="display: flex; align-items: center; font-weight: normal; cursor: pointer;">
+                            <input type="checkbox" name="languages" value="javascript" style="width: auto; margin-right: 8px;"> JavaScript
+                        </label>
+                        <label style="display: flex; align-items: center; font-weight: normal; cursor: pointer;">
+                            <input type="checkbox" name="languages" value="java" style="width: auto; margin-right: 8px;"> Java
+                        </label>
+                        <label style="display: flex; align-items: center; font-weight: normal; cursor: pointer;">
+                            <input type="checkbox" name="languages" value="typescript" style="width: auto; margin-right: 8px;"> TypeScript
+                        </label>
+                        <label style="display: flex; align-items: center; font-weight: normal; cursor: pointer;">
+                            <input type="checkbox" name="languages" value="csharp" style="width: auto; margin-right: 8px;"> C#
+                        </label>
+                        <label style="display: flex; align-items: center; font-weight: normal; cursor: pointer;">
+                            <input type="checkbox" name="languages" value="cpp" style="width: auto; margin-right: 8px;"> C++
+                        </label>
+                        <label style="display: flex; align-items: center; font-weight: normal; cursor: pointer;">
+                            <input type="checkbox" name="languages" value="ruby" style="width: auto; margin-right: 8px;"> Ruby
+                        </label>
+                        <label style="display: flex; align-items: center; font-weight: normal; cursor: pointer;">
+                            <input type="checkbox" name="languages" value="go" style="width: auto; margin-right: 8px;"> Go
+                        </label>
+                        <label style="display: flex; align-items: center; font-weight: normal; cursor: pointer;">
+                            <input type="checkbox" name="languages" value="swift" style="width: auto; margin-right: 8px;"> Swift
+                        </label>
+                        <label style="display: flex; align-items: center; font-weight: normal; cursor: pointer;">
+                            <input type="checkbox" name="languages" value="kotlin" style="width: auto; margin-right: 8px;"> Kotlin
+                        </label>
+                        <label style="display: flex; align-items: center; font-weight: normal; cursor: pointer;">
+                            <input type="checkbox" name="languages" value="php" style="width: auto; margin-right: 8px;"> PHP
+                        </label>
+                        <label style="display: flex; align-items: center; font-weight: normal; cursor: pointer;">
+                            <input type="checkbox" name="languages" value="r" style="width: auto; margin-right: 8px;"> R
+                        </label>
+                        <label style="display: flex; align-items: center; font-weight: normal; cursor: pointer;">
+                            <input type="checkbox" name="languages" value="html-css" style="width: auto; margin-right: 8px;"> HTML/CSS
+                        </label>
+                        <label style="display: flex; align-items: center; font-weight: normal; cursor: pointer;">
+                            <input type="checkbox" name="languages" value="sql" style="width: auto; margin-right: 8px;"> SQL
+                        </label>
+                        <label style="display: flex; align-items: center; font-weight: normal; cursor: pointer;">
+                            <input type="checkbox" name="languages" value="rust" style="width: auto; margin-right: 8px;"> Rust
+                        </label>
+                        <label style="display: flex; align-items: center; font-weight: normal; cursor: pointer;">
+                            <input type="checkbox" name="languages" value="assembly" style="width: auto; margin-right: 8px;"> Assembly
+                        </label>
+                        <label style="display: flex; align-items: center; font-weight: normal; cursor: pointer;">
+                            <input type="checkbox" name="languages" value="perl" style="width: auto; margin-right: 8px;"> Perl
+                        </label>
+                        <label style="display: flex; align-items: center; font-weight: normal; cursor: pointer;">
+                            <input type="checkbox" name="languages" value="powershell" style="width: auto; margin-right: 8px;"> PowerShell
+                        </label>
+                        <label style="display: flex; align-items: center; font-weight: normal; cursor: pointer;">
+                            <input type="checkbox" name="languages" value="cobol" style="width: auto; margin-right: 8px;"> COBOL
+                        </label>
+                        <label style="display: flex; align-items: center; font-weight: normal; cursor: pointer;">
+                            <input type="checkbox" name="languages" value="other" id="languageOtherCheckbox" style="width: auto; margin-right: 8px;"> Other
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="survey-item" id="languageOtherGroup" style="display: none;">
+                    <h3>Please specify other programming languages:</h3>
+                    <input type="text" id="languageOther" placeholder="Enter other programming languages" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
+                </div>
+            </div>
             
             <div style="margin-top: 40px; text-align: center;">
-                <button type="submit" class="btn">Submit Survey</button>
+                <button type="submit" class="btn">Submit Survey & Demographics</button>
             </div>
         </form>
     </div>
@@ -340,13 +472,44 @@ function selectOption(element, questionName, value) {
     radio.checked = true;
 }
 
+// Set up event listeners for "Other" fields
+window.addEventListener('load', () => {
+    // Education "Other" field
+    const educationSelect = document.getElementById('education');
+    const educationOtherGroup = document.getElementById('educationOtherGroup');
+    if (educationSelect && educationOtherGroup) {
+        educationSelect.addEventListener('change', function() {
+            if (this.value === 'other') {
+                educationOtherGroup.style.display = 'block';
+            } else {
+                educationOtherGroup.style.display = 'none';
+                document.getElementById('educationOther').value = '';
+            }
+        });
+    }
+    
+    // Language "Other" field
+    const languageOtherCheckbox = document.getElementById('languageOtherCheckbox');
+    const languageOtherGroup = document.getElementById('languageOtherGroup');
+    if (languageOtherCheckbox && languageOtherGroup) {
+        languageOtherCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                languageOtherGroup.style.display = 'block';
+            } else {
+                languageOtherGroup.style.display = 'none';
+                document.getElementById('languageOther').value = '';
+            }
+        });
+    }
+});
+
 document.getElementById('surveyForm').addEventListener('submit', (e) => {
     e.preventDefault();
     
     const uuid = localStorage.getItem('chatbot_uuid');
     const formData = new FormData(e.target);
     
-    // Check if all questions are answered
+    // Check if all survey questions are answered
     const questions = ['q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8'];
     const unansweredQuestions = [];
     
@@ -357,7 +520,42 @@ document.getElementById('surveyForm').addEventListener('submit', (e) => {
     });
     
     if (unansweredQuestions.length > 0) {
-        alert(`Please answer all questions before submitting. Missing questions: ${unansweredQuestions.join(', ')}`);
+        alert(`Please answer all survey questions before submitting. Missing questions: ${unansweredQuestions.join(', ')}`);
+        return;
+    }
+    
+    // Validate demographics
+    const age = document.getElementById('age').value;
+    const gender = document.getElementById('gender').value;
+    const education = document.getElementById('education').value;
+    const educationOther = document.getElementById('educationOther').value;
+    const experience = document.getElementById('experience').value;
+    
+    // Get selected programming languages
+    const languageCheckboxes = document.querySelectorAll('input[name="languages"]:checked');
+    const languages = Array.from(languageCheckboxes).map(cb => cb.value);
+    const languageOther = document.getElementById('languageOther').value;
+    
+    if (!age || !gender || !education || !experience) {
+        alert('Please fill in all required demographic fields.');
+        return;
+    }
+    
+    // Validate education "Other" field
+    if (education === 'other' && !educationOther.trim()) {
+        alert('Please specify your education level.');
+        return;
+    }
+    
+    // Validate programming languages - at least one must be selected
+    if (languages.length === 0) {
+        alert('Please select at least one programming language.');
+        return;
+    }
+    
+    // Validate language "Other" field if checked
+    if (languages.includes('other') && !languageOther.trim()) {
+        alert('Please specify the other programming languages.');
         return;
     }
     
@@ -374,17 +572,40 @@ document.getElementById('surveyForm').addEventListener('submit', (e) => {
         timestamp: new Date().toISOString()
     };
     
-    fetch('/api/submit_survey', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(surveyData)
-    })
+    const demographicsData = {
+        uuid: uuid,
+        age: age,
+        gender: gender,
+        education: education,
+        educationOther: education === 'other' ? educationOther : null,
+        experience: experience,
+        languages: languages,
+        languageOther: languages.includes('other') ? languageOther : null
+    };
+    
+    // Submit both survey and demographics
+    Promise.all([
+        fetch('/api/submit_survey', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(surveyData)
+        }),
+        fetch('/api/submit_demographics', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(demographicsData)
+        })
+    ])
     .then(() => {
         // Get URL parameters to pass to prize page
         const urlParams = new URLSearchParams(window.location.search);
         const prolificId = urlParams.get('id');
         setCurrentProgress(PROGRESS_STEPS.PRIZE);
         window.location.href = `/prize${prolificId ? '?id=' + prolificId : ''}`;
+    })
+    .catch(error => {
+        console.error('Error submitting data:', error);
+        alert('An error occurred while submitting. Please try again.');
     });
 });
 </script>
