@@ -44,6 +44,7 @@ PRIZE_FILE = 'responses/prize.json'
 DEMOGRAPHICS_FILE = 'responses/demographics.json'
 BATCH_ASSIGNMENTS_FILE = 'responses/user_batch_assignments.json'
 FORCED_NFRS_FILE = 'forced.json'
+GATE_ANSWERS_FILE = 'responses/gate_answers.json'
 
 # How many NFRs should force an independent assessment per participant
 FORCED_ASSESSMENT_RATIO = 0.2  # 40% of NFRs in the batch
@@ -634,6 +635,42 @@ def load_chat_history():
     history = conversations.get(uuid, [])
     return jsonify({'history': history})
 
+
+@app.route('/api/submit_gate_answer', methods=['POST'])
+def submit_gate_answer():
+    """Save the gate question answer (user's explanation of a random NFR)."""
+    try:
+        data = request.json
+        uuid_val = data.get('uuid')
+        batch = data.get('batch')
+        nfr_id = data.get('nfr_id')
+        answer = (data.get('answer') or '').strip()
+        if not uuid_val:
+            return jsonify({'status': 'error', 'message': 'UUID is required'}), 400
+        if answer == '':
+            return jsonify({'status': 'error', 'message': 'Answer is required'}), 400
+        session_id = get_session_id(uuid_val)
+        gate_answers = load_json_file(GATE_ANSWERS_FILE)
+        if session_id not in gate_answers:
+            gate_answers[session_id] = {}
+        batch_key = str(batch)
+        if batch_key not in gate_answers[session_id]:
+            gate_answers[session_id][batch_key] = {}
+        gate_answers[session_id][batch_key][str(nfr_id)] = {
+            'nfr_id': nfr_id,
+            'batch': batch,
+            'answer': answer,
+            'timestamp': datetime.now().isoformat()
+        }
+        save_json_file(GATE_ANSWERS_FILE, gate_answers)
+        return jsonify({'status': 'success'})
+    except Exception as e:
+        print(f"Error in submit_gate_answer: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
+
 @app.route('/api/admin/data', methods=['GET'])
 @require_admin
 def get_admin_data():
@@ -646,6 +683,7 @@ def get_admin_data():
         demographics = load_json_file(DEMOGRAPHICS_FILE)
         prizes = load_json_file(PRIZE_FILE)
         batch_assignments = load_json_file(BATCH_ASSIGNMENTS_FILE)
+        gate_answers = load_json_file(GATE_ANSWERS_FILE)
         
         # Calculate statistics
         # Get unique participants from all data sources
@@ -656,6 +694,7 @@ def get_admin_data():
         all_uuids.update(demographics.keys())
         all_uuids.update(prizes.keys())
         all_uuids.update(batch_assignments.keys())
+        all_uuids.update(gate_answers.keys())
         
         total_conversations = sum(len(msgs) for msgs in conversations.values())
         total_nfr_responses = sum(len(responses) for responses in nfr_responses.values())
@@ -668,7 +707,8 @@ def get_admin_data():
             'total_surveys': len(surveys),
             'total_demographics': len(demographics),
             'total_prizes': len(prizes),
-            'total_batch_assignments': len(batch_assignments)
+            'total_batch_assignments': len(batch_assignments),
+            'total_gate_answers': len(gate_answers)
         }
         
         return jsonify({
@@ -679,7 +719,8 @@ def get_admin_data():
             'surveys': surveys,
             'demographics': demographics,
             'prizes': prizes,
-            'batch_assignments': batch_assignments
+            'batch_assignments': batch_assignments,
+            'gate_answers': gate_answers
         })
     except Exception as e:
         print(f"Error in get_admin_data: {str(e)}")
@@ -699,6 +740,7 @@ def clear_all_data():
         save_json_file(DEMOGRAPHICS_FILE, {})
         save_json_file(PRIZE_FILE, {})
         save_json_file(BATCH_ASSIGNMENTS_FILE, {})
+        save_json_file(GATE_ANSWERS_FILE, {})
         
         # Clear in-memory chatbot instances
         chatbots.clear()

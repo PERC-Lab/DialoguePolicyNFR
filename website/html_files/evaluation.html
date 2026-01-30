@@ -279,6 +279,90 @@
     .chatbot-input button {
         padding: 10px 20px;
     }
+    /* Gate overlay that locks Step 2 + Step 3 together */
+    .right-panels {
+        flex: 2;
+        display: flex;
+        gap: 20px;
+        position: relative;
+        min-width: 0;
+    }
+    .right-panels.locked .chatbot-panel,
+    .right-panels.locked .form-panel {
+        filter: blur(3px);
+        pointer-events: none;
+        user-select: none;
+    }
+    .gate-overlay {
+        position: absolute;
+        inset: 0;
+        z-index: 50;
+        display: none;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 18px;
+    }
+    .right-panels.locked .gate-overlay {
+        display: flex;
+    }
+    .gate-card {
+        width: min(900px, 100%);
+        background: rgba(255, 255, 255, 0.96);
+        border: 1px solid #cfe2ff;
+        border-left: 4px solid #0d6efd;
+        border-radius: 10px;
+        box-shadow: 0 6px 22px rgba(0, 0, 0, 0.18);
+        padding: 14px 16px;
+        color: #0b2e4c;
+    }
+    .gate-title {
+        font-weight: 700;
+        margin-bottom: 6px;
+        font-size: 14px;
+    }
+    .gate-subtitle {
+        font-size: 13px;
+        color: #1f3f5b;
+        margin-bottom: 10px;
+        line-height: 1.4;
+    }
+    .gate-nfr {
+        background: #f1f7ff;
+        border: 1px solid #cfe2ff;
+        border-radius: 8px;
+        padding: 10px 12px;
+        font-size: 13px;
+        line-height: 1.45;
+        margin-bottom: 10px;
+        white-space: pre-wrap;
+    }
+    .gate-answer textarea {
+        width: 100%;
+        min-height: 90px;
+        max-height: 220px;
+        resize: vertical;
+        border: 1px solid #cfe2ff;
+        border-radius: 8px;
+        padding: 10px 12px;
+        font-size: 13px;
+        font-family: inherit;
+        line-height: 1.45;
+        background: #fff;
+    }
+    .gate-actions {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        margin-top: 10px;
+        flex-wrap: wrap;
+    }
+    .gate-status {
+        font-size: 12px;
+        color: #1f3f5b;
+    }
+    .gate-status strong {
+        font-weight: 700;
+    }
     .submit-batch-btn {
         margin-top: 20px;
         width: 100%;
@@ -510,6 +594,7 @@
 {% endblock %}
 
 {% block content %}
+<div id="pageData" data-batch="{{ batch }}" style="display:none;"></div>
 <div class="evaluation-container">
     <!-- NFR Display Panel -->
     <div class="nfr-panel">
@@ -540,50 +625,70 @@
             <div id="nfrList"></div>
         </div>
     </div>
-    
-    <!-- Chatbot Panel -->
-    <div class="chatbot-panel">
-        <div class="chatbot-header">Chatbot Assistant</div>
-        <div class="panel-step chat-step" id="step2">
-            <div class="step-header">
-                <strong>Step 2:</strong>
-                <button type="button" class="step-toggle" onclick="toggleStep('step2', this)">Hide</button>
-            </div>
-            <div class="step-body">
-                Interact with the chatbot to get the following for each NFR:
-                <ul>
-                    <li>Satisfaction Level (Satisfied, Weakly Satisfied, Weakly Denied, Denied, or Not Applicable)</li>
-                    <li>Reasoning for that level</li>
-                    <li>Specific Code Locations that address the NFR</li>
-                </ul>
-            </div>
-        </div>
-        <div class="chatbot-messages" id="chatMessages"></div>
-        <div class="chatbot-input">
-            <textarea id="chatInput" placeholder="Type your message... (Press Enter to send, Shift+Enter for new line)" rows="2" onkeydown="if(event.key==='Enter' && !event.shiftKey && !this.disabled) { event.preventDefault(); sendMessage(); }"></textarea>
-            <button class="btn" onclick="sendMessage()">Send</button>
-        </div>
-    </div>
 
-    <!-- Form Panel -->
-    <div class="form-panel">
-        <div class="panel-header">Feedback Form</div>
-        <div class="panel-content">
-            <div class="panel-step" id="step3">
+    <!-- Steps 2 + 3 locked together -->
+    <div class="right-panels locked" id="rightPanels">
+        <div class="gate-overlay" id="gateOverlay" aria-live="polite">
+            <div class="gate-card">
+                <div class="gate-title">Before you continue (Steps 2 & 3)</div>
+                <div class="gate-subtitle">
+                    Please (1) check <strong>all</strong> “I have read and understood this NFR” boxes in Step 1, and (2) answer the question below.
+                </div>
+                <div class="gate-nfr" id="gateNfrText">Loading question…</div>
+                <div class="gate-answer">
+                    <textarea id="gateAnswerInput" placeholder="Write your answer here…"></textarea>
+                </div>
+                <div class="gate-actions">
+                    <button class="btn" type="button" id="gateSubmitBtn">Submit answer</button>
+                    <div class="gate-status" id="gateStatusText"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chatbot Panel -->
+        <div class="chatbot-panel">
+            <div class="chatbot-header">Chatbot Assistant</div>
+            <div class="panel-step chat-step" id="step2">
                 <div class="step-header">
-                    <strong>Step 3:</strong>
-                    <button type="button" class="step-toggle" onclick="toggleStep('step3', this)">Hide</button>
+                    <strong>Step 2:</strong>
+                    <button type="button" class="step-toggle" onclick="toggleStep('step2', this)">Hide</button>
                 </div>
                 <div class="step-body">
+                    Interact with the chatbot to get the following for each NFR:
                     <ul>
-                        <li>Once you're convinced the chatbot has fully assessed the NFRs, complete this feedback form for each NFR.</li>
+                        <li>Satisfaction Level (Satisfied, Weakly Satisfied, Weakly Denied, Denied, or Not Applicable)</li>
+                        <li>Reasoning for that level</li>
+                        <li>Specific Code Locations that address the NFR</li>
                     </ul>
                 </div>
             </div>
-            <form id="batchForm">
-                <div id="nfrFormsContainer"></div>
-                <button type="submit" class="btn submit-batch-btn" id="submitBatchBtn">Submit All Feedback</button>
-            </form>
+            <div class="chatbot-messages" id="chatMessages"></div>
+            <div class="chatbot-input">
+                <textarea id="chatInput" placeholder="Type your message... (Press Enter to send, Shift+Enter for new line)" rows="2" onkeydown="if(event.key==='Enter' && !event.shiftKey && !this.disabled) { event.preventDefault(); sendMessage(); }"></textarea>
+                <button class="btn" onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+
+        <!-- Form Panel -->
+        <div class="form-panel">
+            <div class="panel-header">Feedback Form</div>
+            <div class="panel-content">
+                <div class="panel-step" id="step3">
+                    <div class="step-header">
+                        <strong>Step 3:</strong>
+                        <button type="button" class="step-toggle" onclick="toggleStep('step3', this)">Hide</button>
+                    </div>
+                    <div class="step-body">
+                        <ul>
+                            <li>Once you're convinced the chatbot has fully assessed the NFRs, complete this feedback form for each NFR.</li>
+                        </ul>
+                    </div>
+                </div>
+                <form id="batchForm">
+                    <div id="nfrFormsContainer"></div>
+                    <button type="submit" class="btn submit-batch-btn" id="submitBatchBtn">Submit All Feedback</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
@@ -756,12 +861,13 @@
 <!-- Marked.js for markdown rendering -->
 <script src="https://cdn.jsdelivr.net/npm/marked@12.0.0/marked.min.js"></script>
 <script>
-let currentBatch = {{ batch }};
+let currentBatch = Number((document.getElementById('pageData')?.dataset?.batch) || 1);
 let nfrs = [];
 let batchData = null;
 let uuid = null;
 let submittedNfrs = new Set();
 let forcedNfrs = [];
+let gateInitialized = false;
 
 // Load UUID and chat history on page load
 window.addEventListener('load', () => {
@@ -806,6 +912,7 @@ function loadNFRs() {
             document.getElementById('totalBatches').textContent = data.total_batches;
             displayNFRs();
             displayForms();
+            setupGateForBatch();
         });
 }
 
@@ -815,8 +922,149 @@ function displayNFRs() {
         <div class="nfr-item">
             <h4>NFR ${nfr.id}: ${nfr.title}</h4>
             <p>${nfr.description}</p>
+            <div style="margin-top: 10px;">
+                <label style="font-size: 13px; display: flex; align-items: center; gap: 6px;">
+                    <input type="checkbox" id="nfr_read_${nfr.id}" name="nfr_read_${nfr.id}" style="margin-right: 6px;">
+                    I have read and understood this NFR
+                </label>
+            </div>
         </div>
     `).join('');
+}
+
+function gateKey(suffix) {
+    // per-user + per-batch
+    return `gate:${uuid || 'anon'}:batch:${currentBatch}:${suffix}`;
+}
+
+function pickOrGetGateNfrId() {
+    const saved = localStorage.getItem(gateKey('nfr_id'));
+    if (saved) return Number(saved);
+    const chosen = nfrs[Math.floor(Math.random() * nfrs.length)];
+    const id = chosen ? Number(chosen.id) : null;
+    if (id != null) localStorage.setItem(gateKey('nfr_id'), String(id));
+    return id;
+}
+
+function renderGateQuestion() {
+    const nfrId = pickOrGetGateNfrId();
+    const nfr = nfrs.find(x => Number(x.id) === Number(nfrId)) || nfrs[0];
+    const textEl = document.getElementById('gateNfrText');
+    if (!textEl) return;
+    if (!nfr) {
+        textEl.textContent = 'No NFRs loaded yet.';
+        return;
+    }
+    textEl.textContent = `Question: Explain this NFR in your own words.\n\nNFR ${nfr.id}: ${nfr.description}`;
+}
+
+function areAllNfrBoxesChecked() {
+    if (!nfrs || nfrs.length === 0) return false;
+    return nfrs.every(nfr => {
+        const cb = document.getElementById(`nfr_read_${nfr.id}`);
+        return cb && cb.checked;
+    });
+}
+
+function getGateAnswer() {
+    return localStorage.getItem(gateKey('answer')) || '';
+}
+
+function isGateAnswered() {
+    return localStorage.getItem(gateKey('answered')) === 'true';
+}
+
+function setGateLocked(locked) {
+    const right = document.getElementById('rightPanels');
+    if (!right) return;
+    right.classList.toggle('locked', locked);
+}
+
+function updateGateStatus() {
+    const status = document.getElementById('gateStatusText');
+    if (!status) return;
+    const allChecked = areAllNfrBoxesChecked();
+    const answered = isGateAnswered();
+
+    const parts = [];
+    parts.push(`Checkboxes: <strong>${allChecked ? 'done' : 'not done'}</strong>`);
+    parts.push(`Answer: <strong>${answered ? 'submitted' : 'not submitted'}</strong>`);
+    status.innerHTML = parts.join(' · ');
+}
+
+function updateGateLockState() {
+    const shouldUnlock = areAllNfrBoxesChecked() && isGateAnswered();
+    setGateLocked(!shouldUnlock);
+    updateGateStatus();
+}
+
+function setupGateForBatch() {
+    if (!uuid) return;
+    if (!nfrs || nfrs.length === 0) return;
+
+    renderGateQuestion();
+
+    // restore answer text (if any)
+    const input = document.getElementById('gateAnswerInput');
+    if (input) {
+        input.value = getGateAnswer();
+        input.addEventListener('input', () => {
+            localStorage.setItem(gateKey('answer'), input.value);
+            // note: typing alone doesn't unlock; must submit
+        });
+    }
+
+    // submit answer
+    const btn = document.getElementById('gateSubmitBtn');
+    if (btn && !gateInitialized) {
+        btn.addEventListener('click', () => {
+            const answer = (document.getElementById('gateAnswerInput')?.value || '').trim();
+            if (!answer) {
+                alert('Please write an answer before submitting.');
+                return;
+            }
+            const nfrId = pickOrGetGateNfrId();
+            localStorage.setItem(gateKey('answer'), answer);
+            localStorage.setItem(gateKey('answered'), 'true');
+
+            // Submit to server
+            fetch('/api/submit_gate_answer', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    uuid: uuid,
+                    batch: currentBatch,
+                    nfr_id: nfrId,
+                    answer: answer
+                })
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data.status === 'error') {
+                    console.error('Gate answer save failed:', data.message);
+                    alert('Answer saved locally but server save failed: ' + (data.message || 'Unknown error'));
+                }
+            })
+            .catch(err => {
+                console.error('Gate answer submit error:', err);
+                alert('Answer saved locally but could not reach the server. Please try again later.');
+            });
+
+            updateGateLockState();
+        });
+    }
+
+    // checkbox handlers (Step 1 remains clickable; Steps 2/3 are blurred)
+    nfrs.forEach(nfr => {
+        const cb = document.getElementById(`nfr_read_${nfr.id}`);
+        if (!cb) return;
+        cb.addEventListener('change', () => {
+            updateGateLockState();
+        });
+    });
+
+    gateInitialized = true;
+    updateGateLockState();
 }
 
 function copyAllNFRs() {
