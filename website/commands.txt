@@ -1,0 +1,22 @@
+localStorage.setItem('chatbot_uuid', '1d16c753-0d94-4f05-ad87-eb8b66fc2d4c');
+localStorage.setItem('current_step', 'tutorial');
+localStorage.setItem('tutorial_page', '1');
+
+
+{
+    "tutorial_page": "10",
+    "current_step": "prize",
+    "gate:1d16c753-0d94-4f05-ad87-eb8b66fc2d4c:batch:2:answer": "asdad",
+    "gate:1d16c753-0d94-4f05-ad87-eb8b66fc2d4c:batch:2:answered": "true",
+    "evaluation_batch": "3",
+    "submitted_nfrs": "[21,22,23,24,25,26,27,28,29,30]",
+    "gate:1d16c753-0d94-4f05-ad87-eb8b66fc2d4c:batch:3:answered": "true",
+    "gate:1d16c753-0d94-4f05-ad87-eb8b66fc2d4c:batch:1:answer": "jkl",
+    "gate:1d16c753-0d94-4f05-ad87-eb8b66fc2d4c:batch:1:answered": "true",
+    "chatbot_uuid": "1d16c753-0d94-4f05-ad87-eb8b66fc2d4c",
+    "gate:1d16c753-0d94-4f05-ad87-eb8b66fc2d4c:batch:3:answer": "dfgdfgdgdf",
+    "gate:1d16c753-0d94-4f05-ad87-eb8b66fc2d4c:batch:3:nfr_id": "30",
+    "current_batch": "3",
+    "gate:1d16c753-0d94-4f05-ad87-eb8b66fc2d4c:batch:1:nfr_id": "8",
+    "gate:1d16c753-0d94-4f05-ad87-eb8b66fc2d4c:batch:2:nfr_id": "20"
+}

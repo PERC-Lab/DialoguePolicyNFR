@@ -1,15 +1,15 @@
 {
-  "7dad2210-c57b-4527-b128-154100700b11": {
-    "uuid": "7dad2210-c57b-4527-b128-154100700b11",
+  "1d16c753-0d94-4f05-ad87-eb8b66fc2d4c": {
+    "uuid": "1d16c753-0d94-4f05-ad87-eb8b66fc2d4c",
     "age": "26-35",
-    "gender": "female",
-    "education": "bachelor",
+    "gender": "male",
+    "education": "high-school",
     "educationOther": null,
     "experience": "less-than-1",
     "languages": [
       "python"
     ],
     "languageOther": null,
-    "timestamp": "2026-01-16T14:11:00.180927"
+    "timestamp": "2026-01-30T22:03:16.454597"
   }
 }

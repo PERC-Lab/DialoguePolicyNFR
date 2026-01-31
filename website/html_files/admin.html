@@ -464,7 +464,7 @@
         <div class="section-header">
             <h2>Prize Submissions</h2>
             <div class="section-controls">
-                <input type="text" class="search-box" id="prizeSearch" placeholder="Search UUID...">
+                <input type="text" class="search-box" id="prizeSearch" placeholder="Search UUID or email...">
                 <button class="btn-export" onclick="exportData('prizes')">Export JSON</button>
             </div>
         </div>
@@ -666,31 +666,51 @@ function renderDemographics(data) {
 
 function renderPrizes(data) {
     const container = document.getElementById('prizesContent');
-    
-    if (!data || Object.keys(data).length === 0) {
+    const prolific = (data && data.prolific) ? data.prolific : {};
+    const emails = (data && Array.isArray(data.emails)) ? data.emails : [];
+    const hasProlific = Object.keys(prolific).length > 0;
+    const hasEmails = emails.length > 0;
+
+    if (!hasProlific && !hasEmails) {
         container.innerHTML = '<div class="empty-state">No prize submissions found</div>';
         return;
     }
-    
-    let html = '<table class="data-table"><thead><tr><th>UUID</th><th>Data</th><th>Actions</th></tr></thead><tbody>';
-    
-    for (const [uuid, prize] of Object.entries(data)) {
+
+    let html = '<table class="data-table"><thead><tr><th>Type</th><th>Identifier</th><th>Data</th><th>Actions</th></tr></thead><tbody>';
+
+    for (const [uuid, prize] of Object.entries(prolific)) {
         const dataStr = Object.entries(prize)
             .filter(([k]) => k !== 'uuid')
             .map(([k, v]) => `${k}: ${v}`)
             .join(', ');
-        
         html += `
             <tr>
+                <td>Prolific ID</td>
                 <td class="uuid-cell">${uuid}</td>
                 <td>${dataStr}</td>
-                <td><button class="btn btn-secondary" onclick="showPrize('${uuid}')">View</button></td>
+                <td><button class="btn btn-secondary" onclick="showPrize('${uuid.replace(/'/g, "\\'")}')">View</button></td>
             </tr>
         `;
     }
-    
+    emails.forEach((email, i) => {
+        html += `
+            <tr>
+                <td>Email</td>
+                <td class="uuid-cell">${escapeHtml(email)}</td>
+                <td>—</td>
+                <td>—</td>
+            </tr>
+        `;
+    });
+
     html += '</tbody></table>';
     container.innerHTML = html;
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
 }
 
 function formatDate(dateStr) {
@@ -727,8 +747,9 @@ function showDemographics(uuid) {
 }
 
 function showPrize(uuid) {
-    if (!adminData || !adminData.prizes[uuid]) return;
-    const prize = adminData.prizes[uuid];
+    const prizes = adminData && adminData.prizes;
+    const prize = prizes && prizes.prolific && prizes.prolific[uuid];
+    if (!prize) return;
     const content = JSON.stringify(prize, null, 2);
     alert(content);
 }

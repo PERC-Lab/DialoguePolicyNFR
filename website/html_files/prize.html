@@ -53,79 +53,90 @@
     });
     </script>
     <div class="prize-container">
-        <h1 style="margin-bottom: 10px;">Thank You!</h1>
-        <p style="margin-bottom: 30px; color: #666;">Your participation in this study is greatly appreciated.</p>
-        
         {% if prolific_id %}
+            <h1 style="margin-bottom: 10px;">Thank You!</h1>
+            <p style="margin-bottom: 30px; color: #666;">Your participation in this study is greatly appreciated.</p>
             <p style="margin-bottom: 20px; color: #666;">Please provide your Prolific ID to receive your reward.</p>
-        {% else %}
-            <p style="margin-bottom: 20px; color: #666;">Please provide your email address. We will send your Amazon gift card prize to this email.</p>
-        {% endif %}
-        
-        <form id="prizeForm">
-            <div class="form-group">
-                <label for="identifier">
-                    {% if prolific_id %}
-                        Prolific ID:
-                    {% else %}
-                        Email Address:
-                    {% endif %}
-                </label>
-                <input 
-                    type="{% if prolific_id %}text{% else %}email{% endif %}" 
-                    id="identifier" 
-                    name="identifier"
-                    placeholder="{% if prolific_id %}Enter your Prolific ID{% else %}Enter your email address{% endif %}"
-                    required
-                >
-            </div>
-            
-            <div style="margin-top: 30px;">
-                <button type="submit" class="btn">Submit</button>
-            </div>
-        </form>
-        
-        <div class="success-message" id="successMessage">
-            {% if prolific_id %}
+            <form id="prizeForm">
+                <div class="form-group">
+                    <label for="identifier">Prolific ID:</label>
+                    <input type="text" id="identifier" name="identifier" placeholder="Enter your Prolific ID" required>
+                </div>
+                <div style="margin-top: 30px;">
+                    <button type="submit" class="btn">Submit</button>
+                </div>
+            </form>
+            <div class="success-message" id="successMessage">
                 Thank you! Your Prolific ID has been recorded. You may now close this page.
+            </div>
+        {% else %}
+            {% if email_prize_available %}
+                <p style="margin-bottom: 20px; color: #333;">Dear Participant,</p>
+                <p style="margin-bottom: 15px; color: #333;">Thank you for showing interest in our research study about evaluating Non-Functional Requirements. As one of the first 15 participants to complete the study, you are eligible to receive a $15 Amazon gift card as compensation for your time. Please enter your email address below, and you will receive a code to access your gift card in your email shortly. We will use your email address only to provide your compensation. It will not be linked to your survey responses in any way.</p>
+                <form id="prizeForm">
+                    <div class="form-group">
+                        <label for="identifier">Enter your email address here:</label>
+                        <input type="email" id="identifier" name="identifier" placeholder="Enter your email address" required>
+                    </div>
+                    <div style="margin-top: 30px;">
+                        <button type="submit" class="btn">Submit</button>
+                    </div>
+                </form>
+                <div class="success-message" id="successMessage">
+                    Thank you! Your email has been recorded. You will receive your gift card code by email shortly. You may now close this page.
+                </div>
+                <p style="margin-top: 25px; font-size: 14px; color: #555;">If you have any questions, please feel free to contact me (ali.pourghasemi@maine.edu) or my faculty advisor (sepideh.ghanavati@maine.edu).</p>
             {% else %}
-                Thank you! Your email has been recorded. We will send your Amazon gift card to this email address. You may now close this page.
+                <p style="margin-bottom: 20px; color: #333;">Dear Participant,</p>
+                <p style="margin-bottom: 15px; color: #333;">Thank you for showing interest in our research study about evaluating Non-Functional Requirements. Unfortunately, you are not among the first 15 participants in the study and therefore you are ineligible for the $15 Amazon gift card. However, your participation is highly valuable since this research may help us learn more about the capabilities and limitations of AI assistants in supporting software developers with complex, context-dependent reasoning tasks related to regulatory compliance.</p>
+                <div style="margin-top: 30px;">
+                    <button type="button" class="btn" id="completeBtn">Continue</button>
+                </div>
+                <script>
+                (function() {
+                    document.getElementById('completeBtn').addEventListener('click', function() {
+                        setCurrentProgress(PROGRESS_STEPS.COMPLETE);
+                        const urlParams = new URLSearchParams(window.location.search);
+                        const id = urlParams.get('id');
+                        window.location.href = '/complete' + (id ? '?id=' + id : '');
+                    });
+                })();
+                </script>
             {% endif %}
-        </div>
+        {% endif %}
     </div>
 </div>
 
 <script>
-document.getElementById('prizeForm').addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    const uuid = localStorage.getItem('chatbot_uuid');
-    const identifier = document.getElementById('identifier').value;
-    const urlParams = new URLSearchParams(window.location.search);
-    const prolificId = urlParams.get('id');
-    
-    const prizeData = {
-        uuid: uuid,
-        identifier: identifier,
-        type: prolificId === 'prolific' ? 'prolific_id' : 'email',
-        timestamp: new Date().toISOString()
-    };
-    
-    fetch('/api/submit_prize', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(prizeData)
-    })
-    .then(() => {
-        // Set progress to complete and redirect to completion page
-        setCurrentProgress(PROGRESS_STEPS.COMPLETE);
+(function() {
+    const form = document.getElementById('prizeForm');
+    if (!form) return;
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const uuid = localStorage.getItem('chatbot_uuid');
+        const identifier = document.getElementById('identifier').value;
+        const urlParams = new URLSearchParams(window.location.search);
         const prolificId = urlParams.get('id');
-        window.location.href = `/complete${prolificId ? '?id=' + prolificId : ''}`;
-    })
-    .catch(error => {
-        alert('An error occurred. Please try again.');
-        console.error(error);
+        const prizeData = {
+            uuid: uuid,
+            identifier: identifier,
+            type: prolificId === 'prolific' ? 'prolific_id' : 'email',
+            timestamp: new Date().toISOString()
+        };
+        fetch('/api/submit_prize', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(prizeData)
+        })
+        .then(() => {
+            setCurrentProgress(PROGRESS_STEPS.COMPLETE);
+            window.location.href = '/complete' + (prolificId ? '?id=' + prolificId : '');
+        })
+        .catch(error => {
+            alert('An error occurred. Please try again.');
+            console.error(error);
+        });
     });
-});
+})();
 </script>
 {% endblock %}

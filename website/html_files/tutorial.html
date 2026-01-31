@@ -200,14 +200,21 @@
         text-align: left;
     }
     .mock-message-content {
-        display: inline-block;
+        display: block;
+        width: 85%;
+        max-width: 85%;
+        box-sizing: border-box;
         padding: 8px 12px;
         border-radius: 12px;
-        max-width: 85%;
         font-size: 12px;
         line-height: 1.4;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        word-break: break-word;
     }
     .mock-message.user .mock-message-content {
+        margin-left: auto;
         background: #007bff;
         color: white;
         text-align: left;
@@ -456,6 +463,7 @@
         font-weight: 700;
     }
 </style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intro.js@7.2.0/minified/introjs.min.css">
 {% endblock %}
 
 {% block content %}
@@ -480,17 +488,14 @@
         <div class="tutorial-page" id="page2">
             <h2>What are Non-Functional Requirements (NFRs)?</h2>
             <p style="line-height: 1.8; margin-bottom: 20px;">
-                Non-Functional Requirements (NFRs) specify <strong>how</strong> a system should perform rather than <strong>what</strong> it should do. While functional requirements define specific behaviors or functions (for example, "User can reset password"), NFRs establish quality attributes and constraints such as security, performance, reliability, usability, and compliance (for example, "System must reset password within 3 seconds.").
+                Non-Functional Requirements (NFRs) specify how a system should perform rather than what it should do.
             </p>
-            
-            <h3 style="margin-top: 30px; margin-bottom: 15px; color: #333;">Examples of NFRs:</h3>
-            <ul style="margin-left: 20px; line-height: 2; margin-bottom: 20px;">
-                <li><strong>Security:</strong> "The system must allow users to change passwords using secure storage methods"</li>
-                <li><strong>Performance:</strong> "The system must load patient records within 2 seconds."</li>
-                <li><strong>Usability:</strong> "The interface must be accessible to users with visual impairments."</li>
-                <li><strong>Reliability:</strong> "The system must have 99.9% uptime."</li>
-                <li><strong>Compliance:</strong> "All patient data must be encrypted according to HIPAA standards."</li>
-            </ul>
+            <p style="line-height: 1.8; margin-bottom: 10px;">
+                <strong>Example of functional requirement:</strong> "User can reset password"
+            </p>
+            <p style="line-height: 1.8; margin-bottom: 20px;">
+                <strong>Example of NFR:</strong> The system must allow users to change passwords using secure storage methods
+            </p>
         </div>
         
         <!-- Page 3: What is HIPAA? -->
@@ -540,339 +545,34 @@
             </div>
         </div>
         
-        <!-- Page 6: Interactive Practice - Introduction -->
+        <!-- Page 6: Code structure - Let's review the code structure first -->
         <div class="tutorial-page" id="page6">
-            <h2>Interactive Practice</h2>
-            <span class="practice-label">PRACTICE MODE</span>
-            
-            <p style="line-height: 1.8; margin-bottom: 20px;">
-                Before starting the actual evaluation, let's walk through the process with a practice example. This will help you understand how to use the evaluation interface.
-            </p>
-            
-            <p style="line-height: 1.8; margin-bottom: 15px;">
-                The evaluation interface consists of <strong>three panels</strong>:
-            </p>
-            
-            <!-- Three Panel Preview -->
-            <div class="mock-three-panel">
-                <!-- Left Panel: NFRs -->
-                <div class="mock-panel">
-                    <div class="mock-panel-header">
-                        NFRs Display
-                        <div class="mock-buttons">
-                            <button class="mock-btn">📋 Code Structure</button>
-                            <button class="mock-btn" onclick="openTutorialModal()">📖 Tutorial</button>
-                        </div>
-                    </div>
-                    <div class="mock-panel-content">
-                        <div class="mock-panel-step">
-                            <strong>Step 1:</strong>
-                            <ul style="margin: 6px 0 0 16px; padding-left: 16px;">
-                                <li>Review each NFR.</li>
-                                <li>Check the acknowledgement box for each NFR.</li>
-                                <li>Explain one randomly selected NFR to unlock steps 2 and 3.</li>
-                                <li>Press "Copy All NFRs" to ask them in one prompt, then start the conversation.</li>
-                            </ul>
-                        </div>
-                        <div class="mock-batch-info">
-                            Batch 1 of 3
-                            <button class="mock-btn" style="background: #007bff; color: white; border: none; padding: 6px 12px; font-size: 12px;">📋 Copy All NFRs</button>
-                        </div>
-                        <div class="mock-nfr-item">
-                            <h4>NFR 1: Example</h4>
-                            <p>This panel displays all NFRs for the current batch.</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Middle Panel: Chatbot -->
-                <div class="mock-panel">
-                    <div class="mock-panel-header">Chatbot Assistant</div>
-                    <div class="mock-chat-messages">
-                        <div class="mock-panel-step">
-                            <strong>Step 2:</strong>
-                            Interact with the chatbot to get the following for each NFR:
-                            <ul style="margin: 6px 0 0 16px; padding-left: 16px;">
-                                <li>Satisfaction Level (Satisfied, Weakly Satisfied, Weakly Denied, Denied, or Not Applicable)</li>
-                                <li>Reasoning for that level</li>
-                                <li>Specific Code Locations that address the NFR</li>
-                            </ul>
-                        </div>
-                        <div class="mock-message bot">
-                            <div class="mock-message-content">Hello! I can help you evaluate NFRs. Paste the NFRs and I'll provide assessments.</div>
-                        </div>
-                    </div>
-                    <div class="mock-chat-input">
-                        <input type="text" placeholder="Type your message..." disabled>
-                        <button class="btn" disabled>Send</button>
-                    </div>
-                </div>
-                
-                <!-- Right Panel: Feedback -->
-                <div class="mock-panel">
-                    <div class="mock-panel-header">Feedback Form</div>
-                    <div class="mock-panel-content white-bg">
-                        <div class="mock-panel-step">
-                            <strong>Step 3:</strong>
-                            <ul style="margin: 6px 0 0 16px; padding-left: 16px;">
-                                <li>Once you're convinced the chatbot has fully assessed the NFRs, complete this feedback form for each NFR.</li>
-                            </ul>
-                        </div>
-                        <div class="mock-form-section">
-                            <h4>NFR 1: Example</h4>
-                            <p style="font-size: 11px; color: #666;">Answer questions about the chatbot's evaluation.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <p style="margin-top: 20px; font-size: 14px; color: #333;">
-                Press <strong>Next</strong> to continue.
-            </p>
-        </div>
-        
-        <!-- Page 7: Highlight Tutorial & Code Structure Buttons -->
-        <div class="tutorial-page" id="page7">
-            <h2>Access Guidelines Anytime</h2>
-            <span class="practice-label">PRACTICE MODE</span>
-            
-            <p style="line-height: 1.8; margin-bottom: 20px;">
-                During the actual evaluation, you can access the guidelines at any time using these buttons:
-            </p>
-            
-            <!-- Three Panel Preview with Highlighted Buttons -->
-            <div class="mock-three-panel">
-                <!-- Left Panel: NFRs -->
-                <div class="mock-panel" style="position: relative;">
-                    <div class="mock-panel-header">
-                        NFRs Display
-                        <div class="mock-buttons highlight-buttons-box">
-                            <button class="mock-btn">📋 Code Structure</button>
-                            <button class="mock-btn" onclick="openTutorialModal()">📖 Tutorial</button>
-                        </div>
-                    </div>
-                    <!-- Highlight callout below header -->
-                    <div class="highlight-callout">
-                        <div class="highlight-arrow-up">↑</div>
-                        <div class="highlight-text-below">
-                            You can review the guidelines at any time by clicking these buttons
-                        </div>
-                    </div>
-                    <div class="mock-panel-content">
-                        <div class="mock-panel-step">
-                            <strong>Step 1:</strong>
-                            <ul style="margin: 6px 0 0 16px; padding-left: 16px;">
-                                <li>Review each NFR.</li>
-                                <li>Check the acknowledgement box for each NFR.</li>
-                                <li>Explain one randomly selected NFR to unlock steps 2 and 3.</li>
-                                <li>Press "Copy All NFRs" to ask them in one prompt, then start the conversation.</li>
-                            </ul>
-                        </div>
-                        <div class="mock-batch-info" style="position: relative;">
-                            Batch 1 of 3
-                            <button class="mock-btn highlight-buttons-box" style="background: #007bff; color: white; border: none; padding: 6px 12px; font-size: 12px;">📋 Copy All NFRs</button>
-                            <!-- Highlight callout for Copy NFRs button -->
-                            <div class="highlight-callout-copy">
-                                <div class="highlight-arrow-up">↑</div>
-                                <div class="highlight-text-below">
-                                    You can copy all NFRs using this button
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mock-nfr-item">
-                            <h4>NFR 1: Example</h4>
-                            <p>This panel displays all NFRs for the current batch.</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Middle Panel: Chatbot -->
-                <div class="mock-panel">
-                    <div class="mock-panel-header">Chatbot Assistant</div>
-                    <div class="mock-chat-messages">
-                        <div class="mock-panel-step">
-                            <strong>Step 2:</strong>
-                            Interact with the chatbot to get the following for each NFR:
-                            <ul style="margin: 6px 0 0 16px; padding-left: 16px;">
-                                <li>Satisfaction Level (Satisfied, Weakly Satisfied, Weakly Denied, Denied, or Not Applicable)</li>
-                                <li>Reasoning for that level</li>
-                                <li>Specific Code Locations that address the NFR</li>
-                            </ul>
-                        </div>
-                        <div class="mock-message bot">
-                            <div class="mock-message-content">Hello! I can help you evaluate NFRs. Paste the NFRs and I'll provide assessments.</div>
-                        </div>
-                    </div>
-                    <div class="mock-chat-input">
-                        <input type="text" placeholder="Type your message..." disabled>
-                        <button class="btn" disabled>Send</button>
-                    </div>
-                </div>
-                
-                <!-- Right Panel: Feedback -->
-                <div class="mock-panel">
-                    <div class="mock-panel-header">Feedback Form</div>
-                    <div class="mock-panel-content white-bg">
-                        <div class="mock-panel-step">
-                            <strong>Step 3:</strong>
-                            <ul style="margin: 6px 0 0 16px; padding-left: 16px;">
-                                <li>Once you're convinced the chatbot has fully assessed the NFRs, complete this feedback form for each NFR.</li>
-                            </ul>
-                        </div>
-                        <div class="mock-form-section">
-                            <h4>NFR 1: Example</h4>
-                            <p style="font-size: 11px; color: #666;">Answer questions about the chatbot's evaluation.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <p style="margin-top: 20px; font-size: 14px; color: #333;">
-                Press <strong>Next</strong> to practice Step 1.
-            </p>
-        </div>
-        
-        <!-- Page 8: Interactive Practice - Step 1 (NFRs with checkboxes) -->
-        <div class="tutorial-page" id="page8">
-            <h2>Step 1: Review the NFRs</h2>
-            <span class="practice-label">PRACTICE MODE</span>
-            <span class="step-indicator">Step 1 of 3</span>
-            
-            <p style="line-height: 1.8; margin-bottom: 15px;">
-                Read and understand each NFR. Check the box below each NFR to acknowledge you have read it, then explain one NFR in your own words.
-            </p>
-            
-            <!-- Three Panel Layout for Step 1 -->
-            <div class="mock-three-panel">
-                <!-- Left Panel: NFRs (Active) -->
-                <div class="mock-panel" style="border: 3px solid #198754;">
-                    <div class="mock-panel-header" style="background: #198754;">
-                        NFRs Display
-                        <div class="mock-buttons">
-                            <button class="mock-btn">📋 Code Structure</button>
-                            <button class="mock-btn" onclick="openTutorialModal()">📖 Tutorial</button>
-                        </div>
-                    </div>
-                    <div class="mock-panel-content">
-                        <div class="mock-panel-step">
-                            <strong>Step 1:</strong>
-                            <ul style="margin: 6px 0 0 16px; padding-left: 16px;">
-                                <li>Review each NFR.</li>
-                                <li>Check the acknowledgement box for each NFR.</li>
-                                <li>Explain one randomly selected NFR to unlock steps 2 and 3.</li>
-                                <li>Press "Copy All NFRs" to ask them in one prompt, then start the conversation.</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="mock-batch-info">
-                            Practice Batch: 3 sample NFRs
-                            <button class="mock-btn" style="background: #007bff; color: white; border: none; padding: 6px 12px; font-size: 12px;">📋 Copy All NFRs</button>
-                        </div>
-                        
-                        <!-- Sample NFR 1 -->
-                        <div class="mock-nfr-item">
-                            <h4>NFR 1: Password Security</h4>
-                            <p>The system must allow users to change passwords using secure storage methods.</p>
-                            <label class="mock-checkbox-label">
-                                <input type="checkbox" id="mock_nfr_read_1" onchange="checkMockNfrBoxes()">
-                                I have read and understood this NFR
-                            </label>
-                        </div>
-                        
-                        <!-- Sample NFR 2 -->
-                        <div class="mock-nfr-item">
-                            <h4>NFR 2: Performance</h4>
-                            <p>The system must load patient records within 2 seconds.</p>
-                            <label class="mock-checkbox-label">
-                                <input type="checkbox" id="mock_nfr_read_2" onchange="checkMockNfrBoxes()">
-                                I have read and understood this NFR
-                            </label>
-                        </div>
-                        
-                        <!-- Sample NFR 3 -->
-                        <div class="mock-nfr-item">
-                            <h4>NFR 3: Usability</h4>
-                            <p>The interface must be accessible to users with visual impairments.</p>
-                            <label class="mock-checkbox-label">
-                                <input type="checkbox" id="mock_nfr_read_3" onchange="checkMockNfrBoxes()">
-                                I have read and understood this NFR
-                            </label>
-                        </div>
-                        
-                        <!-- Gate Question -->
-                        <div class="mock-gate-card">
-                            <div class="mock-gate-title">Before you continue</div>
-                            <p style="font-size: 12px; color: #1f3f5b; margin-bottom: 8px;">
-                                Please check all boxes above, then explain this NFR in your own words:
-                            </p>
-                            <div class="mock-gate-nfr">
-                                <strong>NFR 2: Performance</strong><br>
-                                The system must load patient records within 2 seconds.
-                            </div>
-                            <textarea class="mock-gate-textarea" id="mockGateAnswer" placeholder="Write your explanation here..."></textarea>
-                            <div class="validation-error" id="mockGateError">Please check all boxes and provide an explanation to continue.</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Middle Panel: Chatbot (Locked) -->
-                <div class="mock-panel" style="opacity: 0.5; filter: blur(1px);">
-                    <div class="mock-panel-header">Chatbot Assistant</div>
-                    <div class="mock-chat-messages">
-                        <div class="mock-panel-step">
-                            <strong>Step 2:</strong>
-                            Interact with the chatbot to get the following for each NFR:
-                            <ul style="margin: 6px 0 0 16px; padding-left: 16px;">
-                                <li>Satisfaction Level (Satisfied, Weakly Satisfied, Weakly Denied, Denied, or Not Applicable)</li>
-                                <li>Reasoning for that level</li>
-                                <li>Specific Code Locations that address the NFR</li>
-                            </ul>
-                        </div>
-                        <div class="mock-message bot">
-                            <div class="mock-message-content">Complete Step 1 first to unlock the chatbot.</div>
-                        </div>
-                    </div>
-                    <div class="mock-chat-input">
-                        <input type="text" placeholder="Locked until Step 1 is complete..." disabled>
-                        <button class="btn" disabled>Send</button>
-                    </div>
-                </div>
-                
-                <!-- Right Panel: Feedback (Locked) -->
-                <div class="mock-panel" style="opacity: 0.5; filter: blur(1px);">
-                    <div class="mock-panel-header">Feedback Form</div>
-                    <div class="mock-panel-content white-bg">
-                        <div class="mock-panel-step">
-                            <strong>Step 3:</strong>
-                            <ul style="margin: 6px 0 0 16px; padding-left: 16px;">
-                                <li>Once you're convinced the chatbot has fully assessed the NFRs, complete this feedback form for each NFR.</li>
-                            </ul>
-                        </div>
-                        <div class="mock-form-section">
-                            <h4>NFR 1: Password Security</h4>
-                            <p style="font-size: 11px; color: #666;">Locked until Steps 1 & 2 are complete.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Page 9: Step 1.1 - MVC Structure -->
-        <div class="tutorial-page" id="page9">
-            <h2>Step 1.1: Understanding the Code Structure</h2>
+            <h2>Let's review the code structure first</h2>
             <span class="practice-label">CODE NAVIGATION</span>
             
             <p style="line-height: 1.8; margin-bottom: 20px;">
-                The iTrust codebase follows a <strong>Model-View-Controller (MVC)</strong> architecture. Understanding this structure will help you locate the relevant code when evaluating NFRs.
+                The codebase follows a <strong>Model-View-Controller (MVC)</strong> architecture.
             </p>
-            
-            <p style="line-height: 1.8; margin-bottom: 15px;">
-                In MVC, the application is divided into three layers that separate concerns:
-            </p>
+
             <ul style="margin-left: 20px; line-height: 2; margin-bottom: 20px;">
-                <li><strong>Model</strong> — Data and business logic (database operations)</li>
-                <li><strong>View</strong> — What the user sees and interacts with (UI)</li>
-                <li><strong>Controller</strong> — Handles user input and coordinates between Model and View</li>
+                <li><strong>Model:</strong>
+                    <ul style="margin-top: 4px; padding-left: 22px;">
+                        <li>Data and business logic (database operations)</li>
+                        <li>Located at: <code>src/main/edu/ncsu/csc/itrust/model/old/dao/mysql/*.java</code></li>
+                            </ul>
+                </li>
+                <li><strong>View:</strong>
+                    <ul style="margin-top: 4px; padding-left: 22px;">
+                        <li>What the user sees and interacts with (UI)</li>
+                        <li>Located at: <code>WebRoot/*.jsp</code></li>
+                            </ul>
+                </li>
+                <li><strong>Controller:</strong>
+                    <ul style="margin-top: 4px; padding-left: 22px;">
+                        <li>Handles user input and coordinates between Model and View</li>
+                        <li>Located at: <code>src/main/edu/ncsu/csc/itrust/action/*.java</code></li>
+                            </ul>
+                </li>
             </ul>
             
             <h3 style="margin-bottom: 15px;">MVC Structure in iTrust</h3>
@@ -906,55 +606,16 @@
 └─────────────────────────────────────────────────────────────┘</pre>
         </div>
         
-        <!-- Page 10: Step 1.1 - Layer Locations -->
-        <div class="tutorial-page" id="page10">
-            <h2>Step 1.1: Where to Find Each Layer</h2>
-            <span class="practice-label">CODE NAVIGATION</span>
-            
-            <p style="line-height: 1.8; margin-bottom: 25px;">
-                Each layer has a specific location in the iTrust project. Knowing these paths will help you navigate to the relevant code for any NFR.
-            </p>
-            
-            <div class="code-layer-card">
-                <h4>View Layer</h4>
-                <p><strong>What it does:</strong> What the user sees and interacts with.</p>
-                <p><strong>Location:</strong> <code>WebRoot/*.jsp</code></p>
-            </div>
-            
-            <div class="code-layer-card">
-                <h4>Controller Layer</h4>
-                <p><strong>What it does:</strong> Logic and validation.</p>
-                <p><strong>Location:</strong> <code>src/main/edu/ncsu/csc/itrust/action/*.java</code></p>
-            </div>
-            
-            <div class="code-layer-card">
-                <h4>Model Layer</h4>
-                <p><strong>What it does:</strong> Database operations.</p>
-                <p><strong>Location:</strong> <code>model/old/dao/mysql/*.java</code></p>
-            </div>
-        </div>
-        
-        <!-- Page 11: Step 1.1 - Finding codes for NFR1 -->
-        <div class="tutorial-page" id="page11">
-            <h2>Step 1.1: Finding Relevant Code</h2>
-            <span class="practice-label">CODE NAVIGATION</span>
-            
-            <p style="line-height: 1.8; margin-bottom: 20px;">
+        <!-- Page 7: View Layer Quiz -->
+        <div class="tutorial-page" id="page7">
+            <p style="line-height: 1.8; margin-bottom: 10px;">
                 Let's find the relevant code for this NFR:
             </p>
-            
-            <div class="nfr-highlight-box">
+            <div class="nfr-highlight-box" style="margin-bottom: 20px;">
                 <strong>NFR 1:</strong> "The system must allow users to change passwords using secure storage methods"
             </div>
             
-            <p style="line-height: 1.8; margin-bottom: 20px; margin-top: 20px;">
-                We need to locate where password change functionality is implemented. We'll search through each layer — View, Controller, and Model — to find the relevant files.
-            </p>
-        </div>
-        
-        <!-- Page 12: Step 1.1 - View Layer Quiz -->
-        <div class="tutorial-page" id="page12">
-            <h2>Step 1.1: Finding the View Layer</h2>
+            <h2>Finding the View Layer</h2>
             <span class="practice-label">CODE NAVIGATION</span>
             
             <p style="line-height: 1.8; margin-bottom: 15px;">
@@ -979,10 +640,6 @@
 │   ├── global.jsp                   # Global initialization (DAO, session)
 │   ├── header.jsp                   # Common header
 │   ├── footer.jsp                   # Common footer</pre>
-            
-            <div class="nfr-highlight-box">
-                <strong>NFR 1:</strong> "The system must allow users to change passwords using secure storage methods"
-            </div>
 
             <p style="line-height: 1.8; margin-bottom: 15px;">
                 For this NFR, which file in View Layer is relevant?
@@ -1002,9 +659,16 @@
             </div>
         </div>
         
-        <!-- Page 13: Step 1.1 - Controller/Action Layer -->
-        <div class="tutorial-page" id="page13">
-            <h2>Step 1.1: Finding the Controller/Action Layer</h2>
+        <!-- Page 8: Controller/Action Layer -->
+        <div class="tutorial-page" id="page8">
+            <p style="line-height: 1.8; margin-bottom: 10px;">
+                Let's find the relevant code for this NFR:
+            </p>
+            <div class="nfr-highlight-box" style="margin-bottom: 20px;">
+                <strong>NFR 1:</strong> "The system must allow users to change passwords using secure storage methods"
+            </div>
+            
+            <h2>Finding the Controller/Action Layer</h2>
             <span class="practice-label">CODE NAVIGATION</span>
             
             <p style="line-height: 1.8; margin-bottom: 15px;">
@@ -1019,9 +683,6 @@
 │       │   ├── ViewMyRecordsAction.java
 │       │   └── ... (63+ action classes)</pre>
 
-            <div class="nfr-highlight-box">
-                <strong>NFR 1:</strong> "The system must allow users to change passwords using secure storage methods"
-            </div>
             <p style="line-height: 1.8; margin-bottom: 15px;">
                 For this NFR, which file in Controller Layer is relevant?
             </p>
@@ -1040,9 +701,16 @@
             </div>
         </div>
         
-        <!-- Page 14: Step 1.1 - Model Layer -->
-        <div class="tutorial-page" id="page14">
-            <h2>Step 1.1: Finding the Model Layer</h2>
+        <!-- Page 9: Model Layer -->
+        <div class="tutorial-page" id="page9">
+            <p style="line-height: 1.8; margin-bottom: 10px;">
+                Let's find the relevant code for this NFR:
+            </p>
+            <div class="nfr-highlight-box" style="margin-bottom: 20px;">
+                <strong>NFR 1:</strong> "The system must allow users to change passwords using secure storage methods"
+            </div>
+            
+            <h2>Finding the Model Layer</h2>
             <span class="practice-label">CODE NAVIGATION</span>
             
             <p style="line-height: 1.8; margin-bottom: 15px;">
@@ -1067,10 +735,6 @@
 │       │   │       ├── AddPatientValidator.java
 │       │   │       └── ... (validator classes)</pre>
          
-
-            <div class="nfr-highlight-box">
-                <strong>NFR 1:</strong> "The system must allow users to change passwords using secure storage methods"
-            </div>
             <p style="line-height: 1.8; margin-bottom: 15px;">
                 For this NFR, which file in Model Layer is relevant?
             </p>
@@ -1089,330 +753,144 @@
             </div>
         </div>
         
-        <!-- Page 15: Interactive Practice - Step 2 (Chatbot) -->
-        <div class="tutorial-page" id="page15">
-            <h2>Step 2: Interact with the Chatbot</h2>
-            <span class="practice-label">PRACTICE MODE</span>
-            <span class="step-indicator">Step 2 of 3</span>
-            
-            <p style="line-height: 1.8; margin-bottom: 15px;">
-                Now that you've reviewed the NFRs, use the chatbot to evaluate them. Copy the NFRs and ask the chatbot to assess each one.
+        <!-- Page 10: Evaluation replica (no backend) -->
+        <div class="tutorial-page" id="page10">
+            <h2>You're Ready!</h2>
+            <span class="practice-label">PRACTICE COMPLETE</span>
+            <p style="line-height: 1.8; margin-bottom: 15px;">This is what the evaluation interface looks like. Click <strong>Start Evaluation</strong> below to begin the actual evaluation.</p>
+            <p style="margin-bottom: 15px;">
+                <button type="button" class="btn btn-secondary" id="tour-redo-btn" style="font-size: 13px;">Redo tour</button>
             </p>
-            
-            <!-- Three Panel Layout for Step 2 -->
-            <div class="mock-three-panel">
-                <!-- Left Panel: NFRs (Completed) -->
-                <div class="mock-panel" style="opacity: 0.7;">
-                    <div class="mock-panel-header" style="background: #6c757d;">
-                        NFRs Display ✓
-                        <div class="mock-buttons">
-                            <button class="mock-btn">📋 Code Structure</button>
-                            <button class="mock-btn" onclick="openTutorialModal()">📖 Tutorial</button>
+            <div class="mock-three-panel" style="min-height: 550px;">
+                <!-- Left: NFRs Display (replica of evaluation) -->
+                <div class="mock-panel" id="tour-nfr-panel">
+                    <div class="mock-panel-header">
+                        NFRs Display
+                        <div class="mock-buttons" id="tour-tutorial-buttons">
+                            <button class="mock-btn" type="button">📋 Code Structure</button>
+                            <button class="mock-btn" type="button" onclick="openTutorialModal()">📖 Tutorial</button>
                         </div>
                     </div>
                     <div class="mock-panel-content">
-                        <div class="mock-panel-step" style="background: #d4edda; border-color: #198754;">
-                            <strong>Step 1: ✓ Completed</strong>
+                        <div class="mock-batch-info" style="padding: 10px; background: #e9ecef; border-radius: 4px; margin-bottom: 15px; font-weight: 600; display: flex; justify-content: space-between; align-items: center;">
+                            Batch 1 of 1
+                            <button class="mock-btn" type="button" id="tour-copy-btn" style="background: #007bff; color: white; border: none; padding: 6px 12px; font-size: 12px;">📋 Copy All NFRs</button>
                         </div>
-                        <div class="mock-batch-info">
-                            Practice Batch: 3 sample NFRs
-                            <button class="mock-btn" style="background: #007bff; color: white; border: none; padding: 6px 12px; font-size: 12px;">📋 Copy All NFRs</button>
-                        </div>
-                        <div class="mock-nfr-item" style="opacity: 0.7;">
-                            <h4>NFR 1 ✓</h4>
+                        <div id="tour-nfr-boxes">
+                        <div class="mock-nfr-item">
+                            <h4>NFR 1: Password Security</h4>
                             <p>The system must allow users to change passwords using secure storage methods</p>
+                            <label class="mock-checkbox-label" style="margin-top: 10px;">
+                                <input type="checkbox" id="tour-nfr-cb-1">
+                                I have read and understood this NFR
+                            </label>
                         </div>
-                        <div class="mock-nfr-item" style="opacity: 0.7;">
-                            <h4>NFR 2 ✓</h4>
+                        <div class="mock-nfr-item">
+                            <h4>NFR 2: Performance</h4>
                             <p>The system must load patient records within 2 seconds.</p>
+                            <label class="mock-checkbox-label" style="margin-top: 10px;">
+                                <input type="checkbox" id="tour-nfr-cb-2">
+                                I have read and understood this NFR
+                            </label>
                         </div>
-                        <div class="mock-nfr-item" style="opacity: 0.7;">
-                            <h4>NFR 3 ✓</h4>
+                        <div class="mock-nfr-item">
+                            <h4>NFR 3: Usability</h4>
                             <p>The interface must be accessible to users with visual impairments.</p>
+                            <label class="mock-checkbox-label" style="margin-top: 10px;">
+                                <input type="checkbox" id="tour-nfr-cb-3">
+                                I have read and understood this NFR
+                            </label>
                         </div>
+                        <div id="tour-nfr-error" style="display: none; color: #c00; font-size: 13px; margin-top: 10px; font-weight: 600;">Please check all three NFR acknowledgement boxes first.</div>
                     </div>
-                </div>
-                
-                <!-- Middle Panel: Chatbot (Active) -->
-                <div class="mock-panel" style="border: 3px solid #198754;">
-                    <div class="mock-panel-header" style="background: #198754;">Chatbot Assistant</div>
-                    <div class="mock-chat-messages">
-                        <div class="mock-panel-step">
-                            <strong>Step 2:</strong>
-                            Interact with the chatbot to get the following for each NFR:
-                            <ul style="margin: 6px 0 0 16px; padding-left: 16px;">
-                                <li>Satisfaction Level (Satisfied, Weakly Satisfied, Weakly Denied, Denied, or Not Applicable)</li>
-                                <li>Reasoning for that level</li>
-                                <li>Specific Code Locations that address the NFR</li>
-                            </ul>
-                        </div>
-                        <div class="mock-message bot">
-                            <div class="mock-message-content">Hello! I can help you evaluate NFRs. Paste the NFRs and I'll provide assessments.</div>
-                        </div>
-                        <div class="mock-chat-instruction" style="background: #fff3cd; border: 2px solid #ffc107; border-radius: 6px; padding: 12px 15px; margin: 10px 0; font-size: 12px; color: #856404;">
-                            <strong>Start by asking the chatbot to evaluate all NFRs together</strong><br>
-                            Paste the copied NFRs into the chat
-                        </div>
-                        <div class="mock-message user">
-                            <div class="mock-message-content" style="white-space: pre-line;">Please evaluate the following NFR. Provide:
-• Level of satisfaction
-• Reasoning
-• Relevant code locations (if applicable).
-
-NFR1: The system must allow users to change passwords using secure storage methods
-NFR2: The system must load patient records within 2 seconds.
-NFR3: The interface must be accessible to users with visual impairments.</div>
-                        </div>
-                        <div class="mock-message bot">
-                            <div class="mock-message-content" style="white-space: pre-line;"><strong>NFR 1: Secure password storage</strong>
-Level of satisfaction: Satisfied
-Reasoning: Passwords are hashed with SHA-256 and a per-user salt before storage. The resetPassword method in AuthDAO uses DigestUtils.sha256Hex() and stores salt in the database.
-Relevant code locations: AuthDAO.java (resetPassword), ChangePasswordAction.java
-
-<strong>NFR 2: Load patient records within 2 seconds</strong>
-Level of satisfaction: Weakly Denied
-Reasoning: ...
-Relevant code locations: ...
-
-<strong>NFR 3: Accessibility for users with visual impairments</strong>
-Level of satisfaction: Weakly Satisfied
-Reasoning: ...
-Relevant code locations: ...</div>
-                        </div>
-                    </div>
-                    <div class="mock-chat-input">
-                        <input type="text" placeholder="This is a demo - chatbot is not active" disabled>
-                        <button class="btn" disabled>Send</button>
-                    </div>
-                </div>
-                
-                <!-- Right Panel: Feedback (Locked) -->
-                <div class="mock-panel" style="opacity: 0.5; filter: blur(1px);">
-                    <div class="mock-panel-header">Feedback Form</div>
-                    <div class="mock-panel-content white-bg">
-                        <div class="mock-panel-step">
-                            <strong>Step 3:</strong>
-                            <ul style="margin: 6px 0 0 16px; padding-left: 16px;">
-                                <li>Once you're convinced the chatbot has fully assessed the NFRs, complete this feedback form for each NFR.</li>
-                            </ul>
-                        </div>
-                        <div class="mock-form-section">
-                            <h4>NFR 1: Password Security</h4>
-                            <p style="font-size: 11px; color: #666;">Locked until Step 2 is complete.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <p style="margin-top: 20px; font-size: 14px; color: #333;">
-                Press <strong>Next</strong> to see how to engage with the chatbot.
-            </p>
+                        <div class="mock-gate-card" id="tour-gate-explain" style="margin-top: 16px;">
+                            <div class="mock-gate-title">Before you continue (Steps 2 &amp; 3)</div>
+                            <p style="font-size: 13px; color: #1f3f5b; margin-bottom: 10px; line-height: 1.4;">
+                                Please check all boxes above, then explain this NFR in your own words:
+                            </p>
+                            <div class="mock-gate-nfr">
+                                <strong>NFR 1:</strong> The system must allow users to change passwords using secure storage methods
         </div>
-        
-        <!-- Page 16: Step 2 - Follow-up Dialogue -->
-        <div class="tutorial-page" id="page16">
-            <h2>Step 2: Engaging with the Chatbot</h2>
-            <span class="practice-label">PRACTICE MODE</span>
-            <span class="step-indicator">Step 2 of 3</span>
-            
-            <p style="line-height: 1.8; margin-bottom: 20px;">
-                Engage with the chatbot as a developer would when working to understand and implement requirements. Your dialogue should include:
-            </p>
-            <ul style="margin-left: 20px; line-height: 2; margin-bottom: 25px;">
-                <li>Asking clarifying questions about unclear requirements</li>
-                <li>Seeking additional information about implementation details</li>
-                <li>Requesting specific code locations or examples</li>
-                <li>Discussing potential approaches to satisfy the requirements</li>
-                <li>Providing context about the system architecture when needed</li>
-                <li>Challenging or validating the chatbot's assessments</li>
-            </ul>
-            
-            <div class="code-layer-card" style="margin-bottom: 25px;">
-                <h4>Important Notes:</h4>
-                <ul style="margin: 10px 0 0 20px; line-height: 1.8;">
-                    <li>The chatbot will provide the final evaluation for each NFR</li>
-                    <li>Continue the dialogue until you have a complete understanding of the chatbot's assessment</li>
-                    <li>The chatbot should evaluate each NFR on three dimensions:
-                        <ul style="margin-top: 8px;">
-                            <li><strong>Satisfaction Level:</strong> Satisfied, Weakly Satisfied, Weakly Denied, Denied, or Not Applicable</li>
-                            <li><strong>Reasoning:</strong> Explanation for the satisfaction level</li>
-                            <li><strong>Code Locations:</strong> Specific places in the code where the NFR is addressed</li>
-                        </ul>
-                    </li>
-                </ul>
+                            <textarea class="mock-gate-textarea" id="tour-gate-answer" placeholder="Write your answer here…" style="margin-top: 8px;"></textarea>
+                            <div id="tour-gate-error" style="display: none; color: #c00; font-size: 13px; margin-top: 8px; font-weight: 600;">Please write something in your own words to continue.</div>
+                            <div style="display: flex; gap: 10px; align-items: center; margin-top: 10px; flex-wrap: wrap;">
+                                <button class="btn" type="button" id="tour-gate-submit" style="padding: 8px 16px; font-size: 13px;">Submit answer</button>
             </div>
-            
-            <p style="line-height: 1.8; margin-bottom: 15px;">
-                Example: a follow-up question for NFR 1 (Secure password storage):
-            </p>
-            
-            <!-- Three Panel Layout -->
-            <div class="mock-three-panel">
-                <!-- Left Panel: NFRs (Completed) -->
-                <div class="mock-panel" style="opacity: 0.7;">
-                    <div class="mock-panel-header" style="background: #6c757d;">NFRs Display ✓</div>
-                    <div class="mock-panel-content">
-                        <div class="mock-nfr-item" style="opacity: 0.7;">
-                            <h4>NFR 1: Secure password storage ✓</h4>
-                            <p>The system must allow users to change passwords using secure storage methods</p>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Middle Panel: Chatbot with follow-up -->
-                <div class="mock-panel" style="border: 3px solid #198754;">
-                    <div class="mock-panel-header" style="background: #198754;">Chatbot Assistant</div>
-                    <div class="mock-chat-messages">
-                        <div class="mock-message bot">
-                            <div class="mock-message-content">
-                                <strong>NFR 1: Secure password storage</strong><br>
-                                <strong>Level of satisfaction:</strong> Satisfied<br>
-                                <strong>Reasoning:</strong> Passwords are hashed with SHA-256 and a per-user salt before storage. The resetPassword method in AuthDAO uses DigestUtils.sha256Hex() and stores the salt in the database.<br>
-                                <strong>Relevant code locations:</strong> AuthDAO.java (resetPassword), ChangePasswordAction.java
+                <!-- Middle: Chatbot (empty until user sends in tour) -->
+                <div class="mock-panel" id="tour-chat-panel">
+                    <div class="mock-panel-header">Chatbot Assistant</div>
+                    <div class="mock-chat-messages" id="tour-chat-messages">
+                        <div id="tour-chat-first-message" class="mock-message user" style="display: none;">
+                            <div class="mock-message-content" style="white-space: pre-wrap; text-align: left;"></div>
                             </div>
                         </div>
-                        <div class="mock-message user">
-                            <div class="mock-message-content">I see SHA-256 is being used for password hashing. Isn't SHA-256 vulnerable to brute-force attacks?</div>
-                        </div>
-                        <div class="mock-message bot">
-                            <div class="mock-message-content">
-                                You're right. SHA-256 is designed to be fast, which makes it susceptible to brute-force attacks. There's no key stretching or iteration count in the current implementation. For the actual evaluation, this would warrant a <strong>Weakly Satisfied</strong> assessment — the system does use salted hashing (which is better than plain storage), but it falls short of modern best practices like bcrypt or Argon2.
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mock-chat-input">
-                        <input type="text" placeholder="This is a demo - chatbot is not active" disabled>
-                        <button class="btn" disabled>Send</button>
+                    <div class="mock-chat-input" id="tour-chat-input-area" style="flex-wrap: wrap;">
+                        <textarea id="tour-chat-input" placeholder="Type your message... (Write and press Send to continue the tour)" rows="3" style="flex: 1; min-height: 60px; resize: vertical; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 12px; font-family: inherit;"></textarea>
+                        <button class="btn" id="tour-chat-send">Send</button>
+                        <div id="tour-chat-error" style="display: none; color: #c00; font-size: 12px; margin-top: 6px; width: 100%; flex-basis: 100%;">Please write a message and press Send to continue.</div>
                     </div>
                 </div>
                 
-                <!-- Right Panel: Feedback (Locked) -->
-                <div class="mock-panel" style="opacity: 0.5; filter: blur(1px);">
+                <!-- Right: Feedback Form (static, disabled) -->
+                <div class="mock-panel" id="tour-feedback-form">
                     <div class="mock-panel-header">Feedback Form</div>
                     <div class="mock-panel-content white-bg">
-                        <p style="font-size: 12px; color: #666;">Complete Step 2 to unlock.</p>
-                    </div>
-                </div>
-            </div>
-            
-            <p style="margin-top: 20px; font-size: 14px; color: #333;">
-                In the actual evaluation, continue the conversation until you're satisfied with the chatbot's assessments, then proceed to Step 3. Press <strong>Next</strong> to see Step 3.
-            </p>
-        </div>
-        
-        <!-- Page 17: Step 3 - Complete the Feedback Form -->
-        <div class="tutorial-page" id="page17">
-            <h2>Step 3: Complete the Feedback Form</h2>
-            <span class="practice-label">PRACTICE MODE</span>
-            <span class="step-indicator">Step 3 of 3</span>
-            
-            <p style="line-height: 1.8; margin-bottom: 25px;">
-                <strong>Step 3: Complete the Feedback Form (Right Panel)</strong>
-            </p>
-            <p style="line-height: 1.8; margin-bottom: 25px;">
-                Once you are fully convinced that the chatbot has comprehensively assessed the NFRs, complete the feedback form for each NFR.
-            </p>
-            
-            <!-- Three Panel Layout - Feedback Form highlighted -->
-            <div class="mock-three-panel">
-                <!-- Left Panel: NFRs (Completed) -->
-                <div class="mock-panel" style="opacity: 0.7;">
-                    <div class="mock-panel-header" style="background: #6c757d;">NFRs Display ✓</div>
-                    <div class="mock-panel-content">
-                        <div class="mock-nfr-item" style="opacity: 0.7;">
-                            <h4>NFR 1: Password Security ✓</h4>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Middle Panel: Chatbot (Completed) -->
-                <div class="mock-panel" style="opacity: 0.7;">
-                    <div class="mock-panel-header" style="background: #6c757d;">Chatbot Assistant ✓</div>
-                    <div class="mock-chat-messages">
-                        <div class="mock-message bot">
-                            <div class="mock-message-content">Assessment complete. Ready for feedback.</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Right Panel: Feedback Form (Active) -->
-                <div class="mock-panel" style="border: 3px solid #198754;">
-                    <div class="mock-panel-header" style="background: #198754;">Feedback Form</div>
-                    <div class="mock-panel-content white-bg">
-                        <div class="mock-panel-step">
-                            <strong>Step 3:</strong>
-                            <ul style="margin: 6px 0 0 16px; padding-left: 16px;">
-                                <li>Once you're convinced the chatbot has fully assessed the NFRs, complete this feedback form for each NFR.</li>
-                            </ul>
-                        </div>
                         <div class="mock-form-section">
                             <h4>NFR 1: Password Security</h4>
-                            
                             <div class="mock-form-group">
                                 <label>Question 1: Do you agree with the chatbot's satisfaction level assessment?<span style="color: #c00;">*</span></label>
                                 <div class="mock-radio-group">
-                                    <label><input type="radio" name="tutorial_q1" disabled> Agree</label>
-                                    <label><input type="radio" name="tutorial_q1" disabled> Partially agree</label>
-                                    <label><input type="radio" name="tutorial_q1" disabled> Partially disagree</label>
-                                    <label><input type="radio" name="tutorial_q1" disabled> Disagree</label>
+                                    <label><input type="radio" name="demo_q1_1" disabled> Agree</label>
+                                    <label><input type="radio" name="demo_q1_1" disabled> Partially agree</label>
+                                    <label><input type="radio" name="demo_q1_1" disabled> Partially disagree</label>
+                                    <label><input type="radio" name="demo_q1_1" disabled> Disagree</label>
                                 </div>
                             </div>
-                            
                             <div class="mock-form-group">
                                 <label>Question 2: Do you agree with the chatbot's reasoning?<span style="color: #c00;">*</span></label>
                                 <div class="mock-radio-group">
-                                    <label><input type="radio" name="tutorial_q2" disabled> Agree</label>
-                                    <label><input type="radio" name="tutorial_q2" disabled> Partially agree</label>
-                                    <label><input type="radio" name="tutorial_q2" disabled> Partially disagree</label>
-                                    <label><input type="radio" name="tutorial_q2" disabled> Disagree</label>
+                                    <label><input type="radio" name="demo_q2_1" disabled> Agree</label>
+                                    <label><input type="radio" name="demo_q2_1" disabled> Partially agree</label>
+                                    <label><input type="radio" name="demo_q2_1" disabled> Partially disagree</label>
+                                    <label><input type="radio" name="demo_q2_1" disabled> Disagree</label>
                                 </div>
                             </div>
-                            
                             <div class="mock-form-group">
                                 <label>Question 3: Do you agree with the chatbot's identified code locations?<span style="color: #c00;">*</span></label>
                                 <div class="mock-radio-group">
-                                    <label><input type="radio" name="tutorial_q3" disabled> Agree</label>
-                                    <label><input type="radio" name="tutorial_q3" disabled> Partially agree</label>
-                                    <label><input type="radio" name="tutorial_q3" disabled> Partially disagree</label>
-                                    <label><input type="radio" name="tutorial_q3" disabled> Disagree</label>
+                                    <label><input type="radio" name="demo_q3_1" disabled> Agree</label>
+                                    <label><input type="radio" name="demo_q3_1" disabled> Partially agree</label>
+                                    <label><input type="radio" name="demo_q3_1" disabled> Partially disagree</label>
+                                    <label><input type="radio" name="demo_q3_1" disabled> Disagree</label>
                                 </div>
                             </div>
-                            
                             <div class="mock-form-group">
                                 <label>Undecided? Explain why:</label>
-                                <textarea disabled placeholder="Incase you cannot choose any of the above, explain why." style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; min-height: 60px; font-size: 11px;"></textarea>
+                                <textarea disabled placeholder="Optional" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; min-height: 50px; font-size: 12px;"></textarea>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        
-        <!-- Page 18: Ready for Evaluation -->
-        <div class="tutorial-page" id="page18">
-            <h2>You're Ready!</h2>
-            <span class="practice-label">PRACTICE COMPLETE</span>
-            
-            <p style="line-height: 1.8; margin-bottom: 25px; font-size: 18px;">
-                Now you are ready to enter the actual evaluation.
-            </p>
-            
-            <p style="line-height: 1.8; margin-bottom: 20px;">
-                You've completed the tutorial and practiced the evaluation workflow. Click <strong>Start Evaluation</strong> to begin.
-            </p>
         </div>
         
         <div class="navigation">
             <button class="btn btn-secondary" id="prevBtn" onclick="changePage(-1)" style="display: none;">Previous</button>
             <button class="btn" id="nextBtn" onclick="changePage(1)">Next</button>
+            <div id="tourCompleteError" style="display: none; color: #c00; font-weight: 600; margin-top: 8px;">Please complete the tour to proceed to the evaluation.</div>
         </div>
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/intro.js@7.2.0/minified/intro.min.js"></script>
 <script>
 const STATIC_PASSWORD = 'perc2026'; // Static password
 let currentPage = 1;
-const totalPages = 18;
+const totalPages = 10;
 let uuid = null;
 
 // Get UUID from localStorage (should already exist from consent page)
@@ -1470,18 +948,341 @@ function showPage(page) {
     // Show current page
     document.getElementById(`page${page}`).classList.add('active');
     document.getElementById('pageNum').textContent = page;
+    var tourCompleteErr = document.getElementById('tourCompleteError');
+    if (tourCompleteErr) tourCompleteErr.style.display = 'none';
     document.getElementById('totalPages').textContent = totalPages;
     
     // Update navigation buttons
     document.getElementById('prevBtn').style.display = page === 1 ? 'none' : 'block';
     document.getElementById('nextBtn').textContent = page === totalPages ? 'Start Evaluation' : 'Next';
     
-    // Make container wider for practice pages (three-panel layout)
+    // Wide container for page 10 (evaluation replica)
     const container = document.querySelector('.tutorial-container');
-    if ((page >= 6 && page <= 8) || page === 15 || page === 16 || page === 17) {
-        container.classList.add('wide');
-    } else {
-        container.classList.remove('wide');
+    if (container) {
+        if (page === 10) container.classList.add('wide');
+        else container.classList.remove('wide');
+    }
+    
+    // Intro.js tour on page 10 (evaluation replica walkthrough)
+    if (page === 10 && typeof introJs !== 'undefined') {
+        setTimeout(function() {
+            function allTourBoxesChecked() {
+                var c1 = document.getElementById('tour-nfr-cb-1');
+                var c2 = document.getElementById('tour-nfr-cb-2');
+                var c3 = document.getElementById('tour-nfr-cb-3');
+                return c1 && c2 && c3 && c1.checked && c2.checked && c3.checked;
+            }
+            function tryAdvanceFromCheckboxes() {
+                var errEl = document.getElementById('tour-nfr-error');
+                if (errEl) errEl.style.display = 'none';
+                if (allTourBoxesChecked() && window._page10Tour && window._page10TourCurrentStep === 3) {
+                    window._page10Tour.nextStep();
+                }
+            }
+            function gateAnswerFilled() {
+                var el = document.getElementById('tour-gate-answer');
+                return el && el.value.trim().length > 0;
+            }
+            window.resetPage10Tour = function() {
+                if (window._page10Tour) {
+                    try { window._page10Tour.exit(); } catch (e) {}
+                }
+                window._page10Tour = null;
+                window._tourCompleted = false;
+                window._tourChatSent = false;
+                window._tourFollowUpAdded = false;
+                ['tour-nfr-cb-1', 'tour-nfr-cb-2', 'tour-nfr-cb-3'].forEach(function(id) {
+                    var el = document.getElementById(id);
+                    if (el) { el.checked = false; el._tourListener = false; }
+                });
+                var gate = document.getElementById('tour-gate-answer');
+                if (gate) gate.value = '';
+                var chatInput = document.getElementById('tour-chat-input');
+                if (chatInput) chatInput.value = '';
+                var messagesEl = document.getElementById('tour-chat-messages');
+                if (messagesEl) {
+                    while (messagesEl.firstChild) messagesEl.removeChild(messagesEl.firstChild);
+                    var firstMsg = document.createElement('div');
+                    firstMsg.id = 'tour-chat-first-message';
+                    firstMsg.className = 'mock-message user';
+                    firstMsg.style.display = 'none';
+                    var content = document.createElement('div');
+                    content.className = 'mock-message-content';
+                    content.style.whiteSpace = 'pre-wrap';
+                    content.style.textAlign = 'left';
+                    firstMsg.appendChild(content);
+                    messagesEl.appendChild(firstMsg);
+                }
+                ['tour-nfr-error', 'tour-gate-error', 'tour-chat-error', 'tourCompleteError'].forEach(function(id) {
+                    var el = document.getElementById(id);
+                    if (el) el.style.display = 'none';
+                });
+            };
+            var tourChatFirstMessageText = [
+                'Please evaluate the following NFR. Provide:',
+                '• Level of satisfaction',
+                '• Reasoning',
+                '• Relevant code locations (if applicable).',
+                '',
+                'NFR1: The system must allow users to change passwords using secure storage methods',
+                'NFR2: The system must load patient records within 2 seconds.',
+                'NFR3: The interface must be accessible to users with visual impairments.'
+            ].join('\n');
+            var tourChatBotText = [
+                'NFR 1: Secure password storage',
+                'Level of satisfaction: Satisfied',
+                'Reasoning: Passwords are hashed with SHA-256 and a per-user salt before storage. The resetPassword method in AuthDAO uses DigestUtils.sha256Hex() and stores salt in the database.',
+                'Relevant code locations: AuthDAO.java (resetPassword), ChangePasswordAction.java',
+                '',
+                'NFR 2: Load patient records within 2 seconds',
+                'Level of satisfaction: Weakly Denied',
+                'Reasoning: ...',
+                'Relevant code locations: ...',
+                '',
+                'NFR 3: Accessibility for users with visual impairments',
+                'Level of satisfaction: Weakly Satisfied',
+                'Reasoning: ...',
+                'Relevant code locations: ...'
+            ].join('\n');
+            var tourFollowUpUserText = 'For NFR 1, I see SHA-256 is being used for password hashing. Isn\'t SHA-256 vulnerable to brute-force attacks?';
+            var tourFollowUpBotText = 'You\'re right. So it is Weakly Satisfied. The system does use salted hashing (which is better than plain storage), but it falls short of modern best practices like bcrypt or Argon2.';
+            window.startPage10Tour = function() {
+                window._tourChatSent = false;
+                window._tourCompleted = false;
+                const tour = introJs();
+            tour.setOptions({
+                steps: [
+                    {
+                        element: document.getElementById('tour-tutorial-buttons'),
+                        intro: 'You can review this tutorial at any time.',
+                        position: 'bottom'
+                    },
+                    {
+                        element: document.getElementById('tour-nfr-boxes'),
+                        intro: 'Review and understand the NFRs.',
+                        position: 'right'
+                    },
+                    {
+                        element: document.getElementById('tour-nfr-boxes'),
+                        intro: 'After you read them, press the acknowledgement box for each NFR.',
+                        position: 'right'
+                    },
+                    {
+                        element: document.getElementById('tour-gate-explain'),
+                        intro: 'Explain in your own words what this NFR means.',
+                        position: 'top'
+                    },
+                    {
+                        element: document.getElementById('tour-gate-submit'),
+                        intro: 'Press the Submit answer button to submit your explanation.',
+                        position: 'top'
+                    },
+                    {
+                        element: document.getElementById('tour-copy-btn'),
+                        intro: 'Copy all NFRs.',
+                        position: 'bottom'
+                    },
+                    {
+                        element: document.getElementById('tour-chat-panel'),
+                        intro: '<strong>Interact with the chatbot to get the following for each NFR:</strong><ul style="margin: 10px 0 0 18px; padding-left: 8px;"><li>Satisfaction Level (Satisfied, Weakly Satisfied, Weakly Denied, Denied, or Not Applicable)</li><li>Reasoning for that level</li><li>Specific Code Locations that address the NFR</li></ul>',
+                        position: 'left'
+                    },
+                    {
+                        element: document.getElementById('tour-chat-input-area'),
+                        intro: '<strong>Start by first asking all NFRs together.</strong><br><br>Example: Please evaluate the following NFR. Provide:<br>Level of satisfaction<br>Reasoning<br>Relevant code locations (if applicable)<br><br>NFR1: ... NFR2: ... NFR3: ...<br><br>Write your message and press Send to continue.',
+                        position: 'left'
+                    },
+                    {
+                        element: document.getElementById('tour-chat-first-message'),
+                        intro: 'Example of good first message.',
+                        position: 'left'
+                    },
+                    {
+                        element: document.getElementById('tour-chat-input-area'),
+                        intro: '<strong>Engage with the chatbot as a developer would when working to understand and implement requirements.</strong> Your follow-ups should include:<ul style="margin: 10px 0 0 18px; padding-left: 8px;"><li>Asking clarifying questions about unclear requirements</li><li>Seeking additional information about implementation details</li><li>Requesting specific code locations or examples</li><li>Discussing potential approaches to satisfy the requirements</li><li>Providing context about the system architecture when needed</li><li>Challenging or validating the chatbot\'s assessments</li></ul>',
+                        position: 'left'
+                    },
+                    {
+                        element: document.getElementById('tour-chat-panel'),
+                        intro: 'Example of a follow-up dialogue.',
+                        position: 'left'
+                    },
+                    {
+                        element: document.getElementById('tour-feedback-form'),
+                        intro: 'Once you\'re convinced the chatbot has fully assessed the NFRs, complete this feedback form for each NFR.',
+                        position: 'left'
+                    }
+                ],
+                exitOnOverlayClick: true,
+                showStepNumbers: true,
+                showBullets: true,
+                showProgress: true
+            });
+            tour.onbeforechange(function() {
+                var current = this._currentStep;
+                var nfrErr = document.getElementById('tour-nfr-error');
+                var gateErr = document.getElementById('tour-gate-error');
+                var chatErr = document.getElementById('tour-chat-error');
+                if (nfrErr) nfrErr.style.display = 'none';
+                if (gateErr) gateErr.style.display = 'none';
+                if (chatErr) chatErr.style.display = 'none';
+                // Step 3 (index 3): block until all acknowledgement boxes are checked.
+                if (current === 3 && !allTourBoxesChecked()) {
+                    if (nfrErr) nfrErr.style.display = 'block';
+                    return false;
+                }
+                // Step 4 (index 4): block until they write something in "explain in your own words".
+                if (current === 4 && !gateAnswerFilled()) {
+                    if (gateErr) gateErr.style.display = 'block';
+                    return false;
+                }
+                // Step 8 (index 8): block until they wrote in chat and pressed Send.
+                if (current === 8 && !window._tourChatSent) {
+                    var chatErr = document.getElementById('tour-chat-error');
+                    if (chatErr) chatErr.style.display = 'block';
+                    return false;
+                }
+                return true;
+            });
+            tour.onchange(function() {
+                window._page10TourCurrentStep = this._currentStep;
+                var nfrErr = document.getElementById('tour-nfr-error');
+                if (nfrErr) nfrErr.style.display = 'none';
+                if (this._currentStep === 11) {
+                    window._tourCompleted = true;
+                    var tourCompleteErr = document.getElementById('tourCompleteError');
+                    if (tourCompleteErr) tourCompleteErr.style.display = 'none';
+                }
+                if (this._currentStep === 10 && !window._tourFollowUpAdded) {
+                    window._tourFollowUpAdded = true;
+                    var messagesEl = document.getElementById('tour-chat-messages');
+                    if (messagesEl) {
+                        while (messagesEl.firstChild) {
+                            messagesEl.removeChild(messagesEl.firstChild);
+                        }
+                        var userWrap = document.createElement('div');
+                        userWrap.id = 'tour-follow-up-user-message';
+                        userWrap.className = 'mock-message user';
+                        var userContent = document.createElement('div');
+                        userContent.className = 'mock-message-content';
+                        userContent.style.whiteSpace = 'pre-wrap';
+                        userContent.textContent = tourFollowUpUserText;
+                        userWrap.appendChild(userContent);
+                        messagesEl.appendChild(userWrap);
+                        var botWrap = document.createElement('div');
+                        botWrap.className = 'mock-message bot';
+                        var botContent = document.createElement('div');
+                        botContent.className = 'mock-message-content';
+                        botContent.style.whiteSpace = 'pre-wrap';
+                        botContent.textContent = tourFollowUpBotText;
+                        botWrap.appendChild(botContent);
+                        messagesEl.appendChild(botWrap);
+                    }
+                }
+                if (this._currentStep === 3) {
+                    ['tour-nfr-cb-1', 'tour-nfr-cb-2', 'tour-nfr-cb-3'].forEach(function(id) {
+                        var el = document.getElementById(id);
+                        if (el && !el._tourListener) {
+                            el._tourListener = true;
+                            el.addEventListener('change', tryAdvanceFromCheckboxes);
+                        }
+                    });
+                }
+            });
+            tour.onexit(function() {
+                ['tour-nfr-cb-1', 'tour-nfr-cb-2', 'tour-nfr-cb-3'].forEach(function(id) {
+                    var el = document.getElementById(id);
+                    if (el && el._tourListener) {
+                        el.removeEventListener('change', tryAdvanceFromCheckboxes);
+                        el._tourListener = false;
+                    }
+                });
+                var nfrErr = document.getElementById('tour-nfr-error');
+                var gateErr = document.getElementById('tour-gate-error');
+                var chatErr = document.getElementById('tour-chat-error');
+                if (nfrErr) nfrErr.style.display = 'none';
+                if (gateErr) gateErr.style.display = 'none';
+                if (chatErr) chatErr.style.display = 'none';
+                window._page10Tour = null;
+                window._tourFollowUpAdded = false;
+            });
+            window._page10Tour = tour;
+            window._page10TourCurrentStep = 1;
+            tour.start();
+            };
+            var tourCopyNfrText = 'NFR 1:The system must allow users to change passwords using secure storage methods\nNFR2: The system must load patient records within 2 seconds.\nNFR3: The interface must be accessible to users with visual impairments.';
+            var copyBtn = document.getElementById('tour-copy-btn');
+            if (copyBtn && !copyBtn._copyListener) {
+                copyBtn._copyListener = true;
+                copyBtn.addEventListener('click', function() {
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(tourCopyNfrText).catch(function() {
+                            fallbackCopyToClipboard(tourCopyNfrText);
+                        });
+                    } else {
+                        fallbackCopyToClipboard(tourCopyNfrText);
+                    }
+                });
+            }
+            function fallbackCopyToClipboard(text) {
+                var ta = document.createElement('textarea');
+                ta.value = text;
+                ta.style.position = 'fixed';
+                ta.style.left = '-9999px';
+                document.body.appendChild(ta);
+                ta.select();
+                try {
+                    document.execCommand('copy');
+                } finally {
+                    document.body.removeChild(ta);
+                }
+            }
+            var sendBtn = document.getElementById('tour-chat-send');
+            if (sendBtn && !sendBtn._sendListenerAdded) {
+                sendBtn._sendListenerAdded = true;
+                sendBtn.addEventListener('click', function() {
+                    var input = document.getElementById('tour-chat-input');
+                    var text = (input && input.value) ? input.value.trim() : '';
+                    if (!text) {
+                        var chatErr = document.getElementById('tour-chat-error');
+                        if (chatErr) chatErr.style.display = 'block';
+                        return;
+                    }
+                    var firstMsg = document.getElementById('tour-chat-first-message');
+                    var contentEl = firstMsg ? firstMsg.querySelector('.mock-message-content') : null;
+                    if (contentEl) {
+                        contentEl.textContent = tourChatFirstMessageText;
+                        firstMsg.style.display = 'block';
+                    }
+                    var messagesEl = document.getElementById('tour-chat-messages');
+                    if (messagesEl && tourChatBotText) {
+                        var botWrap = document.createElement('div');
+                        botWrap.className = 'mock-message bot';
+                        var botContent = document.createElement('div');
+                        botContent.className = 'mock-message-content';
+                        botContent.style.whiteSpace = 'pre-wrap';
+                        botContent.textContent = tourChatBotText;
+                        botWrap.appendChild(botContent);
+                        messagesEl.appendChild(botWrap);
+                    }
+                    if (input) input.value = '';
+                    var chatErr = document.getElementById('tour-chat-error');
+                    if (chatErr) chatErr.style.display = 'none';
+                    window._tourChatSent = true;
+                    if (window._page10Tour && window._page10TourCurrentStep === 8) {
+                        window._page10Tour.nextStep();
+                    }
+                });
+            }
+            var redoBtn = document.getElementById('tour-redo-btn');
+            if (redoBtn) {
+                redoBtn.addEventListener('click', function() {
+                    window.resetPage10Tour();
+                    window.startPage10Tour();
+                });
+            }
+            window.startPage10Tour();
+        }, 400);
     }
 }
 
@@ -1497,8 +1298,8 @@ function changePage(direction) {
             }
         }
         
-        // Validate page 12 - view layer quiz (changePassword)
-        if (currentPage === 12) {
+        // Validate page 7 - view layer quiz (changePassword)
+        if (currentPage === 7) {
             const successEl = document.getElementById('viewLayerSuccess');
             if (successEl.style.display === 'block') {
                 // Already passed - allow proceeding
@@ -1515,8 +1316,8 @@ function changePage(direction) {
             }
         }
         
-        // Validate page 13 - controller layer quiz (ChangePasswordAction)
-        if (currentPage === 13) {
+        // Validate page 8 - controller layer quiz (ChangePasswordAction)
+        if (currentPage === 8) {
             const successEl = document.getElementById('controllerLayerSuccess');
             if (successEl.style.display === 'block') {
                 // Already passed - allow proceeding
@@ -1533,8 +1334,8 @@ function changePage(direction) {
             }
         }
         
-        // Validate page 14 - model layer quiz (AuthDAO)
-        if (currentPage === 14) {
+        // Validate page 9 - model layer quiz (AuthDAO)
+        if (currentPage === 9) {
             const successEl = document.getElementById('modelLayerSuccess');
             if (successEl.style.display === 'block') {
                 // Already passed - allow proceeding
@@ -1551,16 +1352,11 @@ function changePage(direction) {
             }
         }
         
-        // Validate page 8 - mock NFR acknowledgment and explanation
-        if (currentPage === 8) {
-            const allChecked = checkMockNfrBoxes();
-            const explanation = document.getElementById('mockGateAnswer').value.trim();
-            
-            if (!allChecked || !explanation) {
-                document.getElementById('mockGateError').style.display = 'block';
-                return;
-            }
-            document.getElementById('mockGateError').style.display = 'none';
+        // Validate page 10 - tour must be completed to go to evaluation
+        if (currentPage === 10 && !window._tourCompleted) {
+            const tourCompleteErr = document.getElementById('tourCompleteError');
+            if (tourCompleteErr) tourCompleteErr.style.display = 'block';
+            return;
         }
         
         if (currentPage === totalPages) {

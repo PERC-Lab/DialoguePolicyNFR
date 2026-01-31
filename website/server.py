@@ -267,9 +267,13 @@ def survey():
 
 @app.route('/prize')
 def prize():
-    """Prize collection page."""
+    """Prize collection page. Non-Prolific: show email form only if fewer than 15 emails collected."""
     prolific = request.args.get('id') == 'prolific'
-    return render_template('prize.html', prolific_id=prolific)
+    email_prize_available = True
+    if not prolific:
+        prizes = _normalize_prizes(load_json_file(PRIZE_FILE))
+        email_prize_available = len(prizes.get('emails', [])) < 15
+    return render_template('prize.html', prolific_id=prolific, email_prize_available=email_prize_available)
 
 @app.route('/complete')
 def complete():
@@ -572,17 +576,30 @@ def submit_survey():
     
     return jsonify({'status': 'success'})
 
+def _normalize_prizes(prizes):
+    """Ensure prizes has 'prolific' (dict keyed by session_id) and 'emails' (list)."""
+    if isinstance(prizes, dict) and 'prolific' in prizes and 'emails' in prizes:
+        return prizes
+    # Old format: whole dict was keyed by session_id (prolific only)
+    return {'prolific': prizes if isinstance(prizes, dict) else {}, 'emails': []}
+
+
 @app.route('/api/submit_prize', methods=['POST'])
 def submit_prize():
-    """Save prize collection information."""
+    """Save prize collection information. Prolific: keyed by session_id. Non-Prolific: email appended to list (no uuid)."""
     data = request.json
-    uuid = data.get('uuid')
-    session_id = get_session_id(uuid)
-    
-    prizes = load_json_file(PRIZE_FILE)
-    prizes[session_id] = data
+    prizes = _normalize_prizes(load_json_file(PRIZE_FILE))
+
+    if data.get('type') == 'prolific_id':
+        uuid = data.get('uuid')
+        session_id = get_session_id(uuid)
+        prizes['prolific'][session_id] = data
+    else:
+        # Non-Prolific: save email in list only, do not assign uuid
+        email = (data.get('identifier') or '').strip()
+        if email:
+            prizes.setdefault('emails', []).append(email)
     save_json_file(PRIZE_FILE, prizes)
-    
     return jsonify({'status': 'success'})
 
 @app.route('/api/submit_demographics', methods=['POST'])
@@ -682,22 +699,24 @@ def get_admin_data():
         surveys = load_json_file(SATISFACTION_FILE)
         demographics = load_json_file(DEMOGRAPHICS_FILE)
         prizes = load_json_file(PRIZE_FILE)
+        prizes = _normalize_prizes(prizes)
         batch_assignments = load_json_file(BATCH_ASSIGNMENTS_FILE)
         gate_answers = load_json_file(GATE_ANSWERS_FILE)
         
         # Calculate statistics
-        # Get unique participants from all data sources
+        # Get unique participants from all data sources (prolific prizes keyed by session_id; emails are a list)
         all_uuids = set()
         all_uuids.update(conversations.keys())
         all_uuids.update(nfr_responses.keys())
         all_uuids.update(surveys.keys())
         all_uuids.update(demographics.keys())
-        all_uuids.update(prizes.keys())
+        all_uuids.update(prizes.get('prolific', {}).keys())
         all_uuids.update(batch_assignments.keys())
         all_uuids.update(gate_answers.keys())
         
         total_conversations = sum(len(msgs) for msgs in conversations.values())
         total_nfr_responses = sum(len(responses) for responses in nfr_responses.values())
+        total_prizes_count = len(prizes.get('prolific', {})) + len(prizes.get('emails', []))
         
         stats = {
             'total_participants': len(all_uuids),
@@ -706,7 +725,7 @@ def get_admin_data():
             'total_nfr_responses': total_nfr_responses,
             'total_surveys': len(surveys),
             'total_demographics': len(demographics),
-            'total_prizes': len(prizes),
+            'total_prizes': total_prizes_count,
             'total_batch_assignments': len(batch_assignments),
             'total_gate_answers': len(gate_answers)
         }
@@ -738,7 +757,7 @@ def clear_all_data():
         save_json_file(NFR_RESPONSES_FILE, {})
         save_json_file(SATISFACTION_FILE, {})
         save_json_file(DEMOGRAPHICS_FILE, {})
-        save_json_file(PRIZE_FILE, {})
+        save_json_file(PRIZE_FILE, {'prolific': {}, 'emails': []})
         save_json_file(BATCH_ASSIGNMENTS_FILE, {})
         save_json_file(GATE_ANSWERS_FILE, {})
         
