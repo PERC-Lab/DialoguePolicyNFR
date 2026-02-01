@@ -1,10 +1,1 @@
-{
-  "1d16c753-0d94-4f05-ad87-eb8b66fc2d4c": [
-    {
-      "user_message": "hello",
-      "bot_reply": "Hi \u2014 which NFR do you want to work on (performance, security, availability, scalability, maintainability, or other)? Do you want a full-codebase assessment or focused changes to a component/endpoint?",
-      "user_time": "2026-01-30T21:43:20.588377",
-      "bot_time": "2026-01-30T21:43:32.120343"
-    }
-  ]
-}
+{}

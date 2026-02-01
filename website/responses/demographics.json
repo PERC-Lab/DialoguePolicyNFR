@@ -1,15 +1,1 @@
-{
-  "1d16c753-0d94-4f05-ad87-eb8b66fc2d4c": {
-    "uuid": "1d16c753-0d94-4f05-ad87-eb8b66fc2d4c",
-    "age": "26-35",
-    "gender": "male",
-    "education": "high-school",
-    "educationOther": null,
-    "experience": "less-than-1",
-    "languages": [
-      "python"
-    ],
-    "languageOther": null,
-    "timestamp": "2026-01-30T22:03:16.454597"
-  }
-}
+{}

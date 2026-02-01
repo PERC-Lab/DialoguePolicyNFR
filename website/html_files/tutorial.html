@@ -757,7 +757,7 @@
         <div class="tutorial-page" id="page10">
             <h2>You're Ready!</h2>
             <span class="practice-label">PRACTICE COMPLETE</span>
-            <p style="line-height: 1.8; margin-bottom: 15px;">This is what the evaluation interface looks like. Click <strong>Start Evaluation</strong> below to begin the actual evaluation.</p>
+            <p style="line-height: 1.8; margin-bottom: 15px;">This is what the evaluation interface looks like.</p>
             <p style="margin-bottom: 15px;">
                 <button type="button" class="btn btn-secondary" id="tour-redo-btn" style="font-size: 13px;">Redo tour</button>
             </p>
@@ -801,7 +801,7 @@
                                 I have read and understood this NFR
                             </label>
                         </div>
-                        <div id="tour-nfr-error" style="display: none; color: #c00; font-size: 13px; margin-top: 10px; font-weight: 600;">Please check all three NFR acknowledgement boxes first.</div>
+                        <div id="tour-nfr-error" style="display: none; color: #c00; font-size: 13px; margin-top: 10px; font-weight: 600;">Please check all NFR acknowledgement boxes first.</div>
                     </div>
                         <div class="mock-gate-card" id="tour-gate-explain" style="margin-top: 16px;">
                             <div class="mock-gate-title">Before you continue (Steps 2 &amp; 3)</div>
@@ -812,7 +812,7 @@
                                 <strong>NFR 1:</strong> The system must allow users to change passwords using secure storage methods
         </div>
                             <textarea class="mock-gate-textarea" id="tour-gate-answer" placeholder="Write your answer here…" style="margin-top: 8px;"></textarea>
-                            <div id="tour-gate-error" style="display: none; color: #c00; font-size: 13px; margin-top: 8px; font-weight: 600;">Please write something in your own words to continue.</div>
+                            <div id="tour-gate-error" style="display: none; color: #c00; font-size: 13px; margin-top: 8px; font-weight: 600;">Please explain the NFR in your own words to continue.</div>
                             <div style="display: flex; gap: 10px; align-items: center; margin-top: 10px; flex-wrap: wrap;">
                                 <button class="btn" type="button" id="tour-gate-submit" style="padding: 8px 16px; font-size: 13px;">Submit answer</button>
             </div>
@@ -835,37 +835,38 @@
                     </div>
                 </div>
                 
-                <!-- Right: Feedback Form (static, disabled) -->
+                <!-- Right: Feedback Form (NFR 1 enabled for tour step 12) -->
                 <div class="mock-panel" id="tour-feedback-form">
                     <div class="mock-panel-header">Feedback Form</div>
                     <div class="mock-panel-content white-bg">
+                        <div id="tour-feedback-error" style="display: none; color: #c00; font-size: 13px; margin-bottom: 10px; font-weight: 600;">Please answer required questions for NFR 1.</div>
                         <div class="mock-form-section">
                             <h4>NFR 1: Password Security</h4>
                             <div class="mock-form-group">
                                 <label>Question 1: Do you agree with the chatbot's satisfaction level assessment?<span style="color: #c00;">*</span></label>
                                 <div class="mock-radio-group">
-                                    <label><input type="radio" name="demo_q1_1" disabled> Agree</label>
-                                    <label><input type="radio" name="demo_q1_1" disabled> Partially agree</label>
-                                    <label><input type="radio" name="demo_q1_1" disabled> Partially disagree</label>
-                                    <label><input type="radio" name="demo_q1_1" disabled> Disagree</label>
+                                    <label><input type="radio" name="demo_q1_1" value="agree"> Agree</label>
+                                    <label><input type="radio" name="demo_q1_1" value="partially_agree"> Partially agree</label>
+                                    <label><input type="radio" name="demo_q1_1" value="partially_disagree"> Partially disagree</label>
+                                    <label><input type="radio" name="demo_q1_1" value="disagree"> Disagree</label>
                                 </div>
                             </div>
                             <div class="mock-form-group">
                                 <label>Question 2: Do you agree with the chatbot's reasoning?<span style="color: #c00;">*</span></label>
                                 <div class="mock-radio-group">
-                                    <label><input type="radio" name="demo_q2_1" disabled> Agree</label>
-                                    <label><input type="radio" name="demo_q2_1" disabled> Partially agree</label>
-                                    <label><input type="radio" name="demo_q2_1" disabled> Partially disagree</label>
-                                    <label><input type="radio" name="demo_q2_1" disabled> Disagree</label>
+                                    <label><input type="radio" name="demo_q2_1" value="agree"> Agree</label>
+                                    <label><input type="radio" name="demo_q2_1" value="partially_agree"> Partially agree</label>
+                                    <label><input type="radio" name="demo_q2_1" value="partially_disagree"> Partially disagree</label>
+                                    <label><input type="radio" name="demo_q2_1" value="disagree"> Disagree</label>
                                 </div>
                             </div>
                             <div class="mock-form-group">
                                 <label>Question 3: Do you agree with the chatbot's identified code locations?<span style="color: #c00;">*</span></label>
                                 <div class="mock-radio-group">
-                                    <label><input type="radio" name="demo_q3_1" disabled> Agree</label>
-                                    <label><input type="radio" name="demo_q3_1" disabled> Partially agree</label>
-                                    <label><input type="radio" name="demo_q3_1" disabled> Partially disagree</label>
-                                    <label><input type="radio" name="demo_q3_1" disabled> Disagree</label>
+                                    <label><input type="radio" name="demo_q3_1" value="agree"> Agree</label>
+                                    <label><input type="radio" name="demo_q3_1" value="partially_agree"> Partially agree</label>
+                                    <label><input type="radio" name="demo_q3_1" value="partially_disagree"> Partially disagree</label>
+                                    <label><input type="radio" name="demo_q3_1" value="disagree"> Disagree</label>
                                 </div>
                             </div>
                             <div class="mock-form-group">
@@ -878,10 +879,128 @@
             </div>
         </div>
         
+        <!-- Page 11: Free practice (same mock panels as page 10, no tour) -->
+        <div class="tutorial-page" id="page11">
+            <h2>Practice</h2>
+            <span class="practice-label">PRACTICE</span>
+            <p style="line-height: 1.8; margin-bottom: 15px;">Before stating the evaluation, practice it, one more time.</p>
+            <div class="mock-three-panel" style="min-height: 550px;">
+                <!-- Left: NFRs Display -->
+                <div class="mock-panel" id="practice-nfr-panel">
+                    <div class="mock-panel-header">
+                        NFRs Display
+                        <div class="mock-buttons">
+                            <button class="mock-btn" type="button">📋 Code Structure</button>
+                            <button class="mock-btn" type="button" onclick="openTutorialModal()">📖 Tutorial</button>
+                        </div>
+                    </div>
+                    <div class="mock-panel-content">
+                        <div class="mock-batch-info" style="padding: 10px; background: #e9ecef; border-radius: 4px; margin-bottom: 15px; font-weight: 600; display: flex; justify-content: space-between; align-items: center;">
+                            Batch 1 of 1
+                            <button class="mock-btn" type="button" id="practice-copy-btn" style="background: #007bff; color: white; border: none; padding: 6px 12px; font-size: 12px;">📋 Copy All NFRs</button>
+                        </div>
+                        <div id="practice-nfr-boxes">
+                            <div class="mock-nfr-item">
+                                <h4>NFR 1: Password Security</h4>
+                                <p>The system must allow users to change passwords using secure storage methods</p>
+                                <label class="mock-checkbox-label" style="margin-top: 10px;">
+                                    <input type="checkbox" id="practice-nfr-cb-1">
+                                    I have read and understood this NFR
+                                </label>
+                            </div>
+                            <div class="mock-nfr-item">
+                                <h4>NFR 2: Performance</h4>
+                                <p>The system must load patient records within 2 seconds.</p>
+                                <label class="mock-checkbox-label" style="margin-top: 10px;">
+                                    <input type="checkbox" id="practice-nfr-cb-2">
+                                    I have read and understood this NFR
+                                </label>
+                            </div>
+                            <div class="mock-nfr-item">
+                                <h4>NFR 3: Usability</h4>
+                                <p>The interface must be accessible to users with visual impairments.</p>
+                                <label class="mock-checkbox-label" style="margin-top: 10px;">
+                                    <input type="checkbox" id="practice-nfr-cb-3">
+                                    I have read and understood this NFR
+                                </label>
+                            </div>
+                        </div>
+                        <div id="practice-nfr-error" style="display: none; color: #c00; font-size: 13px; margin-top: 10px; font-weight: 600;">Please check all three NFR acknowledgement boxes.</div>
+                        <div class="mock-gate-card" style="margin-top: 16px;">
+                            <div class="mock-gate-title">Before you continue</div>
+                            <p style="font-size: 13px; color: #1f3f5b; margin-bottom: 10px; line-height: 1.4;">
+                                Explain this NFR in your own words:
+                            </p>
+                            <div class="mock-gate-nfr">
+                                <strong>NFR 1:</strong> The system must allow users to change passwords using secure storage methods
+                            </div>
+                            <textarea class="mock-gate-textarea" id="practice-gate-answer" placeholder="Write your answer here…" style="margin-top: 8px;"></textarea>
+                            <div id="practice-gate-error" style="display: none; color: #c00; font-size: 13px; margin-top: 8px; font-weight: 600;">Please explain the NFR in your own words.</div>
+                            <div style="display: flex; gap: 10px; align-items: center; margin-top: 10px; flex-wrap: wrap;">
+                                <button class="btn" type="button" id="practice-gate-submit" style="padding: 8px 16px; font-size: 13px;">Submit answer</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Middle: Chatbot -->
+                <div class="mock-panel" id="practice-chat-panel">
+                    <div class="mock-panel-header">Chatbot Assistant</div>
+                    <div class="mock-chat-messages" id="practice-chat-messages"></div>
+                    <div class="mock-chat-input" id="practice-chat-input-area" style="flex-wrap: wrap;">
+                        <textarea id="practice-chat-input" placeholder="Type your message…" rows="3" style="flex: 1; min-height: 60px; resize: vertical; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 12px; font-family: inherit;"></textarea>
+                        <button class="btn" id="practice-chat-send">Send</button>
+                        <div id="practice-chat-error" style="display: none; color: #c00; font-size: 12px; margin-top: 6px; width: 100%; flex-basis: 100%;"></div>
+                    </div>
+                </div>
+                <!-- Right: Feedback Form -->
+                <div class="mock-panel" id="practice-feedback-form">
+                    <div class="mock-panel-header">Feedback Form</div>
+                    <div class="mock-panel-content white-bg">
+                        <div id="practice-feedback-error" style="display: none; color: #c00; font-size: 13px; margin-bottom: 10px; font-weight: 600;">Please answer all three questions for NFR 1.</div>
+                        <div class="mock-form-section">
+                            <h4>NFR 1: Password Security</h4>
+                            <div class="mock-form-group">
+                                <label>Question 1: Do you agree with the chatbot's satisfaction level assessment?<span style="color: #c00;">*</span></label>
+                                <div class="mock-radio-group">
+                                    <label><input type="radio" name="practice_q1_1" value="agree"> Agree</label>
+                                    <label><input type="radio" name="practice_q1_1" value="partially_agree"> Partially agree</label>
+                                    <label><input type="radio" name="practice_q1_1" value="partially_disagree"> Partially disagree</label>
+                                    <label><input type="radio" name="practice_q1_1" value="disagree"> Disagree</label>
+                                </div>
+                            </div>
+                            <div class="mock-form-group">
+                                <label>Question 2: Do you agree with the chatbot's reasoning?<span style="color: #c00;">*</span></label>
+                                <div class="mock-radio-group">
+                                    <label><input type="radio" name="practice_q2_1" value="agree"> Agree</label>
+                                    <label><input type="radio" name="practice_q2_1" value="partially_agree"> Partially agree</label>
+                                    <label><input type="radio" name="practice_q2_1" value="partially_disagree"> Partially disagree</label>
+                                    <label><input type="radio" name="practice_q2_1" value="disagree"> Disagree</label>
+                                </div>
+                            </div>
+                            <div class="mock-form-group">
+                                <label>Question 3: Do you agree with the chatbot's identified code locations?<span style="color: #c00;">*</span></label>
+                                <div class="mock-radio-group">
+                                    <label><input type="radio" name="practice_q3_1" value="agree"> Agree</label>
+                                    <label><input type="radio" name="practice_q3_1" value="partially_agree"> Partially agree</label>
+                                    <label><input type="radio" name="practice_q3_1" value="partially_disagree"> Partially disagree</label>
+                                    <label><input type="radio" name="practice_q3_1" value="disagree"> Disagree</label>
+                                </div>
+                            </div>
+                            <div class="mock-form-group">
+                                <label>Undecided? Explain why:</label>
+                                <textarea id="practice-feedback-optional" placeholder="Optional" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; min-height: 50px; font-size: 12px;"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <div class="navigation">
             <button class="btn btn-secondary" id="prevBtn" onclick="changePage(-1)" style="display: none;">Previous</button>
             <button class="btn" id="nextBtn" onclick="changePage(1)">Next</button>
-            <div id="tourCompleteError" style="display: none; color: #c00; font-weight: 600; margin-top: 8px;">Please complete the tour to proceed to the evaluation.</div>
+            <div id="tourCompleteError" style="display: none; color: #c00; font-weight: 600; margin-top: 8px;">Please complete the tour to proceed.</div>
+            <div id="practiceCompleteError" style="display: none; color: #c00; font-weight: 600; margin-top: 8px;"></div>
         </div>
     </div>
 </div>
@@ -890,7 +1009,7 @@
 <script>
 const STATIC_PASSWORD = 'perc2026'; // Static password
 let currentPage = 1;
-const totalPages = 10;
+const totalPages = 11;
 let uuid = null;
 
 // Get UUID from localStorage (should already exist from consent page)
@@ -939,6 +1058,115 @@ function loadProgress() {
     }
 }
 
+var practicePage11Inited = false;
+window._practiceChatMessageCount = 0;
+
+var practiceBotReply1 = 'Example of a good first message:\nPlease evaluate the following NFR. Provide:\n• Level of satisfaction\n• Reasoning\n• Relevant code locations (if applicable).\n\nNFR1: The system must allow users to change passwords using secure storage methods\nNFR2: The system must load patient records within 2 seconds.\nNFR3: The interface must be accessible to users with visual impairments.';
+
+var practiceBotReply2 = 'Your dialogue should include:\n\n• Asking clarifying questions about unclear requirements\n• Seeking additional information about implementation details\n• Requesting specific code locations or examples\n• Discussing potential approaches to satisfy the requirements\n• Providing context about the system architecture when needed\n• Challenging or validating the chatbot\'s assessments';
+
+var practiceBotReply3 = 'The chatbot should evaluate each NFR on three dimensions:\n\n• Satisfaction Level: Satisfied, Weakly Satisfied, Weakly Denied, Denied, or Not Applicable\n• Reasoning: Explanation for the satisfaction level\n• Code Locations: Specific places in the code where the NFR is addressed';
+
+var practiceBotReplyProceed = 'You can proceed to the feedback form.';
+
+function getPracticeChatMessageCount() {
+    var messages = document.getElementById('practice-chat-messages');
+    if (!messages) return 0;
+    return messages.querySelectorAll('.mock-message.user').length;
+}
+
+function initPracticePage11() {
+    if (practicePage11Inited) return;
+    practicePage11Inited = true;
+    var practiceCopyNfrText = 'NFR 1:The system must allow users to change passwords using secure storage methods\nNFR2: The system must load patient records within 2 seconds.\nNFR3: The interface must be accessible to users with visual impairments.';
+    var copyBtn = document.getElementById('practice-copy-btn');
+    if (copyBtn) {
+        copyBtn.addEventListener('click', function() {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(practiceCopyNfrText).catch(function() {
+                    var ta = document.createElement('textarea');
+                    ta.value = practiceCopyNfrText;
+                    ta.style.position = 'fixed';
+                    ta.style.left = '-9999px';
+                    document.body.appendChild(ta);
+                    ta.select();
+                    try { document.execCommand('copy'); } finally { document.body.removeChild(ta); }
+                });
+            } else {
+                var ta = document.createElement('textarea');
+                ta.value = practiceCopyNfrText;
+                ta.style.position = 'fixed';
+                ta.style.left = '-9999px';
+                document.body.appendChild(ta);
+                ta.select();
+                try { document.execCommand('copy'); } finally { document.body.removeChild(ta); }
+            }
+        });
+    }
+    var sendBtn = document.getElementById('practice-chat-send');
+    var chatInput = document.getElementById('practice-chat-input');
+    var chatMessages = document.getElementById('practice-chat-messages');
+    var chatErr = document.getElementById('practice-chat-error');
+    if (sendBtn && chatInput && chatMessages) {
+        sendBtn.addEventListener('click', function() {
+            var text = (chatInput.value || '').trim();
+            if (!text) return;
+            if (chatErr) { chatErr.style.display = 'none'; chatErr.textContent = ''; }
+            if (!practiceNfrBoxesChecked()) {
+                if (chatErr) { chatErr.style.display = 'block'; chatErr.textContent = 'Please check all NFR boxes first.'; }
+                return;
+            }
+            if (!practiceGateFilled()) {
+                if (chatErr) { chatErr.style.display = 'block'; chatErr.textContent = 'Please explain the NFR in your own words first.'; }
+                return;
+            }
+            var userWrap = document.createElement('div');
+            userWrap.className = 'mock-message user';
+            var userContent = document.createElement('div');
+            userContent.className = 'mock-message-content';
+            userContent.style.whiteSpace = 'pre-wrap';
+            userContent.textContent = text;
+            userWrap.appendChild(userContent);
+            chatMessages.appendChild(userWrap);
+            window._practiceChatMessageCount = getPracticeChatMessageCount();
+            var botText;
+            if (window._practiceChatMessageCount === 1) botText = practiceBotReply1;
+            else if (window._practiceChatMessageCount === 2) botText = practiceBotReply2;
+            else if (window._practiceChatMessageCount === 3) botText = practiceBotReply3;
+            else botText = practiceBotReplyProceed;
+            var botWrap = document.createElement('div');
+            botWrap.className = 'mock-message bot';
+            var botContent = document.createElement('div');
+            botContent.className = 'mock-message-content';
+            botContent.style.whiteSpace = 'pre-wrap';
+            botContent.textContent = botText;
+            botWrap.appendChild(botContent);
+            chatMessages.appendChild(botWrap);
+            chatInput.value = '';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        });
+    }
+}
+
+function practiceNfrBoxesChecked() {
+    var c1 = document.getElementById('practice-nfr-cb-1');
+    var c2 = document.getElementById('practice-nfr-cb-2');
+    var c3 = document.getElementById('practice-nfr-cb-3');
+    return c1 && c2 && c3 && c1.checked && c2.checked && c3.checked;
+}
+
+function practiceGateFilled() {
+    var el = document.getElementById('practice-gate-answer');
+    return el && el.value.trim().length > 0;
+}
+
+function practiceFeedbackCompleted() {
+    var q1 = document.querySelector('input[name="practice_q1_1"]:checked');
+    var q2 = document.querySelector('input[name="practice_q2_1"]:checked');
+    var q3 = document.querySelector('input[name="practice_q3_1"]:checked');
+    return q1 && q2 && q3;
+}
+
 function showPage(page) {
     // Hide all pages
     for (let i = 1; i <= totalPages; i++) {
@@ -949,18 +1177,29 @@ function showPage(page) {
     document.getElementById(`page${page}`).classList.add('active');
     document.getElementById('pageNum').textContent = page;
     var tourCompleteErr = document.getElementById('tourCompleteError');
+    var practiceCompleteErr = document.getElementById('practiceCompleteError');
     if (tourCompleteErr) tourCompleteErr.style.display = 'none';
+    if (practiceCompleteErr) { practiceCompleteErr.style.display = 'none'; practiceCompleteErr.textContent = ''; }
     document.getElementById('totalPages').textContent = totalPages;
     
     // Update navigation buttons
     document.getElementById('prevBtn').style.display = page === 1 ? 'none' : 'block';
     document.getElementById('nextBtn').textContent = page === totalPages ? 'Start Evaluation' : 'Next';
     
-    // Wide container for page 10 (evaluation replica)
+    // Wide container for page 10 (tour) and page 11 (free practice)
     const container = document.querySelector('.tutorial-container');
     if (container) {
-        if (page === 10) container.classList.add('wide');
+        if (page === 10 || page === 11) container.classList.add('wide');
         else container.classList.remove('wide');
+    }
+    
+    // Page 11: set up Copy button and mock chat (once per page load), hide practice errors
+    if (page === 11) {
+        initPracticePage11();
+        ['practice-nfr-error', 'practice-gate-error', 'practice-chat-error', 'practice-feedback-error'].forEach(function(id) {
+            var el = document.getElementById(id);
+            if (el) { el.style.display = 'none'; if (el.textContent) el.textContent = ''; }
+        });
     }
     
     // Intro.js tour on page 10 (evaluation replica walkthrough)
@@ -982,6 +1221,12 @@ function showPage(page) {
             function gateAnswerFilled() {
                 var el = document.getElementById('tour-gate-answer');
                 return el && el.value.trim().length > 0;
+            }
+            function feedbackFormChecked() {
+                var q1 = document.querySelector('input[name="demo_q1_1"]:checked');
+                var q2 = document.querySelector('input[name="demo_q2_1"]:checked');
+                var q3 = document.querySelector('input[name="demo_q3_1"]:checked');
+                return q1 && q2 && q3;
             }
             window.resetPage10Tour = function() {
                 if (window._page10Tour) {
@@ -1013,9 +1258,13 @@ function showPage(page) {
                     firstMsg.appendChild(content);
                     messagesEl.appendChild(firstMsg);
                 }
-                ['tour-nfr-error', 'tour-gate-error', 'tour-chat-error', 'tourCompleteError'].forEach(function(id) {
+                ['tour-nfr-error', 'tour-gate-error', 'tour-chat-error', 'tourCompleteError', 'tour-feedback-error'].forEach(function(id) {
                     var el = document.getElementById(id);
                     if (el) el.style.display = 'none';
+                });
+                ['demo_q1_1', 'demo_q2_1', 'demo_q3_1'].forEach(function(name) {
+                    var radios = document.querySelectorAll('input[name="' + name + '"]');
+                    for (var i = 0; i < radios.length; i++) radios[i].checked = false;
                 });
             };
             var tourChatFirstMessageText = [
@@ -1044,7 +1293,7 @@ function showPage(page) {
                 'Reasoning: ...',
                 'Relevant code locations: ...'
             ].join('\n');
-            var tourFollowUpUserText = 'For NFR 1, I see SHA-256 is being used for password hashing. Isn\'t SHA-256 vulnerable to brute-force attacks?';
+            var tourFollowUpUserText = 'For NFR 1, you mentioned that SHA-256 is being used for password hashing. Isn\'t SHA-256 vulnerable to brute-force attacks?';
             var tourFollowUpBotText = 'You\'re right. So it is Weakly Satisfied. The system does use salted hashing (which is better than plain storage), but it falls short of modern best practices like bcrypt or Argon2.';
             window.startPage10Tour = function() {
                 window._tourChatSent = false;
@@ -1099,7 +1348,7 @@ function showPage(page) {
                     },
                     {
                         element: document.getElementById('tour-chat-input-area'),
-                        intro: '<strong>Engage with the chatbot as a developer would when working to understand and implement requirements.</strong> Your follow-ups should include:<ul style="margin: 10px 0 0 18px; padding-left: 8px;"><li>Asking clarifying questions about unclear requirements</li><li>Seeking additional information about implementation details</li><li>Requesting specific code locations or examples</li><li>Discussing potential approaches to satisfy the requirements</li><li>Providing context about the system architecture when needed</li><li>Challenging or validating the chatbot\'s assessments</li></ul>',
+                        intro: '<strong>Engage with the chatbot as a developer would when working to evaluate requirements.</strong> Your follow-ups should include:<ul style="margin: 10px 0 0 18px; padding-left: 8px;"><li>Asking clarifying questions about unclear requirements</li><li>Seeking additional information about implementation details</li><li>Requesting specific code locations or examples</li><li>Discussing potential approaches to satisfy the requirements</li><li>Providing context about the system architecture when needed</li><li>Challenging or validating the chatbot\'s assessments</li></ul>',
                         position: 'left'
                     },
                     {
@@ -1109,7 +1358,12 @@ function showPage(page) {
                     },
                     {
                         element: document.getElementById('tour-feedback-form'),
-                        intro: 'Once you\'re convinced the chatbot has fully assessed the NFRs, complete this feedback form for each NFR.',
+                        intro: 'Once you\'re convinced the chatbot has fully assessed the NFRs, complete this feedback form for each NFR. Answer all three questions for NFR 1 below, then click Next.',
+                        position: 'left'
+                    },
+                    {
+                        element: document.getElementById('tour-feedback-form'),
+                        intro: 'All set! Click Done to finish the tour.',
                         position: 'left'
                     }
                 ],
@@ -1123,9 +1377,11 @@ function showPage(page) {
                 var nfrErr = document.getElementById('tour-nfr-error');
                 var gateErr = document.getElementById('tour-gate-error');
                 var chatErr = document.getElementById('tour-chat-error');
+                var feedbackErr = document.getElementById('tour-feedback-error');
                 if (nfrErr) nfrErr.style.display = 'none';
                 if (gateErr) gateErr.style.display = 'none';
                 if (chatErr) chatErr.style.display = 'none';
+                if (feedbackErr) feedbackErr.style.display = 'none';
                 // Step 3 (index 3): block until all acknowledgement boxes are checked.
                 if (current === 3 && !allTourBoxesChecked()) {
                     if (nfrErr) nfrErr.style.display = 'block';
@@ -1138,8 +1394,13 @@ function showPage(page) {
                 }
                 // Step 8 (index 8): block until they wrote in chat and pressed Send.
                 if (current === 8 && !window._tourChatSent) {
-                    var chatErr = document.getElementById('tour-chat-error');
                     if (chatErr) chatErr.style.display = 'block';
+                    return false;
+                }
+                // Step 12 (feedback form): block only when leaving step 12 to go to step 13 ("All set").
+                // So we validate when the *next* step would be 12 (0-based) — i.e. we're on the feedback step and pressed Next.
+                if (current === 12 && !feedbackFormChecked()) {
+                    if (feedbackErr) feedbackErr.style.display = 'block';
                     return false;
                 }
                 return true;
@@ -1147,8 +1408,10 @@ function showPage(page) {
             tour.onchange(function() {
                 window._page10TourCurrentStep = this._currentStep;
                 var nfrErr = document.getElementById('tour-nfr-error');
+                var feedbackErr = document.getElementById('tour-feedback-error');
                 if (nfrErr) nfrErr.style.display = 'none';
-                if (this._currentStep === 11) {
+                if (feedbackErr) feedbackErr.style.display = 'none';
+                if (this._currentStep === 12) {
                     window._tourCompleted = true;
                     var tourCompleteErr = document.getElementById('tourCompleteError');
                     if (tourCompleteErr) tourCompleteErr.style.display = 'none';
@@ -1200,9 +1463,11 @@ function showPage(page) {
                 var nfrErr = document.getElementById('tour-nfr-error');
                 var gateErr = document.getElementById('tour-gate-error');
                 var chatErr = document.getElementById('tour-chat-error');
+                var feedbackErr = document.getElementById('tour-feedback-error');
                 if (nfrErr) nfrErr.style.display = 'none';
                 if (gateErr) gateErr.style.display = 'none';
                 if (chatErr) chatErr.style.display = 'none';
+                if (feedbackErr) feedbackErr.style.display = 'none';
                 window._page10Tour = null;
                 window._tourFollowUpAdded = false;
             });
@@ -1357,6 +1622,32 @@ function changePage(direction) {
             const tourCompleteErr = document.getElementById('tourCompleteError');
             if (tourCompleteErr) tourCompleteErr.style.display = 'block';
             return;
+        }
+        
+        // Validate page 11 - practice must be completed before Start Evaluation (show first incomplete step, like step 10)
+        if (currentPage === 11) {
+            var practiceCompleteErr = document.getElementById('practiceCompleteError');
+            if (practiceCompleteErr) { practiceCompleteErr.style.display = 'none'; practiceCompleteErr.textContent = ''; }
+            if (!practiceNfrBoxesChecked()) {
+                if (practiceCompleteErr) { practiceCompleteErr.textContent = 'Please check all three NFR acknowledgement boxes.'; practiceCompleteErr.style.display = 'block'; }
+                return;
+            }
+            if (!practiceGateFilled()) {
+                if (practiceCompleteErr) { practiceCompleteErr.textContent = 'Please explain the NFR in your own words.'; practiceCompleteErr.style.display = 'block'; }
+                return;
+            }
+            var chatCount = getPracticeChatMessageCount();
+            if (chatCount < 3) {
+                if (practiceCompleteErr) {
+                    practiceCompleteErr.textContent = chatCount === 0 ? 'Interact with the chatbot.' : 'Interact with the chatbot and ask follow-up questions.';
+                    practiceCompleteErr.style.display = 'block';
+                }
+                return;
+            }
+            if (!practiceFeedbackCompleted()) {
+                if (practiceCompleteErr) { practiceCompleteErr.textContent = 'Please answer all three questions in the feedback form.'; practiceCompleteErr.style.display = 'block'; }
+                return;
+            }
         }
         
         if (currentPage === totalPages) {
