@@ -927,13 +927,13 @@ function loadNFRs() {
 
 function displayNFRs() {
     const container = document.getElementById('nfrList');
-    container.innerHTML = nfrs.map(nfr => `
+    container.innerHTML = nfrs.map((nfr, index) => `
         <div class="nfr-item">
             <h4>NFR ${nfr.id}: ${nfr.title}</h4>
             <p>${nfr.description}</p>
             <div style="margin-top: 10px;">
                 <label style="font-size: 13px; display: flex; align-items: center; gap: 6px;">
-                    <input type="checkbox" id="nfr_read_${nfr.id}" name="nfr_read_${nfr.id}" style="margin-right: 6px;">
+                    <input type="checkbox" id="nfr_read_${index}" name="nfr_read_${index}" style="margin-right: 6px;">
                     I have read and understood this NFR
                 </label>
             </div>
@@ -969,8 +969,9 @@ function renderGateQuestion() {
 
 function areAllNfrBoxesChecked() {
     if (!nfrs || nfrs.length === 0) return false;
-    return nfrs.every(nfr => {
-        const cb = document.getElementById(`nfr_read_${nfr.id}`);
+    return nfrs.every((nfr, index) => {
+        if (nfr.is_attention_question === true) return true; // attention questions: don't require checked
+        const cb = document.getElementById(`nfr_read_${index}`);
         return cb && cb.checked;
     });
 }
@@ -1064,8 +1065,8 @@ function setupGateForBatch() {
     }
 
     // checkbox handlers (Step 1 remains clickable; Steps 2/3 are blurred)
-    nfrs.forEach(nfr => {
-        const cb = document.getElementById(`nfr_read_${nfr.id}`);
+    nfrs.forEach((nfr, index) => {
+        const cb = document.getElementById(`nfr_read_${index}`);
         if (!cb) return;
         cb.addEventListener('change', () => {
             updateGateLockState();
@@ -1143,7 +1144,48 @@ function fallbackCopyText(text, btn, originalText) {
 function displayForms() {
     const container = document.getElementById('nfrFormsContainer');
     container.innerHTML = nfrs.map(nfr => {
-        const isForced = forcedNfrs.includes(nfr.id);
+        const isAttention = nfr.is_attention_question === true;
+        const isForced = !isAttention && forcedNfrs.includes(nfr.id);
+
+        if (isAttention) {
+            return `
+        <div class="nfr-form-section" id="nfr-form-${nfr.id}">
+            <h4>NFR ${nfr.id}: ${nfr.title}</h4>
+            <div class="form-group">
+                <label>Question 1: To ensure you are paying attention, please select "Disagree" for this question.<span class="required-star">*</span></label>
+                <div class="radio-group">
+                    <label><input type="radio" name="attention_q1_${nfr.id}" value="Agree" required> Agree</label>
+                    <label><input type="radio" name="attention_q1_${nfr.id}" value="Partially agree"> Partially agree</label>
+                    <label><input type="radio" name="attention_q1_${nfr.id}" value="Partially disagree"> Partially disagree</label>
+                    <label><input type="radio" name="attention_q1_${nfr.id}" value="Disagree"> Disagree</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Question 2: To ensure you are paying attention, please select "Partially disagree" for this question.<span class="required-star">*</span></label>
+                <div class="radio-group">
+                    <label><input type="radio" name="attention_q2_${nfr.id}" value="Agree" required> Agree</label>
+                    <label><input type="radio" name="attention_q2_${nfr.id}" value="Partially agree"> Partially agree</label>
+                    <label><input type="radio" name="attention_q2_${nfr.id}" value="Partially disagree"> Partially disagree</label>
+                    <label><input type="radio" name="attention_q2_${nfr.id}" value="Disagree"> Disagree</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Question 3: To ensure you are paying attention, please select "Partially agree" for this question.<span class="required-star">*</span></label>
+                <div class="radio-group">
+                    <label><input type="radio" name="attention_q3_${nfr.id}" value="Agree" required> Agree</label>
+                    <label><input type="radio" name="attention_q3_${nfr.id}" value="Partially agree"> Partially agree</label>
+                    <label><input type="radio" name="attention_q3_${nfr.id}" value="Partially disagree"> Partially disagree</label>
+                    <label><input type="radio" name="attention_q3_${nfr.id}" value="Disagree"> Disagree</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Undecided? Explain why:</label>
+                <textarea name="attention_undecided_reason_${nfr.id}" placeholder="Incase you cannot choose any of the above, explain why." style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; min-height: 80px;"></textarea>
+            </div>
+        </div>
+    `;
+        }
+
         return `
         <div class="nfr-form-section" id="nfr-form-${nfr.id}">
             <h4>NFR ${nfr.id}: ${nfr.title}</h4>
@@ -1209,10 +1251,17 @@ document.getElementById('batchForm').addEventListener('submit', (e) => {
     const missingFields = [];
     
     nfrs.forEach(nfr => {
-        const q1 = document.querySelector(`input[name="q1_${nfr.id}"]:checked`)?.value;
-        const q2 = document.querySelector(`input[name="q2_${nfr.id}"]:checked`)?.value;
-        const q3 = document.querySelector(`input[name="q3_${nfr.id}"]:checked`)?.value;
-        const isForced = forcedNfrs.includes(nfr.id);
+        const isAttention = nfr.is_attention_question === true;
+        const q1 = isAttention 
+            ? document.querySelector(`input[name="attention_q1_${nfr.id}"]:checked`)?.value
+            : document.querySelector(`input[name="q1_${nfr.id}"]:checked`)?.value;
+        const q2 = isAttention 
+            ? document.querySelector(`input[name="attention_q2_${nfr.id}"]:checked`)?.value
+            : document.querySelector(`input[name="q2_${nfr.id}"]:checked`)?.value;
+        const q3 = isAttention 
+            ? document.querySelector(`input[name="attention_q3_${nfr.id}"]:checked`)?.value
+            : document.querySelector(`input[name="q3_${nfr.id}"]:checked`)?.value;
+        const isForced = !isAttention && forcedNfrs.includes(nfr.id);
         
         if (!q1) {
             allValid = false;
@@ -1244,13 +1293,23 @@ document.getElementById('batchForm').addEventListener('submit', (e) => {
     // Collect all form data for all NFRs
     const formDataArray = [];
     
-    nfrs.forEach(nfr => {
-        const q1 = document.querySelector(`input[name="q1_${nfr.id}"]:checked`).value;
-        const q2 = document.querySelector(`input[name="q2_${nfr.id}"]:checked`).value;
-        const q3 = document.querySelector(`input[name="q3_${nfr.id}"]:checked`).value;
-        const isForced = forcedNfrs.includes(nfr.id);
-        const undecided_reason = document.querySelector(`textarea[name="undecided_reason_${nfr.id}"]`)?.value || '';
+    nfrs.forEach((nfr, index) => {
+        const isAttention = nfr.is_attention_question === true;
+        const q1 = isAttention 
+            ? document.querySelector(`input[name="attention_q1_${nfr.id}"]:checked`).value
+            : document.querySelector(`input[name="q1_${nfr.id}"]:checked`).value;
+        const q2 = isAttention 
+            ? document.querySelector(`input[name="attention_q2_${nfr.id}"]:checked`).value
+            : document.querySelector(`input[name="q2_${nfr.id}"]:checked`).value;
+        const q3 = isAttention 
+            ? document.querySelector(`input[name="attention_q3_${nfr.id}"]:checked`).value
+            : document.querySelector(`input[name="q3_${nfr.id}"]:checked`).value;
+        const isForced = !isAttention && forcedNfrs.includes(nfr.id);
+        const undecided_reason = isAttention
+            ? document.querySelector(`textarea[name="attention_undecided_reason_${nfr.id}"]`)?.value || ''
+            : document.querySelector(`textarea[name="undecided_reason_${nfr.id}"]`)?.value || '';
         const forced_own_assessment = document.querySelector(`textarea[name="forced_own_assessment_${nfr.id}"]`)?.value || '';
+        const nfr_acknowledged = document.getElementById(`nfr_read_${index}`)?.checked ?? false;
         // Populate legacy per-question assessment fields to keep downstream logic working
         const q1_own_assessment = isForced ? forced_own_assessment : '';
         const q2_own_assessment = isForced ? forced_own_assessment : '';
@@ -1265,6 +1324,8 @@ document.getElementById('batchForm').addEventListener('submit', (e) => {
             q3_agreement: q3,
             undecided_reason: undecided_reason,
             forced_own_assessment: forced_own_assessment,
+            is_attention_question: isAttention,
+            nfr_acknowledged: nfr_acknowledged,
             timestamp: new Date().toISOString()
         });
     });

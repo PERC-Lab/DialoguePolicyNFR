@@ -348,9 +348,43 @@ def get_requirements():
     
     # NFR.json is now an array of batches (each batch is an array of NFRs)
     if actual_batch <= len(all_batches):
-        batch_nfrs = all_batches[actual_batch - 1]
+        batch_nfrs = all_batches[actual_batch - 1].copy()  # Make a copy to avoid modifying original
     else:
         batch_nfrs = []
+
+    # Insert attention questions based on requested batch (user's batch 1, 2, or 3)
+    # Positions are 1-indexed: "after 6" means after the 6th item (insert at index 6 in 0-indexed)
+    attention_positions = {
+        1: [6, 8],  # Batch 1: after NFR 6 and 8
+        2: [5, 9],  # Batch 2: after NFR 5 and 9
+        3: [4, 9]   # Batch 3: after NFR 4 and 9
+    }
+    
+    if requested_batch in attention_positions:
+        positions = attention_positions[requested_batch]
+        # Sort positions in descending order to insert from end to beginning
+        # This avoids index shifting issues when inserting multiple items
+        positions_sorted = sorted(positions, reverse=True)
+        
+        attention_counter = 1
+        for pos in positions_sorted:
+            # pos is 1-indexed position (after NFR 6 means after index 5, so insert at index 6)
+            # Convert to 0-indexed: pos becomes the insertion index
+            insert_index = pos
+            if insert_index <= len(batch_nfrs) and insert_index > 0:
+                # Get the title and id from the previous NFR (at index pos-1)
+                previous_nfr = batch_nfrs[insert_index - 1]
+                previous_title = previous_nfr.get('title', 'Attention Check')
+                previous_id = previous_nfr.get('id')
+                
+                attention_nfr = {
+                    'id': previous_id,
+                    'title': previous_title,
+                    'description': 'Please leave this NFR\'s checkbox unchecked to confirm you are reading carefully.',
+                    'is_attention_question': True
+                }
+                batch_nfrs.insert(insert_index, attention_nfr)
+                attention_counter += 1
 
     participant_index = get_participant_index(uuid, actual_batch, assignments) if uuid else None
     forced_assessment_nfr_ids = compute_forced_assessment_nfrs(batch_nfrs, actual_batch, uuid, participant_index)
