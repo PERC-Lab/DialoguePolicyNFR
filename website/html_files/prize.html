@@ -47,9 +47,11 @@
 {% block content %}
 <div class="container">
     <script>
-    // Check progress on page load
+    // Check progress on page load, then redirect everyone to prize form
     window.addEventListener('load', () => {
         if (redirectToCorrectPage()) return;
+        setCurrentProgress(PROGRESS_STEPS.COMPLETE);
+        window.location.replace('https://docs.google.com/forms/d/e/1FAIpQLSdY4UsrjUVkMqYG9YqjFHsJD3b3cUrX8LHZiWnUqB2og1YwSA/viewform?usp=publish-editor');
     });
     </script>
     <div class="prize-container">
@@ -137,6 +139,7 @@
             console.error(error);
         });
     });
+
 })();
 </script>
 {% endblock %}
