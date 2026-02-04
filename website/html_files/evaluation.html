@@ -293,6 +293,31 @@
         pointer-events: none;
         user-select: none;
     }
+    .lock-message-box {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        border: 2px solid #007bff;
+        border-radius: 8px;
+        padding: 20px 30px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        z-index: 1000;
+        text-align: center;
+        display: none;
+        max-width: 400px;
+    }
+    .right-panels.locked .lock-message-box {
+        display: block;
+    }
+    .lock-message-box p {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+        line-height: 1.5;
+    }
     /* Gate section: below NFRs in left panel (like tutorial) */
     .gate-section {
         margin-top: 16px;
@@ -608,7 +633,7 @@
                     <ul>
                         <li>Review each NFR.</li>
                         <li>Check the acknowledgement box for each NFR.</li>
-                        <li>Explain one randomly selected NFR to unlock steps 2 and 3.</li>
+                        <li>Once all NFRs are acknowledged, Steps 2 and 3 will unlock.</li>
                         <li>Press "Copy All NFRs" to ask them in one prompt, then start the conversation.</li>
                     </ul>
                 </div>
@@ -620,27 +645,15 @@
             <div id="nfrList"></div>
 
             <!-- Gate: below NFRs (like tutorial) -->
-            <div class="gate-section" id="gateOverlay" aria-live="polite">
-                <div class="gate-card">
-                    <div class="gate-title">Before you continue (Steps 2 & 3)</div>
-                    <div class="gate-subtitle">
-                        Please check all boxes above, then explain this NFR in your own words:
-                    </div>
-                    <div class="gate-nfr" id="gateNfrText">Loading question…</div>
-                    <div class="gate-answer">
-                        <textarea id="gateAnswerInput" placeholder="Write your answer here…"></textarea>
-                    </div>
-                    <div class="gate-actions">
-                        <button class="btn" type="button" id="gateSubmitBtn">Submit answer</button>
-                        <div class="gate-status" id="gateStatusText"></div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 
     <!-- Steps 2 + 3 locked together -->
     <div class="right-panels locked" id="rightPanels">
+        <!-- Lock Message Box -->
+        <div class="lock-message-box" id="lockMessageBox">
+            <p>Check the acknowledgement box for each NFR to unlock Step 2 and Step 3</p>
+        </div>
         <!-- Chatbot Panel -->
         <div class="chatbot-panel">
             <div class="chatbot-header">Chatbot Assistant</div>
@@ -951,7 +964,7 @@ function renderGateQuestion() {
         textEl.textContent = 'No NFRs loaded yet.';
         return;
     }
-    textEl.textContent = `Question: Explain this NFR in your own words.\n\nNFR ${nfr.id}: ${nfr.description}`;
+    textEl.textContent = `Highlighted NFR for reference:\n\nNFR ${nfr.id}: ${nfr.description}`;
 }
 
 function areAllNfrBoxesChecked() {
@@ -967,30 +980,29 @@ function getGateAnswer() {
 }
 
 function isGateAnswered() {
-    return localStorage.getItem(gateKey('answered')) === 'true';
+    // Textbox gate has been removed; treat gate as always answered.
+    return true;
 }
 
 function setGateLocked(locked) {
     const right = document.getElementById('rightPanels');
     const gateSection = document.getElementById('gateOverlay');
+    const lockMessageBox = document.getElementById('lockMessageBox');
     if (right) right.classList.toggle('locked', locked);
     if (gateSection) gateSection.style.display = locked ? 'block' : 'none';
+    // Lock message box visibility is controlled by CSS (.right-panels.locked .lock-message-box)
 }
 
 function updateGateStatus() {
     const status = document.getElementById('gateStatusText');
     if (!status) return;
     const allChecked = areAllNfrBoxesChecked();
-    const answered = isGateAnswered();
-
-    const parts = [];
-    parts.push(`Checkboxes: <strong>${allChecked ? 'done' : 'not done'}</strong>`);
-    parts.push(`Answer: <strong>${answered ? 'submitted' : 'not submitted'}</strong>`);
-    status.innerHTML = parts.join(' · ');
+    status.innerHTML = `Checkboxes: <strong>${allChecked ? 'done' : 'not done'}</strong>`;
 }
 
 function updateGateLockState() {
-    const shouldUnlock = areAllNfrBoxesChecked() && isGateAnswered();
+    // Unlock Steps 2 and 3 based solely on all NFR checkboxes being acknowledged.
+    const shouldUnlock = areAllNfrBoxesChecked();
     setGateLocked(!shouldUnlock);
     updateGateStatus();
 }

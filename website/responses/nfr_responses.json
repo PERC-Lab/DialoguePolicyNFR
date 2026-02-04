@@ -1,1 +1,114 @@
-{}
+{
+  "1d16c753-0d94-4f05-ad87-eb8b66fc2d4c": [
+    {
+      "uuid": "1d16c753-0d94-4f05-ad87-eb8b66fc2d4c",
+      "nfr_id": 1,
+      "batch": 1,
+      "q1_agreement": "Agree",
+      "q2_agreement": "Agree",
+      "q3_agreement": "Agree",
+      "undecided_reason": "",
+      "forced_own_assessment": "",
+      "timestamp": "2026-02-04T18:15:21.596Z"
+    },
+    {
+      "uuid": "1d16c753-0d94-4f05-ad87-eb8b66fc2d4c",
+      "nfr_id": 2,
+      "batch": 1,
+      "q1_agreement": "Agree",
+      "q2_agreement": "Agree",
+      "q3_agreement": "Agree",
+      "undecided_reason": "",
+      "forced_own_assessment": "",
+      "timestamp": "2026-02-04T18:15:21.596Z"
+    },
+    {
+      "uuid": "1d16c753-0d94-4f05-ad87-eb8b66fc2d4c",
+      "nfr_id": 3,
+      "batch": 1,
+      "q1_agreement": "Agree",
+      "q2_agreement": "Agree",
+      "q3_agreement": "Agree",
+      "undecided_reason": "",
+      "forced_own_assessment": "",
+      "timestamp": "2026-02-04T18:15:21.596Z"
+    },
+    {
+      "uuid": "1d16c753-0d94-4f05-ad87-eb8b66fc2d4c",
+      "nfr_id": 4,
+      "batch": 1,
+      "q1_agreement": "Agree",
+      "q2_agreement": "Agree",
+      "q3_agreement": "Agree",
+      "undecided_reason": "",
+      "forced_own_assessment": "",
+      "timestamp": "2026-02-04T18:15:21.596Z"
+    },
+    {
+      "uuid": "1d16c753-0d94-4f05-ad87-eb8b66fc2d4c",
+      "nfr_id": 5,
+      "batch": 1,
+      "q1_agreement": "Agree",
+      "q2_agreement": "Agree",
+      "q3_agreement": "Agree",
+      "undecided_reason": "",
+      "forced_own_assessment": "kl",
+      "timestamp": "2026-02-04T18:15:21.596Z"
+    },
+    {
+      "uuid": "1d16c753-0d94-4f05-ad87-eb8b66fc2d4c",
+      "nfr_id": 6,
+      "batch": 1,
+      "q1_agreement": "Agree",
+      "q2_agreement": "Agree",
+      "q3_agreement": "Agree",
+      "undecided_reason": "",
+      "forced_own_assessment": "",
+      "timestamp": "2026-02-04T18:15:21.596Z"
+    },
+    {
+      "uuid": "1d16c753-0d94-4f05-ad87-eb8b66fc2d4c",
+      "nfr_id": 7,
+      "batch": 1,
+      "q1_agreement": "Agree",
+      "q2_agreement": "Agree",
+      "q3_agreement": "Agree",
+      "undecided_reason": "",
+      "forced_own_assessment": "",
+      "timestamp": "2026-02-04T18:15:21.596Z"
+    },
+    {
+      "uuid": "1d16c753-0d94-4f05-ad87-eb8b66fc2d4c",
+      "nfr_id": 8,
+      "batch": 1,
+      "q1_agreement": "Agree",
+      "q2_agreement": "Agree",
+      "q3_agreement": "Agree",
+      "undecided_reason": "",
+      "forced_own_assessment": "",
+      "timestamp": "2026-02-04T18:15:21.596Z"
+    },
+    {
+      "uuid": "1d16c753-0d94-4f05-ad87-eb8b66fc2d4c",
+      "nfr_id": 9,
+      "batch": 1,
+      "q1_agreement": "Agree",
+      "q2_agreement": "Agree",
+      "q3_agreement": "Agree",
+      "undecided_reason": "",
+      "forced_own_assessment": "",
+      "timestamp": "2026-02-04T18:15:21.596Z"
+    },
+    {
+      "uuid": "1d16c753-0d94-4f05-ad87-eb8b66fc2d4c",
+      "nfr_id": 10,
+      "batch": 1,
+      "q1_agreement": "Agree",
+      "q2_agreement": "Agree",
+      "q3_agreement": "Agree",
+      "undecided_reason": "",
+      "forced_own_assessment": "",
+      "timestamp": "2026-02-04T18:15:21.597Z"
+    }
+  ]
+}
