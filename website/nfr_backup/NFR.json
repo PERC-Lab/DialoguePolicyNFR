@@ -1,212 +1,4 @@
 [
-    [
-        {
-            "id": 51,
-            "title": "§ 164.308 Administrative safeguards",
-            "description": "The system shall establish and implement procedures to restore any loss of electronic protected health information (ePHI)."
-        },
-        {
-            "id": 52,
-            "title": "§ 164.312 Technical safeguards",
-            "description": "The system shall support technical policies and procedures that allow access to electronic protected health information (ePHI) only for authorized users and authorized software programs."
-        },
-        {
-            "id": 53,
-            "title": "§ 164.312 Technical safeguards",
-            "description": "The system shall assign a unique user identifier to each user to support identification and tracking of user identity."
-        },
-        {
-            "id": 54,
-            "title": "§ 164.312 Technical safeguards",
-            "description": "The system shall support procedures for obtaining necessary electronic protected health information (ePHI) during an emergency."
-        },
-        {
-            "id": 55,
-            "title": "§ 164.312 Technical safeguards",
-            "description": "The system shall support electronic procedures that automatically terminate a session after a predetermined period of inactivity."
-        },
-        {
-            "id": 56,
-            "title": "§ 164.312 Technical safeguards",
-            "description": "The system shall implement a mechanism to encrypt and decrypt electronic protected health information (ePHI)."
-        },
-        {
-            "id": 57,
-            "title": "§ 164.312 Technical safeguards",
-            "description": "The system shall implement hardware, software, and/or procedural mechanisms that record and examine activity in information systems that contain or use electronic protected health information (ePHI)."
-        },
-        {
-            "id": 58,
-            "title": "§ 164.312 Technical safeguards",
-            "description": "The system shall support policies and procedures to protect electronic protected health information (ePHI) from improper alteration or destruction."
-        },
-        {
-            "id": 59,
-            "title": "§ 164.312 Technical safeguards",
-            "description": "The system shall implement electronic mechanisms to corroborate that electronic protected health information (ePHI) has not been altered or destroyed in an unauthorized manner."
-        },
-        {
-            "id": 60,
-            "title": "§ 164.312 Technical safeguards",
-            "description": "The system shall implement procedures to verify that a person or entity seeking access to electronic protected health information (ePHI) is the one claimed."
-        }
-    ],
-    [
-        {
-            "id": 61,
-            "title": "§ 164.312 Technical safeguards",
-            "description": "The system shall implement technical security measures to protect electronic protected health information (ePHI) from unauthorized access during transmission over an electronic communications network."
-        },
-        {
-            "id": 62,
-            "title": "§ 164.312 Technical safeguards",
-            "description": "The system shall implement security measures to ensure that electronically transmitted electronic protected health information (ePHI) is not improperly modified without detection until disposal."
-        },
-        {
-            "id": 63,
-            "title": "§ 164.312 Technical safeguards",
-            "description": "The system shall implement a mechanism to encrypt electronic protected health information (ePHI) during transmission whenever appropriate."
-        },
-        {
-            "id": 64,
-            "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
-            "description": "The system may allow the use of protected health information (PHI) to the individual who is the subject of the information."
-        },
-        {
-            "id": 65,
-            "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
-            "description": "The system may allow the disclosure of protected health information (PHI) to the individual who is the subject of the information."
-        },
-        {
-            "id": 66,
-            "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
-            "description": "The system may allow the use of protected health information (PHI) for treatment operations."
-        },
-        {
-            "id": 67,
-            "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
-            "description": "The system may allow the use of protected health information (PHI) for payment operations."
-        },
-        {
-            "id": 68,
-            "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
-            "description": "The system may allow the use of protected health information (PHI) for health care operations."
-        },
-        {
-            "id": 69,
-            "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
-            "description": "The system may allow the disclosure of protected health information (PHI) for payment operations."
-        },
-        {
-            "id": 70,
-            "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
-            "description": "The system may allow the disclosure of protected health information (PHI) for payment operations."
-        }
-    ],
-    [
-        {
-            "id": 1,
-            "title": "§ 164.306 Security standards: General rules",
-            "description": "The system shall ensure the confidentiality of all electronic protected health information (ePHI) that it creates."
-        },
-        {
-            "id": 2,
-            "title": "§ 164.306 Security standards: General rules",
-            "description": "The system shall ensure the confidentiality of all electronic protected health information (ePHI) that it receives."
-        },
-        {
-            "id": 3,
-            "title": "§ 164.306 Security standards: General rules",
-            "description": "The system shall ensure the confidentiality of all electronic protected health information (ePHI) that it maintains."
-        },
-        {
-            "id": 4,
-            "title": "§ 164.306 Security standards: General rules",
-            "description": "The system shall ensure the confidentiality of all electronic protected health information (ePHI) that it transmits."
-        },
-        {
-            "id": 5,
-            "title": "§ 164.306 Security standards: General rules",
-            "description": "The system shall ensure the integrity of all electronic protected health information (ePHI) that it creates."
-        },
-        {
-            "id": 6,
-            "title": "§ 164.306 Security standards: General rules",
-            "description": "The system shall ensure the integrity of all electronic protected health information (ePHI) that it receives."
-        },
-        {
-            "id": 7,
-            "title": "§ 164.306 Security standards: General rules",
-            "description": "The system shall ensure the integrity of all electronic protected health information (ePHI) that it maintains."
-        },
-        {
-            "id": 8,
-            "title": "§ 164.306 Security standards: General rules",
-            "description": "The system shall ensure the integrity of all electronic protected health information (ePHI) that it transmits."
-        },
-        {
-            "id": 9,
-            "title": "§ 164.306 Security standards: General rules",
-            "description": "The system shall ensure the availability of all electronic protected health information (ePHI) that it creates."
-        },
-        {
-            "id": 10,
-            "title": "§ 164.306 Security standards: General rules",
-            "description": "The system shall ensure the availability of all electronic protected health information (ePHI) that it receives."
-        }
-    ],    
-    [
-        {
-            "id": 71,
-            "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
-            "description": "The system may allow the disclosure of protected health information (PHI) for health care operations."
-        },
-        {
-            "id": 72,
-            "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
-            "description": "The system may allow incidental uses of protected health information (PHI) when they occur as a byproduct of permitted or required uses or disclosures."
-        },
-        {
-            "id": 73,
-            "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
-            "description": "The system may allow incidental disclosures of protected health information (PHI) when they occur as a byproduct of permitted or required uses or disclosures."
-        },
-        {
-            "id": 74,
-            "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
-            "description": "The system may allow the use of protected health information (PHI) when a valid authorization has been obtained."
-        },
-        {
-            "id": 75,
-            "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
-            "description": "The system must disclose protected health information (PHI) to an individual when the individual requests a right to access or receive an accounting of disclosures."
-        },
-        {
-            "id": 76,
-            "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
-            "description": "The system may allow disclosing protected health information (PHI) when required for compliance investigations by the regulatory authority."
-        },
-        {
-            "id": 77,
-            "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
-            "description": "The system shall support disclosing protected health information (PHI) when required for regulatory compliance investigations by the Secretary."
-        },
-        {
-            "id": 78,
-            "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
-            "description": "The system shall prevent health plans (excluding long-term care policy issuers) from using or disclosing protected health information that is genetic information for the following underwriting purpose: Determining eligibility for enrollment or continued enrollment in the plan"
-        },
-        {
-            "id": 79,
-            "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
-            "description": "The system shall prevent health plans (excluding long-term care policy issuers) from using or disclosing protected health information that is genetic information for the following underwriting purpose: Determining benefits, including modifications to deductibles or cost-sharing mechanisms"
-        },
-        {
-            "id": 80,
-            "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
-            "description": "The system shall prevent health plans (excluding long-term care policy issuers) from using or disclosing protected health information that is genetic information for the following underwriting purpose: Computing premium or contribution amounts, including discounts, rebates, or premium differentials"
-        }
-    ],    
   [
       {
           "id": 1,
@@ -465,6 +257,162 @@
           "id": 50,
           "title": "§ 164.308 Administrative safeguards",
           "description": "The system shall establish and implement procedures to maintain retrievable exact copies of electronic protected health information (ePHI)"
+      }
+  ],
+  [
+      {
+          "id": 51,
+          "title": "§ 164.308 Administrative safeguards",
+          "description": "The system shall establish and implement procedures to restore any loss of electronic protected health information (ePHI)."
+      },
+      {
+          "id": 52,
+          "title": "§ 164.312 Technical safeguards",
+          "description": "The system shall support technical policies and procedures that allow access to electronic protected health information (ePHI) only for authorized users and authorized software programs."
+      },
+      {
+          "id": 53,
+          "title": "§ 164.312 Technical safeguards",
+          "description": "The system shall assign a unique user identifier to each user to support identification and tracking of user identity."
+      },
+      {
+          "id": 54,
+          "title": "§ 164.312 Technical safeguards",
+          "description": "The system shall support procedures for obtaining necessary electronic protected health information (ePHI) during an emergency."
+      },
+      {
+          "id": 55,
+          "title": "§ 164.312 Technical safeguards",
+          "description": "The system shall support electronic procedures that automatically terminate a session after a predetermined period of inactivity."
+      },
+      {
+          "id": 56,
+          "title": "§ 164.312 Technical safeguards",
+          "description": "The system shall implement a mechanism to encrypt and decrypt electronic protected health information (ePHI)."
+      },
+      {
+          "id": 57,
+          "title": "§ 164.312 Technical safeguards",
+          "description": "The system shall implement hardware, software, and/or procedural mechanisms that record and examine activity in information systems that contain or use electronic protected health information (ePHI)."
+      },
+      {
+          "id": 58,
+          "title": "§ 164.312 Technical safeguards",
+          "description": "The system shall support policies and procedures to protect electronic protected health information (ePHI) from improper alteration or destruction."
+      },
+      {
+          "id": 59,
+          "title": "§ 164.312 Technical safeguards",
+          "description": "The system shall implement electronic mechanisms to corroborate that electronic protected health information (ePHI) has not been altered or destroyed in an unauthorized manner."
+      },
+      {
+          "id": 60,
+          "title": "§ 164.312 Technical safeguards",
+          "description": "The system shall implement procedures to verify that a person or entity seeking access to electronic protected health information (ePHI) is the one claimed."
+      }
+  ],
+  [
+      {
+          "id": 61,
+          "title": "§ 164.312 Technical safeguards",
+          "description": "The system shall implement technical security measures to protect electronic protected health information (ePHI) from unauthorized access during transmission over an electronic communications network."
+      },
+      {
+          "id": 62,
+          "title": "§ 164.312 Technical safeguards",
+          "description": "The system shall implement security measures to ensure that electronically transmitted electronic protected health information (ePHI) is not improperly modified without detection until disposal."
+      },
+      {
+          "id": 63,
+          "title": "§ 164.312 Technical safeguards",
+          "description": "The system shall implement a mechanism to encrypt electronic protected health information (ePHI) during transmission whenever appropriate."
+      },
+      {
+          "id": 64,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system may allow the use of protected health information (PHI) to the individual who is the subject of the information."
+      },
+      {
+          "id": 65,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system may allow the disclosure of protected health information (PHI) to the individual who is the subject of the information."
+      },
+      {
+          "id": 66,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system may allow the use of protected health information (PHI) for treatment operations."
+      },
+      {
+          "id": 67,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system may allow the use of protected health information (PHI) for payment operations."
+      },
+      {
+          "id": 68,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system may allow the use of protected health information (PHI) for health care operations."
+      },
+      {
+          "id": 69,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system may allow the disclosure of protected health information (PHI) for payment operations."
+      },
+      {
+          "id": 70,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system may allow the disclosure of protected health information (PHI) for payment operations."
+      }
+  ],
+  [
+      {
+          "id": 71,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system may allow the disclosure of protected health information (PHI) for health care operations."
+      },
+      {
+          "id": 72,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system may allow incidental uses of protected health information (PHI) when they occur as a byproduct of permitted or required uses or disclosures."
+      },
+      {
+          "id": 73,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system may allow incidenta disclosures of protected health information (PHI) when they occur as a byproduct of permitted or required uses or disclosures."
+      },
+      {
+          "id": 74,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system may allow the use of protected health information (PHI) when a valid authorization has been obtained."
+      },
+      {
+          "id": 75,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system must disclose protected health information (PHI) to an individual when the individual requests a right to access or receive an accounting of disclosures."
+      },
+      {
+          "id": 76,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system may allow disclosing protected health information (PHI) when required for compliance investigations by the regulatory authority."
+      },
+      {
+          "id": 77,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system shall support disclosing protected health information (PHI) when required for regulatory compliance investigations by the Secretary."
+      },
+      {
+          "id": 78,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system shall prevent health plans (excluding long-term care policy issuers) from using or disclosing protected health information that is genetic information for the following underwriting purpose: Determining eligibility for enrollment or continued enrollment in the plan"
+      },
+      {
+          "id": 79,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system shall prevent health plans (excluding long-term care policy issuers) from using or disclosing protected health information that is genetic information for the following underwriting purpose: Determining benefits, including modifications to deductibles or cost-sharing mechanisms"
+      },
+      {
+          "id": 80,
+          "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+          "description": "The system shall prevent health plans (excluding long-term care policy issuers) from using or disclosing protected health information that is genetic information for the following underwriting purpose: Computing premium or contribution amounts, including discounts, rebates, or premium differentials"
       }
   ],
   [
