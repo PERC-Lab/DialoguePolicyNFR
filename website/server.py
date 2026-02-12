@@ -128,6 +128,9 @@ def save_json_file(filepath, data):
 def assign_batches_to_user(uuid):
     """Assign 3 batches to a new user, ensuring each batch has exactly 2 users.
     Assigns first available batches (not randomly)."""
+
+    #TODO remove this after testing
+    return [1, 2, 3]
     assignments = load_json_file(BATCH_ASSIGNMENTS_FILE)
     
     # If user already has assignments, return them

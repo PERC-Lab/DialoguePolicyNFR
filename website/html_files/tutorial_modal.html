@@ -9,21 +9,14 @@
         <div class="tutorial-modal-body">
             <div class="tutorial-section">
                 <h3>Overview</h3>
-                <p>This tool facilitates the evaluation of Non-Functional Requirements (NFRs) from HIPAA through interactive dialogue with a chatbot. You will work through batches of NFRs, engage with the chatbot to obtain assessments, and provide feedback on the chatbot's evaluations. You can reopen this tutorial at any time during the evaluation if you need a refresher.</p>
+                <p>This tool facilitates the evaluation of Non-Functional Requirements (NFRs) from Healthcare regulations through interactive dialogue with a chatbot. You will work through batches of NFRs, engage with the chatbot to obtain assessments, and provide feedback on the chatbot's evaluations.</p>
             </div>
             <div class="tutorial-section">
                 <h3>What are Non-Functional Requirements (NFRs)?</h3>
-                <p>
-                    Non-Functional Requirements (NFRs) specify how a system should perform rather than what it should do. While functional requirements define specific behaviors or functions (for example, <em>"User can reset password"</em>), NFRs establish quality attributes and constraints such as security, performance, reliability, usability, and compliance (for example, <em>"System must reset password within 3 seconds."</em>).
-                </p>
+                <p>Non-Functional Requirements (NFRs) specify how a system should perform rather than what it should do.</p>
+                <p><strong>Example of functional requirement:</strong> "User can reset password"</p>
+                <p><strong>Example of NFR:</strong> The system must allow users to change passwords using secure storage methods</p>
             </div>
-            <div class="tutorial-section">
-                <h3>What is HIPAA?</h3>
-                <p>
-                    HIPAA (<strong>Health Insurance Portability and Accountability Act</strong>) is a U.S. federal law that establishes privacy and security standards for the protection of sensitive patient health information. It requires healthcare providers, insurers, and their business associates to implement safeguards to ensure that <strong>Protected Health Information (PHI)</strong> remains confidential, secure, and accessible only to authorized individuals.
-                </p>
-            </div>
-
             <div class="tutorial-section">
                 <h3>Tool Structure</h3>
                 <p>The interface consists of three panels:</p>
@@ -46,12 +39,22 @@
                 
                 <h4>Step 1: Review NFRs (Left Panel)</h4>
                 <ul>
-                    <li>You will see 10 NFRs displayed at a time</li>
-                    <li>There are up to 30 NFRs total, organized in batches of 10</li>
-                    <li>Use the copy button to copy all 10 NFRs at once for easier interaction with the chatbot</li>
+                    <li>Review each NFR.</li>
+                    <li>Check the acknowledgement box for each NFR.</li>
+                    <li>Once all NFRs are acknowledged, Steps 2 and 3 will unlock.</li>
+                    <li>Press "Copy All NFRs" to ask them in one prompt, then start the conversation.</li>
+
                 </ul>
 
                 <h4>Step 2: Interact with the Chatbot (Middle Panel)</h4>
+                <p>Interact with the chatbot to get the following for each NFR:</p>
+                <ul>
+                    <li>Satisfaction Level (Satisfied, Weakly Satisfied, Weakly Denied, Denied, or Not Applicable)</li>
+                    <li>Reasoning for that level</li>
+                    <li>Specific Code Locations that address the NFR</li>
+                </ul>
+                <p>Ask follow-up questions until you are convinced the chatbot fully assessed the NFR.</p>
+
                 <p><strong>Initial Query:</strong></p>
                 <ul>
                     <li>Start by asking the chatbot to evaluate all 10 NFRs together</li>
@@ -89,6 +92,7 @@
 
                 <h4>Step 3: Complete the Feedback Form (Right Panel)</h4>
                 <p>Once you are fully convinced that the chatbot has comprehensively assessed the NFRs, complete the feedback form for each NFR.</p>
+                <p>Based on the fully assessed dialogues with the chatbot, do you agree with its evaluation? (The code is provided for reference only — you do not need to verify it.)</p>
                 <p><strong>For each NFR, answer questions:</strong></p>
                 <ul>
                     <li><strong>Question 1:</strong> Do you agree with the chatbot's satisfaction level assessment?<br>

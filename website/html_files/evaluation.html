@@ -669,6 +669,7 @@
                         <li>Reasoning for that level</li>
                         <li>Specific Code Locations that address the NFR</li>
                     </ul>
+                    Ask follow-up questions until you are convinced the chatbot fully assessed the NFR.
                 </div>
             </div>
             <div class="chatbot-messages" id="chatMessages"></div>
@@ -690,6 +691,7 @@
                     <div class="step-body">
                         <ul>
                             <li>Once you're convinced the chatbot has fully assessed the NFRs, complete this feedback form for each NFR.</li>
+                            <li>Based on the fully assessed dialogues with the chatbot, do you agree with its evaluation? (The code is provided for reference only — you do not need to verify it.)</li>
                         </ul>
                     </div>
                 </div>
@@ -713,9 +715,8 @@
         <div class="code-structure-modal-body">
             <div class="code-structure-section">
                 <p style="margin-bottom: 20px; line-height: 1.8;">
-                    iTrust is an educational Electronic Health Record (EHR) system developed at NC State University for teaching software engineering. It's designed to handle patient medical records while maintaining HIPAA privacy standards. The system has been continuously developed since 2005, with undergraduate students adding features each semester.
+                    iTrust is an educational Electronic Health Record (EHR) system developed at NC State University for teaching software engineering. It's designed to handle patient medical records while maintaining healthcare regulations. The codebase follows a <strong>Model-View-Controller (MVC)</strong> architecture.
                 </p>
-                
                 <h3>Who Uses iTrust?</h3>
                 <p style="margin-bottom: 15px;">The system supports 8 different roles:</p>
                 <ol style="margin-left: 20px; line-height: 2; margin-bottom: 30px;">
@@ -728,13 +729,29 @@
                     <li><strong>Personal Representative</strong> - Legal guardian/proxy</li>
                     <li><strong>Public Health Agent</strong> - Views aggregated epidemiological data</li>
                 </ol>
-                
-                <p style="margin-bottom: 20px; line-height: 1.8;">
-                    The system follows a <strong>strict Model-View-Controller (MVC) pattern</strong> with clear separation of concerns across three layers.
-                </p>
-                
-                <h3>Architectural Pattern: Model-View-Controller (MVC)</h3>
-                <pre>┌─────────────────────────────────────────────────────────────┐
+                <ul style="margin-left: 20px; line-height: 2; margin-bottom: 20px;">
+                    <li><strong>Model:</strong>
+                        <ul style="margin-top: 4px; padding-left: 22px;">
+                            <li>Data and business logic (database operations)</li>
+                            <li>Located at: <code>src/main/edu/ncsu/csc/itrust/model/old/dao/mysql/*.java</code></li>
+                        </ul>
+                    </li>
+                    <li><strong>View:</strong>
+                        <ul style="margin-top: 4px; padding-left: 22px;">
+                            <li>What the user sees and interacts with (UI)</li>
+                            <li>Located at: <code>WebRoot/*.jsp</code></li>
+                        </ul>
+                    </li>
+                    <li><strong>Controller:</strong>
+                        <ul style="margin-top: 4px; padding-left: 22px;">
+                            <li>Handles user input and coordinates between Model and View</li>
+                            <li>Located at: <code>src/main/edu/ncsu/csc/itrust/action/*.java</code></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h3 style="margin-bottom: 15px;">MVC Structure in iTrust</h3>
+                <pre class="mvc-diagram">┌─────────────────────────────────────────────────────────────┐
 │                         CLIENT BROWSER                      │
 └────────────────────────────┬────────────────────────────────┘
                              │ HTTP Request
@@ -745,50 +762,28 @@
 │  - User interface (HTML, JavaScript)                        │
 │  - Form submission                                          │
 │  - Display data                                             │
-│  - 156 JSP files                                            │
 └────────────────────────────┬────────────────────────────────┘
-                             │
                              │ Calls Action classes
                              ▼
 ┌─────────────────────────────────────────────────────────────┐
 │                 CONTROLLER LAYER (Actions)                  │
 │  Location: src/main/edu/ncsu/csc/itrust/action/*.java       │
 │  - Business logic coordination                              │
-│  - Input validation (via Validators)                        │
-│  - Transaction logging (HIPAA compliance)                   │
-│  - Error handling                                           │
-│  - 63+ Action classes                                       │
+│  - Input validation                                         │
 └────────────────────────────┬────────────────────────────────┘
-                             │
                              │ Uses DAOs
                              ▼
 ┌─────────────────────────────────────────────────────────────┐
 │                   MODEL LAYER                               │
-│  ┌──────────────────────────────────────────────────────┐   │
-│  │ BEANS (Data Containers)                              │   │
-│  │ Location: model/old/beans/*.java                     │   │
-│  │ - PatientBean, OfficeVisitBean, etc.                 │   │
-│  │ - Simple getters/setters                             │   │
-│  │ - 31+ Bean classes                                   │   │
-│  └──────────────────────────────────────────────────────┘   │
-│  ┌──────────────────────────────────────────────────────┐   │
-│  │ DAOs (Database Access Objects)                       │   │
-│  │ Location: model/old/dao/mysql/*.java                 │   │
-│  │ - PatientDAO, OfficeVisitDAO, etc.                   │   │
-│  │ - SQL queries (PreparedStatements)                   │   │
-│  │ - 24+ DAO classes                                    │   │
-│  └──────────────────────────────────────────────────────┘   │
-│  ┌──────────────────────────────────────────────────────┐   │
-│  │ DATABASE (MySQL)                                     │   │
-│  │ - No foreign keys (handled in application code)      │   │
-│  │ - Connection pooling via DAOFactory                  │   │
-│  └──────────────────────────────────────────────────────┘   │
+│  Location: model/old/dao/mysql/*.java                       │
+│  - Database operations (SQL queries)                        │
+│  - Data access                                              │
 └─────────────────────────────────────────────────────────────┘</pre>
-                
-                <h3>Directory Structure</h3>
-                <pre>iTrust/
-├── WebRoot/                          # Web application root (deployed as WAR)
-│   ├── auth/                         # Protected pages (role-based)
+
+                <h3 style="margin-bottom: 15px;">Where to Find Each Layer</h3>
+                <p style="margin-bottom: 10px; line-height: 1.8;"><strong>View:</strong> <code>WebRoot/auth/*.jsp</code>. Pages are organized by role (patient, hcp, admin, etc.).</p>
+                <pre class="mvc-diagram">├── WebRoot/
+│   ├── auth/                        # Protected pages (role-based)
 │   │   ├── hcp/                     # Healthcare Provider only
 │   │   ├── hcp-uap/                 # HCP and UAP shared
 │   │   ├── patient/                 # Patient only
@@ -796,69 +791,36 @@
 │   │   ├── er/                      # Emergency Responder only
 │   │   ├── pha/                     # Public Health Agent only
 │   │   └── staff/                   # All staff (HCP, UAP, Admin, LT)
-│   ├── errors/                      # Error pages (403, 404, 503)
-│   ├── util/                        # Utility JSPs
-│   ├── css/                         # Stylesheets
-│   ├── js/                          # JavaScript files
-│   ├── image/                       # Images
 │   ├── login.jsp                    # Login page
 │   ├── global.jsp                   # Global initialization (DAO, session)
 │   ├── header.jsp                   # Common header
-│   ├── footer.jsp                   # Common footer
-│   └── WEB-INF/
-│       ├── web.xml                  # Servlet configuration, security constraints
-│       ├── tags.tld                 # Custom tag library
-│       └── lib/                     # JAR dependencies
-│
-├── src/main/
-│   └── edu/ncsu/csc/itrust/
-│       ├── action/                  # CONTROLLER LAYER
-│       │   ├── AddPatientAction.java
-│       │   ├── EditPatientAction.java
-│       │   ├── ViewMyRecordsAction.java
-│       │   └── ... (63+ action classes)
-│       │
-│       ├── model/                   # MODEL LAYER
-│       │   ├── old/
-│       │   │   ├── beans/           # Data containers
-│       │   │   │   ├── PatientBean.java
-│       │   │   │   ├── OfficeVisitBean.java
-│       │   │   │   └── ... (31+ bean classes)
-│       │   │   │
-│       │   │   ├── dao/            # Database access
-│       │   │   │   ├── DAOFactory.java      # Singleton factory
-│       │   │   │   └── mysql/
-│       │   │   │       ├── PatientDAO.java
-│       │   │   │       ├── OfficeVisitDAO.java
-│       │   │   │       └── ... (24+ DAO classes)
-│       │   │   │
-│       │   │   └── validate/       # Input validation
-│       │   │       ├── AddPatientValidator.java
-│       │   │       └── ... (validator classes)
-│       │   │
-│       │   └── [newer models]      # Some newer features use different structure
-│       │
-│       ├── logger/                  # Transaction logging (HIPAA)
-│       │   └── TransactionLogger.java
-│       │
-│       ├── server/                 # Servlets
-│       │   ├── PatientSearchServlet.java
-│       │   └── ...
-│       │
-│       └── exception/              # Custom exceptions
-│           ├── FormValidationException.java
-│           └── ITrustException.java
-│
-├── src/test/java/                  # Test code
-│   └── edu/ncsu/csc/itrust/
-│       ├── unit/                   # Unit tests (JUnit)
-│       └── selenium/               # Integration tests
-│
-├── sql/                            # Database scripts
-│   ├── createTables.sql            # Schema definition
-│   └── data/                       # Test data
-│
-└── pom.xml                         # Maven configuration</pre>
+│   └── footer.jsp                   # Common footer</pre>
+
+                <p style="margin-bottom: 10px; margin-top: 20px; line-height: 1.8;"><strong>Controller:</strong> <code>src/main/edu/ncsu/csc/itrust/action/*.java</code>. Actions follow the pattern [Feature]Action.java.</p>
+                <pre class="mvc-diagram">├── src/main/edu/ncsu/csc/itrust/
+│   ├── action/                      # CONTROLLER LAYER
+│   │   ├── AddPatientAction.java
+│   │   ├── EditPatientAction.java
+│   │   ├── ViewMyRecordsAction.java
+│   │   └── ... (action classes)</pre>
+
+                <p style="margin-bottom: 10px; margin-top: 20px; line-height: 1.8;"><strong>Model:</strong> <code>src/main/edu/ncsu/csc/itrust/model/old/</code>. Beans hold data; DAOs in <code>dao/mysql/</code> perform database access.</p>
+                <pre class="mvc-diagram">│   ├── model/                       # MODEL LAYER
+│   │   └── old/
+│   │       ├── beans/               # Data containers (PatientBean, etc.)
+│   │       ├── dao/mysql/           # Database access (PatientDAO, etc.)
+│   │       └── validate/            # Input validation</pre>
+
+                <h3 style="margin-bottom: 15px; margin-top: 25px;">Example: Tracing an NFR Through the Layers</h3>
+                <p style="margin-bottom: 10px; line-height: 1.8;">For this NFR, the relevant code in each layer is:</p>
+                <div style="margin-bottom: 15px; padding: 12px 16px; background: #f1f7ff; border: 1px solid #b8d4f0; border-radius: 6px;">
+                    <strong>NFR 1:</strong> "The system must allow users to change passwords using secure storage methods"
+                </div>
+                <ul style="margin-left: 20px; line-height: 2; margin-bottom: 20px;">
+                    <li><strong>View:</strong> <code>WebRoot/auth/changePassword.jsp</code></li>
+                    <li><strong>Controller:</strong> <code>src/main/edu/ncsu/csc/itrust/action/ChangePasswordAction.java</code></li>
+                    <li><strong>Model:</strong> <code>src/main/edu/ncsu/csc/itrust/model/old/dao/mysql/AuthDAO.java</code></li>
+                </ul>
             </div>
         </div>
         <div class="code-structure-modal-footer">

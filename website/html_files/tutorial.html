@@ -502,7 +502,7 @@
         <div class="tutorial-page" id="page3">
             <h2>Download the Code</h2>
             <p style="line-height: 1.8; margin-bottom: 20px;">
-                You will be evaluating NFRs against the <strong>iTrust</strong> codebase, an Electronic Health Record (EHR) system designed to comply with HIPAA standards.
+                You will be evaluating NFRs against the <strong>iTrust</strong> codebase, an Electronic Health Record (EHR) system designed to comply with healthcare regulations.
             </p>
             <p><strong>Instructions:</strong></p>
             <ol style="margin-left: 20px; line-height: 2; margin-bottom: 30px;">
@@ -706,7 +706,7 @@
             <span class="practice-label">CODE NAVIGATION</span>
             
             <p style="line-height: 1.8; margin-bottom: 15px;">
-                <strong>Finding the Model Layer:</strong> Located at <code>model/old/dao/mysql/*.java</code>. By looking at the Action class imports to find the DAO. ChangePasswordAction.java imports and uses a DAO for authentication operations.
+                <strong>Finding the Model Layer:</strong> Located at <code>src/main/edu/ncsu/csc/itrust/model/old/dao/mysql/*.java</code>. By looking at the Action class imports to find the DAO. ChangePasswordAction.java imports and uses a DAO for authentication operations.
             </p>
             
             <pre class="mvc-diagram">│       ├── model/                   # MODEL LAYER
@@ -1346,7 +1346,7 @@ function showPage(page) {
                     },
                     {
                         element: document.getElementById('tour-feedback-form'),
-                        intro: 'All set! Click Done to finish the tour.',
+                        intro: 'Based on the fully assessed dialogues with the chatbot, do you agree with its evaluation? (The code is provided for reference only — you do not need to verify it.)',
                         position: 'left'
                     }
                 ],
@@ -1508,7 +1508,8 @@ function showPage(page) {
                     var chatErr = document.getElementById('tour-chat-error');
                     if (chatErr) chatErr.style.display = 'none';
                     window._tourChatSent = true;
-                    if (window._page10Tour && window._page10TourCurrentStep === 6) {
+                    console.log('window._page10TourCurrentStep:', window._page10TourCurrentStep);
+                    if (window._page10Tour && window._page10TourCurrentStep === 5) {
                         window._page10Tour.nextStep();
                     }
                 });
