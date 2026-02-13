@@ -62,7 +62,7 @@
       "uuid": "406bdbef-755b-4032-a82f-86e358987177",
       "satisfaction_level": "Satisfied",
       "reasoning": "EmergencyRecordController/EmergencyRecordMySQL load emergency data and log EMERGENCY_REPORT_VIEW.",
-      "code_location": ["controller lines 52-74, MySQL lines 70-112"]
+      "code_location": ["controller 52-74, MySQL 70-112"]
     },
     {
       "batch": 1,
