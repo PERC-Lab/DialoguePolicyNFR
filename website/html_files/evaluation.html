@@ -656,7 +656,12 @@
         </div>
         <!-- Chatbot Panel -->
         <div class="chatbot-panel">
-            <div class="chatbot-header">Chatbot Assistant</div>
+            <div class="chatbot-header">
+                Chatbot Assistant
+                <div style="font-size: 13px; font-weight: 600; margin-top: 4px;">
+                    The goal of this study is to create high-quality dialogues.
+                </div>
+            </div>
             <div class="panel-step chat-step" id="step2">
                 <div class="step-header">
                     <strong>Step 2:</strong>
@@ -667,21 +672,27 @@
                     <ul>
                         <li>Satisfaction Level (Satisfied, Weakly Satisfied, Weakly Denied, Denied, or Not Applicable)</li>
                         <li>Reasoning for that level</li>
-                        <li>Specific Code Locations that address the NFR</li>
+                        <li>Code Locations that address it (file name, line number(s))</li>
                     </ul>
                     Ask follow-up questions until you are convinced the chatbot fully assessed the NFR.
                 </div>
             </div>
             <div class="chatbot-messages" id="chatMessages"></div>
             <div class="chatbot-input">
-                <textarea id="chatInput" placeholder="Type your message... (Press Enter to send, Shift+Enter for new line)" rows="2" onkeydown="if(event.key==='Enter' && !event.shiftKey && !this.disabled) { event.preventDefault(); sendMessage(); }"></textarea>
+                <textarea id="chatInput" placeholder="Type your message... (Press Enter to send, Shift+Enter for new line)" rows="5" onkeydown="if(event.key==='Enter' && !event.shiftKey && !this.disabled) { event.preventDefault(); sendMessage(); }"></textarea>
                 <button class="btn" onclick="sendMessage()">Send</button>
             </div>
         </div>
 
         <!-- Form Panel -->
         <div class="form-panel">
-            <div class="panel-header">Feedback Form</div>
+            <div class="panel-header">
+                Feedback Form
+                <div style="font-size: 13px; font-weight: 600; margin-top: 4px;">
+                    You don't need to verify evaluations in the code.<br>
+                    Answer your agreement based on the conversations.
+                </div>
+            </div>
             <div class="panel-content">
                 <div class="panel-step" id="step3">
                     <div class="step-header">
@@ -889,9 +900,11 @@ function loadNFRs() {
 
 function displayNFRs() {
     const container = document.getElementById('nfrList');
-    container.innerHTML = nfrs.map((nfr, index) => `
+    container.innerHTML = nfrs.map((nfr, index) => {
+        const label = nfr.is_attention_question === true ? `NFR: ${nfr.title}` : `NFR ${nfr.id}: ${nfr.title}`;
+        return `
         <div class="nfr-item">
-            <h4>NFR ${nfr.id}: ${nfr.title}</h4>
+            <h4>${label}</h4>
             <p>${nfr.description}</p>
             <div style="margin-top: 10px;">
                 <label style="font-size: 13px; display: flex; align-items: center; gap: 6px;">
@@ -900,7 +913,8 @@ function displayNFRs() {
                 </label>
             </div>
         </div>
-    `).join('');
+    `;
+    }).join('');
 }
 
 function gateKey(suffix) {
@@ -1041,9 +1055,10 @@ function setupGateForBatch() {
 
 function copyAllNFRs() {
     // Format all NFRs as text
-    const nfrText = nfrs.map(nfr => {
-        return `NFR ${nfr.id}: ${nfr.description}`;
-    }).join('\n\n');
+    const nfrText = nfrs
+        .filter(nfr => nfr.is_attention_question !== true)
+        .map(nfr => `NFR ${nfr.id}: ${nfr.description}`)
+        .join('\n\n');
     
     const btn = document.querySelector('.copy-nfrs-btn');
     const originalText = btn ? btn.textContent : '';
@@ -1112,7 +1127,7 @@ function displayForms() {
         if (isAttention) {
             return `
         <div class="nfr-form-section" id="nfr-form-${nfr.id}">
-            <h4>NFR ${nfr.id}: ${nfr.title}</h4>
+            <h4>NFR: ${nfr.title}</h4>
             <div class="form-group">
                 <label>Question 1: To ensure you are paying attention, please select "Disagree" for this question.<span class="required-star">*</span></label>
                 <div class="radio-group">
@@ -1153,7 +1168,7 @@ function displayForms() {
             <h4>NFR ${nfr.id}: ${nfr.title}</h4>
             
             <div class="form-group">
-                <label>Question 1: Do you agree with the chatbot's satisfaction level assessment?<span class="required-star">*</span></label>
+                <label>Question 1: Based on the conversations, do you agree with the chatbot's satisfaction level assessment?<span class="required-star">*</span></label>
                 <div class="radio-group">
                     <label><input type="radio" name="q1_${nfr.id}" value="Agree" required> Agree</label>
                     <label><input type="radio" name="q1_${nfr.id}" value="Partially agree"> Partially agree</label>
@@ -1163,7 +1178,7 @@ function displayForms() {
             </div>
             
             <div class="form-group">
-                <label>Question 2: Do you agree with the chatbot's reasoning?<span class="required-star">*</span></label>
+                <label>Question 2: Based on the conversations, do you agree with the chatbot's reasoning?<span class="required-star">*</span></label>
                 <div class="radio-group">
                     <label><input type="radio" name="q2_${nfr.id}" value="Agree" required> Agree</label>
                     <label><input type="radio" name="q2_${nfr.id}" value="Partially agree"> Partially agree</label>
@@ -1173,7 +1188,7 @@ function displayForms() {
             </div>
             
             <div class="form-group">
-                <label>Question 3: Do you agree with the chatbot's identified code locations?<span class="required-star">*</span></label>
+                <label>Question 3: Based on the conversations, do you agree with the chatbot's identified code locations?<span class="required-star">*</span></label>
                 <div class="radio-group">
                     <label><input type="radio" name="q3_${nfr.id}" value="Agree" required> Agree</label>
                     <label><input type="radio" name="q3_${nfr.id}" value="Partially agree"> Partially agree</label>
@@ -1227,15 +1242,15 @@ document.getElementById('batchForm').addEventListener('submit', (e) => {
         
         if (!q1) {
             allValid = false;
-            missingFields.push(`NFR ${nfr.id}: Question 1`);
+            missingFields.push(isAttention ? 'NFR: Question 1' : `NFR ${nfr.id}: Question 1`);
         }
         if (!q2) {
             allValid = false;
-            missingFields.push(`NFR ${nfr.id}: Question 2`);
+            missingFields.push(isAttention ? 'NFR: Question 2' : `NFR ${nfr.id}: Question 2`);
         }
         if (!q3) {
             allValid = false;
-            missingFields.push(`NFR ${nfr.id}: Question 3`);
+            missingFields.push(isAttention ? 'NFR: Question 3' : `NFR ${nfr.id}: Question 3`);
         }
 
         if (isForced) {

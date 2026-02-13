@@ -128,9 +128,48 @@ def save_json_file(filepath, data):
 def assign_batches_to_user(uuid):
     """Assign 3 batches to a new user, ensuring each batch has exactly 2 users.
     Assigns first available batches (not randomly)."""
-
-    #TODO remove this after testing
-    return [1, 2, 3]
+    assignments = load_json_file(BATCH_ASSIGNMENTS_FILE)
+    
+    # If user already has assignments, return them
+    if uuid in assignments:
+        return assignments[uuid]
+    
+    # Load total number of batches
+    with open(NFR_FILE, 'r') as f:
+        all_batches = json.load(f)
+    total_batches = len(all_batches)
+    
+    # Count how many users are assigned to each batch
+    batch_user_count = {}
+    for user_uuid, user_batches in assignments.items():
+        for batch_num in user_batches:
+            batch_user_count[batch_num] = batch_user_count.get(batch_num, 0) + 1
+    
+    # Find the batch with the lowest user count
+    # If multiple batches have the same count, pick the one with the lowest batch number
+    min_count = float('inf')
+    selected_batch = None
+    
+    for batch_num in range(1, total_batches + 1):
+        count = batch_user_count.get(batch_num, 0)
+        if count < min_count:
+            min_count = count
+            selected_batch = batch_num
+        elif count == min_count and batch_num < selected_batch:
+            # If same count, prefer lower batch number
+            selected_batch = batch_num
+    
+    # Fallback: if no batch found (shouldn't happen), use batch 1
+    if selected_batch is None:
+        selected_batch = 1
+    
+    assigned = [selected_batch]
+    
+    # Save assignments
+    assignments[uuid] = assigned
+    save_json_file(BATCH_ASSIGNMENTS_FILE, assignments)
+    
+    return assigned
     assignments = load_json_file(BATCH_ASSIGNMENTS_FILE)
     
     # If user already has assignments, return them
