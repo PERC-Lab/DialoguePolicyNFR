@@ -56,6 +56,16 @@
         <p style="margin-top: 30px; font-size: 0.95em; color: #999;">
             You may now close this browser window.
         </p>
+        <p style="margin-top: 15px; font-size: 0.95em; color: #999;">
+            <a href="#" id="another-round" style="color: #28a745; text-decoration: none;">Do you want to do another round?</a>
+        </p>
     </div>
 </div>
+<script>
+    document.getElementById('another-round').addEventListener('click', (e) => {
+        e.preventDefault();
+        localStorage.clear();
+        window.location.reload();
+    });
+</script>
 {% endblock %}
