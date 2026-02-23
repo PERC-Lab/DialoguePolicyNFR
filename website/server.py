@@ -112,6 +112,9 @@ def compute_peer_required_nfrs(actual_batch, participant_index, assignments):
 
     return {k: sorted([n for n in v if n is not None]) for k, v in peer_required.items()}
 
+from threading import Lock
+lock = Lock()
+
 def load_json_file(filepath):
     """Load JSON file, return empty dict if file doesn't exist."""
     if os.path.exists(filepath):
@@ -128,48 +131,50 @@ def save_json_file(filepath, data):
 def assign_batches_to_user(uuid):
     """Assign 3 batches to a new user, ensuring each batch has exactly 2 users.
     Assigns first available batches (not randomly)."""
-    assignments = load_json_file(BATCH_ASSIGNMENTS_FILE)
-    
-    # If user already has assignments, return them
-    if uuid in assignments:
-        return assignments[uuid]
-    
-    # Load total number of batches
-    with open(NFR_FILE, 'r') as f:
-        all_batches = json.load(f)
-    total_batches = len(all_batches)
-    
-    # Count how many users are assigned to each batch
-    batch_user_count = {}
-    for user_uuid, user_batches in assignments.items():
-        for batch_num in user_batches:
-            batch_user_count[batch_num] = batch_user_count.get(batch_num, 0) + 1
-    
-    # Find the batch with the lowest user count
-    # If multiple batches have the same count, pick the one with the lowest batch number
-    min_count = float('inf')
-    selected_batch = None
-    
-    for batch_num in range(1, total_batches + 1):
-        count = batch_user_count.get(batch_num, 0)
-        if count < min_count:
-            min_count = count
-            selected_batch = batch_num
-        elif count == min_count and batch_num < selected_batch:
-            # If same count, prefer lower batch number
-            selected_batch = batch_num
-    
-    # Fallback: if no batch found (shouldn't happen), use batch 1
-    if selected_batch is None:
-        selected_batch = 1
-    
-    assigned = [selected_batch]
-    
-    # Save assignments
-    assignments[uuid] = assigned
-    save_json_file(BATCH_ASSIGNMENTS_FILE, assignments)
-    
-    return assigned
+
+    with lock:
+        assignments = load_json_file(BATCH_ASSIGNMENTS_FILE)
+        
+        # If user already has assignments, return them
+        if uuid in assignments:
+            return assignments[uuid]
+        
+        # Load total number of batches
+        with open(NFR_FILE, 'r') as f:
+            all_batches = json.load(f)
+        total_batches = len(all_batches)
+        
+        # Count how many users are assigned to each batch
+        batch_user_count = {}
+        for user_uuid, user_batches in assignments.items():
+            for batch_num in user_batches:
+                batch_user_count[batch_num] = batch_user_count.get(batch_num, 0) + 1
+        
+        # Find the batch with the lowest user count
+        # If multiple batches have the same count, pick the one with the lowest batch number
+        min_count = float('inf')
+        selected_batch = None
+        
+        for batch_num in range(1, total_batches + 1):
+            count = batch_user_count.get(batch_num, 0)
+            if count < min_count:
+                min_count = count
+                selected_batch = batch_num
+            elif count == min_count and batch_num < selected_batch:
+                # If same count, prefer lower batch number
+                selected_batch = batch_num
+        
+        # Fallback: if no batch found (shouldn't happen), use batch 1
+        if selected_batch is None:
+            selected_batch = 1
+        
+        assigned = [selected_batch]
+        
+        # Save assignments
+        assignments[uuid] = assigned
+        save_json_file(BATCH_ASSIGNMENTS_FILE, assignments)
+        
+        return assigned
     assignments = load_json_file(BATCH_ASSIGNMENTS_FILE)
     
     # If user already has assignments, return them
@@ -394,40 +399,6 @@ def get_requirements():
     else:
         batch_nfrs = []
 
-    # Insert attention questions based on requested batch (user's batch 1, 2, or 3)
-    # Positions are 1-indexed: "after 6" means after the 6th item (insert at index 6 in 0-indexed)
-    attention_positions = {
-        1: [6, 8],  # Batch 1: after NFR 6 and 8
-        2: [5, 9],  # Batch 2: after NFR 5 and 9
-        3: [4, 9]   # Batch 3: after NFR 4 and 9
-    }
-    
-    if requested_batch in attention_positions:
-        positions = attention_positions[requested_batch]
-        # Sort positions in descending order to insert from end to beginning
-        # This avoids index shifting issues when inserting multiple items
-        positions_sorted = sorted(positions, reverse=True)
-        
-        attention_counter = 1
-        for pos in positions_sorted:
-            # pos is 1-indexed position (after NFR 6 means after index 5, so insert at index 6)
-            # Convert to 0-indexed: pos becomes the insertion index
-            insert_index = pos
-            if insert_index <= len(batch_nfrs) and insert_index > 0:
-                # Get the title and id from the previous NFR (at index pos-1)
-                previous_nfr = batch_nfrs[insert_index - 1]
-                previous_title = previous_nfr.get('title', 'Attention Check')
-                previous_id = previous_nfr.get('id')
-                
-                attention_nfr = {
-                    'id': previous_id,
-                    'title': previous_title,
-                    'description': 'Please leave this NFR\'s checkbox unchecked to confirm you are reading carefully.',
-                    'is_attention_question': True
-                }
-                batch_nfrs.insert(insert_index, attention_nfr)
-                attention_counter += 1
-
     participant_index = get_participant_index(uuid, actual_batch, assignments) if uuid else None
     forced_assessment_nfr_ids = compute_forced_assessment_nfrs(batch_nfrs, actual_batch, uuid, participant_index)
     peer_required_by_question = compute_peer_required_nfrs(actual_batch, participant_index, assignments) if uuid else {'q1': [], 'q2': [], 'q3': []}
@@ -454,156 +425,161 @@ def get_requirements():
 @app.route('/api/submit_nfr_feedback', methods=['POST'])
 def submit_nfr_feedback():
     """Save NFR feedback. Accepts either single feedback or batch of feedbacks."""
-    try:
-        data = request.json
-        if not data:
-            return jsonify({'status': 'error', 'message': 'No data provided'}), 400
-        
-        uuid = data.get('uuid')
-        if not uuid:
-            return jsonify({'status': 'error', 'message': 'UUID is required'}), 400
-        
-        session_id = get_session_id(uuid)
-        
-        # Load existing responses
-        responses = load_json_file(NFR_RESPONSES_FILE)
-        
-        if session_id not in responses:
-            responses[session_id] = []
-        
-        # Check if this is a batch submission (array) or single submission
-        if isinstance(data, list):
-            # Batch submission - process all items
-            batch = data[0].get('batch') if data else None
-            # Remove all existing entries for this batch
-            responses[session_id] = [
-                r for r in responses[session_id] 
-                if r.get('batch') != batch
-            ]
-            # Add all new entries
-            responses[session_id].extend(data)
-        else:
-            # Single submission
-            nfr_id = data.get('nfr_id')
-            batch = data.get('batch')
+
+    with lock:
+        try:
+            data = request.json
+            if not data:
+                return jsonify({'status': 'error', 'message': 'No data provided'}), 400
             
-            # Remove existing entry for this NFR in this batch if it exists
-            responses[session_id] = [
-                r for r in responses[session_id] 
-                if not (r.get('nfr_id') == nfr_id and r.get('batch') == batch)
-            ]
+            uuid = data.get('uuid')
+            if not uuid:
+                return jsonify({'status': 'error', 'message': 'UUID is required'}), 400
             
-            # Add new entry
-            responses[session_id].append(data)
-        
-        save_json_file(NFR_RESPONSES_FILE, responses)
-        
-        if isinstance(data, list):
-            return jsonify({'status': 'success', 'count': len(data)})
-        else:
-            return jsonify({'status': 'success', 'nfr_id': data.get('nfr_id')})
-    except Exception as e:
-        print(f"Error in submit_nfr_feedback: {str(e)}")
-        import traceback
-        traceback.print_exc()
-        return jsonify({'status': 'error', 'message': str(e)}), 500
+            session_id = get_session_id(uuid)
+            
+            # Load existing responses
+            responses = load_json_file(NFR_RESPONSES_FILE)
+            
+            if session_id not in responses:
+                responses[session_id] = []
+            
+            # Check if this is a batch submission (array) or single submission
+            if isinstance(data, list):
+                # Batch submission - process all items
+                batch = data[0].get('batch') if data else None
+                # Remove all existing entries for this batch
+                responses[session_id] = [
+                    r for r in responses[session_id] 
+                    if r.get('batch') != batch
+                ]
+                # Add all new entries
+                responses[session_id].extend(data)
+            else:
+                # Single submission
+                nfr_id = data.get('nfr_id')
+                batch = data.get('batch')
+                
+                # Remove existing entry for this NFR in this batch if it exists
+                responses[session_id] = [
+                    r for r in responses[session_id] 
+                    if not (r.get('nfr_id') == nfr_id and r.get('batch') == batch)
+                ]
+                
+                # Add new entry
+                responses[session_id].append(data)
+            
+            save_json_file(NFR_RESPONSES_FILE, responses)
+            
+            if isinstance(data, list):
+                return jsonify({'status': 'success', 'count': len(data)})
+            else:
+                return jsonify({'status': 'success', 'nfr_id': data.get('nfr_id')})
+        except Exception as e:
+            print(f"Error in submit_nfr_feedback: {str(e)}")
+            import traceback
+            traceback.print_exc()
+            return jsonify({'status': 'error', 'message': str(e)}), 500
 
 @app.route('/api/submit_batch_feedback', methods=['POST'])
 def submit_batch_feedback():
     """Save batch of NFR feedbacks in one request to avoid race conditions."""
-    try:
-        data_list = request.json
-        if not data_list or not isinstance(data_list, list):
-            return jsonify({'status': 'error', 'message': 'Array of feedback data required'}), 400
-        
-        if not data_list:
-            return jsonify({'status': 'error', 'message': 'Empty array'}), 400
-        
-        uuid = data_list[0].get('uuid')
-        if not uuid:
-            return jsonify({'status': 'error', 'message': 'UUID is required'}), 400
-        
-        session_id = get_session_id(uuid)
-        requested_batch = data_list[0].get('batch')  # This is 1, 2, or 3
-        
-        # Get actual batch number from assignments
-        assignments = load_json_file(BATCH_ASSIGNMENTS_FILE)
-        if uuid in assignments:
-            user_batches = assignments[uuid]
-            if 1 <= requested_batch <= len(user_batches):
-                actual_batch = user_batches[requested_batch - 1]
+
+    with lock:
+        try:
+            data_list = request.json
+            if not data_list or not isinstance(data_list, list):
+                return jsonify({'status': 'error', 'message': 'Array of feedback data required'}), 400
+            
+            if not data_list:
+                return jsonify({'status': 'error', 'message': 'Empty array'}), 400
+            
+            uuid = data_list[0].get('uuid')
+            if not uuid:
+                return jsonify({'status': 'error', 'message': 'UUID is required'}), 400
+            
+            session_id = get_session_id(uuid)
+            requested_batch = data_list[0].get('batch')  # This is 1, 2, or 3
+            
+            # Get actual batch number from assignments
+            assignments = load_json_file(BATCH_ASSIGNMENTS_FILE)
+            if uuid in assignments:
+                user_batches = assignments[uuid]
+                if 1 <= requested_batch <= len(user_batches):
+                    actual_batch = user_batches[requested_batch - 1]
+                else:
+                    actual_batch = user_batches[0] if user_batches else requested_batch
             else:
-                actual_batch = user_batches[0] if user_batches else requested_batch
-        else:
-            actual_batch = requested_batch
-        
-        # Load existing responses
-        responses = load_json_file(NFR_RESPONSES_FILE)
-        
-        if session_id not in responses:
-            responses[session_id] = []
-        
-        # Remove all existing entries for this actual batch
-        responses[session_id] = [
-            r for r in responses[session_id] 
-            if r.get('batch') != actual_batch
-        ]
-        
-        # Update all entries to use actual batch number
-        for entry in data_list:
-            entry['batch'] = actual_batch
-        
-        # Add all new entries
-        responses[session_id].extend(data_list)
-        save_json_file(NFR_RESPONSES_FILE, responses)
+                actual_batch = requested_batch
+            
+            # Load existing responses
+            responses = load_json_file(NFR_RESPONSES_FILE)
+            
+            if session_id not in responses:
+                responses[session_id] = []
+            
+            # Remove all existing entries for this actual batch
+            responses[session_id] = [
+                r for r in responses[session_id] 
+                if r.get('batch') != actual_batch
+            ]
+            
+            # Update all entries to use actual batch number
+            for entry in data_list:
+                entry['batch'] = actual_batch
+            
+            # Add all new entries
+            responses[session_id].extend(data_list)
+            save_json_file(NFR_RESPONSES_FILE, responses)
 
-        # Update forced NFRs: force when user disagrees on Q2 or Q3 and leaves that question without an assessment
-        #TODO
-        '''
-        loaded_forced = load_json_file(FORCED_NFRS_FILE)
-        forced_nfrs = set(loaded_forced) if isinstance(loaded_forced, list) else set()
-        additions = 0
+            # Update forced NFRs: force when user disagrees on Q2 or Q3 and leaves that question without an assessment
+            #TODO
+            '''
+            loaded_forced = load_json_file(FORCED_NFRS_FILE)
+            forced_nfrs = set(loaded_forced) if isinstance(loaded_forced, list) else set()
+            additions = 0
 
-        for entry in data_list:
-            nfr_id = entry.get('nfr_id')
-            if nfr_id is None:
-                continue
+            for entry in data_list:
+                nfr_id = entry.get('nfr_id')
+                if nfr_id is None:
+                    continue
 
-            q2_agree = entry.get('q2_agreement')
-            q3_agree = entry.get('q3_agreement')
-            q2_own = (entry.get('q2_own_assessment') or '').strip()
-            q3_own = (entry.get('q3_own_assessment') or '').strip()
+                q2_agree = entry.get('q2_agreement')
+                q3_agree = entry.get('q3_agreement')
+                q2_own = (entry.get('q2_own_assessment') or '').strip()
+                q3_own = (entry.get('q3_own_assessment') or '').strip()
 
-            disagree_q2 = bool(q2_agree and q2_agree != 'Agree')
-            disagree_q3 = bool(q3_agree and q3_agree != 'Agree')
-            disagrees = disagree_q2 or disagree_q3
-            misssing = not q2_own or not q3_own
-            #missing_q2 = disagree_q2 and not q2_own
-            #missing_q3 = disagree_q3 and not q3_own
+                disagree_q2 = bool(q2_agree and q2_agree != 'Agree')
+                disagree_q3 = bool(q3_agree and q3_agree != 'Agree')
+                disagrees = disagree_q2 or disagree_q3
+                misssing = not q2_own or not q3_own
+                #missing_q2 = disagree_q2 and not q2_own
+                #missing_q3 = disagree_q3 and not q3_own
 
-            should_force = disagrees and misssing
+                should_force = disagrees and misssing
 
-            if should_force:
-                if additions < 2 and nfr_id not in forced_nfrs:
-                    forced_nfrs.add(nfr_id)
-                    additions += 1
-            else:
-                forced_nfrs.discard(nfr_id)
+                if should_force:
+                    if additions < 2 and nfr_id not in forced_nfrs:
+                        forced_nfrs.add(nfr_id)
+                        additions += 1
+                else:
+                    forced_nfrs.discard(nfr_id)
 
-        # Enforce a hard cap of 2 forced NFRs
-        if len(forced_nfrs) > 2:
-            forced_nfrs = set(sorted(forced_nfrs)[:2])
+            # Enforce a hard cap of 2 forced NFRs
+            if len(forced_nfrs) > 2:
+                forced_nfrs = set(sorted(forced_nfrs)[:2])
 
-        save_json_file(FORCED_NFRS_FILE, sorted(forced_nfrs))
-        '''
-        
-        
-        return jsonify({'status': 'success', 'count': len(data_list)})
-    except Exception as e:
-        print(f"Error in submit_batch_feedback: {str(e)}")
-        import traceback
-        traceback.print_exc()
-        return jsonify({'status': 'error', 'message': str(e)}), 500
+            save_json_file(FORCED_NFRS_FILE, sorted(forced_nfrs))
+            '''
+            
+            
+            return jsonify({'status': 'success', 'count': len(data_list)})
+        except Exception as e:
+            print(f"Error in submit_batch_feedback: {str(e)}")
+            import traceback
+            traceback.print_exc()
+            return jsonify({'status': 'error', 'message': str(e)}), 500
+
 
 @app.route('/api/ask_chatbot', methods=['POST'])
 def ask_chatbot():
@@ -617,23 +593,25 @@ def ask_chatbot():
     
     # Save conversation - get the last entry from chat history which has both timestamps
     session_id = chatbot.get_uuid()
-    conversations = load_json_file(CONVERSATION_FILE)
-    
-    if session_id not in conversations:
-        conversations[session_id] = []
-    
-    # Get the last chat entry which has the correct timestamps
-    chat_history = chatbot.get_chat_history()
-    if chat_history:
-        last_entry = chat_history[-1]
-        conversations[session_id].append({
-            'user_message': last_entry['user_message'],
-            'bot_reply': last_entry['bot_reply'],
-            'user_time': last_entry['user_time'],
-            'bot_time': last_entry['bot_time']
-        })
-    
-    save_json_file(CONVERSATION_FILE, conversations)
+
+    with lock:
+        conversations = load_json_file(CONVERSATION_FILE)
+        
+        if session_id not in conversations:
+            conversations[session_id] = []
+        
+        # Get the last chat entry which has the correct timestamps
+        chat_history = chatbot.get_chat_history()
+        if chat_history:
+            last_entry = chat_history[-1]
+            conversations[session_id].append({
+                'user_message': last_entry['user_message'],
+                'bot_reply': last_entry['bot_reply'],
+                'user_time': last_entry['user_time'],
+                'bot_time': last_entry['bot_time']
+            })
+        
+        save_json_file(CONVERSATION_FILE, conversations)
     
     # Return response with UUID
     response['uuid'] = session_id
@@ -646,9 +624,10 @@ def submit_survey():
     uuid = data.get('uuid')
     session_id = get_session_id(uuid)
     
-    surveys = load_json_file(SATISFACTION_FILE)
-    surveys[session_id] = data
-    save_json_file(SATISFACTION_FILE, surveys)
+    with lock:
+        surveys = load_json_file(SATISFACTION_FILE)
+        surveys[session_id] = data
+        save_json_file(SATISFACTION_FILE, surveys)    
     
     return jsonify({'status': 'success'})
 
@@ -684,13 +663,13 @@ def submit_demographics():
     data = request.json
     uuid = data.get('uuid')
     session_id = get_session_id(uuid)
-    
-    demographics = load_json_file(DEMOGRAPHICS_FILE)
-    demographics[session_id] = {
-        **data,
-        'timestamp': datetime.now().isoformat()
-    }
-    save_json_file(DEMOGRAPHICS_FILE, demographics)
+    with lock:
+        demographics = load_json_file(DEMOGRAPHICS_FILE)
+        demographics[session_id] = {
+            **data,
+            'timestamp': datetime.now().isoformat()
+        }
+        save_json_file(DEMOGRAPHICS_FILE, demographics)
     
     return jsonify({'status': 'success'})
 
@@ -732,36 +711,38 @@ def load_chat_history():
 @app.route('/api/submit_gate_answer', methods=['POST'])
 def submit_gate_answer():
     """Save the gate question answer (user's explanation of a random NFR)."""
-    try:
-        data = request.json
-        uuid_val = data.get('uuid')
-        batch = data.get('batch')
-        nfr_id = data.get('nfr_id')
-        answer = (data.get('answer') or '').strip()
-        if not uuid_val:
-            return jsonify({'status': 'error', 'message': 'UUID is required'}), 400
-        if answer == '':
-            return jsonify({'status': 'error', 'message': 'Answer is required'}), 400
-        session_id = get_session_id(uuid_val)
-        gate_answers = load_json_file(GATE_ANSWERS_FILE)
-        if session_id not in gate_answers:
-            gate_answers[session_id] = {}
-        batch_key = str(batch)
-        if batch_key not in gate_answers[session_id]:
-            gate_answers[session_id][batch_key] = {}
-        gate_answers[session_id][batch_key][str(nfr_id)] = {
-            'nfr_id': nfr_id,
-            'batch': batch,
-            'answer': answer,
-            'timestamp': datetime.now().isoformat()
-        }
-        save_json_file(GATE_ANSWERS_FILE, gate_answers)
-        return jsonify({'status': 'success'})
-    except Exception as e:
-        print(f"Error in submit_gate_answer: {str(e)}")
-        import traceback
-        traceback.print_exc()
-        return jsonify({'status': 'error', 'message': str(e)}), 500
+
+    with lock:
+        try:
+            data = request.json
+            uuid_val = data.get('uuid')
+            batch = data.get('batch')
+            nfr_id = data.get('nfr_id')
+            answer = (data.get('answer') or '').strip()
+            if not uuid_val:
+                return jsonify({'status': 'error', 'message': 'UUID is required'}), 400
+            if answer == '':
+                return jsonify({'status': 'error', 'message': 'Answer is required'}), 400
+            session_id = get_session_id(uuid_val)
+            gate_answers = load_json_file(GATE_ANSWERS_FILE)
+            if session_id not in gate_answers:
+                gate_answers[session_id] = {}
+            batch_key = str(batch)
+            if batch_key not in gate_answers[session_id]:
+                gate_answers[session_id][batch_key] = {}
+            gate_answers[session_id][batch_key][str(nfr_id)] = {
+                'nfr_id': nfr_id,
+                'batch': batch,
+                'answer': answer,
+                'timestamp': datetime.now().isoformat()
+            }
+            save_json_file(GATE_ANSWERS_FILE, gate_answers)
+            return jsonify({'status': 'success'})
+        except Exception as e:
+            print(f"Error in submit_gate_answer: {str(e)}")
+            import traceback
+            traceback.print_exc()
+            return jsonify({'status': 'error', 'message': str(e)}), 500
 
 
 @app.route('/api/admin/data', methods=['GET'])
