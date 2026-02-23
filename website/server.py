@@ -39,6 +39,7 @@ def require_admin(f):
 NFR_FILE = 'NFR.json'
 CONVERSATION_FILE = 'responses/conversation.json'
 NFR_RESPONSES_FILE = 'responses/nfr_responses.json'
+PROLIFIC_UUID_MAPPING_FILE = 'responses/prolific_uuid_mapping.json'
 SATISFACTION_FILE = 'responses/satisfaction_survey.json'
 PRIZE_FILE = 'responses/prize.json'
 DEMOGRAPHICS_FILE = 'responses/demographics.json'
@@ -262,7 +263,8 @@ def get_session_id(uuid=None):
 @app.route('/')
 def index():
     """Show consent form."""
-    prolific = request.args.get('id') == 'prolific'
+    prolific_pid = request.args.get('PROLIFIC_PID')
+    prolific = bool(prolific_pid)
     consent_file = 'consent_forms/consent_prolific.md' if prolific else 'consent_forms/consent_um.md'
     
     with open(consent_file, 'r') as f:
@@ -274,12 +276,13 @@ def index():
     except:
         # Fallback if extensions not available
         consent_html = markdown.markdown(consent_text)
-    return render_template('consent.html', consent_html=consent_html, prolific_id=prolific)
+    return render_template('consent.html', consent_html=consent_html, prolific_id=prolific, prolific_pid=prolific_pid)
 
 @app.route('/consent')
-def consent():
+def consent_page():
     """Show consent form."""
-    prolific = request.args.get('id') == 'prolific'
+    prolific_pid = request.args.get('PROLIFIC_PID')
+    prolific = bool(prolific_pid)
     consent_file = 'consent_forms/consent_prolific.md' if prolific else 'consent_forms/consent_um.md'
     
     with open(consent_file, 'r') as f:
@@ -291,7 +294,7 @@ def consent():
     except:
         # Fallback if extensions not available
         consent_html = markdown.markdown(consent_text)
-    return render_template('consent.html', consent_html=consent_html, prolific_id=prolific)
+    return render_template('consent.html', consent_html=consent_html, prolific_id=prolific, prolific_pid=prolific_pid)
 
 @app.route('/tutorial')
 def tutorial():
@@ -673,25 +676,45 @@ def submit_demographics():
     
     return jsonify({'status': 'success'})
 
+def _save_prolific_mapping(uuid, prolific_pid):
+    """Save uuid -> PROLIFIC_PID mapping to JSON file and cache."""
+    if not prolific_pid:
+        return
+    with lock:
+        mapping = load_json_file(PROLIFIC_UUID_MAPPING_FILE)
+        mapping[uuid] = prolific_pid
+        save_json_file(PROLIFIC_UUID_MAPPING_FILE, mapping)
+    cache.set(f'prolific:{uuid}', prolific_pid)
+
+
 @app.route('/api/get_or_create_uuid', methods=['GET', 'POST'])
 def get_or_create_uuid():
     """Get existing UUID from request or create new one. Assigns batches when creating new UUID."""
+    prolific_pid = None
     if request.method == 'POST':
-        data = request.json
+        data = request.json or {}
+        prolific_pid = data.get('prolific_pid') or data.get('PROLIFIC_PID')
         uuid = data.get('uuid')
         if uuid:
             # Always restore/validate the provided UUID
             # Even if it doesn't exist in data files yet, it might be a new session
             # Just restore the chatbot with this UUID
             get_chatbot(uuid)
+            _save_prolific_mapping(uuid, prolific_pid)
             return jsonify({'uuid': uuid})
     
-    # Create new UUID (GET request - only called from consent page)
+    # Create new UUID (GET or POST without uuid - called from consent page)
+    if request.method == 'POST':
+        data = request.json or {}
+        prolific_pid = prolific_pid or data.get('prolific_pid') or data.get('PROLIFIC_PID')
+    
     chatbot = get_chatbot()
     new_uuid = chatbot.get_uuid()
     
     # Assign batches to the new user
     assign_batches_to_user(new_uuid)
+    
+    _save_prolific_mapping(new_uuid, prolific_pid)
     
     return jsonify({'uuid': new_uuid})
 
@@ -817,6 +840,7 @@ def clear_all_data():
         save_json_file(PRIZE_FILE, {'prolific': {}, 'emails': []})
         save_json_file(BATCH_ASSIGNMENTS_FILE, {})
         save_json_file(GATE_ANSWERS_FILE, {})
+        save_json_file(PROLIFIC_UUID_MAPPING_FILE, {})
         
         # Clear in-memory chatbot instances
         chatbots.clear()

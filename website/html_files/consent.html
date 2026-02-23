@@ -83,16 +83,21 @@ function agreeToConsent() {
     // Check if UUID already exists in localStorage
     let uuid = localStorage.getItem('chatbot_uuid');
     
+    const prolificPid = new URLSearchParams(window.location.search).get('PROLIFIC_PID');
+
     if (uuid) {
         // UUID exists, validate it and proceed
+        const body = {uuid: uuid};
+        if (prolificPid) body.prolific_pid = prolificPid;
         fetch('/api/get_or_create_uuid', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({uuid: uuid})
+            body: JSON.stringify(body)
         })
         .then(r => r.json())
         .then(data => {
             localStorage.setItem('chatbot_uuid', data.uuid);
+            if (prolificPid) localStorage.setItem('prolific_pid', prolificPid);
             setCurrentProgress(PROGRESS_STEPS.TUTORIAL, {page: 1});
             window.location.href = '/tutorial?page=1';
         })
@@ -105,21 +110,25 @@ function agreeToConsent() {
         });
     } else {
         // Create new UUID when user agrees to consent
-        fetch('/api/get_or_create_uuid')
-            .then(r => r.json())
-            .then(data => {
-                // Save UUID to localStorage
-                localStorage.setItem('chatbot_uuid', data.uuid);
-                setCurrentProgress(PROGRESS_STEPS.TUTORIAL, {page: 1});
-                window.location.href = '/tutorial?page=1';
-            })
-            .catch(error => {
-                console.error('Error creating UUID:', error);
-                // Reset button state on error
-                agreeBtn.disabled = false;
-                agreeBtn.textContent = originalText;
-                alert('An error occurred. Please try again.');
-            });
+        const body = prolificPid ? {prolific_pid: prolificPid} : {};
+        fetch('/api/get_or_create_uuid', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(body)
+        })
+        .then(r => r.json())
+        .then(data => {
+            localStorage.setItem('chatbot_uuid', data.uuid);
+            if (prolificPid) localStorage.setItem('prolific_pid', prolificPid);
+            setCurrentProgress(PROGRESS_STEPS.TUTORIAL, {page: 1});
+            window.location.href = '/tutorial?page=1';
+        })
+        .catch(error => {
+            console.error('Error creating UUID:', error);
+            agreeBtn.disabled = false;
+            agreeBtn.textContent = originalText;
+            alert('An error occurred. Please try again.');
+        });
     }
 }
 </script>
