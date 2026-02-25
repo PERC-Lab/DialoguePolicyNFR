@@ -918,7 +918,7 @@ function displayNFRs() {
             return `
         <div class="nfr-item attention-cb-item">
             <h4>${label}</h4>
-            <p>Please leave this NFR's checkbox unchecked to confirm you are reading carefully.</p>
+            <p>This is not an NFR. Leave this unchecked.</p>
             <div style="margin-top: 10px;">
                 <label style="font-size: 13px; display: flex; align-items: center; gap: 6px;">
                     <input type="checkbox" id="${item.id}" name="${item.id}" style="margin-right: 6px;">
@@ -1191,12 +1191,12 @@ function displayForms() {
             </div>
             ${addAttentionFoodQuestion ? `
             <div class="form-group">
-                <label>Question: Which of these is not food?<span class="required-star">*</span></label>
+                <label>Question: What is 2 + 2?<span class="required-star">*</span></label>
                 <div class="radio-group">
-                    <label><input type="radio" name="attention_food_${nfr.id}" value="Sandwich" required> Sandwich</label>
-                    <label><input type="radio" name="attention_food_${nfr.id}" value="Egg"> Egg</label>
-                    <label><input type="radio" name="attention_food_${nfr.id}" value="Football"> Football</label>
-                    <label><input type="radio" name="attention_food_${nfr.id}" value="Cookie"> Cookie</label>
+                    <label><input type="radio" name="attention_food_${nfr.id}" value="1" required> 1</label>
+                    <label><input type="radio" name="attention_food_${nfr.id}" value="2"> 2</label>
+                    <label><input type="radio" name="attention_food_${nfr.id}" value="3"> 3</label>
+                    <label><input type="radio" name="attention_food_${nfr.id}" value="4"> 4</label>
                 </div>
             </div>
             ` : ''}
