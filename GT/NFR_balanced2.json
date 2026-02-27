@@ -1,0 +1,1797 @@
+[
+
+[
+        {
+        "id": 40,
+        "title": "§ 164.308 Administrative safeguards",
+        "description": "The system shall implement procedures for monitoring log-in attempts and reporting discrepancies.",
+        "new_id": 40
+    },
+    {
+        "id": 41,
+        "title": "§ 164.308 Administrative safeguards",
+        "description": "The system shall implement procedures for creating passwords.",
+        "satisfaction_level": "Satisfied",
+        "reasoning": "When a new user is created, the user have a random initial password",
+        "code_location": [
+            "AddPatientAction.java 65-75 50-53",
+            "AddHCPAction.java 52-54",
+            "AddUAPAction.java 52-54",
+            "AddUAPAction.java 52-54",
+            "AddERespAction.java 54-56",
+            "AddPHAAction.java 51-53",
+            "AddLTAction.java 46-48"
+        ],
+        "new_id": 41
+    },
+    {
+        "id": 42,
+        "title": "§ 164.308 Administrative safeguards",
+        "description": "The system shall implement procedures for changing passwords.",
+        "satisfaction_level": "Satisfied",
+        "reasoning": "The system implements procedures for changing passwords by requiring the user to submit the current password, the new password, and a confirmation.",
+        "code_location": [
+            "changePassword.jsp 18-60",
+            "ChangePasswordAction.java 40-69"
+        ],
+        "new_id": 42
+    },
+    {
+        "id": 43,
+        "title": "§ 164.308 Administrative safeguards",
+        "description": "The system shall implement procedures for safeguarding passwords.",
+        "satisfaction_level": "Satisfied",
+        "reasoning": "the system safeguards passwords by using a random salt, hashing with SHA-256, storing only salt and hash.",
+        "code_location": [
+            "AuthDAO.java 74-79",
+            "AuthDAO.java 219-227"
+        ],
+        "new_id": 43
+    },
+    {
+        "id": 44,
+        "title": "§ 164.308 Administrative safeguards",
+        "description": "The system shall support implementing policies and procedures to address security incidents.",
+        "satisfaction_level": "Weakly Denied",
+        "reasoning": "The system does implement recording of some activities (transaction log, login success/failure), but it does not cover all activity involving PHI. Several actions that use PHI (PayBillAction, ViewClaimsAction, VerifyClaimAction, SearchUsersAction, ActivityFeedAction) do not log, and there is no logging of every database request that touches PHI.",
+        "code_location": [
+            "TransactionLogger.java 38-42",
+            "LoginFailureAction.java 47-54"
+        ],
+        "new_id": 44
+    },
+    {
+        "id": 45,
+        "title": "§ 164.308 Administrative safeguards",
+        "description": "The system shall identify and respond to suspected or known security incidents.",
+        "satisfaction_level": "Weakly Denied",
+        "reasoning": "There is no monitoring of loggs of the system to suspect security incidents. The only measure in the code are requiring a CAPTCHA after three failed logins from an IP and blocking further password resets with “Too many retries” after three failed reset attempts from an IP.",
+        "code_location": [
+            "ResetPasswordAction.java 68-70",
+            "LoginFailureAction.java 65-80"
+        ],
+        "new_id": 45
+    },
+    {
+        "id": 46,
+        "title": "§ 164.308 Administrative safeguards",
+        "description": "The system shall mitigate harmful effects to the extent practicable after a suspected or known security incidents.",
+        "satisfaction_level": "Weakly Denied",
+        "reasoning": "The only mitigations are requiring a CAPTCHA after three failed logins from an IP and blocking further password resets with “Too many retries” after three failed reset attempts from an IP which are not enough for all security incidents.",
+        "code_location": [
+            "ResetPasswordAction.java 68-70",
+            "LoginFailureAction.java 65-80"
+        ],
+        "new_id": 46
+    },
+    {
+        "id": 47,
+        "title": "§ 164.308 Administrative safeguards",
+        "description": "The system shall document security incidents and their outcomes.",
+        "satisfaction_level": "Denied",
+        "reasoning": "The system does not report or document any security incident",
+        "code_location": [],
+        "new_id": 47
+    },
+    {
+        "id": 49,
+        "title": "§ 164.308 Administrative safeguards",
+        "description": "The system shall establish and implement procedures to create retrievable exact copies of electronic protected health information (ePHI)",
+        "satisfaction_level": "Denied",
+        "reasoning": "There are no backup or restore procedures in code.",
+        "code_location": [],
+        "new_id": 48
+    },
+    {
+        "id": 50,
+        "title": "§ 164.308 Administrative safeguards",
+        "description": "The system shall establish and implement procedures to maintain retrievable exact copies of electronic protected health information (ePHI)",
+        "satisfaction_level": "Denied",
+        "reasoning": "There are no backup or restore procedures in code",
+        "code_location": [],
+        "new_id": 49
+    },
+
+
+
+     {
+        "id": 51,
+        "title": "§ 164.308 Administrative safeguards",
+        "description": "The system shall establish and implement procedures to restore any loss of electronic protected health information (ePHI).",
+        "satisfaction_level": "Denied",
+        "reasoning": "The system does not establish or implement any procedures to restore ePHI after loss (no backups, no restore logic, no recovery procedures).",
+        "code_location": "",
+        "new_id": 50
+    },  
+    {
+        "id": 52,
+        "title": "§ 164.312 Technical safeguards",
+        "description": "The system shall support technical policies and procedures that allow access to electronic protected health information (ePHI) only for authorized users and authorized software programs.",
+        "satisfaction_level": "Satisfied",
+        "reasoning": "(1) Users must log in with username and password (form login in web.xml). (2) All ePHI lives under /auth/*; those URLs require a valid login. So access is further restricted by role and URL path in web.xml. (3) ePHI is not only “by role” but also “this user can only see this patient’s data.” For example, in ViewMyRecordsAction, the code uses the user’s ID so they only get their own record.",
+        "code_location": [
+            "web.xml 42–48",
+            "web.xml 75–298",
+            "ViewMyRecordsAction.java 67–79",
+            "ViewMyAccessLogAction.java 71",
+            "ViewPatientAction.java 36–63"
+        ],
+        "new_id": 51
+    },
+    {
+        "id": 53,
+        "title": "§ 164.312 Technical safeguards",
+        "description": "The system shall assign a unique user identifier to each user to support identification and tracking of user identity.",
+        "satisfaction_level": "Satisfied",
+        "reasoning": "the system does assign a unique user identifier (MID) to each user and uses it for identification and tracking of user identity.",
+        "code_location": [
+            "createTables.sql 6"
+        ],
+        "new_id": 52
+    },
+    {
+        "id": 54,
+        "title": "§ 164.312 Technical safeguards",
+        "description": "The system shall support procedures for obtaining necessary electronic protected health information (ePHI) during an emergency.",
+        "satisfaction_level": "Satisfied",
+        "reasoning": "Emergency responders use a dedicated ER role for viewing patient records during emergencies.",
+        "code_location": [
+            "emergencyReport.xhtml 24",
+            "EmergencyRecordController.java 52-62",
+            "EmergencyRecordController.java 70-77"
+        ],
+        "new_id": 53
+    },
+    {
+        "id": 55,
+        "title": "§ 164.312 Technical safeguards",
+        "description": "The system shall support electronic procedures that automatically terminate a session after a predetermined period of inactivity.",
+        "satisfaction_level": "Satisfied",
+        "reasoning": "The app uses the servlet container’s “max inactive interval”: if the user does nothing for that many seconds, the container destroys the session. ",
+        "code_location": [
+            "SessionTimeoutListener.java 51"
+        ],
+        "new_id": 54
+    },
+    {
+        "id": 56,
+        "title": "§ 164.312 Technical safeguards",
+        "description": "The system shall implement a mechanism to encrypt and decrypt electronic protected health information (ePHI).",
+        "satisfaction_level": "Denied",
+        "reasoning": " this is not implemented; ePHI is stored and handled in plaintext.",
+        "code_location": [
+            "context.xml 21"
+        ],
+        "new_id": 55
+    },
+    {
+        "id": 57,
+        "title": "§ 164.312 Technical safeguards",
+        "description": "The system shall implement hardware, software, and/or procedural mechanisms that record and examine activity in information systems that contain or use electronic protected health information (ePHI).",
+        "satisfaction_level": "Satisfied",
+        "reasoning": "Recording of ePHI-related activity is implemented via the transaction log and TransactionLogger/TransactionDAO which store each important action; examination is implemented via the patient Access Log and activity feed, which query that log.",
+        "code_location": [
+            "TransactionLogger.java 38-44",
+            "ViewMyAccessLogAction.java 55-115",
+            "viewAccessLog.jsp 25"
+        ],
+        "new_id": 56
+    },
+    {
+        "id": 58,
+        "title": "§ 164.312 Technical safeguards",
+        "description": "The system shall support policies and procedures to protect electronic protected health information (ePHI) from improper alteration or destruction.",
+        "satisfaction_level": "Weakly Satisfied",
+        "reasoning": "The system supports policies and procedures through access control, validation, and no app-level deletion of the transaction log (and deactivation for patients). It is only partially implemented because there is no backup procedures in code.",
+        "code_location": [
+            "EditPatientAction.java 63",
+            "web.xml 42–48",
+            "web.xml 75–298"
+        ],
+        "new_id": 57
+    },
+    {
+        "id": 59,
+        "title": "§ 164.312 Technical safeguards",
+        "description": "The system shall implement electronic mechanisms to corroborate that electronic protected health information (ePHI) has not been altered or destroyed in an unauthorized manner.",
+        "satisfaction_level": "Denied",
+        "reasoning": "There is no mechanism to corroborate that ePHI has not been altered or destroyed in an unauthorized manner.",
+        "code_location": [],
+        "new_id": 58
+    },
+    {
+        "id": 60,
+        "title": "§ 164.312 Technical safeguards",
+        "description": "The system shall implement procedures to verify that a person or entity seeking access to electronic protected health information (ePHI) is the one claimed.",
+        "satisfaction_level": "Satisfied",
+        "reasoning": "The system verifies that a person or entity seeking access to ePHI is the one claimed by requiring a user ID and password, checking the password against a salted hash in the database via the container realm, and only then granting access to any protected ePHI under /auth/*.",
+        "code_location": [
+            "web.xml 42–48",
+            "web.xml 75–298"
+        ],
+        "new_id": 59
+    },
+
+
+    
+    {
+        "id": 61,
+        "title": "§ 164.312 Technical safeguards",
+        "description": "The system shall implement technical security measures to protect electronic protected health information (ePHI) from unauthorized access during transmission over an electronic communications network.",
+        "satisfaction_level": "NA",
+        "reasoning": "This is done via TLS config and HTTPS enforcement, which are usually configured in infrastructure/container config (Tomcat/nginx/load balancer), not in app code.",
+        "code_location": [],
+        "new_id": 60
+    },
+    {
+        "id": 62,
+        "title": "§ 164.312 Technical safeguards",
+        "description": "The system shall implement security measures to ensure that electronically transmitted electronic protected health information (ePHI) is not improperly modified without detection until disposal.",
+        "satisfaction_level": "NA",
+        "reasoning": "This is done via TLS config and HTTPS enforcement, which are usually configured in infrastructure/container config (Tomcat/nginx/load balancer), not in app code.",
+        "code_location": [],
+        "new_id": 61
+    },
+    {
+        "id": 63,
+        "title": "§ 164.312 Technical safeguards",
+        "description": "The system shall implement a mechanism to encrypt electronic protected health information (ePHI) during transmission whenever appropriate.",
+        "satisfaction_level": "NA",
+        "reasoning": "This is done via TLS config and HTTPS enforcement, which are usually configured in infrastructure/container config (Tomcat/nginx/load balancer), not in app code.",
+        "code_location": [],
+        "new_id": 62
+    },
+    {
+        "id": 64,
+        "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+        "description": "The system shall allow the use of protected health information (PHI) to the individual who is the subject of the information.",
+        "satisfaction_level": "Satisfied",
+        "reasoning": "viewMyRecords retrieves PHI using the authenticated patient identity (loggedInMID), enabling the individual to use their own information.",
+        "code_location": [
+            "viewMyRecords.jsp 78-100 47-51",
+            "ViewMyRecordsAction.java 87-89"
+        ],
+        "new_id": 63
+    },
+    {
+        "id": 65,
+        "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+        "description": "The system shall allow the disclosure of protected health information (PHI) to the individual who is the subject of the information.",
+        "satisfaction_level": "Satisfied",
+        "reasoning": "viewMyRecords retrieves PHI using the authenticated patient identity (loggedInMID), enabling the individual to view their own information.",
+        "code_location": [
+            "viewMyRecords.jsp 78-100 47-51",
+            "ViewMyRecordsAction.java 87-89"
+        ],
+        "new_id": 64
+    },
+    {
+        "id": 76,
+        "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+        "description": "The system shall allow disclosing protected health information (PHI) when required for compliance investigations by the regulatory authority.",
+        "satisfaction_level": "Denied",
+        "reasoning": "No role or workflow is intended for that purpose. even admin cannot access full PHI or the full audit trail in the application.",
+        "code_location": [],
+        "new_id": 74
+    },
+    {
+        "id": 77,
+        "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+        "description": "The system shall support disclosing protected health information (PHI) when required for regulatory compliance investigations by the Secretary.",
+        "satisfaction_level": "Denied",
+        "reasoning": "No role or workflow is intended for that purpose. even admin cannot access full PHI or the full audit trail in the application.",
+        "code_location": [],
+        "new_id": 75
+    },
+    {
+        "id": 78,
+        "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+        "description": "The system shall prevent health plans (excluding long-term care policy issuers) from using or disclosing protected health information that is genetic information for the following underwriting purpose: Determining eligibility for enrollment or continued enrollment in the plan",
+        "satisfaction_level": "NA",
+        "reasoning": "There is no genetic data as PHI in the codebase.",
+        "code_location": [],
+        "new_id": 76
+    },
+    {
+        "id": 79,
+        "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+        "description": "The system shall prevent health plans (excluding long-term care policy issuers) from using or disclosing protected health information that is genetic information for the following underwriting purpose: Determining benefits, including modifications to deductibles or cost-sharing mechanisms",
+        "satisfaction_level": "NA",
+        "reasoning": "There is no genetic data as PHI in the codebase.",
+        "code_location": [],
+        "new_id": 77
+    },
+    {
+        "id": 80,
+        "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+        "description": "The system shall prevent health plans (excluding long-term care policy issuers) from using or disclosing protected health information that is genetic information for the following underwriting purpose: Computing premium or contribution amounts, including discounts, rebates, or premium differentials",
+        "satisfaction_level": "NA",
+        "reasoning": "There is no genetic data as PHI in the codebase.",
+        "code_location": [],
+        "new_id": 78
+    },
+
+
+    
+
+
+    {
+        "id": 91,
+        "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+        "description": "The system shall allow a personal representative the same level of access as a person over their PHI.",
+        "satisfaction_level": "Weakly Satisfied",
+        "reasoning": "Personal representatives can exercise rights over PHI for dependents. For non-dependent representees (e.g., adults with POA), they can view records and access logs but cannot request records release or amend demographics, which narrows the scope of the requirement.",
+        "code_location": [
+            "ViewMyRecordsAction.java 67-77",
+            "ViewPatientAction.java 54-55",
+            "requestRecordsReleaseHistory.jsp 47-60"
+        ],
+        "new_id": 79
+    },
+    {
+        "id": 92,
+        "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+        "description": "The system shall treat a legally authorized person acting on behalf of an adult or emancipated minor as the personal representative for accessing protected health information (PHI).",
+        "satisfaction_level": "Satisfied",
+        "reasoning": "This is done by marking the patient as dependant to the legally authorized person",
+        "code_location": [
+            "ViewMyRecordsAction.java 67-77",
+            "ViewPatientAction.java 54-55"
+        ],
+        "new_id": 80
+    },
+    {
+        "id": 92,
+        "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+        "description": "The system shall treat a legally authorized person acting on behalf of an adult or emancipated minor as the personal representative for managing protected health information (PHI).",
+        "satisfaction_level": "Satisfied",
+        "reasoning": "This is done by marking the patient as dependant to the legally authorized person",
+        "code_location": [
+            "requestRecordsReleaseHistory.jsp 47-60"
+        ],
+        "new_id": 81
+    },
+    {
+        "id": 94,
+        "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+        "description": "The system shall support allowing an unemancipated minor to act as the individual and restrict a parent or guardian’s access to protected health information (PHI) when the minor has legal authority over a specific health care service.",
+        "satisfaction_level": "Denied",
+        "reasoning": "The system does not support treating minors as the individual for specific services or restricting parent/guardian access by service. Parents/guardians keep full access to all PHI for dependents; there is no service-level filtering or restrictions.",
+        "code_location": [],
+        "new_id": 82
+    },
+    {
+        "id": 95,
+        "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+        "description": "The system shall allow a legally authorized person to act as the personal representative of a deceased individual for accessing or managing protected health information (PHI).",
+        "satisfaction_level": "Denied",
+        "reasoning": "The system does not support a personal representative for a deceased individual. It has no concept of a deceased representative, no workflow for designating one, and no way for them to manage PHI. Existing representative logic does not handle death.",
+        "code_location": [],
+        "new_id": 83
+    },
+    {
+        "id": 96,
+        "title": "§ 164.506 Uses and disclosures to carry out treatment, payment, or health care operations",
+        "description": "The system shall allow the use of PHI for treatment operations without requiring individual authorization.",
+        "satisfaction_level": "Satisfied",
+        "reasoning": "HCPs and UAPs can use PHI for treatment without individual patient authorization. PatientBaseAction only checks that the patient exists",
+        "code_location": [
+            "PatientBaseAction.java 59-67"
+        ],
+        "new_id": 84
+    },
+    {
+        "id": 96,
+        "title": "§ 164.506 Uses and disclosures to carry out treatment, payment, or health care operations",
+        "description": "The system shall allow the disclosure of PHI for treatment operations without requiring individual authorization.",
+        "satisfaction_level": "Satisfied",
+        "reasoning": "HCPs and UAPs can disclose PHI for treatment without individual patient authorization. PatientBaseAction only checks that the patient exists",
+        "code_location": [
+            "PatientBaseAction.java 59-67"
+        ],
+        "new_id": 85
+    },
+    {
+        "id": 111,
+        "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+        "description": "The system must treat an authorization as invalid if the expiration date has passed or if the expiration event has occurred.",
+        "satisfaction_level": "Denied",
+        "reasoning": "Authorizations are stored and used without any concept of expiration date or expiration event",
+        "code_location": [],
+        "new_id": 92
+    },
+    {
+        "id": 112,
+        "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+        "description": "The system must treat an authorization as invalid if any authorization element has not been filled out completely.",
+        "satisfaction_level": "Weakly Satisfied",
+        "reasoning": "When the patient submits the authorization form, the server constructs a RecordsReleaseForm and then always runs a validator. The validator rejects empty or badly formatted values for all the key authorization elements. The “I agree” checkbox (verifyForm) is not checked on the server side. A malicious client could omit this field.",
+        "code_location": [
+            "RecordsReleaseFormValidator.java 17-31"
+        ],
+        "new_id": 93
+    },
+    {
+        "id": 113,
+        "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+        "description": "The system must treat an authorization as invalid if it has been revoked.",
+        "satisfaction_level": "Denied",
+        "reasoning": "Authorizations are stored and used without any concept of revocation",
+        "code_location": [],
+        "new_id": 94
+    },
+    
+    
+
+    {
+        "id": 97,
+        "title": "§ 164.506 Uses and disclosures to carry out treatment, payment, or health care operations",
+        "description": "The system shall permit uses of protected health information for payment operations without requiring individual authorization.",
+        "satisfaction_level": "Satisfied",
+        "reasoning": "PHI is used for payment operations without individual authorization.",
+        "code_location": [
+            "PayBillAction.java 21-27",
+            "PayBillAction.java 79-131",
+            "PayBillAction.java 146-210"
+        ],
+        "new_id": 86
+    },
+    {
+        "id": 97,
+        "title": "§ 164.506 Uses and disclosures to carry out treatment, payment, or health care operations",
+        "description": "The system shall permit disclosures of protected health information for payment operations without requiring individual authorization.",
+        "satisfaction_level": "Satisfied",
+        "reasoning": "UAP sees who submitted the insurance claim and UAP sees full insurance PHI for claim verification without authorization.",
+        "code_location": [
+            "viewClaims.jsp 34-45",
+            "ViewClaimsAction.java 51-58",
+            "ViewClaimsAction.java 36-43",
+            "VerifyClaimAction.java 23-27",
+            "verifyClaim.jsp 65-100"
+        ],
+        "new_id": 87
+    },
+    {
+        "id": 98,
+        "title": "§ 164.506 Uses and disclosures to carry out treatment, payment, or health care operations",
+        "description": "The system shall permit uses of protected health information for health care operations without requiring individual authorization.",
+        "satisfaction_level": "Satisfied",
+        "reasoning": "PHI is used for healthcare operations without individual authorization. for example group reports by HCP",
+        "code_location": [
+            "GroupReportAction.java 49-62"
+        ],
+        "new_id": 88
+    },
+    {
+        "id": 98,
+        "title": "§ 164.506 Uses and disclosures to carry out treatment, payment, or health care operations",
+        "description": "The system shall permit disclosures of protected health information for health care operations without requiring individual authorization.",
+        "satisfaction_level": "Satisfied",
+        "reasoning": "PHI is disclosed for healthcare operations without individual authorization. for example group reports by HCP",
+        "code_location": [
+            "GroupReportAction.java 49-62"
+        ],
+        "new_id": 89
+    },
+    {
+        "id": 99,
+        "title": "§ 164.506 Uses and disclosures to carry out treatment, payment, or health care operations",
+        "description": "The system may support obtaining and recording individual consent for Treatment operations uses and disclosures, but shall not require such consent as a condition for permitting Treatment activities.",
+        "satisfaction_level": "Satisfied",
+        "reasoning": "No treatment activity requires consent.",
+        "code_location": [],
+        "new_id": 90
+    },
+    {
+        "id": 100,
+        "title": "§ 164.506 Uses and disclosures to carry out treatment, payment, or health care operations",
+        "description": "The system may support obtaining and recording individual consent for Payment operations uses and disclosures, but shall not require such consent as a condition for permitting Payment activities.",
+        "satisfaction_level": "Satisfied",
+        "reasoning": "No payment activity requires consent.",
+        "code_location": [],
+        "new_id": 91
+    },
+
+    {
+        "id": 114,
+        "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+        "description": "The system must treat an authorization as invalid if any material information in the authorization is known to be false.",
+        "satisfaction_level": "Denied",
+        "reasoning": "There is no mechanism to invalid data in case of detecting a false information in the authorization",
+        "code_location": [],
+        "new_id": 95
+    },
+    {
+        "id": 116,
+        "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+        "description": "The system must allow an individual to revoke an authorization at any time in writing.",
+        "satisfaction_level": "Denied",
+        "reasoning": "Authorizations are stored and used without any concept of revocation",
+        "code_location": [],
+        "new_id": 97
+    },
+    {
+        "id": 116,
+        "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+        "description": "The system shall prevent further use or disclosure of PHI under the authorization following revocation.",
+        "satisfaction_level": "Denied",
+        "reasoning": "Authorizations are stored and used without any concept of revocation",
+        "code_location": [],
+        "new_id": 98
+    },
+    {
+        "id": 116,
+        "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+        "description": "The system shall permit continued retention or contest-related use of PHI where the revoked authorization was a condition of obtaining insurance coverage and such retention rights apply.",
+        "satisfaction_level": "Denied",
+        "reasoning": "Authorizations are stored and used without any concept of revocation",
+        "code_location": [],
+        "new_id": 99
+    },
+    
+    
+
+    {
+        "id": 1,
+        "title": "§ 164.306 Security standards: General rules",
+        "description": "The system shall ensure the confidentiality of all electronic protected health information (ePHI) that it creates.",
+        "new_id": 1
+    },
+    {
+        "id": 2,
+        "title": "§ 164.306 Security standards: General rules",
+        "description": "The system shall ensure the confidentiality of all electronic protected health information (ePHI) that it receives.",
+        "new_id": 2
+    },
+    {
+        "id": 3,
+        "title": "§ 164.306 Security standards: General rules",
+        "description": "The system shall ensure the confidentiality of all electronic protected health information (ePHI) that it maintains.",
+        "new_id": 3
+    },
+    {
+        "id": 4,
+        "title": "§ 164.306 Security standards: General rules",
+        "description": "The system shall ensure the confidentiality of all electronic protected health information (ePHI) that it transmits.",
+        "new_id": 4
+    },
+        {
+        "id": 115,
+        "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+        "description": "The system shall not permit an authorization for use or disclosure of protected health information to be combined with any other document to create a compound authorization.",
+        "satisfaction_level": "Satisfied",
+        "reasoning": "There is one authorization form, and that form is used only to request release of medical records; it is not combined with other agreements",
+        "code_location": [
+            "requestRecordsRelease.jsp 101-165"
+        ],
+        "new_id": 96
+    },
+
+    {
+        "id": 117,
+        "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+        "description": "The system shall require that a valid authorization for use or disclosure of protected health information contain at least the following elements: (i) A description of the information to be used or disclosed that identifies the information in a specific and meaningful fashion. (ii) The name or other specific identification of the person(s), or class of persons, authorized to make the requested use or disclosure. (iii) The name or other specific identification of the person(s), or class of persons, to whom the covered entity may make the requested use or disclosure. (iv) A description of each purpose of the requested use or disclosure. The statement “at the request of the individual” is a sufficient description of the purpose when an individual initiates the authorization and does not, or elects not to, provide a statement of the purpose. (v) An expiration date or an expiration event that relates to the individual or the purpose of the use or disclosure. The statement “end of the research study,” “none,” or similar language is sufficient if the authorization is for a use or disclosure of protected health information for research, including for the creation and maintenance of a research database or research repository. (vi) Signature of the individual and date. If the authorization is signed by a personal representative of the individual, a description of such representative's authority to act for the individual must also be provided.",
+        "satisfaction_level": "Weakly Denied",
+        "reasoning": "The authorization contains a generic text and multiple mandatory elements ((ii), (iv), (v), and part of (vi)) are missing.",
+        "code_location": [
+            "requestRecordsRelease.jsp 147-151"
+        ],
+        "new_id": 100
+    },
+    {
+        "id": 118,
+        "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+        "description": "The system must ensure that each authorization includes a statement informing the individual of their right to revoke the authorization, and includes a description of any exceptions and how to revoke it.",
+        "satisfaction_level": "Denied",
+        "reasoning": "There is no revocation concept in the system and in the authorization statement.",
+        "code_location": [
+            "requestRecordsRelease.jsp 147-151"
+        ],
+        "new_id": 101
+    },
+    {
+        "id": 119,
+        "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+        "description": "The system must ensure that each authorization includes a statement explaining whether treatment, payment, enrollment, or eligibility for benefits can or cannot be conditioned on signing the authorization, and if it can, the consequences of not signing must be stated.",
+        "satisfaction_level": "Denied",
+        "reasoning": "There is no statement anywhere on the form that says whether treatment, payment, enrollment, or eligibility for benefits can or cannot be conditioned on signing this authorization, and no explanation of consequences for not signing.",
+        "code_location": [
+            "requestRecordsRelease.jsp 147-151"
+        ],
+        "new_id": 102
+    },
+    {
+        "id": 120,
+        "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+        "description": "The system must ensure that each authorization includes a statement warning the individual that information disclosed under the authorization may be redisclosed by the recipient and may no longer be protected.",
+        "satisfaction_level": "Denied",
+        "reasoning": "The form does not include any warning statement notifying the individual that information disclosed under the authorization may be redisclosed by the recipient and may no longer be protected",
+        "code_location": [
+            "requestRecordsRelease.jsp 147-151"
+        ],
+        "new_id": 103
+    },
+    {
+        "id": 121,
+        "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+        "description": "The system must ensure that each authorization is written in plain language.",
+        "satisfaction_level": "Satisfied",
+        "reasoning": "The actual authorization text shown to patients is short and mostly understandable",
+        "code_location": [
+            "requestRecordsRelease.jsp 147-151"
+        ],
+        "new_id": 104
+    },
+
+
+
+
+
+    {
+        "id": 5,
+        "title": "§ 164.306 Security standards: General rules",
+        "description": "The system shall ensure the integrity of all electronic protected health information (ePHI) that it creates.",
+        "new_id": 5
+    },
+    {
+        "id": 6,
+        "title": "§ 164.306 Security standards: General rules",
+        "description": "The system shall ensure the integrity of all electronic protected health information (ePHI) that it receives.",
+        "new_id": 6
+    },
+    {
+        "id": 7,
+        "title": "§ 164.306 Security standards: General rules",
+        "description": "The system shall ensure the integrity of all electronic protected health information (ePHI) that it maintains.",
+        "new_id": 7
+    },
+    {
+        "id": 8,
+        "title": "§ 164.306 Security standards: General rules",
+        "description": "The system shall ensure the integrity of all electronic protected health information (ePHI) that it transmits.",
+        "new_id": 8
+    },
+    {
+        "id": 133,
+        "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+        "description": "The system shall require a covered entity to obtain an authorization for any use or disclosure of psychotherapy notes, unless the use is by the originator of the notes for treatment purposes.",
+        "satisfaction_level": "NA",
+        "reasoning": "The system does not contain any psychotherapy notes to disclose it.",
+        "code_location": [],
+        "new_id": 117
+    },
+    {
+        "id": 134,
+        "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+        "description": "The system shall allow a covered entity to use or disclose psychotherapy notes without authorization for its own training programs involving supervised mental health instruction.",
+        "satisfaction_level": "NA",
+        "reasoning": "The system does not contain any psychotherapy notes to disclose it.",
+        "code_location": [],
+        "new_id": 118
+    },
+    {
+        "id": 135,
+        "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+        "description": "The system shall allow a covered entity to use or disclose psychotherapy notes without authorization when defending itself in a legal action or other proceeding brought by the individual.",
+        "satisfaction_level": "NA",
+        "reasoning": "The system does not contain any psychotherapy notes to disclose it.",
+        "code_location": [],
+        "new_id": 119
+    },    
+    {
+        "id": 37,
+        "title": "§ 164.308 Administrative safeguards",
+        "description": "The system shall implement procedures for guarding against malicious software.",
+        "new_id": 37
+    },
+    {
+        "id": 38,
+        "title": "§ 164.308 Administrative safeguards",
+        "description": "The system shall implement procedures for detecting malicious software.",
+        "new_id": 38
+    },
+    {
+        "id": 39,
+        "title": "§ 164.308 Administrative safeguards",
+        "description": "The system shall implement procedures for reporting malicious software.",
+        "new_id": 39
+    },  
+
+
+    
+    {
+        "id": 9,
+        "title": "§ 164.306 Security standards: General rules",
+        "description": "The system shall ensure the availability of all electronic protected health information (ePHI) that it creates.",
+        "new_id": 9
+    },
+    {
+        "id": 10,
+        "title": "§ 164.306 Security standards: General rules",
+        "description": "The system shall ensure the availability of all electronic protected health information (ePHI) that it receives.",
+        "new_id": 10
+    },
+    {
+        "id": 11,
+        "title": "§ 164.306 Security standards: General rules",
+        "description": "The system shall ensure the availability of all electronic protected health information (ePHI) that it maintains.",
+        "new_id": 11
+    },
+    {
+        "id": 12,
+        "title": "§ 164.306 Security standards: General rules",
+        "description": "The system shall ensure the availability of all electronic protected health information (ePHI) that it transmits.",
+        "new_id": 12
+    },
+    {
+        "id": 168,
+        "title": "§ 164.514 Other requirements relating to uses and disclosures of protected health information",
+        "description": "The system must implement policies and procedures that limit the amount of protected health information disclosed during routine and recurring disclosures to only what is reasonably necessary to achieve the disclosure’s purpose.",
+        "satisfaction_level": "Weakly Denied",
+        "reasoning": "The system does not consistently apply minimum necessary when retrieving PHI. Several flows load full patient records when only one or two fields are needed.",
+        "code_location": [
+            "SendMessageAction.java 91-111",
+            "ResetPasswordAction.java 198-204",
+            "EditRepresentativesAction.java 84",
+            "ViewMyRecordsAction.java 119"
+        ],
+        "new_id": 125
+    },    
+    {
+        "id": 137,
+        "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+        "description": "The system shall require a covered entity to obtain an authorization for any use or disclosure of protected health information for marketing, unless the communication is a face-to-face interaction with the individual.",
+        "satisfaction_level": "NA",
+        "reasoning": "The system does not support any marketing data.",
+        "code_location": [],
+        "new_id": 120
+    },
+    {
+        "id": 138,
+        "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+        "description": "The system shall allow a covered entity to use or disclose protected health information for marketing without authorization if the communication is a promotional gift of nominal value provided by the covered entity.",
+        "satisfaction_level": "NA",
+        "reasoning": "The system does not support any promotional gift.",
+        "code_location": [],
+        "new_id": 121
+    },
+    {
+        "id": 139,
+        "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+        "description": "The system shall ensure that if marketing involves financial payment to the covered entity from a third party, the authorization clearly states that financial remuneration is involved.",
+        "satisfaction_level": "NA",
+        "reasoning": "The system does not support any marketing.",
+        "code_location": [],
+        "new_id": 122
+    },
+    {
+        "id": 140,
+        "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+        "description": "The system shall require a covered entity to obtain an authorization for any disclosure of protected health information that constitutes a sale of such information.",
+        "satisfaction_level": "NA",
+        "reasoning": "The system does not support any information that constitudes as sale.",
+        "code_location": [],
+        "new_id": 123
+    },
+    {
+        "id": 141,
+        "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+        "description": "The system shall ensure that any authorization for the sale of protected health information states that the disclosure will result in payment to the covered entity.",
+        "satisfaction_level": "NA",
+        "reasoning": "The system does not support any information that constitudes as sale.",
+        "code_location": [],
+        "new_id": 124
+    },
+    
+    
+
+
+    {
+        "id": 13,
+        "title": "§ 164.306 Security standards: General rules",
+        "description": "The system shall protect against any reasonably anticipated threats or hazards to the security of electronic protected health information (ePHI).",
+        "new_id": 13
+    },
+    {
+        "id": 14,
+        "title": "§ 164.306 Security standards: General rules",
+        "description": "The system shall protect against any reasonably anticipated threats or hazards to the integrity of electronic protected health information (ePHI).",
+        "new_id": 14
+    },
+    {
+        "id": 15,
+        "title": "§ 164.306 Security standards: General rules",
+        "description": "The system shall protect against any reasonably anticipated uses of electronic protected health information (ePHI) that are not permitted or required.",
+        "new_id": 15
+    },
+    {
+        "id": 16,
+        "title": "§ 164.306 Security standards: General rules",
+        "description": "The system shall protect against any disclosures of electronic protected health information (ePHI) that are not permitted or required.",
+        "new_id": 16
+    },
+    {
+        "id": 172,
+        "title": "§ 164.520 Notice of privacy practices for protected health information",
+        "description": "The system must ensure that individuals receive adequate notice of the uses and disclosures of protected health information that may be made by the covered entity.",
+        "satisfaction_level": "Weakly Denied",
+        "reasoning": "There is only one notice of uses and disclosure of ePHI in the privacy policy page, and the system does not ensure that individuals are actually given or required to see that notice (e.g., no mandatory viewing or acknowledgment). The privacy policy informs users of how their health information may be used  in the Notice/Awareness and Choice/Consent sections.",
+        "code_location": [
+            "privacyPolicy.jsp 17-99"
+        ],
+        "new_id": 126
+    },
+    {
+        "id": 173,
+        "title": "§ 164.520 Notice of privacy practices for protected health information",
+        "description": "The system must ensure that individuals receive adequate notice of the individuals’ rights.",
+        "satisfaction_level": "Weakly Denied",
+        "reasoning": "There is only one notice of individuals' rights in the privacy policy page, and that is Right to access and correct records in Access/Participation section. It is not adequate because the system does not ensure that individuals are actually given or required to see that notice (e.g., no mandatory viewing or acknowledgment).",
+        "code_location": [
+            "privacyPolicy.jsp 17-99"
+        ],
+        "new_id": 127
+    },
+    {
+        "id": 174,
+        "title": "§ 164.520 Notice of privacy practices for protected health information",
+        "description": "The system must ensure that individuals receive adequate notice of the covered entity’s legal duties regarding protected health information.",
+        "satisfaction_level": "Denied",
+        "reasoning": "There is only one privacy policy in the code, and in it, there is no mention of covered entity’s legal duties regarding protected health information",
+        "code_location": [],
+        "new_id": 128
+    },
+    {
+        "id": 178,
+        "title": "§ 164.520 Notice of privacy practices for protected health information",
+        "description": "The system must ensure that an individual enrolled in a group health plan receives a notice of privacy practices from the health insurance issuer or Health Maintenance Organization (HMO) if the individual receives health benefits under the plan through that issuer or HMO.",
+        "satisfaction_level": "NA",
+        "reasoning": "There is no concept of group health plan in the system",
+        "code_location": [],
+        "new_id": 129
+    },
+    {
+        "id": 179,
+        "title": "§ 164.520 Notice of privacy practices for protected health information",
+        "description": "The system must ensure that a group health plan providing health benefits solely through an insurance contract, and that creates or receives protected health information beyond summary health information or enrollment status, maintains a notice of privacy practices.",
+        "satisfaction_level": "NA",
+        "reasoning": "There is no concept of group health plan in the system",
+        "code_location": [],
+        "new_id": 130
+    },
+    {
+        "id": 180,
+        "title": "§ 164.520 Notice of privacy practices for protected health information",
+        "description": "The system must ensure that any group health plan required to maintain a notice of privacy practices must provide the notice to any person upon request.",
+        "satisfaction_level": "NA",
+        "reasoning": "There is no concept of group health plan in the system",
+        "code_location": [],
+        "new_id": 131
+    },
+
+
+
+    
+    {
+        "id": 17,
+        "title": "§ 164.308 Administrative safeguards",
+        "description": "The system shall support the organization in implementing policies and procedures to prevent security violations.",
+        "new_id": 17
+    },
+    {
+        "id": 18,
+        "title": "§ 164.308 Administrative safeguards",
+        "description": "The system shall support the organization in implementing policies and procedures to detect security violations.",
+        "new_id": 18
+    },
+    {
+        "id": 19,
+        "title": "§ 164.308 Administrative safeguards",
+        "description": "The system shall support the organization in implementing policies and procedures to contain security violations.",
+        "new_id": 19
+    },
+    {
+        "id": 20,
+        "title": "§ 164.308 Administrative safeguards",
+        "description": "The system shall support the organization in implementing policies and procedures to correct security violations.",
+        "new_id": 20
+    },
+    {
+        "id": 181,
+        "title": "§ 164.520 Notice of privacy practices for protected health information",
+        "description": "The system must ensure that inmates do not receive a notice of privacy practices and that correctional institutions acting as covered entities are not subject to the notice requirements.",
+        "satisfaction_level": "NA",
+        "reasoning": "correctional institutions and inmates are irrelevant to the system.",
+        "code_location": [],
+        "new_id": 132
+    },
+    {
+        "id": 182,
+        "title": "§ 164.520 Notice of privacy practices for protected health information",
+        "description": "The system must ensure that the notice of privacy practices is written in plain language.",
+        "satisfaction_level": "Weakly Satisfied",
+        "reasoning": "The privacy policy is written in accessible, non-technical language and avoids legal jargon in most sections. However, it uses terms like PIHI, USHHS, and references to Privacy Rule Standards without sufficient explanation.",
+        "code_location": [],
+        "new_id": 133
+    },
+    {
+        "id": 183,
+        "title": "§ 164.520 Notice of privacy practices for protected health information",
+        "description": "The system must ensure that the notice of privacy practices includes the following prominently displayed statement:“THIS NOTICE DESCRIBES HOW MEDICAL INFORMATION ABOUT YOU MAY BE USED AND DISCLOSED AND HOW YOU CAN GET ACCESS TO THIS INFORMATION. PLEASE REVIEW IT CAREFULLY.”",
+        "satisfaction_level": "Denied",
+        "reasoning": "The privacy policy does not include this specific required statement anywhere",
+        "code_location": [],
+        "new_id": 134
+    },
+    {
+        "id": 184,
+        "title": "§ 164.520 Notice of privacy practices for protected health information",
+        "description": "The system must ensure that the notice of privacy practices contains a description, including at least one example, of the types of uses and disclosures permitted for treatment, payment, and health care operations.",
+        "satisfaction_level": "Denied",
+        "reasoning": "The system contains a list of types of uses and disclosures but does not contain any examples or descriptions for it.",
+        "code_location": [],
+        "new_id": 135
+    },
+    {
+        "id": 185,
+        "title": "§ 164.520 Notice of privacy practices for protected health information",
+        "description": "The system must ensure that the notice of privacy practices includes a description of each other purpose for which protected health information may be used or disclosed without the individual’s written authorization.",
+        "satisfaction_level": "Denied",
+        "reasoning": "The policy lists permitted purposes without providing any description of what each use entails",
+        "code_location": [],
+        "new_id": 136
+    },
+    {
+        "id": 186,
+        "title": "§ 164.520 Notice of privacy practices for protected health information",
+        "description": "The system must ensure that the notice of privacy practices reflects any prohibition or material limitation on uses or disclosures imposed by other applicable law, and that the description reflects the stricter standard when required.",
+        "satisfaction_level": "Denied",
+        "reasoning": "The system does not ensure that the notice in privacy policy reflects additional legal prohibitions/limitations or that its description always reflects the stricter standard.",
+        "code_location": [],
+        "new_id": 137
+    },
+
+
+
+    {
+        "id": 21,
+        "title": "§ 164.308 Administrative safeguards",
+        "description": "The system shall support conducting an accurate and thorough assessment of potential risks and vulnerabilities to the confidentiality of electronic protected health information (ePHI)",
+        "new_id": 21
+    },
+    {
+        "id": 22,
+        "title": "§ 164.308 Administrative safeguards",
+        "description": "The system shall support conducting an accurate and thorough assessment of potential risks and vulnerabilities to the integrity of electronic protected health information (ePHI)",
+        "new_id": 22
+    },
+    {
+        "id": 23,
+        "title": "§ 164.308 Administrative safeguards",
+        "description": "The system shall support conducting an accurate and thorough assessment of potential risks and vulnerabilities to the availability of electronic protected health information (ePHI)",
+        "new_id": 23
+    },    
+
+    {
+        "id": 187,
+        "title": "§ 164.520 Notice of privacy practices for protected health information",
+        "description": "The system must ensure that each description of permitted or required use or disclosure includes sufficient detail to notify the individual of how their information may be used or disclosed.",
+        "satisfaction_level": "Denied",
+        "reasoning": "The privacy policy contains no mention of how the information will be used or disclosed.",
+        "code_location": [],
+        "new_id": 138
+    },
+    {
+        "id": 188,
+        "title": "§ 164.520 Notice of privacy practices for protected health information",
+        "description": "The system must ensure that the notice of privacy practices describes the types of uses and disclosures that require written authorization, includes a statement that any other uses or disclosures will only be made with written authorization, and informs the individual of their right to revoke that authorization.",
+        "satisfaction_level": "Denied",
+        "reasoning": "The policy only vaguely mentions written authorization for disclosures outside the listed permitted categories, but never describes the specific types of uses or disclosures that require it. There is also no mention of the individual's right to revoke authorization.",
+        "code_location": [],
+        "new_id": 139
+    },
+    {
+        "id": 189,
+        "title": "§ 164.520 Notice of privacy practices for protected health information",
+        "description": "The system must ensure that the notice of privacy practices includes a description, with at least one example, of the types of uses and disclosures that are prohibited, written in sufficient detail for individuals to understand the prohibition.",
+        "satisfaction_level": "Denied",
+        "reasoning": "The privacy policy makes no mention of prohibited uses or disclosures whatsoever, and provides no examples of such prohibitions.",
+        "code_location": [],
+        "new_id": 140
+    },
+    {
+        "id": 190,
+        "title": "§ 164.520 Notice of privacy practices for protected health information",
+        "description": "The system must ensure that the notice of privacy practices includes a description, with at least one example, of the types of uses and disclosures that require an attestation.",
+        "satisfaction_level": "Denied",
+        "reasoning": "The privacy policy contains no mention of attestation anywhere, nor any description or examples of uses and disclosures that require it.",
+        "code_location": [],
+        "new_id": 141
+    },
+    {
+        "id": 191,
+        "title": "§ 164.520 Notice of privacy practices for protected health information",
+        "description": "The system must ensure that the notice of privacy practices contains a statement informing individuals that information disclosed may be subject to redisclosure by the recipient and may no longer be protected.",
+        "satisfaction_level": "Denied",
+        "reasoning": "No mention in the privacy policy of disclosed information potentially being subject to redisclosure by the recipient or losing its protected status.",
+        "code_location": [],
+        "new_id": 142
+    },
+    {
+        "id": 193,
+        "title": "§ 164.520 Notice of privacy practices for protected health information",
+        "description": "The system must ensure that if a group health plan, health insurance issuer, or Health Maintenance Organization (HMO) intends to disclose protected health information to a plan sponsor, the notice of privacy practices includes a separate statement informing individuals of this practice.",
+        "satisfaction_level": "NA",
+        "reasoning": "There is no concept of group health plan in the system",
+        "code_location": [],
+        "new_id": 143
+    },
+    {
+        "id": 194,
+        "title": "§ 164.520 Notice of privacy practices for protected health information",
+        "description": "The system must ensure that if a health plan intends to use or disclose protected health information for underwriting purposes, the notice of privacy practices includes a separate statement informing individuals that genetic information may not be used or disclosed for those purposes.",
+        "satisfaction_level": "NA",
+        "reasoning": "There is no genetic data as PHI in the codebase.",
+        "code_location": [],
+        "new_id": 144
+    },
+
+
+    
+
+    {
+        "id": 24,
+        "title": "§ 164.308 Administrative safeguards",
+        "description": "The system shall support implementing security measures sufficient to reduce risks and vulnerabilities to a reasonable and appropriate level to comply with the general security requirements.",
+        "new_id": 24
+    },
+    {
+        "id": 25,
+        "title": "§ 164.308 Administrative safeguards",
+        "description": "The system shall support procedures to regularly review records of information system activity, including audit logs, access reports, and security incident tracking reports.",
+        "new_id": 25
+    },
+    {
+        "id": 26,
+        "title": "§ 164.308 Administrative safeguards",
+        "description": "The system shall support implementing policies and procedures to ensure that workforce members have appropriate access to electronic protected health information (ePHI), and to prevent access by workforce members who are not authorized.",
+        "new_id": 26
+    },
+    {
+        "id": 27,
+        "title": "§ 164.308 Administrative safeguards",
+        "description": "The system shall support procedures for the authorization and/or supervision of workforce members who work with electronic protected health information (ePHI) or in locations where ePHI might be accessed.",
+        "new_id": 27
+    },
+    {
+        "id": 195,
+        "title": "§ 164.520 Notice of privacy practices for protected health information",
+        "description": "The system must ensure that the notice of privacy practices includes a statement informing individuals of their right to request restrictions on certain uses and disclosures of protected health information (i.e., treatment, payment, or health care operations), along with a clarification that the covered entity is not required to agree to such requests.",
+        "satisfaction_level": "Denied",
+        "reasoning": "The policy never mentions the individual's right to request restrictions on uses and disclosures for treatment, payment, or healthcare operations, nor any clarification about whether the entity must agree to such requests.",
+        "code_location": [],
+        "new_id": 145
+    },
+    {
+        "id": 196,
+        "title": "§ 164.520 Notice of privacy practices for protected health information",
+        "description": "The system must ensure that the notice of privacy practices informs individuals of their right to request to receive protected health information through confidential communications.",
+        "satisfaction_level": "Denied",
+        "reasoning": "No mention of the individual's right to request confidential communications or to receive their information through alternative means.",
+        "code_location": [],
+        "new_id": 146
+    },
+    {
+        "id": 197,
+        "title": "§ 164.520 Notice of privacy practices for protected health information",
+        "description": "The system must ensure that the notice of privacy practices informs individuals of their right to inspect their protected health information.",
+        "satisfaction_level": "Satisfied",
+        "reasoning": "The Access/Participation section states: The privacy policy requires us to allow you access to your medical records, which partially addresses inspection and access.",
+        "code_location": [
+            "privacyPolicy.jsp 17-99"
+        ],
+        "new_id": 147
+    },
+    {
+        "id": 197,
+        "title": "§ 164.520 Notice of privacy practices for protected health information",
+        "description": "The system must ensure that the notice of privacy practices informs individuals of their right to obtain a copy of their protected health information.",
+        "satisfaction_level": "Denied",
+        "reasoning": "The privacy policy does not mention the right to obtain a copy.",
+        "code_location": [],
+        "new_id": 148
+    },
+    {
+        "id": 198,
+        "title": "§ 164.520 Notice of privacy practices for protected health information",
+        "description": "The system must ensure that the notice of privacy practices informs individuals of their right to request an amendment to their protected health information.",
+        "satisfaction_level": "Weakly Satisfied",
+        "reasoning": "The Access/Participation section states: Please contact the iTrust System Administrator or your medical professional if you feel any information is incorrect or needs to be changed, which implies a right to amendment but never explicitly frames it as a formal right.",
+        "code_location": [
+            "privacyPolicy.jsp 17-99"
+        ],
+        "new_id": 149
+    },
+    {
+        "id": 199,
+        "title": "§ 164.520 Notice of privacy practices for protected health information",
+        "description": "The system must ensure that the notice of privacy practices informs individuals of their right to receive a record of disclosures of their protected health information.",
+        "satisfaction_level": "Denied",
+        "reasoning": "No mention of the individual's right to receive an accounting or record of disclosures of their PHI.",
+        "code_location": [],
+        "new_id": 150
+    },
+
+    
+
+    {
+        "id": 28,
+        "title": "§ 164.308 Administrative safeguards",
+        "description": "The system shall support procedures to determine that a workforce member’s access to electronic protected health information (ePHI) is appropriate.",
+        "new_id": 28
+    },
+    {
+        "id": 29,
+        "title": "§ 164.308 Administrative safeguards",
+        "description": "The system shall support procedures for terminating a workforce member’s access to electronic protected health information (ePHI) when employment or other authorized arrangement ends.",
+        "new_id": 29
+    },
+    {
+        "id": 32,
+        "title": "§ 164.308 Administrative safeguards",
+        "description": "The system shall implement policies and procedures for granting access to electronic protected health information (ePHI), for example via a workstation, transaction, program, process or other mechanism.",
+        "new_id": 32
+    },
+ 
+        {
+        "id": 33,
+        "title": "§ 164.308 Administrative safeguards",
+        "description": "The system shall implement policies and procedures that establish a user’s right of access to a workstation, transaction, program, or process based on the organization’s access authorization policies.",
+        "new_id": 33
+    },
+    {
+        "id": 34,
+        "title": "§ 164.308 Administrative safeguards",
+        "description": "The system shall implement policies and procedures that document a user’s right of access to a workstation, transaction, program, or process based on the organization’s access authorization policies.",
+        "new_id": 34
+    },
+    {
+        "id": 35,
+        "title": "§ 164.308 Administrative safeguards",
+        "description": "The system shall implement policies and procedures that review a user’s right of access to a workstation, transaction, program, or process based on the organization’s access authorization policies.",
+        "new_id": 35
+    },
+    {
+        "id": 36,
+        "title": "§ 164.308 Administrative safeguards",
+        "description": "The system shall implement policies and procedures that modify a user’s right of access to a workstation, transaction, program, or process based on the organization’s access authorization policies.",
+        "new_id": 36
+    },
+    {
+        "id": 200,
+        "title": "§ 164.520 Notice of privacy practices for protected health information",
+        "description": "The system must ensure that the notice of privacy practices informs individuals of their right to request and receive a paper copy of the notice, even if they previously agreed to receive it electronically.",
+        "satisfaction_level": "Denied",
+        "reasoning": "No mention of the right to request or receive a paper copy of the notice.",
+        "code_location": [],
+        "new_id": 151
+    },
+    {
+        "id": 211,
+        "title": "§ 164.520 Notice of privacy practices for protected health information",
+        "description": "The system must ensure that a health care provider with a direct treatment relationship provides the notice no later than the date of the first service delivery, or as soon as reasonably practicable after emergency treatment.",
+        "satisfaction_level": "Denied",
+        "reasoning": "It is not implemented in the system",
+        "code_location": [],
+        "new_id": 152
+    },
+    {
+        "id": 215,
+        "title": "§ 164.520 Notice of privacy practices for protected health information",
+        "description": "The system must ensure that when a covered entity maintains a website that provides information about its customer services or benefits, the covered entity prominently posts its notice on the website and makes the notice available electronically through the website.",
+        "satisfaction_level": "Satisfied",
+        "reasoning": "The notice itself is the page privacyPolicy.jsp. It is linked in the global footer/template on every page",
+        "code_location": [
+            "footer.jsp 19-23"
+        ],
+        "new_id": 153
+    },
+    
+
+
+    {
+        "id": 66,
+        "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+        "description": "The system shall allow the use of protected health information (PHI) for treatment operations.",
+        "satisfaction_level": "Satisfied",
+        "reasoning": "web.xml grants HCP role access to treatment pages (/auth/hcp/*) and PHI of the patients, enabling treatment operations.",
+        "code_location": [
+            "web.xml 143-153"
+        ],
+        "new_id": 65
+    },
+    {
+        "id": 67,
+        "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+        "description": "The system shall allow the use of protected health information (PHI) for payment operations.",
+        "satisfaction_level": "Satisfied",
+        "reasoning": "The system supports PHI use for payment operations through PayBillAction, which uses BillingDAO to retrieve and update bill/insurance/payment records and uses PatientDAO to resolve patient identity information associated with the bill. ",
+        "code_location": [
+            "payBill.jsp 73-80",
+            "PayBillAction.java 21-27",
+            "PayBillAction.java 79-131",
+            "PayBillAction.java 146-210"
+        ],
+        "new_id": 66
+    },
+    {
+        "id": 68,
+        "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+        "description": "The system shall allow the use of protected health information (PHI) for health care operations.",
+        "satisfaction_level": "Satisfied",
+        "reasoning": "web.xml grants HCP role access to treatment pages (/auth/hcp/*) and PHI of the patients, enabling treatment operations.",
+        "code_location": [
+            "web.xml 143-153"
+        ],
+        "new_id": 67
+    },
+    {
+        "id": 69,
+        "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+        "description": "The system shall allow the disclosure of protected health information (PHI) for payment operations.",
+        "satisfaction_level": "Satisfied",
+        "reasoning": "The system discloses patient payment PHI workflows via ViewMyBillingAction, which uses BillingDAO to retrieve bills associated with the logged-in patient. The patient UI (myBills.jsp) calls this action to display bill/payment information, demonstrating operational PHI use/disclosure for payment.",
+        "code_location": [
+            "myBills.jsp 32-33",
+            "ViewMyBillingAction.java 18-20 26-29",
+            "ViewMyBillingAction.java 49-52"
+        ],
+        "new_id": 68
+    },
+    {
+        "id": 70,
+        "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+        "description": "The system shall allow the disclosure of protected health information (PHI) for health care operations.",
+        "satisfaction_level": "Satisfied",
+        "reasoning": "HCP users can view patient PHI through HCP workflows (including report features), which constitutes PHI disclosure for health care operations.",
+        "code_location": [
+            "GroupReportGeneratorAction.java 129-213",
+            "viewReport.jsp 48-50 41-43",
+            "GroupReportAction.java 49-63"
+        ],
+        "new_id": 69
+    },
+    {
+        "id": 216,
+        "title": "§ 164.520 Notice of privacy practices for protected health information",
+        "description": "The system must ensure that the covered entity may provide the required notice to an individual by email only if the individual has agreed to electronic notice and has not withdrawn that agreement.",
+        "satisfaction_level": "Denied",
+        "reasoning": "There are three email notice types in the system. After patient demographics updated, password reset, and in-app messaging. There is no field or table for “agreed to electronic notice” or “withdrawn electronic notice” for patients or personnel.",
+        "code_location": [
+            "EditPatientAction.java 84-104",
+            "ResetPasswordAction.java 172-172",
+            "SendMessageAction.java 64-124"
+        ],
+        "new_id": 154
+    },
+    {
+        "id": 217,
+        "title": "§ 164.520 Notice of privacy practices for protected health information",
+        "description": "The system must ensure that a paper copy of the notice is provided, If the covered entity knows that the email transmission has failed.",
+        "satisfaction_level": "Denied",
+        "reasoning": "There is no way for the covered entity to know that failure",
+        "code_location": [],
+        "new_id": 155
+    },
+    {
+        "id": 218,
+        "title": "§ 164.520 Notice of privacy practices for protected health information",
+        "description": "The system must ensure that an individual who receives electronic notice retains the right to obtain a paper copy of the notice from the covered entity upon request.",
+        "satisfaction_level": "Denied",
+        "reasoning": "provides no way for users to request a paper copy or for the covered entity",
+        "code_location": [],
+        "new_id": 156
+    },
+    {
+        "id": 219,
+        "title": "§ 164.522 Rights to request privacy protection for protected health information",
+        "description": "The system must allow individuals to request restrictions on the use or disclosure of their protected health information for treatment operations.",
+        "satisfaction_level": "Denied",
+        "reasoning": "The system does not allow individuals to request restrictions on use or disclosure of PHI for treatment operations.",
+        "code_location": [],
+        "new_id": 157
+    },
+    {
+        "id": 220,
+        "title": "§ 164.522 Rights to request privacy protection for protected health information",
+        "description": "The system must allow individuals to request restrictions on the use or disclosure of their protected health information for payment operations.",
+        "satisfaction_level": "Denied",
+        "reasoning": "The system does not allow individuals to request restrictions on use or disclosure of PHI for payment operations",
+        "code_location": [],
+        "new_id": 158
+    },
+
+
+
+
+
+    {
+        "id": 72,
+        "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+        "description": "The system shall allow incidental uses of protected health information (PHI) only when the underlying use or disclosure is itself permitted or required.",
+        "satisfaction_level": "Satisfied",
+        "reasoning": "PHI exposure occurs only inside already permitted workflows",
+        "code_location": [
+            "web.xml 42–48",
+            "web.xml 75–298"
+        ],
+        "new_id": 70
+    },
+    {
+        "id": 73,
+        "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+        "description": "The system shall allow incidental disclosures of protected health information (PHI) only when the underlying use or disclosure is itself permitted or required.",
+        "satisfaction_level": "Satisfied",
+        "reasoning": "PHI exposure occurs only inside already permitted workflows",
+        "code_location": [
+            "web.xml 42–48",
+            "web.xml 75–298"
+        ],
+        "new_id": 71
+    },
+    {
+        "id": 74,
+        "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+        "description": "The system must disclose protected health information (PHI) to an individual when the individual requests a right to access.",
+        "satisfaction_level": "Satisfied",
+        "reasoning": "When a patient requests access, the system discloses their PHI via patient-only pages and actions (e.g., viewMyRecords.jsp, ViewMyRecordsAction) that load and display the subject’s records, demographics, allergies, and related data.",
+        "code_location": [
+            "viewMyRecords.jsp 47-58 78-100 141-157 183-210",
+            "ViewMyRecordsAction.java 42-55 128-130 137-147"
+        ],
+        "new_id": 72
+    },
+    {
+        "id": 75,
+        "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+        "description": "The system must disclose protected health information (PHI) to an individual when the individual requests to receive an accounting of disclosures (meaning who has access to their PHI).",
+        "satisfaction_level": "Satisfied",
+        "reasoning": "When a patient requests it, the system provides accounting via the Access Log. The ViewMyAccessLogAction and TransactionDAO supply a date-filterable list of who accessed the patient’s record (accessor, role, transaction type, time). That list is shown to the patient in viewAccessLog.jsp, scoped to the logged-in patient (and represented dependents).",
+        "code_location": [
+            "viewAccessLog.jsp 25-34 39-41 117-127",
+            "ViewMyAccessLogAction.java 55-80"
+        ],
+        "new_id": 73
+    },
+    {
+        "id": 221,
+        "title": "§ 164.522 Rights to request privacy protection for protected health information",
+        "description": "The system must allow individuals to request restrictions on the use or disclosure of their protected health information for health care operations.",
+        "satisfaction_level": "Denied",
+        "reasoning": "The system does not allow individuals to request restrictions on use or disclosure of PHI for health care operations.",
+        "code_location": [],
+        "new_id": 159
+    },
+    {
+        "id": 253,
+        "title": "§ 164.526 Amendment of protected health information",
+        "description": "The system must allow individuals to request an amendment to their protected health information maintained in designated record sets, for as long as the information is retained in those sets.",
+        "satisfaction_level": "Weakly Denied",
+        "reasoning": "The requirement expects a mechanism that allows an individual to submit a request to amend PHI in designated record sets. Patients can directly edit some of their own data. But there is no page that lets a patient file a formal request to amend my record.",
+        "code_location": [
+            "editMyDemographics.jsp 53-64 161-183",
+            "EditPatientAction.java 61-65"
+        ],
+        "new_id": 160
+    },
+    {
+        "id": 254,
+        "title": "§ 164.526 Amendment of protected health information",
+        "description": "The system shall identify the records affected by the accepted amendment within the designated record set.",
+        "satisfaction_level": "Denied",
+        "reasoning": "Patients can directly edit some of their own data, and this data will override the previous record.",
+        "code_location": [],
+        "new_id": 161
+    },
+    {
+        "id": 256,
+        "title": "§ 164.526 Amendment of protected health information",
+        "description": "The system shall append or link the accepted amendment to the corresponding original record.",
+        "satisfaction_level": "Denied",
+        "reasoning": "Patients can directly edit some of their own data, and this data will override the previous record.",
+        "code_location": [],
+        "new_id": 162
+    },
+    {
+        "id": 257,
+        "title": "§ 164.526 Amendment of protected health information",
+        "description": "The system shall maintain a connection to receive PHI amendment notifications from external covered entities and apply any updates to the local designated record set upon transmission.",
+        "satisfaction_level": "Denied",
+        "reasoning": "The system does not implement any mechanism for receiving PHI amendment notifications from external covered entities.",
+        "code_location": [],
+        "new_id": 163
+    },
+    {
+        "id": 261,
+        "title": "§ 164.526 Amendment of protected health information",
+        "description": "The system must record and retain The titles of persons or offices responsible for receiving and processing amendment requests",
+        "satisfaction_level": "Denied",
+        "reasoning": "There is no role in the system for recieving and processing amendment requests.",
+        "code_location": [],
+        "new_id": 164
+    },
+
+
+    {
+        "id": 122,
+        "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+        "description": "The system must ensure that when an authorization is requested from an individual for the use or disclosure of protected health information, a copy of the signed authorization is provided to the individual.",
+        "satisfaction_level": "Denied",
+        "reasoning": "The system shows a confirmation/details page, but it does not provide a copy of the signed authorization",
+        "code_location": [
+            "confirmRecordsRelease.jsp 45-75"
+        ],
+        "new_id": 105
+    },
+    {
+        "id": 123,
+        "title": "§ 164.506 Uses and disclosures to carry out treatment, payment, or health care operations",
+        "description": "The system may allow a covered entity to obtain an individual’s consent to use or disclose protected health information for treatment operations.",
+        "satisfaction_level": "",
+        "reasoning": "",
+        "code_location": [],
+        "new_id": 106
+    },
+    {
+        "id": 124,
+        "title": "§ 164.506 Uses and disclosures to carry out treatment, payment, or health care operations",
+        "description": "The system may allow a covered entity to obtain an individual’s consent to use or disclose protected health information for payment operations.",
+        "satisfaction_level": "",
+        "reasoning": "",
+        "code_location": [],
+        "new_id": 107
+    },
+    {
+        "id": 125,
+        "title": "§ 164.506 Uses and disclosures to carry out treatment, payment, or health care operations",
+        "description": "The system may allow a covered entity to obtain an individual’s consent to use or disclose protected health information for health care operations.",
+        "satisfaction_level": "",
+        "reasoning": "",
+        "code_location": [],
+        "new_id": 108
+    },
+    {
+        "id": 126,
+        "title": "§ 164.506 Uses and disclosures to carry out treatment, payment, or health care operations",
+        "description": "The system shall ensure that consent is not treated as valid for use or disclosure of protected health information when an authorization is required.",
+        "satisfaction_level": "",
+        "reasoning": "",
+        "code_location": [],
+        "new_id": 109
+    },
+    {
+        "id": 127,
+        "title": "§ 164.506 Uses and disclosures to carry out treatment, payment, or health care operations",
+        "description": "The system shall allow a covered entity to use or disclose protected health information for its own treatment operations.",
+        "satisfaction_level": "",
+        "reasoning": "",
+        "code_location": [],
+        "new_id": 110
+    },
+    {
+        "id": 128,
+        "title": "§ 164.506 Uses and disclosures to carry out treatment, payment, or health care operations",
+        "description": "The system shall allow a covered entity to use or disclose protected health information for its own payment operations.",
+        "satisfaction_level": "",
+        "reasoning": "",
+        "code_location": [],
+        "new_id": 111
+    },
+    {
+        "id": 129,
+        "title": "§ 164.506 Uses and disclosures to carry out treatment, payment, or health care operations",
+        "description": "The system shall allow a covered entity to use or disclose protected health information for its own health care operations.",
+        "satisfaction_level": "",
+        "reasoning": "",
+        "code_location": [],
+        "new_id": 112
+    },
+    {
+        "id": 130,
+        "title": "§ 164.506 Uses and disclosures to carry out treatment, payment, or health care operations",
+        "description": "The system shall allow a covered entity to disclose protected health information for the treatment activities of a health care provider.",
+        "satisfaction_level": "",
+        "reasoning": "",
+        "code_location": [],
+        "new_id": 113
+    },
+    {
+        "id": 131,
+        "title": "§ 164.506 Uses and disclosures to carry out treatment, payment, or health care operations",
+        "description": "The system shall allow a covered entity to disclose protected health information to another covered entity or to a health care provider for the payment activities of the receiving entity.",
+        "satisfaction_level": "",
+        "reasoning": "",
+        "code_location": [],
+        "new_id": 114
+    },
+    {
+        "id": 132,
+        "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+        "description": "The system shall not allow a covered entity to use or disclose protected health information without a valid authorization. When a valid authorization is obtained, the use or disclosure shall match the scope of the authorization.",
+        "satisfaction_level": "",
+        "reasoning": "",
+        "code_location": [],
+        "new_id": 115
+    },
+    {
+        "id": 132,
+        "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+        "description": "The system shall ensure that any use or disclosure of PHI does not exceed the scope defined in the authorization.",
+        "satisfaction_level": "",
+        "reasoning": "",
+        "code_location": [],
+        "new_id": 116
+    },
+
+    {
+        "id": 101,
+        "title": "§ 164.506 Uses and disclosures to carry out treatment, payment, or health care operations",
+        "description": "The system may support obtaining and recording individual consent for health care Operations uses and disclosures, but shall not require such consent as a condition for permitting health care Operations activities.",
+        "satisfaction_level": "Satisfied",
+        "reasoning": "No health care operation activity requires consent.",
+        "code_location": [],
+        "new_id": 165
+    },
+    {
+        "id": 103,
+        "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+        "description": "The system must require authorization for any use or disclosure of psychotherapy notes, except when the originator uses the notes for treatment.",
+        "satisfaction_level": "NA",
+        "reasoning": "There is no psychotherapy note data in the code",
+        "code_location": [],
+        "new_id": 166
+    },
+    {
+        "id": 104,
+        "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+        "description": "The system must require authorization for any use or disclosure of psychotherapy notes, except when the notes are used or disclosed by the covered entity in its own supervised mental health training programs.",
+        "satisfaction_level": "NA",
+        "reasoning": "There is no psychotherapy note data in the code",
+        "code_location": [],
+        "new_id": 167
+    },
+    {
+        "id": 104,
+        "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+        "description": "The system must require authorization for any use or disclosure of psychotherapy notes, except when the notes are used or disclosed by the covered entity in its own supervised mental health training programs.",
+        "satisfaction_level": "NA",
+        "reasoning": "There is no psychotherapy note data in the code",
+        "code_location": [],
+        "new_id": 168
+    },
+    {
+        "id": 105,
+        "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+        "description": "The system must require an authorization for any use or disclosure of protected health information for marketing, unless the communication is a face-to-face interaction or a promotional gift of nominal value provided by the covered entity.",
+        "satisfaction_level": "NA",
+        "reasoning": "There is no marketing-related logic in the code.",
+        "code_location": [],
+        "new_id": 169
+    },
+    {
+        "id": 106,
+        "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+        "description": "The system must ensure that when marketing involves financial payment to the covered entity from a third party, the required authorization explicitly states that financial remuneration is involved.",
+        "satisfaction_level": "NA",
+        "reasoning": "There is no marketing-related logic in the code.",
+        "code_location": [],
+        "new_id": 170
+    },
+    {
+        "id": 107,
+        "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+        "description": "The system must require an authorization for any disclosure of protected health information that constitutes a sale.",
+        "satisfaction_level": "NA",
+        "reasoning": "Ther is no information in the code that constitudes a sale",
+        "code_location": [],
+        "new_id": 171
+    },
+    {
+        "id": 108,
+        "title": "§ 164.508 Uses and disclosures for which an authorization is required",
+        "description": "The system must ensure that an authorization for the sale of protected health information explicitly states that the disclosure will result in payment to the covered entity.",
+        "satisfaction_level": "NA",
+        "reasoning": "The system does not support selling data",
+        "code_location": [],
+        "new_id": 172
+    },
+    {
+        "id": 81,
+        "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+        "description": "The system shall permit the use of genetic information for determinations of medical appropriateness when an individual seeks a benefit under the plan.",
+        "satisfaction_level": "NA",
+        "reasoning": "There is no genetic data as PHI in the codebase.",
+        "code_location": [],
+        "new_id": 173
+    },
+    {
+        "id": 85,
+        "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+        "description": "The system shall ensure that any use, disclosure, or request of protected health information (PHI) is limited to the minimum amount necessary to accomplish the intended purpose.",
+        "satisfaction_level": "Weakly Denied",
+        "reasoning": "The system does not consistently apply minimum necessary when retrieving PHI. Several flows load full patient records when only one or two fields are needed.",
+        "code_location": [
+            "SendMessageAction.java 91-111",
+            "ResetPasswordAction.java 198-204",
+            "EditRepresentativesAction.java 84",
+            "ViewMyRecordsAction.java 119"
+        ],
+        "new_id": 174
+    },
+    {
+        "id": 86,
+        "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+        "description": "The system shall allow the use or disclosure of protected health information (PHI) for the purpose of creating de-identified information.",
+        "satisfaction_level": "NA",
+        "reasoning": "There is no process of de-identifying information in the code",
+        "code_location": [],
+        "new_id": 175
+    },
+    {
+        "id": 87,
+        "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+        "description": "The system shall allow the use or disclose of de-identified information without treating it as PHI, as long as the data is in a de-identified state.",
+        "satisfaction_level": "NA",
+        "reasoning": "There is no process of de-identifying information in the code",
+        "code_location": [],
+        "new_id": 176
+    },
+    {
+        "id": 88,
+        "title": "§ 164.502 Uses and disclosures of protected health information: General rules",
+        "description": "The system shall treat any disclosure of a code or mechanism that enables re-identification as a disclosure of protected health information (PHI).",
+        "satisfaction_level": "Satisfied",
+        "reasoning": "There is no process of de-identifying information in the code",
+        "code_location": [],
+        "new_id": 177
+    },
+    {
+        "id": 175,
+        "title": "§ 164.520 Notice of privacy practices for protected health information",
+        "description": "The system must ensure that individuals who are the subjects of records related to substance use disorder treatment receive adequate notice of the uses and disclosures of those records.",
+        "satisfaction_level": "Denied",
+        "reasoning": "There isn't a concept of “substance use disorder treatment” defined in the system.",
+        "code_location": [],
+        "new_id": 178
+    },
+    {
+        "id": 176,
+        "title": "§ 164.520 Notice of privacy practices for protected health information",
+        "description": "The system must ensure that individuals who are the subjects of records related to substance use disorder treatment receive adequate notice of their rights.",
+        "satisfaction_level": "Denied",
+        "reasoning": "There isn't a concept of “substance use disorder treatment” defined in the system.",
+        "code_location": [],
+        "new_id": 179
+    },
+    {
+        "id": 177,
+        "title": "§ 164.520 Notice of privacy practices for protected health information",
+        "description": "The system must ensure that individuals who are the subjects of records related to substance use disorder treatment receive adequate notice of the covered entity’s legal duties with respect to those records.",
+        "satisfaction_level": "Denied",
+        "reasoning": "There isn't a concept of “substance use disorder treatment” defined in the system.",
+        "code_location": [],
+        "new_id": 180
+    },
+    {
+        "id": 201,
+        "title": "§ 164.520 Notice of privacy practices for protected health information",
+        "description": "The system must ensure that the notice of privacy practices includes a statement that the covered entity is required by law to maintain the privacy of protected health information, to provide individuals with notice of its legal duties and privacy practices, and to notify affected individuals in the event of a breach involving unsecured protected health information.",
+        "satisfaction_level": "",
+        "reasoning": "",
+        "code_location": [],
+        "new_id": 181
+    },
+    {
+        "id": 202,
+        "title": "§ 164.520 Notice of privacy practices for protected health information",
+        "description": "The system must ensure that the notice of privacy practices includes a statement that the covered entity is required to follow the terms of the notice currently in effect.",
+        "satisfaction_level": "",
+        "reasoning": "",
+        "code_location": [],
+        "new_id": 182
+    },
+    {
+        "id": 203,
+        "title": "§ 164.520 Notice of privacy practices for protected health information",
+        "description": "The system must ensure that the notice of privacy practices includes a statement that the covered entity reserves the right to change the terms of its notice and apply those changes to all protected health information it maintains, including information created or received before the change. The notice must describe how individuals will be informed of any revised notice.",
+        "satisfaction_level": "",
+        "reasoning": "",
+        "code_location": [],
+        "new_id": 183
+    },
+    {
+        "id": 204,
+        "title": "§ 164.520 Notice of privacy practices for protected health information",
+        "description": "The system must ensure that the notice of privacy practices includes a statement informing individuals that they may file a complaint with the covered entity and with the Secretary if they believe their privacy rights have been violated. The notice must briefly explain how to file a complaint with the covered entity and state that individuals will not be retaliated against for filing a complaint.",
+        "satisfaction_level": "",
+        "reasoning": "",
+        "code_location": [],
+        "new_id": 184
+    },
+    {
+        "id": 205,
+        "title": "§ 164.520 Notice of privacy practices for protected health information",
+        "description": "The system must ensure that the notice of privacy practices includes the name or title, and telephone number, of a person or office that individuals may contact for more information.",
+        "satisfaction_level": "",
+        "reasoning": "",
+        "code_location": [],
+        "new_id": 185
+    },
+    {
+        "id": 206,
+        "title": "§ 164.520 Notice of privacy practices for protected health information",
+        "description": "The system must ensure that the notice of privacy practices includes the date it first becomes effective, which must not be earlier than the date on which the notice is printed or published.",
+        "satisfaction_level": "",
+        "reasoning": "",
+        "code_location": [],
+        "new_id": 186
+    },
+    {
+        "id": 207,
+        "title": "§ 164.520 Notice of privacy practices for protected health information",
+        "description": "The system must ensure that the notice of privacy practices is available upon request to any person and to individuals as required.",
+        "satisfaction_level": "",
+        "reasoning": "",
+        "code_location": [],
+        "new_id": 187
+    },
+    {
+        "id": 208,
+        "title": "§ 164.520 Notice of privacy practices for protected health information",
+        "description": "The system must ensure that a health plan provides the notice of privacy practices to individuals covered by the plan no later than the compliance date and to new enrollees at the time of enrollment.",
+        "satisfaction_level": "",
+        "reasoning": "",
+        "code_location": [],
+        "new_id": 188
+    },
+    {
+        "id": 209,
+        "title": "§ 164.520 Notice of privacy practices for protected health information",
+        "description": "The system must ensure that a health plan notifies individuals of the availability of the notice of privacy practices and how to obtain it at least once every three years.",
+        "satisfaction_level": "",
+        "reasoning": "",
+        "code_location": [],
+        "new_id": 189
+    },
+    {
+        "id": 210,
+        "title": "§ 164.520 Notice of privacy practices for protected health information",
+        "description": "The system must ensure that, when a material change is made to the notice of privacy practices and the health plan does not post its notice on a website, the health plan provides the revised notice, or information about the material change and how to obtain the revised notice, to individuals covered by the plan at that time within 60 days of the material revision.",
+        "satisfaction_level": "",
+        "reasoning": "",
+        "code_location": [],
+        "new_id": 190
+    }    
+    
+]
+]
