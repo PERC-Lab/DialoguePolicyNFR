@@ -1162,20 +1162,20 @@ function displayForms() {
             <div class="form-group">
                 <label>Question 1: Based on the conversations, do you agree with the chatbot's satisfaction level assessment?<span class="required-star">*</span></label>
                 <div class="radio-group">
-                    <label><input type="radio" name="q1_${nfr.id}" value="Agree" required> Agree</label>
-                    <label><input type="radio" name="q1_${nfr.id}" value="Partially agree"> Partially agree</label>
-                    <label><input type="radio" name="q1_${nfr.id}" value="Partially disagree"> Partially disagree</label>
+                    <label><input type="radio" name="q1_${nfr.id}" value="Strongly Agree" required> Strongly Agree</label>
+                    <label><input type="radio" name="q1_${nfr.id}" value="Agree"> Agree</label>
                     <label><input type="radio" name="q1_${nfr.id}" value="Disagree"> Disagree</label>
+                    <label><input type="radio" name="q1_${nfr.id}" value="Strongly Disagree"> Strongly Disagree</label>
                 </div>
             </div>
             ${addAttentionPartiallyDisagree ? `
             <div class="form-group">
-                <label>Question: To ensure you are paying attention, please select "Partially disagree" for this question.<span class="required-star">*</span></label>
+                <label>Question: To ensure you are paying attention, please select "Disagree" for this question.<span class="required-star">*</span></label>
                 <div class="radio-group">
-                    <label><input type="radio" name="attention_pd_${nfr.id}" value="Agree" required> Agree</label>
-                    <label><input type="radio" name="attention_pd_${nfr.id}" value="Partially agree"> Partially agree</label>
-                    <label><input type="radio" name="attention_pd_${nfr.id}" value="Partially disagree"> Partially disagree</label>
+                    <label><input type="radio" name="attention_pd_${nfr.id}" value="Strongly Agree" required> Strongly Agree</label>
+                    <label><input type="radio" name="attention_pd_${nfr.id}" value="Agree"> Agree</label>
                     <label><input type="radio" name="attention_pd_${nfr.id}" value="Disagree"> Disagree</label>
+                    <label><input type="radio" name="attention_pd_${nfr.id}" value="Strongly Disagree"> Strongly Disagree</label>
                 </div>
             </div>
             ` : ''}
@@ -1183,10 +1183,10 @@ function displayForms() {
             <div class="form-group">
                 <label>Question 2: Based on the conversations, do you agree with the chatbot's reasoning?<span class="required-star">*</span></label>
                 <div class="radio-group">
-                    <label><input type="radio" name="q2_${nfr.id}" value="Agree" required> Agree</label>
-                    <label><input type="radio" name="q2_${nfr.id}" value="Partially agree"> Partially agree</label>
-                    <label><input type="radio" name="q2_${nfr.id}" value="Partially disagree"> Partially disagree</label>
+                    <label><input type="radio" name="q2_${nfr.id}" value="Strongly Agree" required> Strongly Agree</label>
+                        <label><input type="radio" name="q2_${nfr.id}" value="Agree"> Agree</label>
                     <label><input type="radio" name="q2_${nfr.id}" value="Disagree"> Disagree</label>
+                    <label><input type="radio" name="q2_${nfr.id}" value="Strongly Disagree"> Strongly Disagree</label>
                 </div>
             </div>
             ${addAttentionFoodQuestion ? `
@@ -1204,10 +1204,10 @@ function displayForms() {
             <div class="form-group">
                 <label>Question 3: Based on the conversations, do you agree with the chatbot's identified code locations?<span class="required-star">*</span></label>
                 <div class="radio-group">
-                    <label><input type="radio" name="q3_${nfr.id}" value="Agree" required> Agree</label>
-                    <label><input type="radio" name="q3_${nfr.id}" value="Partially agree"> Partially agree</label>
-                    <label><input type="radio" name="q3_${nfr.id}" value="Partially disagree"> Partially disagree</label>
+                    <label><input type="radio" name="q3_${nfr.id}" value="Strongly Agree" required>Strongly Agree</label>
+                    <label><input type="radio" name="q3_${nfr.id}" value="Agree"> Agree</label>
                     <label><input type="radio" name="q3_${nfr.id}" value="Disagree"> Disagree</label>
+                    <label><input type="radio" name="q3_${nfr.id}" value="Strongly Disagree"> Strongly Disagree</label>
                 </div>
             </div>
 
@@ -1257,7 +1257,7 @@ document.getElementById('batchForm').addEventListener('submit', (e) => {
             const attnPd = document.querySelector(`input[name="attention_pd_${nfr.id}"]:checked`)?.value;
             if (!attnPd) {
                 allValid = false;
-                missingFields.push(`NFR ${nfr.id}: Attention question (Partially disagree)`);
+                missingFields.push(`NFR ${nfr.id}`);
             }
         }
         if (!q2) {
@@ -1268,7 +1268,7 @@ document.getElementById('batchForm').addEventListener('submit', (e) => {
             const attnFood = document.querySelector(`input[name="attention_food_${nfr.id}"]:checked`)?.value;
             if (!attnFood) {
                 allValid = false;
-                missingFields.push(`NFR ${nfr.id}: Attention question (Which is not food)`);
+                missingFields.push(`NFR ${nfr.id}`);
             }
         }
         if (!q3) {
