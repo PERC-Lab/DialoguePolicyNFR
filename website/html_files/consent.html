@@ -62,6 +62,9 @@
             <button id="agreeBtn" class="btn" onclick="agreeToConsent()">I Agree</button>
             <button class="btn btn-secondary" onclick="window.location.href='/'">Cancel</button>
         </div>
+        <p id="loadingNotice" style="margin-top: 15px; text-align: center; color: #c0392b; display: none;">
+            Loading the model may take a while. If an error occurs, please refresh this page and try again.
+        </p>
     </div>
 </div>
 
@@ -74,11 +77,15 @@ window.addEventListener('load', () => {
 function agreeToConsent() {
     // Get the button element
     const agreeBtn = document.getElementById('agreeBtn');
+    const loadingNotice = document.getElementById('loadingNotice');
     const originalText = agreeBtn.textContent;
     
     // Set loading state
     agreeBtn.disabled = true;
     agreeBtn.textContent = 'Loading...';
+    if (loadingNotice) {
+        loadingNotice.style.display = 'block';
+    }
     
     // Check if UUID already exists in localStorage
     let uuid = localStorage.getItem('chatbot_uuid');
