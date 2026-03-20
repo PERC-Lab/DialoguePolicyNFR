@@ -1,0 +1,893 @@
+{% extends "base.html" %}
+
+{% block title %}Show Results{% endblock %}
+
+{% block extra_css %}
+<style>
+    .show-results-container {
+        max-width: 1700px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .top-bar {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        padding: 14px 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 12px;
+    }
+
+    .top-bar-left {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .page-title {
+        font-size: 1.25em;
+        font-weight: 700;
+        color: #333;
+    }
+
+    .selected-uuid {
+        font-family: monospace;
+        font-size: 0.9em;
+        color: #666;
+        word-break: break-all;
+    }
+
+    .top-bar-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+    }
+
+    .btn-secondaryish {
+        background-color: #6c757d;
+        border: 0;
+        color: white;
+        padding: 10px 16px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        transition: filter 0.2s;
+    }
+
+    .btn-secondaryish:hover {
+        filter: brightness(0.95);
+    }
+
+    .info-panel {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        padding: 14px 16px;
+        margin-bottom: 12px;
+    }
+
+    .info-panel.hidden {
+        display: none;
+    }
+
+    .info-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+
+    @media (max-width: 1300px) {
+        .info-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .info-card {
+        background: #f8f9fa;
+        border: 1px solid #eee;
+        border-radius: 8px;
+        padding: 12px;
+    }
+
+    .info-card h3 {
+        font-size: 1em;
+        margin: 0 0 10px 0;
+        color: #333;
+    }
+
+    .kv {
+        display: grid;
+        grid-template-columns: 180px 1fr;
+        gap: 8px 12px;
+        margin-top: 6px;
+        align-items: start;
+    }
+
+    @media (max-width: 900px) {
+        .kv {
+            grid-template-columns: 140px 1fr;
+        }
+    }
+
+    .kv .k {
+        font-weight: 600;
+        color: #555;
+    }
+
+    .kv .v {
+        color: #333;
+        word-break: break-word;
+    }
+
+    .columns {
+        display: flex;
+        gap: 12px;
+        height: calc(100vh - 220px);
+        min-height: 520px;
+        align-items: stretch;
+    }
+
+    .col-left {
+        width: 280px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        flex: 0 0 auto;
+    }
+
+    .col-middle {
+        flex: 1;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .col-right {
+        width: 560px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .col-resize-handle {
+        width: 6px;
+        cursor: col-resize;
+        flex: 0 0 6px;
+        border-radius: 4px;
+        background: transparent;
+        transition: background-color 0.15s;
+        margin: 0 -3px; /* visually sits in the gap */
+    }
+
+    .columns:hover .col-resize-handle {
+        background: rgba(102, 126, 234, 0.12);
+    }
+
+    .columns.dragging .col-resize-handle {
+        background: rgba(102, 126, 234, 0.25);
+    }
+
+    @media (max-width: 1450px) {
+        .col-right {
+            width: 480px;
+        }
+    }
+
+    @media (max-width: 1250px) {
+        .columns {
+            flex-direction: column;
+            height: auto;
+        }
+        .col-left, .col-right {
+            width: auto;
+        }
+        .col-left, .col-middle, .col-right {
+            min-height: 280px;
+            height: auto;
+        }
+        .col-resize-handle {
+            display: none;
+        }
+    }
+
+    .column-header {
+        padding: 12px 14px;
+        border-bottom: 1px solid #eee;
+        background: #fafafa;
+        color: #333;
+        font-weight: 800;
+        font-size: 1em;
+    }
+
+    .panel-scroll {
+        padding: 12px 14px;
+        overflow-y: auto;
+        flex: 1;
+    }
+
+    .uuid-list {
+        overflow-y: auto;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .uuid-btn {
+        width: 100%;
+        text-align: left;
+        padding: 10px 10px;
+        border-radius: 8px;
+        border: 1px solid #eee;
+        background: #fff;
+        cursor: pointer;
+        transition: background-color 0.15s;
+        font-family: monospace;
+        font-size: 0.9em;
+        color: #333;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .uuid-btn:hover {
+        background: #f7f9ff;
+    }
+
+    .uuid-btn.active {
+        background: #eef2ff;
+        border-color: #c7d2fe;
+    }
+
+    .empty-state {
+        color: #777;
+        text-align: center;
+        padding: 20px 10px;
+    }
+
+    /* Conversation styles (copied to match `evaluation.html`) */
+    .chatbot-messages {
+        flex: 1;
+        padding: 20px;
+        overflow-y: auto;
+        background: #f8f9fa;
+    }
+
+    .message {
+        margin-bottom: 15px;
+    }
+
+    .message.user {
+        text-align: right;
+    }
+
+    .message.bot {
+        text-align: left;
+    }
+
+    .message-content {
+        display: inline-block;
+        padding: 10px 15px;
+        border-radius: 18px;
+        max-width: 80%;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        font-size: 13px;
+    }
+
+    .message.user .message-content {
+        background: #007bff;
+        color: white;
+        text-align: left;
+    }
+
+    .message.bot .message-content {
+        background: white;
+        color: #333;
+        border: 1px solid #ddd;
+    }
+
+    /* Keep compatibility if messages include markdown-rendered HTML */
+    .message.bot .message-content h1,
+    .message.bot .message-content h2,
+    .message.bot .message-content h3,
+    .message.bot .message-content h4 {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+        font-weight: 600;
+    }
+
+    .message.bot .message-content h1 { font-size: 1.5em; }
+    .message.bot .message-content h2 { font-size: 1.3em; }
+    .message.bot .message-content h3 { font-size: 1.1em; }
+
+    .message.bot .message-content p {
+        margin: 0.5em 0;
+    }
+
+    .message.bot .message-content ul,
+    .message.bot .message-content ol {
+        margin: 0.5em 0;
+        padding-left: 1.5em;
+    }
+
+    .message.bot .message-content li {
+        margin: 0.25em 0;
+    }
+
+    .message.bot .message-content code {
+        background-color: #f4f4f4;
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-family: 'Courier New', monospace;
+        font-size: 0.9em;
+    }
+
+    .message.bot .message-content pre {
+        background-color: #f4f4f4;
+        padding: 10px;
+        border-radius: 4px;
+        overflow-x: auto;
+        margin: 0.5em 0;
+    }
+
+    .message.bot .message-content pre code {
+        background-color: transparent;
+        padding: 0;
+    }
+
+    .message.bot .message-content blockquote {
+        border-left: 3px solid #ddd;
+        padding-left: 1em;
+        margin: 0.5em 0;
+        color: #666;
+        font-style: italic;
+    }
+
+    .message.bot .message-content strong {
+        font-weight: 600;
+    }
+
+    .message.bot .message-content em {
+        font-style: italic;
+    }
+
+    .message.bot .message-content a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    .message.bot .message-content a:hover {
+        text-decoration: underline;
+    }
+
+    .message.bot .message-content table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 0.5em 0;
+    }
+
+    .message.bot .message-content table th,
+    .message.bot .message-content table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    .message.bot .message-content table th {
+        background-color: #f4f4f4;
+        font-weight: 600;
+    }
+
+    .message-time {
+        font-size: 11px;
+        color: #666;
+        margin-top: 5px;
+    }
+
+    .nfr-card {
+        border: 1px solid #eee;
+        border-radius: 10px;
+        padding: 12px;
+        background: #fff;
+        margin-bottom: 12px;
+    }
+
+    .nfr-header {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        align-items: baseline;
+        margin-bottom: 8px;
+    }
+
+    .nfr-id {
+        font-weight: 900;
+        color: #333;
+    }
+
+    .nfr-batch {
+        color: #777;
+        font-size: 0.9em;
+        font-family: monospace;
+    }
+
+    .nfr-text {
+        font-size: 0.95em;
+        color: #333;
+        margin-bottom: 10px;
+        line-height: 1.4;
+        white-space: pre-wrap;
+        word-break: break-word;
+    }
+
+    .agreements-grid {
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        gap: 6px 12px;
+        margin-bottom: 8px;
+        align-items: baseline;
+    }
+
+    .agreements-grid .k {
+        font-weight: 800;
+        color: #555;
+    }
+
+    .agreements-grid .v {
+        color: #222;
+        word-break: break-word;
+    }
+
+    .subtle {
+        color: #666;
+        font-size: 0.95em;
+        white-space: pre-wrap;
+        word-break: break-word;
+    }
+
+    .pre {
+        white-space: pre-wrap;
+        word-break: break-word;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="show-results-container">
+    <div class="top-bar">
+        <div class="top-bar-left">
+            <div class="page-title">Results Viewer (responses2)</div>
+            <div class="selected-uuid" id="selectedUuidLabel">Select a UUID</div>
+        </div>
+
+        <div class="top-bar-actions">
+            <button class="btn-secondaryish" id="toggleInfoBtn" type="button">Show participant info</button>
+        </div>
+    </div>
+
+    <div class="info-panel hidden" id="infoPanel">
+        <div class="info-grid">
+            <div class="info-card">
+                <h3>Prolific + Batch</h3>
+                <div class="kv">
+                    <div class="k">Prolific ID present</div>
+                    <div class="v" id="infoProlificPresent">-</div>
+
+                    <div class="k">Prolific ID</div>
+                    <div class="v" id="infoProlificId">-</div>
+
+                    <div class="k">Batch</div>
+                    <div class="v" id="infoBatch">-</div>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <h3>Satisfaction Survey</h3>
+                <div class="kv">
+                    <div class="k">Q1..Q8</div>
+                    <div class="v" id="infoSurveyValues">-</div>
+
+                    <div class="k">Timestamp</div>
+                    <div class="v" id="infoSurveyTimestamp">-</div>
+                </div>
+            </div>
+        </div>
+
+        <div style="height: 12px;"></div>
+
+        <div class="info-card">
+            <h3>Demographics</h3>
+            <div class="kv" id="infoDemographicsKv"></div>
+        </div>
+    </div>
+
+    <div class="columns">
+        <div class="col-left" id="colLeft">
+            <div class="column-header">UUIDs</div>
+            <div class="uuid-list" id="uuidList">
+                <div class="empty-state">Loading...</div>
+            </div>
+        </div>
+
+        <div class="col-resize-handle" id="resizeHandle" aria-hidden="true"></div>
+
+        <div class="col-middle">
+            <div class="column-header">Conversations</div>
+            <div class="panel-scroll chatbot-messages" id="conversationPanel">
+                <div class="empty-state">Select a UUID to view conversations.</div>
+            </div>
+        </div>
+
+        <div class="col-right" id="colRight">
+            <div class="column-header">NFR Responses</div>
+            <div class="panel-scroll" id="nfrPanel">
+                <div class="empty-state">Select a UUID to view NFR responses.</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    let data = null;
+    let selectedUuid = null;
+    let infoExpanded = false;
+    let resizeState = null;
+
+    function setText(id, value) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.textContent = (value === undefined || value === null) ? '-' : String(value);
+    }
+
+    function setInfoExpanded(expanded) {
+        infoExpanded = expanded;
+        const infoPanel = document.getElementById('infoPanel');
+        const toggleBtn = document.getElementById('toggleInfoBtn');
+        if (expanded) {
+            infoPanel.classList.remove('hidden');
+            toggleBtn.textContent = 'Hide participant info';
+        } else {
+            infoPanel.classList.add('hidden');
+            toggleBtn.textContent = 'Show participant info';
+        }
+    }
+
+    async function loadShowResultsData() {
+        const response = await fetch('/api/show_results/data');
+        if (!response.ok) {
+            throw new Error('Failed to load data: ' + response.status);
+        }
+        return await response.json();
+    }
+
+    function renderUuidList() {
+        const list = document.getElementById('uuidList');
+        list.innerHTML = '';
+
+        if (!data || !Array.isArray(data.participants) || data.participants.length === 0) {
+            list.innerHTML = '<div class="empty-state">No participants found.</div>';
+            return;
+        }
+
+        const frag = document.createDocumentFragment();
+        for (const uuid of data.participants) {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'uuid-btn' + (uuid === selectedUuid ? ' active' : '');
+            btn.textContent = uuid;
+            btn.onclick = () => selectUuid(uuid);
+            frag.appendChild(btn);
+        }
+        list.appendChild(frag);
+    }
+
+    function renderSelectedUuidLabel() {
+        setText('selectedUuidLabel', selectedUuid || 'Select a UUID');
+    }
+
+    function renderConversationPanel() {
+        const panel = document.getElementById('conversationPanel');
+        panel.innerHTML = '';
+
+        const turns = (data && data.conversations && selectedUuid && data.conversations[selectedUuid]) ? data.conversations[selectedUuid] : [];
+        if (!turns || turns.length === 0) {
+            panel.innerHTML = '<div class="empty-state">No conversations found for this UUID.</div>';
+            return;
+        }
+
+        for (const msg of turns) {
+            const userEl = document.createElement('div');
+            userEl.className = 'message user';
+
+            const userContent = document.createElement('div');
+            userContent.className = 'message-content';
+            userContent.textContent = msg.user_message || '';
+            userEl.appendChild(userContent);
+
+            if (msg.user_time) {
+                const userTime = document.createElement('div');
+                userTime.className = 'message-time';
+                userTime.textContent = new Date(msg.user_time).toLocaleTimeString();
+                userEl.appendChild(userTime);
+            }
+
+            panel.appendChild(userEl);
+
+            const botEl = document.createElement('div');
+            botEl.className = 'message bot';
+
+            const botContent = document.createElement('div');
+            botContent.className = 'message-content';
+            botContent.textContent = msg.bot_reply || '';
+            botEl.appendChild(botContent);
+
+            if (msg.bot_time) {
+                const botTime = document.createElement('div');
+                botTime.className = 'message-time';
+                botTime.textContent = new Date(msg.bot_time).toLocaleTimeString();
+                botEl.appendChild(botTime);
+            }
+
+            panel.appendChild(botEl);
+        }
+    }
+
+    function renderNfrPanel() {
+        const panel = document.getElementById('nfrPanel');
+        panel.innerHTML = '';
+
+        const entries = (data && data.nfr_responses && selectedUuid && data.nfr_responses[selectedUuid]) ? data.nfr_responses[selectedUuid] : [];
+        if (!entries || entries.length === 0) {
+            panel.innerHTML = '<div class="empty-state">No NFR responses found for this UUID.</div>';
+            return;
+        }
+
+        const relevant = entries
+            .filter(e => e && e.nfr_id !== undefined && e.nfr_id !== null && (e.nfr_acknowledged === true || e.nfr_acknowledged === undefined))
+            .sort((a, b) => (a.nfr_id - b.nfr_id));
+
+        if (relevant.length === 0) {
+            panel.innerHTML = '<div class="empty-state">No acknowledged NFR responses found.</div>';
+            return;
+        }
+
+        for (const entry of relevant) {
+            const card = document.createElement('div');
+            card.className = 'nfr-card';
+
+            const header = document.createElement('div');
+            header.className = 'nfr-header';
+
+            const idEl = document.createElement('div');
+            idEl.className = 'nfr-id';
+            idEl.textContent = 'NFR ' + entry.nfr_id;
+
+            const batchEl = document.createElement('div');
+            batchEl.className = 'nfr-batch';
+            batchEl.textContent = 'Batch ' + (entry.batch ?? '-');
+
+            header.appendChild(idEl);
+            header.appendChild(batchEl);
+
+            const textEl = document.createElement('div');
+            textEl.className = 'nfr-text';
+            const key = String(entry.nfr_id);
+            textEl.textContent = (data.nfr_text_map && data.nfr_text_map[key]) ? data.nfr_text_map[key] : '[NFR text not found]';
+
+            const agGrid = document.createElement('div');
+            agGrid.className = 'agreements-grid';
+
+            const k1 = document.createElement('div');
+            k1.className = 'k';
+            k1.textContent = 'Q1';
+            const v1 = document.createElement('div');
+            v1.className = 'v';
+            v1.textContent = entry.q1_agreement || '-';
+
+            const k2 = document.createElement('div');
+            k2.className = 'k';
+            k2.textContent = 'Q2';
+            const v2 = document.createElement('div');
+            v2.className = 'v';
+            v2.textContent = entry.q2_agreement || '-';
+
+            const k3 = document.createElement('div');
+            k3.className = 'k';
+            k3.textContent = 'Q3';
+            const v3 = document.createElement('div');
+            v3.className = 'v';
+            v3.textContent = entry.q3_agreement || '-';
+
+            agGrid.appendChild(k1); agGrid.appendChild(v1);
+            agGrid.appendChild(k2); agGrid.appendChild(v2);
+            agGrid.appendChild(k3); agGrid.appendChild(v3);
+
+            const undecided = document.createElement('div');
+            undecided.className = 'subtle';
+            const reason = (entry.undecided_reason && entry.undecided_reason.trim()) ? entry.undecided_reason.trim() : '';
+            undecided.innerHTML = '<div style="font-weight: 900; margin-bottom: 6px; color:#555;">Undecided</div>' +
+                (reason ? reason : '<span style="color:#777;">(none)</span>');
+
+            card.appendChild(header);
+            card.appendChild(textEl);
+            card.appendChild(agGrid);
+            card.appendChild(undecided);
+
+            panel.appendChild(card);
+        }
+    }
+
+    function renderInfoPanel() {
+        if (!data || !selectedUuid) return;
+
+        const prolificId = (data.prolific_uuid_mapping && data.prolific_uuid_mapping[selectedUuid]) ? data.prolific_uuid_mapping[selectedUuid] : null;
+        setText('infoProlificId', prolificId || '-');
+        setText('infoProlificPresent', prolificId ? 'Yes' : 'No');
+
+        const batches = (data.batch_assignments && data.batch_assignments[selectedUuid]) ? data.batch_assignments[selectedUuid] : [];
+        if (Array.isArray(batches)) {
+            setText('infoBatch', batches.length ? batches.join(', ') : '-');
+        } else {
+            setText('infoBatch', batches || '-');
+        }
+
+        const demo = (data.demographics && data.demographics[selectedUuid]) ? data.demographics[selectedUuid] : null;
+        const survey = (data.surveys && data.surveys[selectedUuid]) ? data.surveys[selectedUuid] : null;
+
+        const demoKv = document.getElementById('infoDemographicsKv');
+        demoKv.innerHTML = '';
+
+        if (demo) {
+            for (const [k, v] of Object.entries(demo)) {
+                if (k === 'timestamp') continue;
+                const kEl = document.createElement('div');
+                kEl.className = 'k';
+                kEl.textContent = k;
+
+                const vEl = document.createElement('div');
+                vEl.className = 'v';
+                vEl.textContent = (v === null || v === undefined) ? '-' : String(v);
+
+                demoKv.appendChild(kEl);
+                demoKv.appendChild(vEl);
+            }
+        } else {
+            const kEl = document.createElement('div');
+            kEl.className = 'k';
+            kEl.textContent = 'Demographics';
+
+            const vEl = document.createElement('div');
+            vEl.className = 'v';
+            vEl.textContent = '-';
+
+            demoKv.appendChild(kEl);
+            demoKv.appendChild(vEl);
+        }
+
+        if (survey) {
+            const qVals = [];
+            for (let i = 1; i <= 8; i++) {
+                const key = 'q' + i;
+                if (survey[key] !== undefined) qVals.push(key.toUpperCase() + ': ' + survey[key]);
+            }
+            setText('infoSurveyValues', qVals.length ? qVals.join(', ') : '-');
+            setText('infoSurveyTimestamp', survey.timestamp || '-');
+        } else {
+            setText('infoSurveyValues', '-');
+            setText('infoSurveyTimestamp', '-');
+        }
+    }
+
+    function selectUuid(uuid) {
+        selectedUuid = uuid;
+        renderSelectedUuidLabel();
+        renderUuidList();
+        renderConversationPanel();
+        renderNfrPanel();
+        renderInfoPanel();
+    }
+
+    window.addEventListener('load', async () => {
+        const toggleBtn = document.getElementById('toggleInfoBtn');
+        toggleBtn.addEventListener('click', () => {
+            setInfoExpanded(!infoExpanded);
+        });
+
+        // Enable drag-to-resize left panel.
+        // Works only in the horizontal layout (handle is hidden by CSS on small screens).
+        const columns = document.querySelector('.columns');
+        const leftPanel = document.getElementById('colLeft');
+        const rightPanel = document.getElementById('colRight');
+        const handle = document.getElementById('resizeHandle');
+
+        if (columns && leftPanel && rightPanel && handle) {
+            const trySetupResize = () => {
+                const handleRect = handle.getBoundingClientRect();
+                if (handleRect.width === 0) return; // handle is hidden (small screen)
+
+                // Initialize width if empty.
+                if (!leftPanel.style.width) {
+                    leftPanel.style.width = leftPanel.getBoundingClientRect().width + 'px';
+                }
+
+                handle.addEventListener('pointerdown', (e) => {
+                    e.preventDefault();
+                    columns.classList.add('dragging');
+                    handle.setPointerCapture(e.pointerId);
+
+                    const leftWidth = leftPanel.getBoundingClientRect().width;
+                    resizeState = {
+                        startX: e.clientX,
+                        startLeftWidth: leftWidth
+                    };
+                });
+
+                handle.addEventListener('pointermove', (e) => {
+                    if (!resizeState) return;
+
+                    const containerWidth = columns.getBoundingClientRect().width;
+                    const rightWidth = rightPanel.getBoundingClientRect().width;
+
+                    // Keep a reasonable middle area.
+                    const minLeft = 180;
+                    const maxLeft = Math.max(minLeft, containerWidth - rightWidth - 140);
+
+                    const dx = e.clientX - resizeState.startX;
+                    const nextLeft = Math.min(maxLeft, Math.max(minLeft, resizeState.startLeftWidth + dx));
+                    leftPanel.style.width = nextLeft + 'px';
+                });
+
+                handle.addEventListener('pointerup', () => {
+                    resizeState = null;
+                    columns.classList.remove('dragging');
+                });
+                handle.addEventListener('pointercancel', () => {
+                    resizeState = null;
+                    columns.classList.remove('dragging');
+                });
+            };
+
+            trySetupResize();
+        }
+
+        try {
+            data = await loadShowResultsData();
+            if (!data || data.status !== 'success') {
+                document.getElementById('uuidList').innerHTML = '<div class="empty-state">Failed to load data.</div>';
+                return;
+            }
+
+            selectedUuid = (data.participants && data.participants.length) ? data.participants[0] : null;
+            renderSelectedUuidLabel();
+            renderUuidList();
+            renderConversationPanel();
+            renderNfrPanel();
+            renderInfoPanel();
+        } catch (err) {
+            console.error(err);
+            document.getElementById('uuidList').innerHTML = '<div class="empty-state">Error loading data: ' + err.message + '</div>';
+        }
+    });
+</script>
+{% endblock %}
+
