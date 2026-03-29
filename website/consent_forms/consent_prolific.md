@@ -12,7 +12,7 @@ In this study, you will work with our chatbot that evaluates software requiremen
 
 
 ## Compensation:
-Upon reaching the end of the study, your account associated with your Prolific ID will be credited with $15, per your contract with Prolific. But you must answer every question and complete your study to receive compensation.
+Upon reaching the end of the study, your account associated with your Prolific ID will be credited with $20, per your contract with Prolific. But you must answer every question and complete your study to receive compensation.
 
 ## Confidentiality
 Your Prolific ID will be used to log you into our tool and to compensate you once you have participated in the study. After your compensation has been processed through Prolific, we will delete your account and the associated response from our tool by July 30th, 2026. We will store your anonymized data on a password-protected, secure cloud storage drive indefinitely.
