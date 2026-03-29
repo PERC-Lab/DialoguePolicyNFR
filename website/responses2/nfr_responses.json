@@ -922,5 +922,269 @@
       "timestamp": "2026-03-18T23:02:22.884Z",
       "uuid": "b50b6c66-2252-47cf-a890-9f13757be68c"
     }
-  ]
+  ],
+  "700f34fb-b376-44ef-98c3-a55a045abdd5": [
+    {
+      "batch": 3,
+      "forced_own_assessment": "",
+      "nfr_acknowledged": true,
+      "nfr_id": 21,
+      "q1_agreement": "Strongly Agree",
+      "q2_agreement": "Agree",
+      "q3_agreement": "Agree",
+      "timestamp": "2026-03-25T06:05:52.447Z",
+      "undecided_reason": "",
+      "uuid": "700f34fb-b376-44ef-98c3-a55a045abdd5"
+    },
+    {
+      "batch": 3,
+      "forced_own_assessment": "",
+      "nfr_acknowledged": true,
+      "nfr_id": 22,
+      "q1_agreement": "Strongly Agree",
+      "q2_agreement": "Strongly Agree",
+      "q3_agreement": "Strongly Agree",
+      "timestamp": "2026-03-25T06:05:52.447Z",
+      "undecided_reason": "",
+      "uuid": "700f34fb-b376-44ef-98c3-a55a045abdd5"
+    },
+    {
+      "batch": 3,
+      "forced_own_assessment": "",
+      "nfr_acknowledged": true,
+      "nfr_id": 23,
+      "q1_agreement": "Agree",
+      "q2_agreement": "Strongly Agree",
+      "q3_agreement": "Strongly Agree",
+      "timestamp": "2026-03-25T06:05:52.447Z",
+      "undecided_reason": "",
+      "uuid": "700f34fb-b376-44ef-98c3-a55a045abdd5"
+    },
+    {
+      "batch": 3,
+      "forced_own_assessment": "",
+      "nfr_acknowledged": true,
+      "nfr_id": 24,
+      "q1_agreement": "Strongly Agree",
+      "q2_agreement": "Agree",
+      "q3_agreement": "Agree",
+      "timestamp": "2026-03-25T06:05:52.447Z",
+      "undecided_reason": "",
+      "uuid": "700f34fb-b376-44ef-98c3-a55a045abdd5"
+    },
+    {
+      "batch": 3,
+      "forced_own_assessment": "",
+      "nfr_acknowledged": true,
+      "nfr_id": 25,
+      "q1_agreement": "Agree",
+      "q2_agreement": "Strongly Agree",
+      "q3_agreement": "Strongly Agree",
+      "timestamp": "2026-03-25T06:05:52.447Z",
+      "undecided_reason": "",
+      "uuid": "700f34fb-b376-44ef-98c3-a55a045abdd5"
+    },
+    {
+      "batch": 3,
+      "forced_own_assessment": "",
+      "nfr_acknowledged": true,
+      "nfr_id": 26,
+      "q1_agreement": "Strongly Agree",
+      "q2_agreement": "Agree",
+      "q3_agreement": "Agree",
+      "timestamp": "2026-03-25T06:05:52.447Z",
+      "undecided_reason": "",
+      "uuid": "700f34fb-b376-44ef-98c3-a55a045abdd5"
+    },
+    {
+      "batch": 3,
+      "forced_own_assessment": "",
+      "nfr_acknowledged": true,
+      "nfr_id": 27,
+      "q1_agreement": "Agree",
+      "q2_agreement": "Strongly Agree",
+      "q3_agreement": "Agree",
+      "timestamp": "2026-03-25T06:05:52.447Z",
+      "undecided_reason": "",
+      "uuid": "700f34fb-b376-44ef-98c3-a55a045abdd5"
+    },
+    {
+      "batch": 3,
+      "forced_own_assessment": "",
+      "nfr_acknowledged": true,
+      "nfr_id": 28,
+      "q1_agreement": "Strongly Agree",
+      "q2_agreement": "Agree",
+      "q3_agreement": "Agree",
+      "timestamp": "2026-03-25T06:05:52.447Z",
+      "undecided_reason": "",
+      "uuid": "700f34fb-b376-44ef-98c3-a55a045abdd5"
+    },
+    {
+      "batch": 3,
+      "forced_own_assessment": "",
+      "nfr_acknowledged": true,
+      "nfr_id": 29,
+      "q1_agreement": "Agree",
+      "q2_agreement": "Strongly Agree",
+      "q3_agreement": "Strongly Agree",
+      "timestamp": "2026-03-25T06:05:52.447Z",
+      "undecided_reason": "",
+      "uuid": "700f34fb-b376-44ef-98c3-a55a045abdd5"
+    },
+    {
+      "batch": 3,
+      "forced_own_assessment": "",
+      "nfr_acknowledged": true,
+      "nfr_id": 30,
+      "q1_agreement": "Agree",
+      "q2_agreement": "Agree",
+      "q3_agreement": "Agree",
+      "timestamp": "2026-03-25T06:05:52.447Z",
+      "undecided_reason": "",
+      "uuid": "700f34fb-b376-44ef-98c3-a55a045abdd5"
+    },
+    {
+      "batch": 3,
+      "is_attention_question": true,
+      "nfr_display_1": "Agree",
+      "nfr_display_2": "Agree",
+      "nfr_feedback_1": "Disagree",
+      "nfr_feedback_2": "4",
+      "timestamp": "2026-03-25T06:05:52.447Z",
+      "uuid": "700f34fb-b376-44ef-98c3-a55a045abdd5"
+    }
+  ],
+  "78288bfa-e19e-4af8-acad-effa1e3aae35": [
+    {
+      "batch": 2,
+      "forced_own_assessment": "",
+      "nfr_acknowledged": true,
+      "nfr_id": 11,
+      "q1_agreement": "Agree",
+      "q2_agreement": "Agree",
+      "q3_agreement": "Disagree",
+      "timestamp": "2026-03-25T04:40:13.557Z",
+      "undecided_reason": "",
+      "uuid": "78288bfa-e19e-4af8-acad-effa1e3aae35"
+    },
+    {
+      "batch": 2,
+      "forced_own_assessment": "",
+      "nfr_acknowledged": true,
+      "nfr_id": 12,
+      "q1_agreement": "Agree",
+      "q2_agreement": "Agree",
+      "q3_agreement": "Agree",
+      "timestamp": "2026-03-25T04:40:13.557Z",
+      "undecided_reason": "",
+      "uuid": "78288bfa-e19e-4af8-acad-effa1e3aae35"
+    },
+    {
+      "batch": 2,
+      "forced_own_assessment": "",
+      "nfr_acknowledged": true,
+      "nfr_id": 13,
+      "q1_agreement": "Strongly Agree",
+      "q2_agreement": "Agree",
+      "q3_agreement": "Strongly Agree",
+      "timestamp": "2026-03-25T04:40:13.557Z",
+      "undecided_reason": "",
+      "uuid": "78288bfa-e19e-4af8-acad-effa1e3aae35"
+    },
+    {
+      "batch": 2,
+      "forced_own_assessment": "",
+      "nfr_acknowledged": true,
+      "nfr_id": 14,
+      "q1_agreement": "Strongly Agree",
+      "q2_agreement": "Agree",
+      "q3_agreement": "Agree",
+      "timestamp": "2026-03-25T04:40:13.557Z",
+      "undecided_reason": "",
+      "uuid": "78288bfa-e19e-4af8-acad-effa1e3aae35"
+    },
+    {
+      "batch": 2,
+      "forced_own_assessment": "",
+      "nfr_acknowledged": true,
+      "nfr_id": 15,
+      "q1_agreement": "Strongly Agree",
+      "q2_agreement": "Agree",
+      "q3_agreement": "Strongly Agree",
+      "timestamp": "2026-03-25T04:40:13.557Z",
+      "undecided_reason": "",
+      "uuid": "78288bfa-e19e-4af8-acad-effa1e3aae35"
+    },
+    {
+      "batch": 2,
+      "forced_own_assessment": "",
+      "nfr_acknowledged": true,
+      "nfr_id": 16,
+      "q1_agreement": "Agree",
+      "q2_agreement": "Agree",
+      "q3_agreement": "Agree",
+      "timestamp": "2026-03-25T04:40:13.557Z",
+      "undecided_reason": "",
+      "uuid": "78288bfa-e19e-4af8-acad-effa1e3aae35"
+    },
+    {
+      "batch": 2,
+      "forced_own_assessment": "",
+      "nfr_acknowledged": true,
+      "nfr_id": 17,
+      "q1_agreement": "Agree",
+      "q2_agreement": "Agree",
+      "q3_agreement": "Strongly Agree",
+      "timestamp": "2026-03-25T04:40:13.557Z",
+      "undecided_reason": "",
+      "uuid": "78288bfa-e19e-4af8-acad-effa1e3aae35"
+    },
+    {
+      "batch": 2,
+      "forced_own_assessment": "",
+      "nfr_acknowledged": true,
+      "nfr_id": 18,
+      "q1_agreement": "Agree",
+      "q2_agreement": "Strongly Agree",
+      "q3_agreement": "Agree",
+      "timestamp": "2026-03-25T04:40:13.557Z",
+      "undecided_reason": "",
+      "uuid": "78288bfa-e19e-4af8-acad-effa1e3aae35"
+    },
+    {
+      "batch": 2,
+      "forced_own_assessment": "",
+      "nfr_acknowledged": true,
+      "nfr_id": 19,
+      "q1_agreement": "Strongly Agree",
+      "q2_agreement": "Agree",
+      "q3_agreement": "Agree",
+      "timestamp": "2026-03-25T04:40:13.558Z",
+      "undecided_reason": "",
+      "uuid": "78288bfa-e19e-4af8-acad-effa1e3aae35"
+    },
+    {
+      "batch": 2,
+      "forced_own_assessment": "",
+      "nfr_acknowledged": true,
+      "nfr_id": 20,
+      "q1_agreement": "Agree",
+      "q2_agreement": "Agree",
+      "q3_agreement": "Agree",
+      "timestamp": "2026-03-25T04:40:13.558Z",
+      "undecided_reason": "",
+      "uuid": "78288bfa-e19e-4af8-acad-effa1e3aae35"
+    },
+    {
+      "batch": 2,
+      "is_attention_question": true,
+      "nfr_display_1": "Agree",
+      "nfr_display_2": "Agree",
+      "nfr_feedback_1": "Disagree",
+      "nfr_feedback_2": "4",
+      "timestamp": "2026-03-25T04:40:13.558Z",
+      "uuid": "78288bfa-e19e-4af8-acad-effa1e3aae35"
+    }
+  ]  
 }

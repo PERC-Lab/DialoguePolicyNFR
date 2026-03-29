@@ -843,12 +843,19 @@ def api_show_results_data():
     JSON backing for the `show_results.html` viewer.
     Reads from `website/responses2/*` and NFR definitions from `website/NFR.json`.
     """
-    conversations = load_json_file(CONVERSATION_FILE_2)
-    nfr_responses = load_json_file(NFR_RESPONSES_FILE_2)
-    surveys = load_json_file(SATISFACTION_FILE_2)
-    demographics = load_json_file(DEMOGRAPHICS_FILE_2)
-    batch_assignments = load_json_file(BATCH_ASSIGNMENTS_FILE_2)
-    prolific_uuid_mapping = load_json_file(PROLIFIC_UUID_MAPPING_FILE_2)
+    #conversations = load_json_file(CONVERSATION_FILE_2)
+    #nfr_responses = load_json_file(NFR_RESPONSES_FILE_2)
+    #surveys = load_json_file(SATISFACTION_FILE_2)
+    #demographics = load_json_file(DEMOGRAPHICS_FILE_2)
+    #batch_assignments = load_json_file(BATCH_ASSIGNMENTS_FILE_2)
+    #prolific_uuid_mapping = load_json_file(PROLIFIC_UUID_MAPPING_FILE_2)
+    
+    conversations = load_json_file(CONVERSATION_FILE)
+    nfr_responses = load_json_file(NFR_RESPONSES_FILE)
+    surveys = load_json_file(SATISFACTION_FILE)
+    demographics = load_json_file(DEMOGRAPHICS_FILE)
+    batch_assignments = load_json_file(BATCH_ASSIGNMENTS_FILE)
+    prolific_uuid_mapping = load_json_file(PROLIFIC_UUID_MAPPING_FILE)
     nfr_text_map = build_nfr_text_map()
 
     # Only show UUIDs that have conversations.
