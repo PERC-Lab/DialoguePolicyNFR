@@ -290,8 +290,9 @@
     .right-panels.locked .chatbot-panel,
     .right-panels.locked .form-panel {
         filter: blur(3px);
-        pointer-events: none;
-        user-select: none;
+        /* Visual-only lock: keep visible hint but do not block interaction */
+        pointer-events: auto;
+        user-select: auto;
     }
     .lock-message-box {
         position: absolute;
@@ -307,6 +308,8 @@
         text-align: center;
         display: none;
         max-width: 400px;
+        /* Don't intercept clicks; allow interacting with panels underneath */
+        pointer-events: none;
     }
     .right-panels.locked .lock-message-box {
         display: block;
