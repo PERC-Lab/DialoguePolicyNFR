@@ -147,9 +147,16 @@ def assign_batches_to_user(uuid):
             for batch_num in user_batches:
                 batch_user_count[batch_num] = batch_user_count.get(batch_num, 0) + 1
 
-        # First available batch: lowest batch number that has fewer than 2 users
+        # First available batch, with preferred batches taking priority
+        preferred_batches = [2, 10, 5, 9, 12, 8]
+        candidate_batches = [
+            b for b in preferred_batches if 1 <= b <= total_batches
+        ] + [
+            b for b in range(1, total_batches + 1) if b not in preferred_batches
+        ]
+
         selected_batch = None
-        for batch_num in range(1, total_batches + 1):
+        for batch_num in candidate_batches:
             if batch_user_count.get(batch_num, 0) < 2:
                 selected_batch = batch_num
                 break
