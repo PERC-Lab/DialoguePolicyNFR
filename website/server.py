@@ -911,6 +911,70 @@ def api_show_results_data():
     })
 
 
+@app.route('/show_results_pilot')
+def show_results_pilot():
+    """Standalone results viewer for `website/responses2/`."""
+    return render_template('show_results_pilot.html')
+
+@app.route('/api/show_results_pilot/data', methods=['GET'])
+def api_show_results_data_pilot():
+    """
+    JSON backing for the `show_results.html` viewer.
+    Reads from `website/responses2/*` and NFR definitions from `website/NFR.json`.
+    """
+    conversations = load_json_file(CONVERSATION_FILE_2)
+    nfr_responses = load_json_file(NFR_RESPONSES_FILE_2)
+    surveys = load_json_file(SATISFACTION_FILE_2)
+    demographics = load_json_file(DEMOGRAPHICS_FILE_2)
+    batch_assignments = load_json_file(BATCH_ASSIGNMENTS_FILE_2)
+    prolific_uuid_mapping = load_json_file(PROLIFIC_UUID_MAPPING_FILE_2)
+    nfr_text_map = build_nfr_text_map()
+
+    # Only show UUIDs that have conversations.
+    # Sort UUIDs by the earliest conversation timestamp (user_time/bot_time).
+    participants = []
+    if isinstance(conversations, dict):
+        def _parse_ts(ts):
+            if not ts or not isinstance(ts, str):
+                return None
+            try:
+                # Handle ISO strings ending with 'Z' (UTC)
+                if ts.endswith('Z'):
+                    ts = ts[:-1] + '+00:00'
+                return datetime.fromisoformat(ts)
+            except Exception:
+                return None
+
+        items = []
+        for uuid, turns in conversations.items():
+            min_ts = None
+            if isinstance(turns, list):
+                for msg in turns:
+                    if not isinstance(msg, dict):
+                        continue
+                    for key in ('user_time', 'bot_time'):
+                        t = _parse_ts(msg.get(key))
+                        if t and (min_ts is None or t < min_ts):
+                            min_ts = t
+            items.append((min_ts, uuid))
+
+        # UUIDs without timestamps go last, but stable by UUID.
+        items.sort(key=lambda x: (x[0] is None, x[0] or datetime.max, x[1]))
+        participants = [uuid for _, uuid in items]
+
+    return jsonify({
+        'status': 'success',
+        'participants': participants,
+        'nfr_text_map': nfr_text_map,
+        'conversations': conversations,
+        'nfr_responses': nfr_responses,
+        'surveys': surveys,
+        'demographics': demographics,
+        'batch_assignments': batch_assignments,
+        'prolific_uuid_mapping': prolific_uuid_mapping,
+    })
+
+
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
 
