@@ -154,7 +154,7 @@ def assign_batches_to_user(uuid):
         ] + [
             b for b in range(1, total_batches + 1) if b not in preferred_batches
         ]
-        candidate_batches = [7, 12, 13, 14,15]
+        candidate_batches = [7, 12, 13, 15]
 
         selected_batch = None
         for batch_num in candidate_batches:
@@ -163,7 +163,7 @@ def assign_batches_to_user(uuid):
                 break
 
         if selected_batch is None:
-            selected_batch = 1
+            selected_batch = 7
 
         assigned = [selected_batch]
         assignments[uuid] = assigned
