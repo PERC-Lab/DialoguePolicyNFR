@@ -1,31 +1,20 @@
 def assign_batches_to_user(uuid):
 
     assignments = {
-        "48b181c2-0689-4a5b-9d61-0644f4e37492": [
-            1
-        ],
-        "process-1768508305789-14650": [
-            1
-        ],
-        "03da7645-232c-429c-be02-389a00eb33c0": [
-            2
-        ],
-        "2dee0f05-c597-432b-9d5e-1cf938fb436c": [
-            2
-        ],
-        "efdd096c-7cc5-429c-ad81-99af13f7c20d": [
-            3
-        ],
-        "1ce0ca00-a660-4d8d-bb92-55aa138a495c": [
-            3
-        ],
-        "debf8256-4dbc-4f71-972d-89488d17a8b1": [
-            4
-        ],
-        "e7c3d057-f0bb-4f30-aea0-ab689f9412ac": [
-            1
-        ]
-        }
+  "232fb27e-b2ad-4862-b574-c27dc374b6b0": [
+    2
+  ],
+  "932fb27e-b2ad-4862-b574-c27dc374b6b0": [
+    2
+  ],
+
+  "e9d46a67-49a6-445b-a851-46effd7e101c": [
+    9
+  ],
+  "919e13b3-57c3-46bf-8496-ef7ab7db8eba": [
+    9
+  ],
+}
 
     if uuid in assignments:
         return assignments[uuid]
@@ -37,9 +26,15 @@ def assign_batches_to_user(uuid):
         for batch_num in user_batches:
             batch_user_count[batch_num] = batch_user_count.get(batch_num, 0) + 1
 
-    # First available batch: lowest batch number that has fewer than 2 users
+    preferred_batches = [2, 9,]
+    candidate_batches = [
+        b for b in preferred_batches if 1 <= b <= total_batches
+    ] + [
+        b for b in range(1, total_batches + 1) if b not in preferred_batches
+    ]
+
     selected_batch = None
-    for batch_num in range(1, total_batches + 1):
+    for batch_num in candidate_batches:
         if batch_user_count.get(batch_num, 0) < 2:
             selected_batch = batch_num
             break
