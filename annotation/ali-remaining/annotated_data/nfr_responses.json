@@ -540,7 +540,7 @@
             "nfr_acknowledged": true,
             "timestamp": "2026-04-02T14:39:13.303Z",
             "satisfaction_level": "Weakly Satisfied",
-            "reasoning": "Positive controls: role-based access is enforced (web.xml), user roles checked (AuthDAO.getUserRole), session role/MID management (SessionUtils), and a transaction/audit system logs many PHI accesses (TransactionDAO / TransactionLogger; many actions call logTransaction). Weaknesses: some code paths intentionally bypass per-call logging (ViewMyRemoteMonitoringListAction.getPatientDataWithoutLogging used by WebRoot/auth/uap/getPatientMonitorList.jsp), and a high-level privacyPolicy.jsp relies on "professional judgment" rather than strict enforcement. Public servlet mappings (e.g., /charts/*) could expose PHI if misused. These gaps risk incidental PHI disclosures occurring outside documented permitted disclosures or without per-access audit.",
+            "reasoning": "Positive controls: role-based access is enforced (web.xml), user roles checked (AuthDAO.getUserRole), session role/MID management (SessionUtils), and a transaction/audit system logs many PHI accesses (TransactionDAO / TransactionLogger; many actions call logTransaction). Weaknesses: some code paths intentionally bypass per-call logging (ViewMyRemoteMonitoringListAction.getPatientDataWithoutLogging used by WebRoot/auth/uap/getPatientMonitorList.jsp), and a high-level privacyPolicy.jsp relies on \"professional judgment\" rather than strict enforcement. Public servlet mappings (e.g., /charts/*) could expose PHI if misused. These gaps risk incidental PHI disclosures occurring outside documented permitted disclosures or without per-access audit.",
             "code_location": ["privacyPolicy.jsp 20-70"],
             "comp": 1
         },
@@ -620,7 +620,7 @@
             "nfr_acknowledged": true,
             "timestamp": "2026-04-02T14:39:13.304Z",
             "satisfaction_level": "Denied",
-            "reasoning": "No code paths for \"amend\", \"amendment\", or \"correction\" were found in the codebase — grep returned no matches. The only related patient-initiated workflow is for records release (requestRecordsRelease), which supports requesting disclosure to third parties, not requesting amendments to the patient's own PHI. - While patients can edit some personal/basic health info via patient pages (PATIENT_HEALTH_INFORMATION_EDIT exists in TransactionType), there is no formal "request an amendment" workflow that:   - Accepts an amendment request,   - Stores the request and its status,  - Routes it for review/approval, and  - Records the outcome (granted/denied) and any appended statements — all required by the amendment rule.- No DAO/table, servlet, action, or JSP implements amendment request handling or enforcement.",
+            "reasoning": "No code paths for \"amend\", \"amendment\", or \"correction\" were found in the codebase — grep returned no matches. The only related patient-initiated workflow is for records release (requestRecordsRelease), which supports requesting disclosure to third parties, not requesting amendments to the patient's own PHI. - While patients can edit some personal/basic health info via patient pages (PATIENT_HEALTH_INFORMATION_EDIT exists in TransactionType), there is no formal \"request an amendment\" workflow that:   - Accepts an amendment request,   - Stores the request and its status,  - Routes it for review/approval, and  - Records the outcome (granted/denied) and any appended statements — all required by the amendment rule.- No DAO/table, servlet, action, or JSP implements amendment request handling or enforcement.",
             "code_location": [],
             "comp": 0
         },
@@ -1532,7 +1532,7 @@
             "nfr_acknowledged": true,
             "timestamp": "2026-04-02T14:13:36.547Z",
             "satisfaction_level": "Weakly Satisfied",
-            "reasoning": "The system requires patient authorization for record releases (UI/form + servlet + DAO + digital-signature check) and enforces role-based access controls elsewhere. However the "digital signature" check is rudimentary (string equality with logged-in name) and enforcement for other PHI disclosures is not shown as a strict, auditable authorization/consent-enforcement pipeline.",
+            "reasoning": "The system requires patient authorization for record releases (UI/form + servlet + DAO + digital-signature check) and enforces role-based access controls elsewhere. However the \"digital signature\" check is rudimentary (string equality with logged-in name) and enforcement for other PHI disclosures is not shown as a strict, auditable authorization/consent-enforcement pipeline.",
             "code_location": ["requestRecordsRelease.jsp 145-156", "RecordsReleaseServlet.java 53-97", "RecordsReleaseServlet.java 150-155", "RecordsReleaseDAO.java 22-31"],
             "comp": 0
         },
