@@ -11,10 +11,10 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T17:58:45.707Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
-            "comp": 0
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Policy allows payment use without authorization but no enforcement/audit controls.",
+            "code_location": ["privacyPolicy.jsp 42-70"],
+            "comp": 1
         },
         {
             "uuid": "996a0e8f-2294-4183-a4a2-c29e88930d65",
@@ -27,10 +27,10 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T17:58:45.707Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
-            "comp": 0
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "No disclosure workflow or flags; only policy text mentions payment disclosures. the only place “disclosure” is mentioned is static policy text in `WebRoot/privacyPolicy.jsp`. There is no code to model or record disclosures: no DAO/entity/controller to create a disclosure record, tag it as Payment/Operations, or bypass per‑patient authorization; no UI flow or API to initiate a disclosure event; and no audit/transaction type for disclosures. Without those, the system can’t actually execute or track permitted disclosures, so the requirement is effectively unmet.",
+            "code_location": ["privacyPolicy.jsp 51-70"],
+            "comp": 1
         },
         {
             "uuid": "996a0e8f-2294-4183-a4a2-c29e88930d65",
@@ -43,8 +43,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T17:58:45.707Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Policy permits operations use without auth (same section); no supporting logic.",
             "code_location": [],
             "comp": 0
         },
@@ -59,10 +59,10 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T17:58:45.708Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
-            "comp": 0
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "No ops disclosure handling beyond policy text. the only place “disclosure” is mentioned is static policy text in `WebRoot/privacyPolicy.jsp`. There is no code to model or record disclosures: no DAO/entity/controller to create a disclosure record, tag it as Payment/Operations, or bypass per‑patient authorization; no UI flow or API to initiate a disclosure event; and no audit/transaction type for disclosures. Without those, the system can’t actually execute or track permitted disclosures, so the requirement is effectively unmet.",
+            "code_location": ["privacyPolicy.jsp 51-70"],
+            "comp": 1
         },
         {
             "uuid": "996a0e8f-2294-4183-a4a2-c29e88930d65",
@@ -75,8 +75,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T17:58:45.708Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "No consent capture/recording for Treatment; optional support absent.",
             "code_location": [],
             "comp": 0
         },
@@ -91,8 +91,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T17:58:45.708Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "No consent capture for Payment.",
             "code_location": [],
             "comp": 0
         },
@@ -107,10 +107,10 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T17:58:45.708Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Denied",
+            "reasoning": "No authorization object/validation to mark false data invalid.",
             "code_location": [],
-            "comp": 0
+            "comp": 1
         },
         {
             "uuid": "996a0e8f-2294-4183-a4a2-c29e88930d65",
@@ -123,10 +123,10 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T17:58:45.708Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Denied",
+            "reasoning": "No way to record/process revocation.",
             "code_location": [],
-            "comp": 0
+            "comp": 1
         },
         {
             "uuid": "996a0e8f-2294-4183-a4a2-c29e88930d65",
@@ -139,10 +139,10 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T17:58:45.708Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Denied",
+            "reasoning": "No logic to halt use/disclosure after revocation.",
             "code_location": [],
-            "comp": 0
+            "comp": 1
         },
         {
             "uuid": "996a0e8f-2294-4183-a4a2-c29e88930d65",
@@ -155,10 +155,10 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T17:58:45.708Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Denied",
+            "reasoning": "No retention carve‑out for insurance-conditioned authorizations.",
             "code_location": [],
-            "comp": 0
+            "comp": 1
         },
         {
             "batch": 4,
@@ -187,8 +187,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T16:50:07.247Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "RBAC/audit (WebRoot/WEB-INF/web.xml; TransactionLogger.java). No HTTPS/TLS enforcement, so data can traverse in cleartext (WebRoot/WEB-INF/web.xml).",
             "code_location": [],
             "comp": 0
         },
@@ -203,8 +203,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T16:50:07.247Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "RBAC/audit (WebRoot/WEB-INF/web.xml; TransactionLogger.java) when receiving, No encryption at rest; PHI and even credit cards are stored plaintext in DB tables (sql/createTables.sql, e.g., officeVisit, prescription, patients, recordsrelease, credit card fields).",
             "code_location": [],
             "comp": 0
         },
@@ -219,8 +219,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T16:50:07.247Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "maintained PHI unencrypted (createTables.sql); Authorization forms/flows don’t add confidentiality controls beyond RBAC/audit, so created/received data remains unencrypted. - Digital signature/auth checks are weak (name-based), offering little protection if traffic or storage is compromised.",
             "code_location": [],
             "comp": 0
         },
@@ -235,8 +235,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T16:50:07.247Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "records release is separate form/JSP/table (RecordsReleaseForm.java; requestRecordsRelease.jsp); no explicit block on compound auth.",
             "code_location": [],
             "comp": 0
         },
@@ -251,8 +251,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T16:50:07.248Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "key required elements are missing. The records release form (`model/old/beans/forms/RecordsReleaseForm.java`, `WebRoot/auth/patient/requestRecordsRelease.jsp`) captures description/purpose and parties, and has a simple “digitalSignature” checkbox, but there’s no expiration date/event field, no personal-representative authority field, and the signature check is just a name match (`server/RecordsReleaseServlet.java` → `checkCredentials`). Validator (`model/old/validate/RecordsReleaseFormValidator.java`) enforces required fields but none of these missing elements. Without expiration and a robust signature/authority capture, the HIPAA authorization criteria aren’t met.",
             "code_location": [],
             "comp": 0
         },
@@ -267,10 +267,10 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T16:50:07.248Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Denied",
+            "reasoning": "the authorization flow never informs users of a right to revoke or how to do so. The form bean has no revoke-related fields (`model/old/beans/forms/RecordsReleaseForm.java`), the JSP text lacks any revocation statement (`WebRoot/auth/patient/requestRecordsRelease.jsp`), the validator doesn’t check for it (`model/old/validate/RecordsReleaseFormValidator.java`), and the servlet/action don’t enforce or store revocation info (`server/RecordsReleaseServlet.java`, `action/RequestRecordsReleaseAction.java`). There’s no workflow to capture, persist, or honor revocation.",
             "code_location": [],
-            "comp": 0
+            "comp": 1
         },
         {
             "uuid": "456bc583-cfbd-43c6-848c-f85006ad6e1f",
@@ -283,10 +283,10 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T16:50:07.248Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Denied",
+            "reasoning": "The authorization form/JSP text (`WebRoot/auth/patient/requestRecordsRelease.jsp`) has no conditioning statement about treatment/payment/enrollment, and no redisclosure warning. The form bean (`model/old/beans/forms/RecordsReleaseForm.java`), validator (`model/old/validate/RecordsReleaseFormValidator.java`), and servlet/action (`server/RecordsReleaseServlet.java`, `action/RequestRecordsReleaseAction.java`) don’t hold or enforce those statements.",
             "code_location": [],
-            "comp": 0
+            "comp": 1
         },
         {
             "uuid": "456bc583-cfbd-43c6-848c-f85006ad6e1f",
@@ -299,10 +299,10 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T16:50:07.248Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Denied",
+            "reasoning": "The authorization form/JSP text (`WebRoot/auth/patient/requestRecordsRelease.jsp`) has no conditioning statement about treatment/payment/enrollment, and no redisclosure warning. The form bean (`model/old/beans/forms/RecordsReleaseForm.java`), validator (`model/old/validate/RecordsReleaseFormValidator.java`), and servlet/action (`server/RecordsReleaseServlet.java`, `action/RequestRecordsReleaseAction.java`) don’t hold or enforce those statements.",
             "code_location": [],
-            "comp": 0
+            "comp": 1
         },
         {
             "uuid": "456bc583-cfbd-43c6-848c-f85006ad6e1f",
@@ -315,10 +315,10 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T16:50:07.248Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
-            "comp": 0
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "requestRecordsRelease.jsp show a short, plain statement about releasing records (and a variant for dependents). The form bean RecordsReleaseForm.java and validator RecordsReleaseFormValidator.java don’t enforce readability; they just require a checkbox/signature.",
+            "code_location": ["requestRecordsRelease.jsp 145-152"],
+            "comp": 1
         },
         {
             "uuid": "456bc583-cfbd-43c6-848c-f85006ad6e1f",
@@ -331,8 +331,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T16:50:07.248Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "There’s basic auditing (TransactionLogger → `transactionlog` table in `sql/createTables.sql`), but no code or tooling for risk assessments: no threat models, vulnerability scans, encryption controls, or documented risk register/mitigations. To improve: add formal risk assessment workflow (e.g., STRIDE/LINDDUN), scheduled vuln scans/static analysis, inventory of ePHI data flows and assets, encryption/key management for storage/backups, HTTPS/TLS enforcement, least-privilege DB access, and monitoring/alerting with documented remediation steps.",
             "code_location": [],
             "comp": 0
         },
@@ -363,10 +363,10 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T22:11:04.867Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
-            "comp": 0
+            "satisfaction_level": "Satisfied",
+            "reasoning": "Sessions auto-expire after a configured inactivity window and inactive logouts are recorded, meeting the session-timeout security requirement.",
+            "code_location": ["SessionTimeoutListener.java 40-66", "TransactionLogger.java 14-44", "AuthDAO.java 35-38", "AuthDAO.java 348-396"],
+            "comp": 1
         },
         {
             "uuid": "99234c2d-5838-4f45-9a84-1eef505b4126",
@@ -379,10 +379,10 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T22:11:04.867Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
-            "comp": 0
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "The system can deactivate patient accounts and mark deactivation timestamps; searches can include deactivated users, and deactivation removes representative links. However, there is no explicit workforce offboarding workflow, role revocation, or automatic disabling of all user types beyond patient deactivation, so termination coverage is partial.",
+            "code_location": ["EditPatientAction.java 107-128", "SearchUsersAction.java 193-200", "TransactionType.java 102"],
+            "comp": 1
         },
         {
             "uuid": "99234c2d-5838-4f45-9a84-1eef505b4126",
@@ -395,10 +395,10 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T22:11:04.867Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
-            "comp": 0
+            "satisfaction_level": "Satisfied",
+            "reasoning": "Access to ePHI is granted via role-based accounts and login authentication. The system enforces authentication with salted/hashed passwords and tracks login failures/timeouts, and authorization is role-based (patients, HCPs, admins, etc.) through DAO and role checks.",
+            "code_location": ["AuthDAO.java 35-170", "AuthDAO.java 286-406", "ViewPatientAction.java 36-94"],
+            "comp": 1
         },
         {
             "uuid": "99234c2d-5838-4f45-9a84-1eef505b4126",
@@ -411,10 +411,10 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T22:11:04.867Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
-            "comp": 0
+            "satisfaction_level": "Denied",
+            "reasoning": "Patient identifiers (MIDs) are openly exposed in search results and URLs, and access redirection uses raw MID parameters without masking, so access controls aren’t enforced at the UI/transaction level per policy.",
+            "code_location": ["patientSearch.jsp 24-105", "PatientSearchServlet.java 60-86", "getPatientID.jsp 13-17", "getPatientID.jsp 116-146"],
+            "comp": 1
         },
         {
             "uuid": "99234c2d-5838-4f45-9a84-1eef505b4126",
@@ -427,10 +427,10 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T22:11:04.867Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
-            "comp": 0
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "The system records user roles and logs access events, providing a basic record of who accessed what, but it lacks explicit documentation/attestation workflows capturing authorization rationale or approvals for each access right, so documentation of rights is partial.",
+            "code_location": ["Role.java 1-77", "TransactionLogger.java 14-44", "ViewMyAccessLogAction.java 23-115", "ViewMyAccessLogAction.java 163-165"],
+            "comp": 1
         },
         {
             "uuid": "99234c2d-5838-4f45-9a84-1eef505b4126",
@@ -443,10 +443,10 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T22:11:04.868Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
-            "comp": 0
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Access logs can be reviewed for a user (including date filtering and role-based views), enabling periodic review of who accessed ePHI. However, there’s no explicit scheduled review workflow or policy enforcement beyond ad-hoc log viewing.",
+            "code_location": ["ViewMyAccessLogAction.java lines 23-115", "ViewMyAccessLogAction.java 163-165", "TransactionLogger.java 14-44"],
+            "comp": 1
         },
         {
             "uuid": "99234c2d-5838-4f45-9a84-1eef505b4126",
@@ -459,10 +459,10 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T22:11:04.868Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
-            "comp": 0
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "The system supports modifying user credentials and marking patients as deactivated, and role validation occurs during password reset, but there is no comprehensive workflow to modify access rights/roles across all workforce members, nor approval/audit for role changes beyond basic logging.",
+            "code_location": ["ResetPasswordAction.java 83-185", "EditPatientAction.java 107-128", "EditPatientAction.java 146-159", "TransactionLogger.java 14-44"],
+            "comp": 1
         },
         {
             "uuid": "99234c2d-5838-4f45-9a84-1eef505b4126",
@@ -475,10 +475,10 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T22:11:04.868Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
-            "comp": 0
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "A privacy policy page exists, but there is no explicit notice informing individuals of the right to request and receive a paper copy, nor functionality to request/fulfill such copies. The requirement is only partially represented by a general privacy policy link.",
+            "code_location": ["privacyPolicy.jsp 15-98", "footer.jsp 18-22", "header.jsp 68-73"],
+            "comp": 1
         },
         {
             "uuid": "99234c2d-5838-4f45-9a84-1eef505b4126",
@@ -491,10 +491,10 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T22:11:04.868Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
-            "comp": 0
+            "satisfaction_level": "Denied",
+            "reasoning": "The privacy policy page exists but does not address providing the notice no later than first service delivery or after emergency treatment; there is no workflow or content ensuring timing of notice delivery.",
+            "code_location": ["privacyPolicy.jsp 15-98", "footer.jsp 18-22", "header.jsp 68-73"],
+            "comp": 1
         },
         {
             "uuid": "99234c2d-5838-4f45-9a84-1eef505b4126",
@@ -507,10 +507,10 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T22:11:04.868Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
-            "comp": 0
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "The site includes a prominent footer/nav link to the privacy policy on all pages and the policy is available electronically, but there’s no explicit requirement that the site provides customer service/benefits info or highlights “prominently posts” beyond a standard footer link; no separate prominence or homepage posting is enforced.",
+            "code_location": ["footer.jsp 18-22", "header.jsp 68-73", "iTrust_template.xhtml 84-95"],
+            "comp": 1
         },
         {
             "batch": 6,
@@ -539,10 +539,10 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-02T14:39:13.303Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
-            "comp": 0
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Positive controls: role-based access is enforced (web.xml), user roles checked (AuthDAO.getUserRole), session role/MID management (SessionUtils), and a transaction/audit system logs many PHI accesses (TransactionDAO / TransactionLogger; many actions call logTransaction). Weaknesses: some code paths intentionally bypass per-call logging (ViewMyRemoteMonitoringListAction.getPatientDataWithoutLogging used by WebRoot/auth/uap/getPatientMonitorList.jsp), and a high-level privacyPolicy.jsp relies on "professional judgment" rather than strict enforcement. Public servlet mappings (e.g., /charts/*) could expose PHI if misused. These gaps risk incidental PHI disclosures occurring outside documented permitted disclosures or without per-access audit.",
+            "code_location": ["privacyPolicy.jsp 20-70"],
+            "comp": 1
         },
         {
             "uuid": "0133784d-c032-4518-97c6-b6b58fe671aa",
@@ -555,8 +555,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-02T14:39:13.304Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "the app has role-based access and audit logging (so permitted disclosures can be tracked) but there are inconsistent code paths that display PHI without per-access authorization/audit or minimum-necessary filtering. That means incidental disclosures could occur when the underlying access isn’t strictly justified or recorded.",
             "code_location": [],
             "comp": 0
         },
@@ -571,8 +571,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-02T14:39:13.304Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Satisfied",
+            "reasoning": "Patients can view their own records via patient-facing pages (protected by role-based rules), and can view their access log — so the system provides a direct access path for individuals to obtain PHI.; The system also supports formal record-release requests to third parties (RecordsReleaseServlet) and logs release-related transactions.; Caveats: the records-release flow is “pending” (manual approval workflow) and its digital-signature check is trivial (digitalSig.equals(loggedInName)), and there are isolated places where PHI access bypasses per-access logging (see earlier NFR). Those weaken assurance that a request → disclosure path is robust/auditable.",
             "code_location": [],
             "comp": 0
         },
@@ -587,8 +587,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-02T14:39:13.304Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "The app provides a patient-facing accounting UI (viewAccessLog.jsp + ViewMyAccessLogAction) that queries transaction logs (TransactionDAO.getAllRecordAccesses/getRecordAccesses) and shows who/when via TransactionBean/TransactionType. That meets the basic “accounting on request” need.; Shortcomings: some PHI accesses bypass per-access logging (e.g., ViewMyRemoteMonitoringListAction.getPatientDataWithoutLogging / getPatientMonitorList.jsp), transaction entries lack a structured “purpose” field (only transactionType/addedInfo), and there’s no explicit retention policy in code. Some accesses bypass logging (ViewMyRemoteMonitoringListAction.getPatientDataWithoutLogging / getPatientMonitorList.jsp). Logs store transactionType/addedInfo but no structured “purpose” field (TransactionBean/TransactionType). Only a JSP/UI exists (no documented API endpoint) and some release checks are weak.",
             "code_location": [],
             "comp": 0
         },
@@ -603,8 +603,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-02T14:39:13.304Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Denied",
+            "reasoning": "No code was found implementing patient-requested restrictions or consent management. Searches for \"restriction\", \"restrict\", and \"consent\" returned no matches in source files. The only related functionality is RecordsReleaseServlet (requesting release to third parties) and the privacy policy page — those support requesting releases, not requesting contractual restrictions on use/disclosure for operations. iTrust has role-based access and some manual release workflow, but lacks: - A patient-facing UI or API to submit restriction requests for health care operations. - Backend storage/tracking of granted/denied restrictions (no DB tables or DAO methods found). - Enforcement logic that checks and honors such restrictions before displaying or disclosing PHI.",
             "code_location": [],
             "comp": 0
         },
@@ -619,8 +619,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-02T14:39:13.304Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Denied",
+            "reasoning": "No code paths for \"amend\", \"amendment\", or \"correction\" were found in the codebase — grep returned no matches. The only related patient-initiated workflow is for records release (requestRecordsRelease), which supports requesting disclosure to third parties, not requesting amendments to the patient's own PHI. - While patients can edit some personal/basic health info via patient pages (PATIENT_HEALTH_INFORMATION_EDIT exists in TransactionType), there is no formal "request an amendment" workflow that:   - Accepts an amendment request,   - Stores the request and its status,  - Routes it for review/approval, and  - Records the outcome (granted/denied) and any appended statements — all required by the amendment rule.- No DAO/table, servlet, action, or JSP implements amendment request handling or enforcement.",
             "code_location": [],
             "comp": 0
         },
@@ -635,8 +635,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-02T14:39:13.304Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Denied",
+            "reasoning": "There is no amendment-request/acceptance feature in the codebase, so nothing records or links an “accepted amendment” to specific record entries. Patients can view/edit some basic info (patient pages), but no formal workflow exists to submit, approve, or record amendments and the exact record IDs/fields changed.",
             "code_location": [],
             "comp": 0
         },
@@ -651,8 +651,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-02T14:39:13.304Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Denied",
+            "reasoning": "no amendment workflow exists to accept and record patient-requested changes, so nothing appends or links accepted amendments to original records. The app allows direct edits to some patient data, but there’s no mechanism to record an amendment request, approval, or tie an “accepted amendment” to the original record entry.",
             "code_location": [],
             "comp": 0
         },
@@ -667,8 +667,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-02T14:39:13.304Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Denied",
+            "reasoning": " No code supports inbound amendment notifications (no matches for key integration terms: \"amend\", \"amendment\", \"fhir\", \"webhook\", \"mllp\", \"soap\" etc.). Only unrelated listeners (SessionTimeoutListener) exist. Therefore the system cannot receive external amendment notifications or automatically apply updates to the local designated record set.",
             "code_location": [],
             "comp": 0
         },
@@ -683,8 +683,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-02T14:39:13.305Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Denied",
+            "reasoning": "No amendment-request/processing feature exists. Repo contains no \"amend\"/\"amendment\" code, no DB/storage for amendment requests or processing metadata, and no place that records titles/offices responsible for handling amendments. Transaction logging exists but not for amendment workflows or processor titles.",
             "code_location": [],
             "comp": 0
         },
@@ -715,8 +715,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-29T19:25:17.618Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Denied",
+            "reasoning": "Records release form captures authorization (`requestRecordsRelease.jsp`), but nothing sends a copy of the signed authorization back to the individual (no email/print/download flow in action or DAO).",
             "code_location": [],
             "comp": 0
         },
@@ -731,8 +731,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-29T19:25:17.619Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Denied",
+            "reasoning": "No consent capture UI or logic; the system operates without collecting optional consents for treatment/payment/operations.",
             "code_location": [],
             "comp": 0
         },
@@ -747,8 +747,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-29T19:25:17.619Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Denied",
+            "reasoning": "No consent capture UI or logic; the system operates without collecting optional consents for treatment/payment/operations.",
             "code_location": [],
             "comp": 0
         },
@@ -763,8 +763,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-29T19:25:17.619Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Denied",
+            "reasoning": "No consent capture UI or logic; the system operates without collecting optional consents for treatment/payment/operations.",
             "code_location": [],
             "comp": 0
         },
@@ -779,8 +779,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-29T19:25:17.620Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "No consent model or enforcement that distinguishes when authorization is required; nothing blocks using a “consent” in place of authorization.",
             "code_location": [],
             "comp": 0
         },
@@ -795,9 +795,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-29T19:25:17.620Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Satisfied",
+            "reasoning": "PHI is used internally for treatment, billing, and operations across the app; privacy policy explicitly allows these uses.",
+            "code_location": ["privacyPolicy.jsp 52-57"],
             "comp": 0
         },
         {
@@ -811,9 +811,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-29T19:25:17.620Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Satisfied",
+            "reasoning": "PHI is used internally for treatment, billing, and operations across the app; privacy policy explicitly allows these uses.",
+            "code_location": ["privacyPolicy.jsp 52-57"],
             "comp": 0
         },
         {
@@ -827,9 +827,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-29T19:25:17.621Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Satisfied",
+            "reasoning": "PHI is used internally for treatment, billing, and operations across the app; privacy policy explicitly allows these uses.",
+            "code_location": ["privacyPolicy.jsp 52-57"],
             "comp": 0
         },
         {
@@ -859,8 +859,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-29T19:25:17.622Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Disclosure for treatment to another provider is only available via patient-initiated records release (form posts to `RecordsReleaseServlet`).",
             "code_location": [],
             "comp": 0
         },
@@ -873,8 +873,8 @@
             "nfr_feedback_2": "4",
             "timestamp": "2026-03-29T19:25:17.622Z",
             "uuid": "4274f797-dc8b-4127-bb50-bcf5c4a2e2bd",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "No mechanism to disclose PHI for another entity’s payment activities beyond the general release form, and no payment-specific handling.",
             "code_location": [],
             "comp": 0
         }
@@ -891,9 +891,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-31T00:06:09.300Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "Only coarse role-based folder guards exist. Treatment, payment, and “operations” use the same PHI without purpose checks or consent flags; PayBillAction and BillingDAO fetch/edit billing PHI directly; no DB columns for allowed-purpose or disclosure tracking.",
+            "code_location": ["web.xml 75-188", "PayBillAction.java 21-210", "BillingDAO 70-150", "createTables.sql 55-94"],
             "comp": 0
         },
         {
@@ -907,9 +907,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-31T00:06:09.300Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "Only coarse role-based folder guards exist. Treatment, payment, and “operations” use the same PHI without purpose checks or consent flags; PayBillAction and BillingDAO fetch/edit billing PHI directly; no DB columns for allowed-purpose or disclosure tracking.",
+            "code_location": ["web.xml 75-188", "PayBillAction.java 21-210", "BillingDAO 70-150", "createTables.sql 55-94"],
             "comp": 0
         },
         {
@@ -923,9 +923,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-31T00:06:09.300Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "Only coarse role-based folder guards exist. Treatment, payment, and “operations” use the same PHI without purpose checks or consent flags; PayBillAction and BillingDAO fetch/edit billing PHI directly; no DB columns for allowed-purpose or disclosure tracking.",
+            "code_location": ["web.xml 75-188", "PayBillAction.java 21-210", "BillingDAO 70-150", "createTables.sql 55-94"],
             "comp": 0
         },
         {
@@ -939,9 +939,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-31T00:06:09.300Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "Only coarse role-based folder guards exist. Treatment, payment, and “operations” use the same PHI without purpose checks or consent flags; PayBillAction and BillingDAO fetch/edit billing PHI directly; no DB columns for allowed-purpose or disclosure tracking.",
+            "code_location": ["web.xml 75-188", "PayBillAction.java 21-210", "BillingDAO 70-150", "createTables.sql 55-94"],
             "comp": 0
         },
         {
@@ -955,9 +955,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-31T00:06:09.300Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "Only coarse role-based folder guards exist. Treatment, payment, and “operations” use the same PHI without purpose checks or consent flags; PayBillAction and BillingDAO fetch/edit billing PHI directly; no DB columns for allowed-purpose or disclosure tracking.",
+            "code_location": ["web.xml 75-188", "PayBillAction.java 21-210", "BillingDAO 70-150", "createTables.sql 55-94"],
             "comp": 0
         },
         {
@@ -987,9 +987,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-31T00:06:09.300Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Denied",
+            "reasoning": "Patients table has only email (no consent/opt-in/fallback flags). EmailUtil sends mail blindly to FakeEmail; no logic for consent, bounce handling, or paper copy.",
+            "code_location": ["createTables.sql 55-94", "EmailUtil.java 13-24"],
             "comp": 0
         },
         {
@@ -1003,9 +1003,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-31T00:06:09.300Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Denied",
+            "reasoning": "Patients table has only email (no consent/opt-in/fallback flags). EmailUtil sends mail blindly to FakeEmail; no logic for consent, bounce handling, or paper copy.",
+            "code_location": ["createTables.sql 55-94", "EmailUtil.java 13-24"],
             "comp": 0
         },
         {
@@ -1019,8 +1019,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-31T00:06:09.300Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Denied",
+            "reasoning": "No tables or actions to store or honor PHI-use/disclosure restrictions; “restrict” only appears in labProcedure.isRestricted (createTables around line 400), unrelated to patient requests.",
             "code_location": [],
             "comp": 0
         },
@@ -1035,8 +1035,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-31T00:06:09.300Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Denied",
+            "reasoning": "No tables or actions to store or honor PHI-use/disclosure restrictions; “restrict” only appears in labProcedure.isRestricted (createTables around line 400), unrelated to patient requests.",
             "code_location": [],
             "comp": 0
         },
@@ -1067,9 +1067,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T17:20:59.447Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "They have some controls, but not full integrity guarantees. Present: RBAC on ingestion/edits (web.xml), input validators (Patient/AddPatient, RemoteMonitoringDataValidator), DB constraints, and transaction logging (TransactionLogger). Missing: cryptographic integrity (no checksums/HMAC/signatures on writes), no enforced TLS/transport guarantee, no read-only/maintenance safeguards, no tamper-evident storage. ",
+            "code_location": ["web.xml 170-195", "AddPatientFileAction.java 120-245", "CSVParser.java 97-175", "RemoteMonitoringDataBeanValidator.java 25-49", "RemoteMonitoringDAO.java 208-276", "TransactionLogger.java 1-44", "addTelemedicineExternalData.jsp 70-108"],
             "comp": 0
         },
         {
@@ -1083,9 +1083,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T17:20:59.447Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "They have some controls, but not full integrity guarantees. Present: RBAC on ingestion/edits (web.xml), input validators (Patient/AddPatient, RemoteMonitoringDataValidator), DB constraints, and transaction logging (TransactionLogger). Missing: cryptographic integrity (no checksums/HMAC/signatures on writes), no enforced TLS/transport guarantee, no read-only/maintenance safeguards, no tamper-evident storage. ",
+            "code_location": ["web.xml 170-195", "AddPatientFileAction.java 120-245", "CSVParser.java 97-175", "RemoteMonitoringDataBeanValidator.java 25-49", "RemoteMonitoringDAO.java 208-276", "TransactionLogger.java 1-44", "addTelemedicineExternalData.jsp 70-108"],
             "comp": 0
         },
         {
@@ -1099,9 +1099,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T17:20:59.448Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "They have some controls, but not full integrity guarantees. Present: RBAC on ingestion/edits (web.xml), input validators (Patient/AddPatient, RemoteMonitoringDataValidator), DB constraints, and transaction logging (TransactionLogger). Missing: cryptographic integrity (no checksums/HMAC/signatures on writes), no enforced TLS/transport guarantee, no read-only/maintenance safeguards, no tamper-evident storage. ",
+            "code_location": ["web.xml 170-195", "AddPatientFileAction.java 120-245", "CSVParser.java 97-175", "RemoteMonitoringDataBeanValidator.java 25-49", "RemoteMonitoringDAO.java 208-276", "TransactionLogger.java 1-44", "addTelemedicineExternalData.jsp 70-108"],
             "comp": 0
         },
         {
@@ -1115,8 +1115,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T17:20:59.448Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Denied",
+            "reasoning": "there’s no malware guarding in the codebase: no AV/antimalware hooks, no upload scanning, no executable-type blocking, no sandboxing, no allowlist, and no procedures/docs describing such controls. Upload/telemed paths only do schema/field validation; nothing inspects for malicious content.",
             "code_location": [],
             "comp": 0
         },
@@ -1131,8 +1131,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T17:20:59.448Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Denied",
+            "reasoning": "the codebase has zero malware detection today (no AV scans, signatures, heuristics, or alerts), so it’s Denied. Add AV scanning on uploads/ingest with quarantine and user feedback, log detections via TransactionLogger, alert ops, and consider periodic scans of stored files/hashes for retroactive detection. Without these, the system can’t detect malicious payloads.",
             "code_location": [],
             "comp": 0
         },
@@ -1147,8 +1147,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T17:20:59.448Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Denied",
+            "reasoning": "No malware guarding/detection/reporting procedures or tooling found",
             "code_location": [],
             "comp": 0
         },
@@ -1163,8 +1163,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T17:20:59.449Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Denied",
+            "reasoning": "no notice/rights UI or content exists—no code locations to point to. To satisfy it, add a dedicated notice-of-rights page/template (e.g., under `WebRoot/auth/patient/`), surface it at SUD-related flows (viewing/creating SUD records), require acknowledgment, and log via `TransactionLogger` with a new transaction type (e.g., `SUD_NOTICE_ACK`). Also store the acknowledged version/timestamp per patient. No current code implements this.",
             "code_location": [],
             "comp": 0
         },
@@ -1179,8 +1179,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T17:20:59.449Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Denied",
+            "reasoning": "the codebase has no notice content or workflow informing individuals of the covered entity’s legal duties for SUD-related records. I found no pages, templates, messages, or logging tied to such a notice. Without surfaced text and acknowledgment capture, the system doesn’t meet this requirement.",
             "code_location": [],
             "comp": 0
         },
@@ -1195,8 +1195,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T17:20:59.449Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Denied",
+            "reasoning": "there’s no notice-of-privacy-practices content or flow in the codebase: no page/template with the required statements (legal duty to maintain privacy, breach notification, and adherence to current notice), no acknowledgment capture, and no linkage to PHI access/creation. Without surfaced text, versioning, and logging, the system doesn’t meet those notice requirements.",
             "code_location": [],
             "comp": 0
         },
@@ -1211,8 +1211,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T17:20:59.450Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Denied",
+            "reasoning": "there’s no notice-of-privacy-practices content or flow in the codebase: no page/template with the required statements (legal duty to maintain privacy, breach notification, and adherence to current notice), no acknowledgment capture, and no linkage to PHI access/creation. Without surfaced text, versioning, and logging, the system doesn’t meet those notice requirements.",
             "code_location": [],
             "comp": 0
         },
@@ -1243,8 +1243,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T18:26:22.869Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Satisfied",
+            "reasoning": "salted SHA-256, session timeout, captcha/rate-limiting, validation",
             "code_location": [],
             "comp": 0
         },
@@ -1259,9 +1259,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T18:26:22.878Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Satisfied",
+            "reasoning": "Comprehensive transaction logging with patient-facing audit review",
+            "code_location": ["FormValidationException.java 64-80", "FormValidationException.java 87-114"],
             "comp": 0
         },
         {
@@ -1275,8 +1275,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T18:26:22.878Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Satisfied",
+            "reasoning": "Role constraints plus patient-controlled declared HCPs/representatives",
             "code_location": [],
             "comp": 0
         },
@@ -1291,8 +1291,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T18:26:22.878Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Supervision/delegation tables (`hcprelations`, `representatives`, `declaredhcp`) exist, but formal supervisory workflows are minimal.",
             "code_location": [],
             "comp": 0
         },
@@ -1307,8 +1307,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T18:26:22.878Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "`privacyPolicy.jsp` mentions uses/disclosures and restriction requests implicitly, but not a clear statement that the entity may refuse.",
             "code_location": [],
             "comp": 0
         },
@@ -1323,8 +1323,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T18:26:22.878Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Confidential communication via records release recipient selection, but not explicitly framed as a right in the notice.",
             "code_location": [],
             "comp": 0
         },
@@ -1339,8 +1339,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T18:26:22.879Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Policy notes right to access; no dedicated “inspect PHI” statement in the notice beyond that section.",
             "code_location": [],
             "comp": 0
         },
@@ -1355,8 +1355,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T18:26:22.879Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Access logs/records view imply copies; notice lacks explicit “obtain a copy” language.",
             "code_location": [],
             "comp": 0
         },
@@ -1371,8 +1371,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T18:26:22.879Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Policy tells users to contact admin/provider for corrections; not a clear amendment-right statement.",
             "code_location": [],
             "comp": 0
         },
@@ -1387,8 +1387,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T18:26:22.879Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Audit log view provides disclosure history, but the notice does not explicitly state the right.",
             "code_location": [],
             "comp": 0
         },
@@ -1419,9 +1419,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-02T14:13:36.545Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "The app provides strong audit/logging and authentication hooks that support integrity assessments (who/when accessed, transaction logging), but lacks automated integrity validators (tamper-evident logs, checksums, immutable storage, or risk-scanning tools).",
+            "code_location": ["TransactionDAO.java 82-98", "EventLoggingAction.java 36-39", "AuthDAO.java 69-78", "privacyPolicy.jsp 76-83"],
             "comp": 0
         },
         {
@@ -1435,9 +1435,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-02T14:13:36.547Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "Basic session and login-failure controls exist (session timeout, login-failure counters) which help availability posture, but no capacity/availability risk assessment features (backup/replication, monitoring, failover, DDoS detection, SLA/testing hooks).",
+            "code_location": ["SessionTimeoutListener.java 39-51", "AccessDAO.java 52-62", "AuthDAO.java 294-302"],
             "comp": 0
         },
         {
@@ -1451,9 +1451,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-02T14:13:36.547Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Privacy page lists categories of permitted uses (treatment, payment, operations, public health, research) which notifies individuals at a category level; descriptions are high-level and lack granular examples per use.",
+            "code_location": ["privacyPolicy.jsp 39-66"],
             "comp": 0
         },
         {
@@ -1467,9 +1467,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-02T14:13:36.547Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "Privacy page explicitly says written authorization will be obtained for disclosures outside listed categories (satisfies part). It does NOT include language about the individual’s right to revoke authorization.",
+            "code_location": ["privacyPolicy.jsp 68-70", "requestRecordsRelease.jsp 95-156", "requestRecordsRelease.jsp 43-71", "requestRecordsRelease.jsp 112-118"],
             "comp": 0
         },
         {
@@ -1483,9 +1483,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-02T14:13:36.547Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Denied",
+            "reasoning": "No explicit \"prohibited uses\" section or concrete prohibited-use examples in privacyPolicy.jsp; only general statements about preventing accidental/intentional disclosure.",
+            "code_location": ["privacyPolicy.jsp 72-83"],
             "comp": 0
         },
         {
@@ -1499,8 +1499,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-02T14:13:36.547Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Denied",
+            "reasoning": "No mention of \"attestation\" or attestation-required disclosures in policy or code.",
             "code_location": [],
             "comp": 0
         },
@@ -1515,8 +1515,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-02T14:13:36.547Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Denied",
+            "reasoning": "Privacy policy does not state that once disclosed data may be subject to redisclosure and lose protection.",
             "code_location": [],
             "comp": 0
         },
@@ -1531,9 +1531,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-02T14:13:36.547Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "The system requires patient authorization for record releases (UI/form + servlet + DAO + digital-signature check) and enforces role-based access controls elsewhere. However the "digital signature" check is rudimentary (string equality with logged-in name) and enforcement for other PHI disclosures is not shown as a strict, auditable authorization/consent-enforcement pipeline.",
+            "code_location": ["requestRecordsRelease.jsp 145-156", "RecordsReleaseServlet.java 53-97", "RecordsReleaseServlet.java 150-155", "RecordsReleaseDAO.java 22-31"],
             "comp": 0
         },
         {
@@ -1547,9 +1547,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-02T14:13:36.548Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "Release requests capture scope details (recipient doctor/hospital, justification) and are stored, but there is no clear code path shown that enforces scope at time-of-disclosure (no release/transfer engine that enforces recipient/hospital restrictions or checks before delivering data). Without an approval/fulfillment enforcement step, scope-exceeding disclosures could occur.",
+            "code_location": ["RecordsReleaseForm.java 16-29","RecordsReleaseFormValidator.java 16-29","RecordsReleaseDAO.java 24-27","confirmRecordsRelease.jsp 45-74"],
             "comp": 0
         },
         {
@@ -1563,9 +1563,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-02T14:13:36.548Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Satisfied",
+            "reasoning": "Privacy policy explicitly states written permission is optional and the system collects/stores PIHI for treatment and operations; records-release and signature form exist to record consent/authorization when needed.",
+            "code_location": ["privacyPolicy.jsp 42-49", "requestRecordsRelease.jsp 95-156", "RecordsReleaseServlet.java 43-71", "RecordsReleaseServlet.java 112-118"],
             "comp": 0
         },
         {
@@ -1595,9 +1595,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-01T19:29:41.275Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "URL/role-based constraints exist (web.xml) but enforcement relies on container config; some controller-level checks are used but not consistently centralized.",
+            "code_location": ["web.xml 115-141" ,"web.xml 143-154" ,"web.xml 182-196" ,"web.xml 244-256" ,"web.xml 278-290"],
             "comp": 0
         },
         {
@@ -1611,9 +1611,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-01T19:29:41.275Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Authentication implemented via container FORM-auth plus DB-backed password hashing; login flow has weaknesses (credentials placed in redirect URL, hard-coded reCAPTCHA key).",
+            "code_location": ["web.xml 40-49", "login.jsp 20", "login.jsp 35-45", "login.jsp 61-64", "AuthDAO.java 503-513", "AuthDAO.java 568-575"],
             "comp": 0
         },
         {
@@ -1627,9 +1627,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-01T19:29:41.275Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Code-level authorization checks exist (role lookups and conditional logic) but per-action checks are scattered rather than centrally enforced.",
+            "code_location": ["AuthDAO.java 154-166", "DeclareHCPAction.java 53-57", "SessionUtils.java 124-129"],
             "comp": 0
         },
         {
@@ -1643,9 +1643,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-01T19:29:41.275Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Satisfied",
+            "reasoning": "Comprehensive transaction/audit logging exists: TransactionLogger delegates to TransactionDAO, which records transactions and provides record-access queries.",
+            "code_location": ["TransactionLogger.java 14-44", "TransactionDAO.java 82-100", "TransactionDAO.java 112-121"],
             "comp": 0
         },
         {
@@ -1659,9 +1659,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-01T19:29:41.275Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Satisfied",
+            "reasoning": "A user-facing privacy/notice page is present describing privacy/HIPAA compliance and awareness.",
+            "code_location": ["privacyPolicy.jsp 20-33"],
             "comp": 0
         },
         {
@@ -1675,9 +1675,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-01T19:29:41.275Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Satisfied",
+            "reasoning": "Choice/consent appears as both policy text and concrete UI: records-release form requires a checkbox and signature to authorize release.",
+            "code_location": ["privacyPolicy.jsp 39-49", "requestRecordsRelease.jsp 145-156"],
             "comp": 0
         },
         {
@@ -1691,9 +1691,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-01T19:29:41.275Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "Privacy/Integrity is declared in policy UI but no code-level technical controls (e.g., encryption at rest, integrity checks) were found to prove enforcement.",
+            "code_location": ["privacyPolicy.jsp 76-83"],
             "comp": 0
         },
         {
@@ -1707,9 +1707,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-01T19:29:41.275Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Records-release workflow and logging exist (request form, confirmation, servlet). Digital-signature check is minimal (string equality); process is implemented but has weak verification.",
+            "code_location": ["requestRecordsRelease.jsp 101-113", "requestRecordsRelease.jsp 145-159", "confirmRecordsRelease.jsp 52-56", "RecordsReleaseServlet.java 112-118", "RecordsReleaseServlet.java 150-155"],
             "comp": 0
         },
         {
@@ -1723,9 +1723,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-01T19:29:41.275Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Session-based patient context and role-driven patient selection are implemented (SessionUtils) and used by controllers; finer-grained privacy enforcement (field-level ACLs) not evident.",
+            "code_location": ["SessionUtils.java 141-156", "SessionUtils.java 166-173", "PrescriptionController.java 124-126", "PrescriptionController.java 172-181"],
             "comp": 0
         },
         {
@@ -1739,9 +1739,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-01T19:29:41.275Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Satisfied",
+            "reasoning": "Access/participation UI exists: privacy-policy link, info that patients may access records, and UI flows for requesting/viewing releases and history.",
+            "code_location": ["iTrust_template.xhtml 91-94", "privacyPolicy.jsp 88-96", "requestRecordsRelease.jsp 85-99", "requestRecordsRelease.jsp 160-165", "requestRecordsReleaseHistory.jsp 15-28", "requestRecordsReleaseHistory.jsp 81-88"],
             "comp": 0
         },
         {
@@ -1771,9 +1771,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-01T15:07:39.870Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "Availability relies on a single MySQL instance with MyISAM tables (no ACID/replication/backup); only connection pooling and session timeout handling exist. No retry/failover/DR for create/receive/maintain/transmit of ePHI.",
+            "code_location": ["createTables.sql 1-175", "context.xml 18-33", "web.xml 35-73"],
             "comp": 0
         },
         {
@@ -1787,9 +1787,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-01T15:07:39.871Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "Availability relies on a single MySQL instance with MyISAM tables (no ACID/replication/backup); only connection pooling and session timeout handling exist. No retry/failover/DR for create/receive/maintain/transmit of ePHI.",
+            "code_location": ["createTables.sql 1-175", "context.xml 18-33", "web.xml 35-60"],
             "comp": 0
         },
         {
@@ -1803,9 +1803,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-01T15:07:39.871Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "Availability relies on a single MySQL instance with MyISAM tables (no ACID/replication/backup); only connection pooling and session timeout handling exist. No retry/failover/DR for create/receive/maintain/transmit of ePHI.",
+            "code_location": ["createTables.sql 1-175", "context.xml 18-33", "web.xml 35-60"],
             "comp": 0
         },
         {
@@ -1819,9 +1819,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-01T15:07:39.871Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "Availability relies on a single MySQL instance with MyISAM tables (no ACID/replication/backup); only connection pooling and session timeout handling exist. No retry/failover/DR for create/receive/maintain/transmit of ePHI.",
+            "code_location": ["createTables.sql 1-175", "context.xml 18-33", "web.xml 35-60"],
             "comp": 0
         },
         {
@@ -1835,9 +1835,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-01T15:07:39.871Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Role-based folder constraints in `web.xml`, PHI filtering/report controls in `report/MedicalReportFilter.java` and consented releases via `model/old/dao/mysql/RecordsReleaseDAO.java`, but no enforced “minimum necessary” scoping or automatic revocation. There is role-gated access and some PHI filtering, plus explicit release workflow, but no systematic “minimum necessary” scoping per data element or purpose, and no auto-redaction or consent revocation.",
+            "code_location": ["web.xml 101-196", "MedicalReportFilter.java 21-109", "RecordsReleaseDAO.java 22-94"],
             "comp": 0
         },
         {
@@ -1851,9 +1851,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-01T15:07:39.871Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Preventive controls exist but are limited: IP-based throttling/CAPTCHA after 3 failures, basic password policy, salted SHA-256 hashing. Missing account-level lockout, CSRF tokens, stronger password complexity, session hardening, rate limits on sensitive actions, and proactive monitoring.",
+            "code_location": ["ChangePasswordAction.java 41-68", "AuthDAO.java 69-79", "LoginFailureAction.java 52-83"],
             "comp": 0
         },
         {
@@ -1867,9 +1867,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-01T15:07:39.872Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Good breadth of audit events, but no real-time detection/alerting, correlation, or dashboards—logs only.",
+            "code_location": ["TransactionLogger.java 14-44", "TransactionType.java 12-120", "TransactionDAO.java 82-99"],
             "comp": 0
         },
         {
@@ -1883,9 +1883,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-01T15:07:39.872Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "Containment limited to CAPTCHA after IP failures; no session isolation, lockout, or quarantine workflows. Current controls only throttle by IP after 3 failed logins and log an incident; there is no containment such as account lockout, session quarantine, privilege reduction, or isolation of suspected abuse.",
+            "code_location": ["LoginFailureAction.java 51-104", "TransactionLogger.java 14-44"],
             "comp": 0
         },
         {
@@ -1899,9 +1899,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-01T15:07:39.872Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "No automated correction/remediation; logging only. System only records incidents; no automated correction/remediation, no workflow to revert/disable accounts, nor tools to clean up after a breach.",
+            "code_location": ["TransactionLogger.java 14-44", "TransactionDAO.java 82-99", "TransactionType.java 12-15"],
             "comp": 0
         },
         {
@@ -1915,9 +1915,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-01T15:07:39.872Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Notice exists in plain language, but it is outdated (2008) and omits modern HIPAA breach/retention language. A readable notice exists, but it’s dated (2008) and omits modern HIPAA-required sections (breach notification, patient rights details, retention). Language is plain but incomplete.",
+            "code_location": ["privacyPolicy.jsp 14-99"],
             "comp": 0
         },
         {
@@ -1947,9 +1947,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-02T15:06:18.891Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Session-based patient access exists: SessionUtils returns the logged-in patient's MID (role \"patient\") and controllers use getCurrentPatientMID for list endpoints, so patients can view their own PHI. Weakness: some endpoints accept record IDs and return records without verifying the record belongs to the current patient (e.g., getVisitByID, getPrescriptionByID, EmergencyRecord.loadRecord). If those pages expose ID params, a patient could access another patient's PHI.",
+            "code_location": ["SessionUtils.java 141-148", "SessionUtils.java 166-173", "OfficeVisitController.java 224-226", "OfficeVisitController.java 288-304", "OfficeVisitController.java 309-315", "PrescriptionController.java 124-126", "PrescriptionController.java 109-121", "EmergencyRecordController.java 52-62", "EmergencyRecordController.java 69-74"],
             "comp": 0
         },
         {
@@ -1963,8 +1963,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-02T15:06:18.891Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "SessionUtils + controllers expose getCurrentPatientMID and many patient views so a logged-in patient can view their own PHI, but some record-by-ID endpoints originally lacked ownership checks (patched one).",
             "code_location": [],
             "comp": 0
         },
@@ -1979,8 +1979,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-02T15:06:18.891Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "The app has an audit UI (hcp/auditPage.jsp), PatientSearchServlet supports audit mode, and transaction logging exists, so data can be produced for investigations — but there is no explicit governed workflow, export, or documented role-based disclosure flow for regulators.",
             "code_location": [],
             "comp": 0
         },
@@ -1995,8 +1995,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-02T15:06:18.891Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "technical primitives (audit + logs) exist, but no documented, role-restricted Secretary-specific disclosure process or export format.  ",
             "code_location": [],
             "comp": 0
         },
@@ -2011,8 +2011,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-02T15:06:18.891Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Denied",
+            "reasoning": "privacyPolicy.jsp exists but does not include the exact required prominent statement text (the ALL-CAPS sentence required).  ",
             "code_location": [],
             "comp": 0
         },
@@ -2027,9 +2027,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-02T15:06:18.891Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Satisfied",
+            "reasoning": "privacyPolicy.jsp lists allowed uses and explicitly includes treatment, payment, and operations and example bullets.",
+            "code_location": ["privacyPolicy.jsp 1-101"],
             "comp": 0
         },
         {
@@ -2043,9 +2043,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-02T15:06:18.891Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Satisfied",
+            "reasoning": "privacyPolicy.jsp lists public health, research, and other limited uses (items in the list and explanatory text).  ",
+            "code_location": ["privacyPolicy.jsp 1-101"],
             "comp": 0
         },
         {
@@ -2059,9 +2059,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-02T15:06:18.891Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "privacyPolicy.jsp does not mention how it defers to stricter applicable law or list examples of legal prohibitions/limitations; no code/text shows logic to select stricter rules.  ",
+            "code_location": ["privacyPolicy.jsp 1-101"],
             "comp": 0
         },
         {
@@ -2091,9 +2091,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-01T16:42:53.014Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "login failures tracked per IP with CAPTCHA/timeout and incident log",
+            "code_location": ["LoginFailureAction.java 24-116", "AuthDAO.java 294-456"],
             "comp": 0
         },
         {
@@ -2107,9 +2107,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-01T16:42:53.017Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Satisfied",
+            "reasoning": "iTrust does have a defined password-creation procedure.",
+            "code_location": ["ValidationFormat.java 45-46", "ChangePasswordAction.java 43-60", "ResetPasswordAction.java 226-239"],
             "comp": 0
         },
         {
@@ -2123,9 +2123,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-01T16:42:53.017Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Satisfied",
+            "reasoning": "change/reset flows verify old pass, confirm, log, email on reset",
+            "code_location": ["ChangePasswordAction.java 47-64", "ResetPasswordAction.java 147-215"],
             "comp": 0
         },
         {
@@ -2139,9 +2139,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-01T16:42:53.017Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "SHA-256+salt stored in DB; no bcrypt/HTTPS enforcement",
+            "code_location": ["AuthDAO.java 219-227", "createTables.sql 5-17"],
             "comp": 0
         },
         {
@@ -2155,8 +2155,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-01T16:42:53.018Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "incidents logged but no alerting/containment beyond IP throttling",
             "code_location": [],
             "comp": 0
         },
@@ -2171,9 +2171,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-01T16:42:53.018Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "incidents logged but no alerting/containment beyond IP throttling",
+            "code_location": ["TransactionLogger.java 14-44", "TransactionType.java"],
             "comp": 0
         },
         {
@@ -2187,9 +2187,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-01T16:42:53.018Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "incidents logged but no alerting/containment beyond IP throttling",
+            "code_location": ["TransactionLogger.java 14-44", "TransactionType.java"],
             "comp": 0
         },
         {
@@ -2203,9 +2203,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-01T16:42:53.018Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Satisfied",
+            "reasoning": "incidents stored in `transactionlog` with viewer",
+            "code_location": ["TransactionDAO.java 55-100"],
             "comp": 0
         },
         {
@@ -2219,8 +2219,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-01T16:42:53.019Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Denied",
+            "reasoning": "no backup/restore procedures or ePHI copy maintenance present.",
             "code_location": [],
             "comp": 0
         },
@@ -2235,8 +2235,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-04-01T16:42:53.019Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Denied",
+            "reasoning": "no backup/restore procedures or ePHI copy maintenance present.",
             "code_location": [],
             "comp": 0
         },
@@ -2267,9 +2267,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T23:55:14.790Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Representative relationships exist and allow some PHI access (e.g., `PatientDAO.getRepresented`, `EditRepresentativesAction`; representee access in `viewMyRecords.jsp`, `viewRepresenteePrescriptionReport.xhtml`, and appointment view checks in `viewAppt.jsp`). Access isn’t uniformly equivalent to a patient across all PHI features (e.g., records release is limited to dependents in `requestRecordsReleaseHistory.jsp`).",
+            "code_location": ["viewMyRecords.jsp 31-42", "viewMyRecords.jsp 244-255", "viewRepresenteePrescriptionReport.xhtml 43-66", "PrescriptionController.java 184-192", "viewAppt.jsp 38-50", "viewAppt.jsp 82-95", "requestRecordsReleaseHistory.jsp 17-23"],
             "comp": 0
         },
         {
@@ -2283,8 +2283,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T23:55:14.791Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Denied",
+            "reasoning": "No concept of “legally authorized” or “emancipated minor” in the model or access logic—representation is a manual relationship only (`PatientDAO`, `EditRepresentativesAction`, `changeDependency.jsp`).",
             "code_location": [],
             "comp": 0
         },
@@ -2299,8 +2299,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T23:55:14.791Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Denied",
+            "reasoning": "Management actions for PHI aren’t tied to legal authorization; representative management is generic and doesn’t model adult/emancipated minor status (`PatientDAO`, `EditRepresentativesAction`).",
             "code_location": [],
             "comp": 0
         },
@@ -2315,8 +2315,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T23:55:14.791Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Denied",
+            "reasoning": "Dependents cannot log in as full patients and cannot represent others (`AuthDAO.isDependent`, `changeDependency.jsp`, `DependentsTest#testDependentLogin`, `editRepresentatives.jsp`). No service‑specific restriction logic for minors.",
             "code_location": [],
             "comp": 0
         },
@@ -2331,8 +2331,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T23:55:14.791Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Denied",
+            "reasoning": "No handling for representatives of deceased patients; there’s a `DateOfDeath` field but no access logic based on it (e.g., `PatientDAO.checkIfRepresenteeIsActive` only checks `DateOfDeactivation`).",
             "code_location": [],
             "comp": 0
         },
@@ -2347,9 +2347,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T23:55:14.791Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Treatment access is allowed without explicit authorization in the privacy policy engine for clinical roles (`PrivacyPolicyEngine.isDisclosureAllowed`) and used in `EmergencyRecordController`. This is limited in scope to emergency records.",
+            "code_location": ["PrivacyPolicyEngine.java 44-47", "EmergencyRecordController.java 78-85"],
             "comp": 0
         },
         {
@@ -2363,9 +2363,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T23:55:14.791Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Same reasoning as NFR 26; disclosure for treatment/view is allowed for clinical roles without authorization, but primarily enforced in emergency record flow (`PrivacyPolicyEngine`, `EmergencyRecordController`).",
+            "code_location": ["PrivacyPolicyEngine.java 44-47", "EmergencyRecordController.java 78-85"],
             "comp": 0
         },
         {
@@ -2379,9 +2379,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T23:55:14.791Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Denied",
+            "reasoning": "Authorization artifacts have no expiration date/event fields or checks (`RecordsReleaseForm`, `RecordsReleaseBean`, `RecordsReleaseDAO`).",
+            "code_location": ["RecordsReleaseForm.java 4-13", "RecordsReleaseFormValidator.java 19-27", "createTables.sql 356-369"],
             "comp": 0
         },
         {
@@ -2395,9 +2395,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T23:55:14.791Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Records release “authorization” requires all fields + digital signature validation (`RecordsReleaseFormValidator`, required fields in `requestRecordsRelease.jsp`). No generalized authorization element elsewhere.",
+            "code_location": ["RecordsReleaseFormValidator.java 19-27", "RequestRecordsReleaseAction.java 91-106", "requestRecordsRelease.jsp 101-159", "RecordsReleaseForm.java 4-13"],
             "comp": 0
         },
         {
@@ -2411,8 +2411,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-30T23:55:14.792Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Denied",
+            "reasoning": "No revocation logic for authorizations; records release only has pending/approved/denied status (`RecordsReleaseBean`, `RecordsReleaseDAO`).",
             "code_location": [],
             "comp": 0
         },

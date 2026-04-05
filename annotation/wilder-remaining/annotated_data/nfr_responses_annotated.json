@@ -1,0 +1,3025 @@
+{
+    "f9399963-3f69-43d2-8d9d-e0a573a9c35d": [
+        {
+            "uuid": "f9399963-3f69-43d2-8d9d-e0a573a9c35d",
+            "nfr_id": 11,
+            "batch": 2,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T18:47:18.811Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "No backup/restore procedures or tooling; only schema files exist",
+            "code_location": [
+                "sql/createTables.sql:1-94",
+                "sql/dropTables.sql:1-49"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "f9399963-3f69-43d2-8d9d-e0a573a9c35d",
+            "nfr_id": 12,
+            "batch": 2,
+            "q1_agreement": "Disagree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T18:47:18.812Z",
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Code enforces human user role-based access but no mechanism for programmatic client authentication/authorization (no API keys/OAuth/mTLS)",
+            "code_location": [
+                "Role.java:8-23",
+                "WebRoot/WEB-INF/web.xml:75-179",
+                "sql/createTables.sql:5-17"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "f9399963-3f69-43d2-8d9d-e0a573a9c35d",
+            "nfr_id": 13,
+            "batch": 2,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T18:47:18.812Z",
+            "satisfaction_level": "Satisfied",
+            "reasoning": "MID is declared as PRIMARY KEY in core tables, enforcing uniqueness; auto-increment generation",
+            "code_location": [
+                "sql/createTables.sql:5-17",
+                "sql/createTables.sql:55-94",
+                "sql/createTables.sql:37-53"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "f9399963-3f69-43d2-8d9d-e0a573a9c35d",
+            "nfr_id": 14,
+            "batch": 2,
+            "q1_agreement": "Disagree",
+            "q2_agreement": "Disagree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T18:47:18.812Z",
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "ER role exists with emergency record controller and audit logging, but no break-glass override or broader emergency access",
+            "code_location": [
+                "controller/emergencyRecord/EmergencyRecordController.java:19-75",
+                "Role.java:8-23",
+                "TransactionType.java:199-202"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "f9399963-3f69-43d2-8d9d-e0a573a9c35d",
+            "nfr_id": 15,
+            "batch": 2,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T18:47:18.812Z",
+            "satisfaction_level": "Satisfied",
+            "reasoning": "Listener sets inactivity logout; admin can change timeout; default 20 mins; listener wired in web.xml",
+            "code_location": [
+                "server/SessionTimeoutListener.java:35-65",
+                "action/ChangeSessionTimeoutAction.java:13-53",
+                "sql/createTables.sql:252-258",
+                "WebRoot/WEB-INF/web.xml:35-38"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "f9399963-3f69-43d2-8d9d-e0a573a9c35d",
+            "nfr_id": 16,
+            "batch": 2,
+            "q1_agreement": "Disagree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T18:47:18.812Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "ePHI fields not encrypted at rest; only passwords hashed (SHA-256+salt)",
+            "code_location": [
+                "AuthDAO.java:35-76",
+                "AuthDAO.java:503-509",
+                "sql/createTables.sql:55-94"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "f9399963-3f69-43d2-8d9d-e0a573a9c35d",
+            "nfr_id": 17,
+            "batch": 2,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T18:47:18.812Z",
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Broad audit events logged but logs sit in standard MyISAM table with no tamper resistance",
+            "code_location": [
+                "sql/createTables.sql:165-173",
+                "logger/TransactionLogger.java:14-44",
+                "TransactionType.java:199-202"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "f9399963-3f69-43d2-8d9d-e0a573a9c35d",
+            "nfr_id": 18,
+            "batch": 2,
+            "q1_agreement": "Strongly Disagree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T18:47:18.812Z",
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "Only schema constraints (PK/FK) and audit logging; no cryptographic integrity or tamper resistance; MyISAM storage",
+            "code_location": [
+                "sql/createTables.sql:165-173",
+                "sql/createTables.sql:230-233"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "f9399963-3f69-43d2-8d9d-e0a573a9c35d",
+            "nfr_id": 19,
+            "batch": 2,
+            "q1_agreement": "Disagree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T18:47:18.813Z",
+            "satisfaction_level": "Satisfied",
+            "reasoning": "FORM auth in web.xml; password verification with salted SHA-256; login timeout policy",
+            "code_location": [
+                "WebRoot/WEB-INF/web.xml:41-49",
+                "AuthDAO.java:503-509",
+                "AuthDAO.java:35-36"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "f9399963-3f69-43d2-8d9d-e0a573a9c35d",
+            "nfr_id": 20,
+            "batch": 2,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T18:47:18.813Z",
+            "satisfaction_level": "Satisfied",
+            "reasoning": "Session identity stored via SessionUtils; role-based constraints and authentication via AuthDAO",
+            "code_location": [
+                "webutils/SessionUtils.java:32-43",
+                "WebRoot/WEB-INF/web.xml:115-141",
+                "AuthDAO.java:503-509"
+            ],
+            "comp": 0
+        },
+        {
+            "batch": 2,
+            "is_attention_question": true,
+            "nfr_display_1": "Agree",
+            "nfr_display_2": "Agree",
+            "nfr_feedback_1": "Disagree",
+            "nfr_feedback_2": "4",
+            "timestamp": "2026-03-29T18:47:18.813Z",
+            "uuid": "f9399963-3f69-43d2-8d9d-e0a573a9c35d",
+            "satisfaction_level": "",
+            "reasoning": "",
+            "code_location": [],
+            "comp": 0
+        }
+    ],
+    "b2edd4e6-9b8f-43f4-bda5-77d43bcffc7e": [
+        {
+            "uuid": "b2edd4e6-9b8f-43f4-bda5-77d43bcffc7e",
+            "nfr_id": 31,
+            "batch": 4,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "n/a",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T16:52:40.502Z",
+            "satisfaction_level": "Satisfied",
+            "reasoning": "Payment use allowed without authorization; payment flows lack consent gates",
+            "code_location": [
+                "WebRoot/privacyPolicy.jsp:45-70",
+                "WebRoot/auth/patient/payBill.jsp",
+                "PayBillAction.java",
+                "BillingDAO.java"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "b2edd4e6-9b8f-43f4-bda5-77d43bcffc7e",
+            "nfr_id": 32,
+            "batch": 4,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "n/a",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T16:52:40.502Z",
+            "satisfaction_level": "Satisfied",
+            "reasoning": "Payment disclosures allowed; claims visible/processed without consent",
+            "code_location": [
+                "WebRoot/privacyPolicy.jsp:45-70",
+                "WebRoot/auth/uap/viewClaims.jsp",
+                "WebRoot/auth/uap/verifyClaim.jsp",
+                "ViewClaimsAction.java",
+                "VerifyClaimAction.java"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "b2edd4e6-9b8f-43f4-bda5-77d43bcffc7e",
+            "nfr_id": 33,
+            "batch": 4,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "not sure if in the code, view claims and verify claims are enough to permit all of these actions in the specified conditions",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T16:52:40.503Z",
+            "satisfaction_level": "Satisfied",
+            "reasoning": "Operations use allowed without consent; operational views show PHI post-auth only",
+            "code_location": [
+                "WebRoot/privacyPolicy.jsp:45-70",
+                "WebRoot/auth/uap/verifyClaim.jsp",
+                "ViewClaimsAction.java"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "b2edd4e6-9b8f-43f4-bda5-77d43bcffc7e",
+            "nfr_id": 34,
+            "batch": 4,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "n/a",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T16:52:40.503Z",
+            "satisfaction_level": "Satisfied",
+            "reasoning": "Operations disclosures permitted; UAP claim review shows PHI without consent",
+            "code_location": [
+                "WebRoot/privacyPolicy.jsp:45-70",
+                "WebRoot/auth/uap/viewClaims.jsp",
+                "WebRoot/auth/uap/verifyClaim.jsp"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "b2edd4e6-9b8f-43f4-bda5-77d43bcffc7e",
+            "nfr_id": 35,
+            "batch": 4,
+            "q1_agreement": "Disagree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "n/a",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T16:52:40.503Z",
+            "satisfaction_level": "Satisfied",
+            "reasoning": "Treatment not gated by consent; no treatment-consent recording (optional)",
+            "code_location": [
+                "WebRoot/privacyPolicy.jsp:45-70",
+                "WebRoot/auth/hcp/viewAppt.jsp:22-110"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "b2edd4e6-9b8f-43f4-bda5-77d43bcffc7e",
+            "nfr_id": 36,
+            "batch": 4,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "n/a",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T16:52:40.503Z",
+            "satisfaction_level": "Satisfied",
+            "reasoning": "Payment not gated by consent; no payment-consent recording (optional)",
+            "code_location": [
+                "WebRoot/privacyPolicy.jsp:45-70",
+                "WebRoot/auth/patient/payBill.jsp",
+                "PayBillAction.java",
+                "BillingDAO.java"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "b2edd4e6-9b8f-43f4-bda5-77d43bcffc7e",
+            "nfr_id": 37,
+            "batch": 4,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "n/a",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T16:52:40.503Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "Validator only checks format/signature flag, not falsity; false data not invalidated",
+            "code_location": [
+                "RecordsReleaseFormValidator.java:18-30",
+                "RequestRecordsReleaseAction.java:88-114"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "b2edd4e6-9b8f-43f4-bda5-77d43bcffc7e",
+            "nfr_id": 38,
+            "batch": 4,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "n/a",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T16:52:40.503Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "No revocation path in records release",
+            "code_location": [
+                "RequestRecordsReleaseAction.java",
+                "RecordsReleaseDAO.java",
+                "WebRoot/auth/patient/confirmRecordsRelease.jsp"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "b2edd4e6-9b8f-43f4-bda5-77d43bcffc7e",
+            "nfr_id": 39,
+            "batch": 4,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "n/a",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T16:52:40.503Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "No revocation state, so no blocking after revocation",
+            "code_location": [
+                "RequestRecordsReleaseAction.java",
+                "RecordsReleaseDAO.java"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "b2edd4e6-9b8f-43f4-bda5-77d43bcffc7e",
+            "nfr_id": 40,
+            "batch": 4,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "n/a",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T16:52:40.503Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "No retention/contest carve-out tracking post-revocation",
+            "code_location": [
+                "RecordsReleaseBean.java",
+                "RequestRecordsReleaseAction.java",
+                "RecordsReleaseDAO.java"
+            ],
+            "comp": 0
+        },
+        {
+            "batch": 4,
+            "is_attention_question": true,
+            "nfr_display_1": "Agree",
+            "nfr_display_2": "Agree",
+            "nfr_feedback_1": "Disagree",
+            "nfr_feedback_2": "4",
+            "timestamp": "2026-03-30T16:52:40.503Z",
+            "uuid": "b2edd4e6-9b8f-43f4-bda5-77d43bcffc7e",
+            "satisfaction_level": "",
+            "reasoning": "",
+            "code_location": [],
+            "comp": 0
+        }
+    ],
+    "397d6632-4575-4fb1-bbe4-b752e201a4bd": [
+        {
+            "uuid": "397d6632-4575-4fb1-bbe4-b752e201a4bd",
+            "nfr_id": 41,
+            "batch": 5,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T19:34:22.296Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "No encryption of ePHI data in model layer; only SHA-256 hashing for passwords",
+            "code_location": [
+                "AuthDAO.java:70-80"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "397d6632-4575-4fb1-bbe4-b752e201a4bd",
+            "nfr_id": 42,
+            "batch": 5,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T19:34:22.296Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "No decryption or cryptography handling for incoming ePHI; DAOs store/read PHI in plaintext",
+            "code_location": [
+                "AuthDAO.java"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "397d6632-4575-4fb1-bbe4-b752e201a4bd",
+            "nfr_id": 43,
+            "batch": 5,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T19:34:22.297Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "No database encryption or model-layer access control protecting stored ePHI; DAOs read/write PHI in plaintext",
+            "code_location": [
+                "PatientDAO",
+                "OfficeVisitDAO",
+                "RecordsDAO",
+                "RecordsReleaseDAO"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "397d6632-4575-4fb1-bbe4-b752e201a4bd",
+            "nfr_id": 44,
+            "batch": 5,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T19:34:22.297Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "No controller or JSP enforces no compound authorization; release flow has no check",
+            "code_location": [
+                "RecordsReleaseServlet",
+                "RequestRecordsReleaseAction.java",
+                "requestRecordsRelease.jsp"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "397d6632-4575-4fb1-bbe4-b752e201a4bd",
+            "nfr_id": 45,
+            "batch": 5,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T19:34:22.297Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "Authorization form lacks several of the six required elements (specific PHI description, authorized discloser, expiration date/event, representative authority)",
+            "code_location": [
+                "WebRoot/auth/patient/requestRecordsRelease.jsp"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "397d6632-4575-4fb1-bbe4-b752e201a4bd",
+            "nfr_id": 46,
+            "batch": 5,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T19:34:22.298Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "Authorization form lacks statement about right to revoke and exceptions",
+            "code_location": [
+                "WebRoot/auth/patient/requestRecordsRelease.jsp",
+                "confirmRecordsRelease.jsp"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "397d6632-4575-4fb1-bbe4-b752e201a4bd",
+            "nfr_id": 47,
+            "batch": 5,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T19:34:22.298Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "Authorization form contains no statement about conditioning treatment/enrollment on signing",
+            "code_location": [
+                "WebRoot/auth/patient/requestRecordsRelease.jsp"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "397d6632-4575-4fb1-bbe4-b752e201a4bd",
+            "nfr_id": 48,
+            "batch": 5,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T19:34:22.298Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "Authorization form lacks redisclosure warning",
+            "code_location": [
+                "WebRoot/auth/patient/requestRecordsRelease.jsp"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "397d6632-4575-4fb1-bbe4-b752e201a4bd",
+            "nfr_id": 49,
+            "batch": 5,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T19:34:22.298Z",
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Authorization form uses mostly plain non-technical language but retains some legal phrasing",
+            "code_location": [
+                "WebRoot/auth/patient/requestRecordsRelease.jsp"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "397d6632-4575-4fb1-bbe4-b752e201a4bd",
+            "nfr_id": 50,
+            "batch": 5,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T19:34:22.299Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "No module or DAO performing risk/vulnerability assessment for ePHI confidentiality",
+            "code_location": [],
+            "comp": 0
+        },
+        {
+            "batch": 5,
+            "is_attention_question": true,
+            "nfr_display_1": "Agree",
+            "nfr_display_2": "Agree",
+            "nfr_feedback_1": "Disagree",
+            "nfr_feedback_2": "4",
+            "timestamp": "2026-03-29T19:34:22.299Z",
+            "uuid": "397d6632-4575-4fb1-bbe4-b752e201a4bd",
+            "satisfaction_level": "",
+            "reasoning": "",
+            "code_location": [],
+            "comp": 0
+        }
+    ],
+    "1540a642-a495-4b83-ae3c-937a1aedf6ea": [
+        {
+            "uuid": "1540a642-a495-4b83-ae3c-937a1aedf6ea",
+            "nfr_id": 51,
+            "batch": 6,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T16:47:16.103Z",
+            "satisfaction_level": "Satisfied",
+            "reasoning": "Role-based security constraints in web.xml map URL patterns to roles; AuthDAO.getUserRole() enforces role lookup",
+            "code_location": [
+                "WebRoot/WEB-INF/web.xml",
+                "Role.java",
+                "AuthDAO.java"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "1540a642-a495-4b83-ae3c-937a1aedf6ea",
+            "nfr_id": 52,
+            "batch": 6,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T16:47:16.104Z",
+            "satisfaction_level": "Satisfied",
+            "reasoning": "Patient deactivation/activation with cascade revocation; AuthDAO.getDeactivated() blocks deactivated patients",
+            "code_location": [
+                "EditPatientAction.java",
+                "PatientDAO.java",
+                "AuthDAO.java"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "1540a642-a495-4b83-ae3c-937a1aedf6ea",
+            "nfr_id": 53,
+            "batch": 6,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T16:47:16.105Z",
+            "satisfaction_level": "Satisfied",
+            "reasoning": "Granting access via DeclareHCPAction.declareHCP and EditRepresentativesAction.addRepresentee; logged",
+            "code_location": [
+                "DeclareHCPAction.java",
+                "EditRepresentativesAction.java"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "1540a642-a495-4b83-ae3c-937a1aedf6ea",
+            "nfr_id": 54,
+            "batch": 6,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T16:47:16.105Z",
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Review/remove access via list-and-remove; no granular edits or periodic review",
+            "code_location": [
+                "DeclareHCPAction.java",
+                "EditRepresentativesAction.java",
+                "editRepresentatives.jsp"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "1540a642-a495-4b83-ae3c-937a1aedf6ea",
+            "nfr_id": 55,
+            "batch": 6,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T16:47:16.106Z",
+            "satisfaction_level": "Satisfied",
+            "reasoning": "Revocation via undeclareHCP, removeRepresentee, and cascade in deactivate",
+            "code_location": [
+                "DeclareHCPAction.java",
+                "EditRepresentativesAction.java",
+                "EditPatientAction.java"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "1540a642-a495-4b83-ae3c-937a1aedf6ea",
+            "nfr_id": 56,
+            "batch": 6,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T16:47:16.107Z",
+            "satisfaction_level": "Satisfied",
+            "reasoning": "SessionTimeoutListener sets configurable timeout; logs inactivity logout",
+            "code_location": [
+                "SessionTimeoutListener.java",
+                "AccessDAO.java"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "1540a642-a495-4b83-ae3c-937a1aedf6ea",
+            "nfr_id": 57,
+            "batch": 6,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T16:47:16.108Z",
+            "satisfaction_level": "Satisfied",
+            "reasoning": "Central audit trail via TransactionLogger/TransactionDAO; patients can review via ViewMyAccessLogAction",
+            "code_location": [
+                "TransactionLogger.java",
+                "TransactionDAO.java",
+                "ViewMyAccessLogAction.java",
+                "viewAccessLog.jsp"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "1540a642-a495-4b83-ae3c-937a1aedf6ea",
+            "nfr_id": 58,
+            "batch": 6,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T16:47:16.108Z",
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Privacy notice exists at privacyPolicy.jsp but no delivery/acknowledgment or version tracking",
+            "code_location": [
+                "WebRoot/privacyPolicy.jsp"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "1540a642-a495-4b83-ae3c-937a1aedf6ea",
+            "nfr_id": 59,
+            "batch": 6,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T16:47:16.109Z",
+            "satisfaction_level": "Satisfied",
+            "reasoning": "Patient rights via representatives, declared HCPs, records release; all logged",
+            "code_location": [
+                "EditRepresentativesAction.java",
+                "DeclareHCPAction.java",
+                "RecordsReleaseDAO.java"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "1540a642-a495-4b83-ae3c-937a1aedf6ea",
+            "nfr_id": 60,
+            "batch": 6,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T16:47:16.110Z",
+            "satisfaction_level": "Satisfied",
+            "reasoning": "Declarative RBAC in web.xml blocks unauthorized roles; 403 routes to noaccess.jsp",
+            "code_location": [
+                "WebRoot/WEB-INF/web.xml",
+                "errors/noaccess.jsp",
+                "DeclareHCPAction.java"
+            ],
+            "comp": 0
+        },
+        {
+            "batch": 6,
+            "is_attention_question": true,
+            "nfr_display_1": "Agree",
+            "nfr_display_2": "Agree",
+            "nfr_feedback_1": "Disagree",
+            "nfr_feedback_2": "4",
+            "timestamp": "2026-03-30T16:47:16.110Z",
+            "uuid": "1540a642-a495-4b83-ae3c-937a1aedf6ea",
+            "satisfaction_level": "",
+            "reasoning": "",
+            "code_location": [],
+            "comp": 0
+        }
+    ],
+    "e58ecbc0-6eda-433a-b765-b4d27976946c": [
+        {
+            "uuid": "e58ecbc0-6eda-433a-b765-b4d27976946c",
+            "nfr_id": 61,
+            "batch": 7,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-04-01T19:11:34.407Z",
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Release requests validated and logged; no explicit incidental-disclosure policy code",
+            "code_location": [
+                "RequestRecordsReleaseAction.java",
+                "RecordsReleaseServlet.java",
+                "TransactionDAO.java"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "e58ecbc0-6eda-433a-b765-b4d27976946c",
+            "nfr_id": 62,
+            "batch": 7,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-04-01T19:11:34.408Z",
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Same release + logging flows as NFR61; no incidental-disclosure policy code",
+            "code_location": [
+                "RequestRecordsReleaseAction.java",
+                "RecordsReleaseServlet.java",
+                "TransactionDAO.java"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "e58ecbc0-6eda-433a-b765-b4d27976946c",
+            "nfr_id": 63,
+            "batch": 7,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-04-01T19:11:34.408Z",
+            "satisfaction_level": "Satisfied",
+            "reasoning": "Patients can view their own records; patient-facing action and logging exists",
+            "code_location": [
+                "ViewMyRecordsAction.java:30-99",
+                "TransactionType.java:101-106"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "e58ecbc0-6eda-433a-b765-b4d27976946c",
+            "nfr_id": 64,
+            "batch": 7,
+            "q1_agreement": "Disagree",
+            "q2_agreement": "Disagree",
+            "q3_agreement": "Disagree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-04-01T19:11:34.408Z",
+            "satisfaction_level": "Satisfied",
+            "reasoning": "System records transactions and provides patient access to their access log",
+            "code_location": [
+                "ViewMyAccessLogAction.java:27-66",
+                "TransactionDAO.java:112-121",
+                "TransactionDAO.java:190-208"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "e58ecbc0-6eda-433a-b765-b4d27976946c",
+            "nfr_id": 65,
+            "batch": 7,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-04-01T19:11:34.408Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "No patient restriction-request API/flow found; only LabProcedure.isRestricted data flag",
+            "code_location": [
+                "LabProcedure.java:17"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "e58ecbc0-6eda-433a-b765-b4d27976946c",
+            "nfr_id": 66,
+            "batch": 7,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-04-01T19:11:34.408Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "No amendment-request workflow found (no form/DAO/controller)",
+            "code_location": [],
+            "comp": 0
+        },
+        {
+            "uuid": "e58ecbc0-6eda-433a-b765-b4d27976946c",
+            "nfr_id": 67,
+            "batch": 7,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-04-01T19:11:34.408Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "No code to identify affected records for amendments; amendment feature missing",
+            "code_location": [],
+            "comp": 0
+        },
+        {
+            "uuid": "e58ecbc0-6eda-433a-b765-b4d27976946c",
+            "nfr_id": 68,
+            "batch": 7,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-04-01T19:11:34.408Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "No append/link amendment logic found; amendment feature missing",
+            "code_location": [],
+            "comp": 0
+        },
+        {
+            "uuid": "e58ecbc0-6eda-433a-b765-b4d27976946c",
+            "nfr_id": 69,
+            "batch": 7,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-04-01T19:11:34.409Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "No external amendment notification/integration code",
+            "code_location": [],
+            "comp": 0
+        },
+        {
+            "uuid": "e58ecbc0-6eda-433a-b765-b4d27976946c",
+            "nfr_id": 70,
+            "batch": 7,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-04-01T19:11:34.409Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "No amendment-processing personnel/offices recorded",
+            "code_location": [],
+            "comp": 0
+        },
+        {
+            "batch": 7,
+            "is_attention_question": true,
+            "nfr_display_1": "Agree",
+            "nfr_display_2": "Agree",
+            "nfr_feedback_1": "Disagree",
+            "nfr_feedback_2": "4",
+            "timestamp": "2026-04-01T19:11:34.409Z",
+            "uuid": "e58ecbc0-6eda-433a-b765-b4d27976946c",
+            "satisfaction_level": "",
+            "reasoning": "",
+            "code_location": [],
+            "comp": 0
+        }
+    ],
+    "e4691f7a-773b-438b-a7db-fd4cb12dc37f": [
+        {
+            "uuid": "e4691f7a-773b-438b-a7db-fd4cb12dc37f",
+            "nfr_id": 71,
+            "batch": 8,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T18:46:00.862Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "Signed release captured only as checkbox/name match; signature not stored or returned to patient",
+            "code_location": [
+                "requestRecordsRelease.jsp",
+                "RecordsReleaseFormValidator.java",
+                "RecordsReleaseBean.java",
+                "confirmRecordsRelease.jsp"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "e4691f7a-773b-438b-a7db-fd4cb12dc37f",
+            "nfr_id": 72,
+            "batch": 8,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T18:46:00.862Z",
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "No workflow to capture consent for treatment use; privacyPolicy.jsp states implicit use only",
+            "code_location": [
+                "WebRoot/privacyPolicy.jsp",
+                "editPatient.jsp",
+                "ViewPatientAction.java"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "e4691f7a-773b-438b-a7db-fd4cb12dc37f",
+            "nfr_id": 73,
+            "batch": 8,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T18:46:00.862Z",
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "No consent capture for payment; only billing views without consent",
+            "code_location": [
+                "WebRoot/privacyPolicy.jsp",
+                "myBills.jsp",
+                "notificationArea.jsp"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "e4691f7a-773b-438b-a7db-fd4cb12dc37f",
+            "nfr_id": 74,
+            "batch": 8,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T18:46:00.863Z",
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "No consent capture for health care operations; only implied in privacyPolicy.jsp",
+            "code_location": [
+                "WebRoot/privacyPolicy.jsp"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "e4691f7a-773b-438b-a7db-fd4cb12dc37f",
+            "nfr_id": 75,
+            "batch": 8,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "test",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T18:46:00.863Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "System never distinguishes consent vs authorization; checkbox accepted without rule checks",
+            "code_location": [
+                "requestRecordsRelease.jsp",
+                "RecordsReleaseFormValidator.java"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "e4691f7a-773b-438b-a7db-fd4cb12dc37f",
+            "nfr_id": 76,
+            "batch": 8,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T18:46:00.863Z",
+            "satisfaction_level": "Satisfied",
+            "reasoning": "PHI viewable/editable for treatment",
+            "code_location": [
+                "editPatient.jsp",
+                "ViewPatientAction.java"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "e4691f7a-773b-438b-a7db-fd4cb12dc37f",
+            "nfr_id": 77,
+            "batch": 8,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T18:46:00.864Z",
+            "satisfaction_level": "Satisfied",
+            "reasoning": "PHI used for own payment operations",
+            "code_location": [
+                "myBills.jsp",
+                "notificationArea.jsp"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "e4691f7a-773b-438b-a7db-fd4cb12dc37f",
+            "nfr_id": 78,
+            "batch": 8,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T18:46:00.864Z",
+            "satisfaction_level": "Satisfied",
+            "reasoning": "PHI accessible for internal operations consistent with privacyPolicy.jsp",
+            "code_location": [
+                "WebRoot/privacyPolicy.jsp"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "e4691f7a-773b-438b-a7db-fd4cb12dc37f",
+            "nfr_id": 79,
+            "batch": 8,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T18:46:00.864Z",
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Records release lets patients authorize disclosure to another provider, but only via manual authorization",
+            "code_location": [
+                "requestRecordsRelease.jsp",
+                "RecordsReleaseServlet.java",
+                "RequestRecordsReleaseAction.java",
+                "approveRecordsRelease.jsp"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "e4691f7a-773b-438b-a7db-fd4cb12dc37f",
+            "nfr_id": 80,
+            "batch": 8,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T18:46:00.865Z",
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Same release workflow can be used for payment disclosures; no dedicated payment-specific controls",
+            "code_location": [
+                "approveRecordsRelease.jsp"
+            ],
+            "comp": 0
+        },
+        {
+            "batch": 8,
+            "is_attention_question": true,
+            "nfr_display_1": "Agree",
+            "nfr_display_2": "Agree",
+            "nfr_feedback_1": "Disagree",
+            "nfr_feedback_2": "4",
+            "timestamp": "2026-03-29T18:46:00.865Z",
+            "uuid": "e4691f7a-773b-438b-a7db-fd4cb12dc37f",
+            "satisfaction_level": "",
+            "reasoning": "",
+            "code_location": [],
+            "comp": 0
+        }
+    ],
+    "e9d46a67-49a6-445b-a851-46effd7e101c": [
+        {
+            "uuid": "e9d46a67-49a6-445b-a851-46effd7e101c",
+            "nfr_id": 81,
+            "batch": 9,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T19:49:06.131Z",
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "Uses PHI in care flows but no purpose tagging/controls distinguishing treatment use",
+            "code_location": [
+                "EditPatientAction.java:61-103"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "e9d46a67-49a6-445b-a851-46effd7e101c",
+            "nfr_id": 82,
+            "batch": 9,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T19:49:06.131Z",
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "Payment views use PHI without payment-purpose flag/consent",
+            "code_location": [
+                "myBills.jsp:29-66"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "e9d46a67-49a6-445b-a851-46effd7e101c",
+            "nfr_id": 83,
+            "batch": 9,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T19:49:06.132Z",
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "Only static policy text; no operational-purpose handling",
+            "code_location": [
+                "WebRoot/privacyPolicy.jsp:55-57"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "e9d46a67-49a6-445b-a851-46effd7e101c",
+            "nfr_id": 84,
+            "batch": 9,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T19:49:06.132Z",
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "Policy allows but no disclosure workflow/log tied to payment",
+            "code_location": [
+                "WebRoot/privacyPolicy.jsp:53-56"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "e9d46a67-49a6-445b-a851-46effd7e101c",
+            "nfr_id": 85,
+            "batch": 9,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T19:49:06.132Z",
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "Policy mentions operations; no operational disclosure handling",
+            "code_location": [
+                "WebRoot/privacyPolicy.jsp:55-57"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "e9d46a67-49a6-445b-a851-46effd7e101c",
+            "nfr_id": 86,
+            "batch": 9,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T19:49:06.133Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "Emails always sent without checking agreement/withdrawal",
+            "code_location": [
+                "EditPatientAction.java:61-103",
+                "EmailUtil.java:20-25"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "e9d46a67-49a6-445b-a851-46effd7e101c",
+            "nfr_id": 87,
+            "batch": 9,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T19:49:06.133Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "Fake email send, no delivery check or paper-copy fallback",
+            "code_location": [
+                "EmailUtil.java:20-25"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "e9d46a67-49a6-445b-a851-46effd7e101c",
+            "nfr_id": 88,
+            "batch": 9,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T19:49:06.133Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "No UI/API to request paper notice; only static policy",
+            "code_location": [],
+            "comp": 0
+        },
+        {
+            "uuid": "e9d46a67-49a6-445b-a851-46effd7e101c",
+            "nfr_id": 89,
+            "batch": 9,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T19:49:06.134Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "No restriction fields/UI; policy says 'in writing' only",
+            "code_location": [
+                "WebRoot/privacyPolicy.jsp:47-49"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "e9d46a67-49a6-445b-a851-46effd7e101c",
+            "nfr_id": 90,
+            "batch": 9,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T19:49:06.134Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "No mechanism to request restrictions for payment disclosures; same absence",
+            "code_location": [
+                "WebRoot/privacyPolicy.jsp:47-49"
+            ],
+            "comp": 0
+        },
+        {
+            "batch": 9,
+            "is_attention_question": true,
+            "nfr_display_1": "Agree",
+            "nfr_display_2": "Agree",
+            "nfr_feedback_1": "Disagree",
+            "nfr_feedback_2": "4",
+            "timestamp": "2026-03-29T19:49:06.134Z",
+            "uuid": "e9d46a67-49a6-445b-a851-46effd7e101c",
+            "satisfaction_level": "",
+            "reasoning": "",
+            "code_location": [],
+            "comp": 0
+        }
+    ],
+    "b4b276ed-55d1-4874-b61c-e47d9075125a": [
+        {
+            "uuid": "b4b276ed-55d1-4874-b61c-e47d9075125a",
+            "nfr_id": 91,
+            "batch": 10,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T20:33:12.965Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "No technical integrity controls for created ePHI; only generic statement in privacyPolicy.jsp",
+            "code_location": [
+                "WebRoot/privacyPolicy.jsp"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "b4b276ed-55d1-4874-b61c-e47d9075125a",
+            "nfr_id": 92,
+            "batch": 10,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T20:33:12.966Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "No technical integrity controls for received ePHI",
+            "code_location": [
+                "WebRoot/privacyPolicy.jsp"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "b4b276ed-55d1-4874-b61c-e47d9075125a",
+            "nfr_id": 93,
+            "batch": 10,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T20:33:12.966Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "No technical integrity controls for maintained ePHI",
+            "code_location": [
+                "WebRoot/privacyPolicy.jsp"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "b4b276ed-55d1-4874-b61c-e47d9075125a",
+            "nfr_id": 94,
+            "batch": 10,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T20:33:12.966Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "No code or procedures for guarding against malware; searches show only medical virus codes",
+            "code_location": [],
+            "comp": 0
+        },
+        {
+            "uuid": "b4b276ed-55d1-4874-b61c-e47d9075125a",
+            "nfr_id": 95,
+            "batch": 10,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T20:33:12.967Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "No procedures for detecting malicious software",
+            "code_location": [],
+            "comp": 0
+        },
+        {
+            "uuid": "b4b276ed-55d1-4874-b61c-e47d9075125a",
+            "nfr_id": 96,
+            "batch": 10,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T20:33:12.967Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "No procedures for reporting malicious software",
+            "code_location": [],
+            "comp": 0
+        },
+        {
+            "uuid": "b4b276ed-55d1-4874-b61c-e47d9075125a",
+            "nfr_id": 97,
+            "batch": 10,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T20:33:12.967Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "No notice describing substance use disorder rights; nothing in privacy policy or related views",
+            "code_location": [],
+            "comp": 0
+        },
+        {
+            "uuid": "b4b276ed-55d1-4874-b61c-e47d9075125a",
+            "nfr_id": 98,
+            "batch": 10,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T20:33:12.967Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "No notice about entity's legal duties for SUD records",
+            "code_location": [],
+            "comp": 0
+        },
+        {
+            "uuid": "b4b276ed-55d1-4874-b61c-e47d9075125a",
+            "nfr_id": 99,
+            "batch": 10,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T20:33:12.967Z",
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "Privacy notice references HIPAA but lacks explicit legal-duty statement, breach-notification commitment",
+            "code_location": [
+                "WebRoot/privacyPolicy.jsp"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "b4b276ed-55d1-4874-b61c-e47d9075125a",
+            "nfr_id": 100,
+            "batch": 10,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T20:33:12.967Z",
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "No commitment to follow the notice currently in effect",
+            "code_location": [
+                "WebRoot/privacyPolicy.jsp"
+            ],
+            "comp": 0
+        },
+        {
+            "batch": 10,
+            "is_attention_question": true,
+            "nfr_display_1": "Agree",
+            "nfr_display_2": "Agree",
+            "nfr_feedback_1": "Disagree",
+            "nfr_feedback_2": "4",
+            "timestamp": "2026-03-29T20:33:12.967Z",
+            "uuid": "b4b276ed-55d1-4874-b61c-e47d9075125a",
+            "satisfaction_level": "",
+            "reasoning": "",
+            "code_location": [],
+            "comp": 0
+        }
+    ],
+    "977831a4-7811-4832-a8ed-fd4d830aaf18": [
+        {
+            "uuid": "977831a4-7811-4832-a8ed-fd4d830aaf18",
+            "nfr_id": 101,
+            "batch": 11,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-31T01:32:02.106Z",
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "Security controls exist but patient selection trusts UID_PATIENTID from request without authorization",
+            "code_location": [
+                "WebRoot/auth/getPatientID.jsp:13-17",
+                "SecureMIDNFRTest.java:57,87"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "977831a4-7811-4832-a8ed-fd4d830aaf18",
+            "nfr_id": 102,
+            "batch": 11,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-31T01:32:02.107Z",
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Access logs are viewable with filters and logged; but no clear incident-tracking workflow or structured review procedure",
+            "code_location": [
+                "ViewMyAccessLogAction.java:55-114",
+                "WebRoot/auth/patient/viewAccessLog.jsp"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "977831a4-7811-4832-a8ed-fd4d830aaf18",
+            "nfr_id": 103,
+            "batch": 11,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-31T01:32:02.107Z",
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "Role checks undermined by unchecked patient-ID injection path allowing unauthorized ePHI context",
+            "code_location": [
+                "WebRoot/auth/getPatientID.jsp:13-17"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "977831a4-7811-4832-a8ed-fd4d830aaf18",
+            "nfr_id": 104,
+            "batch": 11,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-31T01:32:02.108Z",
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "Authorization/supervision depends on session PID set unsafely so supervision can be bypassed",
+            "code_location": [
+                "WebRoot/auth/getPatientID.jsp:13-17"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "977831a4-7811-4832-a8ed-fd4d830aaf18",
+            "nfr_id": 105,
+            "batch": 11,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-31T01:32:02.108Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "Notice lacks right-to-request-restrictions language",
+            "code_location": [
+                "WebRoot/privacyPolicy.jsp"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "977831a4-7811-4832-a8ed-fd4d830aaf18",
+            "nfr_id": 106,
+            "batch": 11,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-31T01:32:02.108Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "Notice omits confidential-communication rights",
+            "code_location": [
+                "WebRoot/privacyPolicy.jsp"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "977831a4-7811-4832-a8ed-fd4d830aaf18",
+            "nfr_id": 107,
+            "batch": 11,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-31T01:32:02.108Z",
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Notice mentions access/participation but not clearly the right to inspect",
+            "code_location": [
+                "WebRoot/privacyPolicy.jsp:88-95"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "977831a4-7811-4832-a8ed-fd4d830aaf18",
+            "nfr_id": 108,
+            "batch": 11,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-31T01:32:02.108Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "Notice doesn't state right to obtain copies",
+            "code_location": [
+                "WebRoot/privacyPolicy.jsp"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "977831a4-7811-4832-a8ed-fd4d830aaf18",
+            "nfr_id": 109,
+            "batch": 11,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-31T01:32:02.108Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "Notice doesn't state right to request amendment",
+            "code_location": [
+                "WebRoot/privacyPolicy.jsp"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "977831a4-7811-4832-a8ed-fd4d830aaf18",
+            "nfr_id": 110,
+            "batch": 11,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-31T01:32:02.108Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "Notice doesn't state right to receive a disclosure record",
+            "code_location": [
+                "WebRoot/privacyPolicy.jsp"
+            ],
+            "comp": 0
+        },
+        {
+            "batch": 11,
+            "is_attention_question": true,
+            "nfr_display_1": "Agree",
+            "nfr_display_2": "Agree",
+            "nfr_feedback_1": "Disagree",
+            "nfr_feedback_2": "4",
+            "timestamp": "2026-03-31T01:32:02.108Z",
+            "uuid": "977831a4-7811-4832-a8ed-fd4d830aaf18",
+            "satisfaction_level": "",
+            "reasoning": "",
+            "code_location": [],
+            "comp": 0
+        }
+    ],
+    "9a5f8d45-6bf0-4f1e-aadb-9011d213e24b": [
+        {
+            "uuid": "9a5f8d45-6bf0-4f1e-aadb-9011d213e24b",
+            "nfr_id": 111,
+            "batch": 12,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T21:28:46.140Z",
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Audit trail provides traceability; but no explicit risk/vulnerability assessment process or integrity checking",
+            "code_location": [
+                "TransactionLogger.java:35-43",
+                "TransactionDAO.java",
+                "SessionTimeoutListener.java:60-65"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "9a5f8d45-6bf0-4f1e-aadb-9011d213e24b",
+            "nfr_id": 112,
+            "batch": 12,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T21:28:46.140Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "No assessment or continuity tooling; only session timeout handling and RBAC",
+            "code_location": [
+                "server/SessionTimeoutListener.java",
+                "WebRoot/WEB-INF/web.xml"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "9a5f8d45-6bf0-4f1e-aadb-9011d213e24b",
+            "nfr_id": 113,
+            "batch": 12,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T21:28:46.140Z",
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Privacy page lists permitted uses but is general, not tied to specific disclosures",
+            "code_location": [
+                "WebRoot/privacyPolicy.jsp:42-70"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "9a5f8d45-6bf0-4f1e-aadb-9011d213e24b",
+            "nfr_id": 114,
+            "batch": 12,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T21:28:46.140Z",
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "States written authorization needed outside listed uses but lacks detail on types and omits revocation rights",
+            "code_location": [
+                "WebRoot/privacyPolicy.jsp:68-70"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "9a5f8d45-6bf0-4f1e-aadb-9011d213e24b",
+            "nfr_id": 115,
+            "batch": 12,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T21:28:46.140Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "No prohibited-use section in privacyPolicy.jsp",
+            "code_location": [
+                "WebRoot/privacyPolicy.jsp"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "9a5f8d45-6bf0-4f1e-aadb-9011d213e24b",
+            "nfr_id": 116,
+            "batch": 12,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T21:28:46.140Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "No attestation content present",
+            "code_location": [
+                "WebRoot/privacyPolicy.jsp"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "9a5f8d45-6bf0-4f1e-aadb-9011d213e24b",
+            "nfr_id": 117,
+            "batch": 12,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T21:28:46.141Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "Privacy notice lacks any redisclosure statement",
+            "code_location": [
+                "WebRoot/privacyPolicy.jsp"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "9a5f8d45-6bf0-4f1e-aadb-9011d213e24b",
+            "nfr_id": 118,
+            "batch": 12,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T21:28:46.141Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "System relies on role-based access; no capture/verification of patient authorizations. DeclareHCP provides visibility not enforcement",
+            "code_location": [
+                "WebRoot/WEB-INF/web.xml",
+                "DeclareHCPAction.java:13-89",
+                "PatientDAO.java:203-289"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "9a5f8d45-6bf0-4f1e-aadb-9011d213e24b",
+            "nfr_id": 119,
+            "batch": 12,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T21:28:46.141Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "No mechanism to store or enforce authorization scope beyond roles",
+            "code_location": [
+                "WebRoot/WEB-INF/web.xml"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "9a5f8d45-6bf0-4f1e-aadb-9011d213e24b",
+            "nfr_id": 120,
+            "batch": 12,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-29T21:28:46.141Z",
+            "satisfaction_level": "Not Applicable",
+            "reasoning": "No consent capture implemented; nothing indicates consent is required or supported",
+            "code_location": [],
+            "comp": 0
+        },
+        {
+            "batch": 12,
+            "is_attention_question": true,
+            "nfr_display_1": "Agree",
+            "nfr_display_2": "Agree",
+            "nfr_feedback_1": "Disagree",
+            "nfr_feedback_2": "4",
+            "timestamp": "2026-03-29T21:28:46.141Z",
+            "uuid": "9a5f8d45-6bf0-4f1e-aadb-9011d213e24b",
+            "satisfaction_level": "",
+            "reasoning": "",
+            "code_location": [],
+            "comp": 0
+        }
+    ],
+    "b07644cc-9eda-4e68-b848-126831f7ad67": [
+        {
+            "uuid": "b07644cc-9eda-4e68-b848-126831f7ad67",
+            "nfr_id": 121,
+            "batch": 13,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "N/A",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-04-01T15:17:37.355Z",
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "RBAC/logging/timeouts exist; legacy SHA-256 hashing without KDF/MFA; no TLS or at-rest encryption; no global rate limiting",
+            "code_location": [
+                "WebRoot/WEB-INF/web.xml",
+                "AuthDAO.java",
+                "SessionTimeoutListener.java",
+                "TransactionLogger.java"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "b07644cc-9eda-4e68-b848-126831f7ad67",
+            "nfr_id": 122,
+            "batch": 13,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "N/A",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-04-01T15:17:37.356Z",
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "Validators and DB constraints help; no tamper-evident storage/signing, integrity monitoring, or at-rest crypto",
+            "code_location": [
+                "RecordsReleaseFormValidator.java",
+                "PatientValidator.java",
+                "sql/createTables.sql"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "b07644cc-9eda-4e68-b848-126831f7ad67",
+            "nfr_id": 123,
+            "batch": 13,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "N/A",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-04-01T15:17:37.356Z",
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "RBAC only; no purpose-of-use capture, policy engine, or consistent minimum-necessary enforcement",
+            "code_location": [
+                "WebRoot/WEB-INF/web.xml",
+                "sql/createTables.sql",
+                "ViewMyAccessLogAction.java",
+                "iTrustController.java"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "b07644cc-9eda-4e68-b848-126831f7ad67",
+            "nfr_id": 124,
+            "batch": 13,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "N/A",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-04-01T15:17:37.356Z",
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "Records release requires patient auth/signature; lacks masking, minimum-necessary export controls, TLS/at-rest encryption",
+            "code_location": [
+                "requestRecordsRelease.jsp",
+                "RequestRecordsReleaseAction.java",
+                "RecordsReleaseServlet.java",
+                "sql/createTables.sql"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "b07644cc-9eda-4e68-b848-126831f7ad67",
+            "nfr_id": 125,
+            "batch": 13,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "N/A",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-04-01T15:17:37.356Z",
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "Privacy policy exists but no versioning or per-user acceptance records",
+            "code_location": [
+                "WebRoot/privacyPolicy.jsp"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "b07644cc-9eda-4e68-b848-126831f7ad67",
+            "nfr_id": 126,
+            "batch": 13,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "N/A",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-04-01T15:17:37.356Z",
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "Rights described in policy; no workflow or attestation proving delivery per user",
+            "code_location": [
+                "WebRoot/privacyPolicy.jsp"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "b07644cc-9eda-4e68-b848-126831f7ad67",
+            "nfr_id": 127,
+            "batch": 13,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "N/A",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-04-01T15:17:37.357Z",
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "Legal duties referenced generally; not versioned/acknowledged or change-notified",
+            "code_location": [
+                "WebRoot/privacyPolicy.jsp"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "b07644cc-9eda-4e68-b848-126831f7ad67",
+            "nfr_id": 128,
+            "batch": 13,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "N/A",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-04-01T15:17:37.357Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "Only telemedicine metric flags; no systematic minimum-necessary enforcement or data minimization",
+            "code_location": [
+                "RemoteMonitoringDAO.java",
+                "WebRoot/WEB-INF/web.xml"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "b07644cc-9eda-4e68-b848-126831f7ad67",
+            "nfr_id": 129,
+            "batch": 13,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "N/A",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-04-01T15:17:37.357Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "No de-identification/re-identification handling; PHI directly linked via MID; no protected mapping",
+            "code_location": [],
+            "comp": 0
+        },
+        {
+            "uuid": "b07644cc-9eda-4e68-b848-126831f7ad67",
+            "nfr_id": 130,
+            "batch": 13,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "N/A",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-04-01T15:17:37.357Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "No 42 CFR Part 2 consent, segmentation, or special notice for SUD records",
+            "code_location": [
+                "WebRoot/privacyPolicy.jsp"
+            ],
+            "comp": 0
+        },
+        {
+            "batch": 13,
+            "is_attention_question": true,
+            "nfr_display_1": "Agree",
+            "nfr_display_2": "Agree",
+            "nfr_feedback_1": "Disagree",
+            "nfr_feedback_2": "4",
+            "timestamp": "2026-04-01T15:17:37.357Z",
+            "uuid": "b07644cc-9eda-4e68-b848-126831f7ad67",
+            "satisfaction_level": "",
+            "reasoning": "",
+            "code_location": [],
+            "comp": 0
+        }
+    ],
+    "f384d13f-c84b-4163-a343-a035dbf5374f": [
+        {
+            "uuid": "f384d13f-c84b-4163-a343-a035dbf5374f",
+            "nfr_id": 131,
+            "batch": 14,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T23:17:22.303Z",
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Data stored with audit log; availability depends on single MyISAM instance with no backup/HA",
+            "code_location": [
+                "sql/createTables.sql:165-173",
+                "SessionTimeoutListener.java:40-66"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "f384d13f-c84b-4163-a343-a035dbf5374f",
+            "nfr_id": 132,
+            "batch": 14,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T23:17:22.303Z",
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Incoming ePHI stored in MyISAM tables; no replication/ACID/backup or disaster recovery",
+            "code_location": [
+                "sql/createTables.sql:165-173"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "f384d13f-c84b-4163-a343-a035dbf5374f",
+            "nfr_id": 133,
+            "batch": 14,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T23:17:22.303Z",
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "All maintained records in MyISAM tables; no replication, backups, or transactional integrity",
+            "code_location": [
+                "sql/createTables.sql:165-173"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "f384d13f-c84b-4163-a343-a035dbf5374f",
+            "nfr_id": 134,
+            "batch": 14,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T23:17:22.303Z",
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Transmissions logged and stored; no high-availability or backup strategy",
+            "code_location": [
+                "sql/createTables.sql:165-173"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "f384d13f-c84b-4163-a343-a035dbf5374f",
+            "nfr_id": 135,
+            "batch": 14,
+            "q1_agreement": "Disagree",
+            "q2_agreement": "Strongly Disagree",
+            "q3_agreement": "Disagree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T23:17:22.303Z",
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Release requires justification and recipient info; approvals/denials logged; but no per-field scoping or redaction",
+            "code_location": [
+                "sql/createTables.sql:355-370",
+                "RecordsReleaseDAO.java:22-45",
+                "requestRecordsRelease.jsp:30-74",
+                "TransactionType.java:377-388"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "f384d13f-c84b-4163-a343-a035dbf5374f",
+            "nfr_id": 136,
+            "batch": 14,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T23:17:22.304Z",
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Role-based access, salted SHA-256 passwords, session inactivity logout, failed-login tracking; but no encryption at rest, MFA, or rate-limiting/lockout",
+            "code_location": [
+                "WebRoot/WEB-INF/web.xml:115-260",
+                "AuthDAO.java:69-88",
+                "sql/createTables.sql:105-110",
+                "SessionTimeoutListener.java:40-66"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "f384d13f-c84b-4163-a343-a035dbf5374f",
+            "nfr_id": 137,
+            "batch": 14,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T23:17:22.304Z",
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Accesses logged and viewable; but no real-time detection or alerting",
+            "code_location": [
+                "TransactionDAO.java:190-205",
+                "TransactionType.java:340-388",
+                "sql/createTables.sql:165-173"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "f384d13f-c84b-4163-a343-a035dbf5374f",
+            "nfr_id": 138,
+            "batch": 14,
+            "q1_agreement": "Disagree",
+            "q2_agreement": "Disagree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T23:17:22.304Z",
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "Only logout/logging; no containment actions",
+            "code_location": [
+                "SessionTimeoutListener.java:59-66",
+                "TransactionType.java:16-20"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "f384d13f-c84b-4163-a343-a035dbf5374f",
+            "nfr_id": 139,
+            "batch": 14,
+            "q1_agreement": "Disagree",
+            "q2_agreement": "Disagree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T23:17:22.304Z",
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "No correction workflow beyond logging",
+            "code_location": [
+                "TransactionType.java:16-20",
+                "TransactionDAO.java:190-205"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "f384d13f-c84b-4163-a343-a035dbf5374f",
+            "nfr_id": 140,
+            "batch": 14,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T23:17:22.304Z",
+            "satisfaction_level": "Satisfied",
+            "reasoning": "Privacy notice written in simple non-legal wording with clear sections",
+            "code_location": [
+                "WebRoot/privacyPolicy.jsp:14-99"
+            ],
+            "comp": 0
+        },
+        {
+            "batch": 14,
+            "is_attention_question": true,
+            "nfr_display_1": "Agree",
+            "nfr_display_2": "Agree",
+            "nfr_feedback_1": "Disagree",
+            "nfr_feedback_2": "4",
+            "timestamp": "2026-03-30T23:17:22.304Z",
+            "uuid": "f384d13f-c84b-4163-a343-a035dbf5374f",
+            "satisfaction_level": "",
+            "reasoning": "",
+            "code_location": [],
+            "comp": 0
+        }
+    ],
+    "f5c2ee02-60ba-4601-8659-ce3c65110b53": [
+        {
+            "uuid": "f5c2ee02-60ba-4601-8659-ce3c65110b53",
+            "nfr_id": 141,
+            "batch": 15,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-04-01T16:13:51.361Z",
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Policy implies access/disclosure to the individual; patient can view records; but enforcement/process unclear",
+            "code_location": [
+                "ViewMyRecordsAction.java",
+                "WebRoot/auth/patient/viewMyRecords.jsp",
+                "WebRoot/privacyPolicy.jsp"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "f5c2ee02-60ba-4601-8659-ce3c65110b53",
+            "nfr_id": 142,
+            "batch": 15,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-04-01T16:13:51.420Z",
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Policy implies disclosure to the individual; patient record views exist",
+            "code_location": [
+                "ViewMyRecordsAction.java",
+                "WebRoot/auth/patient/viewMyRecords.jsp"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "f5c2ee02-60ba-4601-8659-ce3c65110b53",
+            "nfr_id": 143,
+            "batch": 15,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-04-01T16:13:51.420Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "No support for regulatory/Secretary investigations; no controller/JSP/service for regulator disclosures",
+            "code_location": [],
+            "comp": 0
+        },
+        {
+            "uuid": "f5c2ee02-60ba-4601-8659-ce3c65110b53",
+            "nfr_id": 144,
+            "batch": 15,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-04-01T16:13:51.420Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "No support for regulatory compliance investigations by the Secretary",
+            "code_location": [],
+            "comp": 0
+        },
+        {
+            "uuid": "f5c2ee02-60ba-4601-8659-ce3c65110b53",
+            "nfr_id": 145,
+            "batch": 15,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-04-01T16:13:51.421Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "Required all-caps notice banner missing from privacyPolicy.jsp",
+            "code_location": [
+                "WebRoot/privacyPolicy.jsp"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "f5c2ee02-60ba-4601-8659-ce3c65110b53",
+            "nfr_id": 146,
+            "batch": 15,
+            "q1_agreement": "Disagree",
+            "q2_agreement": "Disagree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-04-01T16:13:51.421Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "Privacy policy mentions categories but provides no examples for treatment/payment/operations",
+            "code_location": [
+                "WebRoot/privacyPolicy.jsp:50-64"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "f5c2ee02-60ba-4601-8659-ce3c65110b53",
+            "nfr_id": 147,
+            "batch": 15,
+            "q1_agreement": "Disagree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-04-01T16:13:51.421Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "Privacy policy covers a few permitted categories but omits other HIPAA-permitted purposes",
+            "code_location": [
+                "WebRoot/privacyPolicy.jsp:50-64"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "f5c2ee02-60ba-4601-8659-ce3c65110b53",
+            "nfr_id": 148,
+            "batch": 15,
+            "q1_agreement": "Disagree",
+            "q2_agreement": "Disagree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-04-01T16:13:51.422Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "No mention of following stricter applicable laws in privacyPolicy.jsp",
+            "code_location": [
+                "WebRoot/privacyPolicy.jsp"
+            ],
+            "comp": 0
+        },
+        {
+            "batch": 15,
+            "is_attention_question": true,
+            "nfr_display_1": "Agree",
+            "nfr_display_2": "Agree",
+            "nfr_feedback_1": "Disagree",
+            "nfr_feedback_2": "4",
+            "timestamp": "2026-04-01T16:13:51.422Z",
+            "uuid": "f5c2ee02-60ba-4601-8659-ce3c65110b53",
+            "satisfaction_level": "",
+            "reasoning": "",
+            "code_location": [],
+            "comp": 0
+        }
+    ],
+    "7ff75834-6394-4c93-9c99-b8859c5dbd7d": [
+        {
+            "uuid": "7ff75834-6394-4c93-9c99-b8859c5dbd7d",
+            "nfr_id": 1,
+            "batch": 1,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "N/A",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T23:23:36.998Z",
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "IP-based login failure tracking/CAPTCHA with logging; no per-user lockouts or alerts",
+            "code_location": [
+                "LoginFailureAction.java:47-53",
+                "AuthDAO.java:294-306",
+                "AuthDAO.java:379-405",
+                "login.jsp:59-76"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "7ff75834-6394-4c93-9c99-b8859c5dbd7d",
+            "nfr_id": 2,
+            "batch": 1,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "N/A",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T23:23:36.999Z",
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Password creation uses salted SHA-256 and basic rules; no generator/history/expiration",
+            "code_location": [
+                "AuthDAO.java:69-87",
+                "ValidationFormat.java:136-137"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "7ff75834-6394-4c93-9c99-b8859c5dbd7d",
+            "nfr_id": 3,
+            "batch": 1,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "N/A",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T23:23:36.999Z",
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Change flow validates, salts, logs; but lacks history/expiration",
+            "code_location": [
+                "ChangePasswordAction.java:41-69",
+                "AuthDAO.java:219-228"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "7ff75834-6394-4c93-9c99-b8859c5dbd7d",
+            "nfr_id": 4,
+            "batch": 1,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "N/A",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T23:23:36.999Z",
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Hashed+salted storage; but security questions in plaintext and no MFA",
+            "code_location": [
+                "AuthDAO.java:70-90",
+                "AuthDAO.java:222-226",
+                "AuthDAO.java:586-589",
+                "AuthDAO.java:100-112"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "7ff75834-6394-4c93-9c99-b8859c5dbd7d",
+            "nfr_id": 5,
+            "batch": 1,
+            "q1_agreement": "Disagree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "N/A",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T23:23:36.999Z",
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "Only audit logging; no procedures/playbooks for security incidents",
+            "code_location": [
+                "TransactionLogger.java",
+                "TransactionDAO.java:82-100"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "7ff75834-6394-4c93-9c99-b8859c5dbd7d",
+            "nfr_id": 6,
+            "batch": 1,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "N/A",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T23:23:37.000Z",
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "No detection/alerting beyond logged events",
+            "code_location": [
+                "TransactionType.java",
+                "TransactionLogger.java"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "7ff75834-6394-4c93-9c99-b8859c5dbd7d",
+            "nfr_id": 7,
+            "batch": 1,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "N/A",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T23:23:37.000Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "No mitigation automation/lockdowns found",
+            "code_location": [],
+            "comp": 0
+        },
+        {
+            "uuid": "7ff75834-6394-4c93-9c99-b8859c5dbd7d",
+            "nfr_id": 8,
+            "batch": 1,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "N/A",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T23:23:37.000Z",
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "Transactions logged but no incident/outcome documentation workflow",
+            "code_location": [
+                "TransactionDAO.java:82-100"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "7ff75834-6394-4c93-9c99-b8859c5dbd7d",
+            "nfr_id": 9,
+            "batch": 1,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "N/A",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T23:23:37.000Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "No backup creation code; searches for backup/restore empty",
+            "code_location": [],
+            "comp": 0
+        },
+        {
+            "uuid": "7ff75834-6394-4c93-9c99-b8859c5dbd7d",
+            "nfr_id": 10,
+            "batch": 1,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "N/A",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T23:23:37.001Z",
+            "satisfaction_level": "Denied",
+            "reasoning": "No processes to maintain/restore copies of ePHI",
+            "code_location": [],
+            "comp": 0
+        },
+        {
+            "batch": 1,
+            "is_attention_question": true,
+            "nfr_display_1": "Agree",
+            "nfr_display_2": "Agree",
+            "nfr_feedback_1": "Disagree",
+            "nfr_feedback_2": "4",
+            "timestamp": "2026-03-30T23:23:37.001Z",
+            "uuid": "7ff75834-6394-4c93-9c99-b8859c5dbd7d",
+            "satisfaction_level": "",
+            "reasoning": "",
+            "code_location": [],
+            "comp": 0
+        }
+    ],
+    "a85fbaef-eff6-4d7d-93d1-1017b8107bdc": [
+        {
+            "uuid": "a85fbaef-eff6-4d7d-93d1-1017b8107bdc",
+            "nfr_id": 11,
+            "batch": 2,
+            "q1_agreement": "Strongly Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T23:30:55.948Z",
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "Only test-only DB rebuild/seed helpers; no operational backup/restore mechanism",
+            "code_location": [
+                "DBBuilder.java",
+                "TestDataGenerator.java",
+                "sql/createTables.sql",
+                "sql/dropTables.sql"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "a85fbaef-eff6-4d7d-93d1-1017b8107bdc",
+            "nfr_id": 12,
+            "batch": 2,
+            "q1_agreement": "Disagree",
+            "q2_agreement": "Strongly Disagree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T23:30:55.950Z",
+            "satisfaction_level": "Satisfied",
+            "reasoning": "Role constraints in web.xml + realm-backed auth; minor exposure (patient directory lookup by any authenticated role)",
+            "code_location": [
+                "WebRoot/WEB-INF/web.xml",
+                "WebRoot/META-INF/context.xml",
+                "WebRoot/global.jsp"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "a85fbaef-eff6-4d7d-93d1-1017b8107bdc",
+            "nfr_id": 13,
+            "batch": 2,
+            "q1_agreement": "Disagree",
+            "q2_agreement": "Disagree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T23:30:55.950Z",
+            "satisfaction_level": "Satisfied",
+            "reasoning": "Every user keyed by unique MID; schema enforces PK on MID; auto-generated/allocated in role-specific ranges",
+            "code_location": [
+                "sql/createTables.sql:5-17",
+                "PatientDAO.java:117-123",
+                "PersonnelDAO.java:77-123",
+                "User.java:23-30"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "a85fbaef-eff6-4d7d-93d1-1017b8107bdc",
+            "nfr_id": 14,
+            "batch": 2,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T23:30:55.951Z",
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "Emergency Record view exists and logs access, but no break-glass/override workflow or special emergency policy",
+            "code_location": [
+                "EmergencyRecordController.java",
+                "EmergencyRecordMySQL.java",
+                "TransactionType.java",
+                "WebRoot/auth/hcp/viewEmergencyRecord.xhtml"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "a85fbaef-eff6-4d7d-93d1-1017b8107bdc",
+            "nfr_id": 15,
+            "batch": 2,
+            "q1_agreement": "Disagree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T23:30:55.951Z",
+            "satisfaction_level": "Satisfied",
+            "reasoning": "Inactivity timeout enforced on session creation, configurable via DB, admin UI to change, logout logged",
+            "code_location": [
+                "SessionTimeoutListener.java",
+                "WebRoot/WEB-INF/web.xml",
+                "AccessDAO.java",
+                "ChangeSessionTimeoutAction.java"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "a85fbaef-eff6-4d7d-93d1-1017b8107bdc",
+            "nfr_id": 16,
+            "batch": 2,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T23:30:55.952Z",
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Passwords salted and SHA-256 hashed; no evidence of encrypting ePHI at rest or TLS/SSL config in repo",
+            "code_location": [
+                "AuthDAO.java",
+                "login.jsp",
+                "WebRoot/META-INF/context.xml"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "a85fbaef-eff6-4d7d-93d1-1017b8107bdc",
+            "nfr_id": 17,
+            "batch": 2,
+            "q1_agreement": "Disagree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T23:30:55.952Z",
+            "satisfaction_level": "Satisfied",
+            "reasoning": "System logs transactions with actor/patient context; provides views for users to see access logs",
+            "code_location": [
+                "TransactionLogger.java",
+                "TransactionDAO.java",
+                "sql/createTables.sql",
+                "TransactionType.java",
+                "iTrustController.java",
+                "ViewMyAccessLogAction.java"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "a85fbaef-eff6-4d7d-93d1-1017b8107bdc",
+            "nfr_id": 18,
+            "batch": 2,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Strongly Agree",
+            "q3_agreement": "Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T23:30:55.953Z",
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "Validation and prepared statements exist; but no versioning, locks, or integrity hashes on patient records; MyISAM lacks FK enforcement",
+            "code_location": [
+                "PatientValidator.java",
+                "ValidationFormat.java",
+                "sql/createTables.sql",
+                "PatientDAO.java"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "a85fbaef-eff6-4d7d-93d1-1017b8107bdc",
+            "nfr_id": 19,
+            "batch": 2,
+            "q1_agreement": "Agree",
+            "q2_agreement": "Agree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T23:30:55.954Z",
+            "satisfaction_level": "Weakly Denied",
+            "reasoning": "No cryptographic integrity mechanism; digital signature is just string comparison against logged-in name",
+            "code_location": [
+                "RecordsReleaseServlet.java",
+                "RequestRecordsReleaseAction.java",
+                "RecordsReleaseForm.java"
+            ],
+            "comp": 0
+        },
+        {
+            "uuid": "a85fbaef-eff6-4d7d-93d1-1017b8107bdc",
+            "nfr_id": 20,
+            "batch": 2,
+            "q1_agreement": "Disagree",
+            "q2_agreement": "Disagree",
+            "q3_agreement": "Strongly Agree",
+            "undecided_reason": "",
+            "forced_own_assessment": "",
+            "nfr_acknowledged": true,
+            "timestamp": "2026-03-30T23:30:55.955Z",
+            "satisfaction_level": "Satisfied",
+            "reasoning": "Access requires authenticated user accounts via container realm; salted/hashed passwords; CAPTCHA; security answer verification",
+            "code_location": [
+                "WebRoot/META-INF/context.xml",
+                "login.jsp",
+                "AuthDAO.java",
+                "ResetPasswordAction.java",
+                "WebRoot/WEB-INF/web.xml"
+            ],
+            "comp": 0
+        },
+        {
+            "batch": 2,
+            "is_attention_question": true,
+            "nfr_display_1": "Agree",
+            "nfr_display_2": "Agree",
+            "nfr_feedback_1": "Disagree",
+            "nfr_feedback_2": "4",
+            "timestamp": "2026-03-30T23:30:55.955Z",
+            "uuid": "a85fbaef-eff6-4d7d-93d1-1017b8107bdc",
+            "satisfaction_level": "",
+            "reasoning": "",
+            "code_location": [],
+            "comp": 0
+        }
+    ]
+}
