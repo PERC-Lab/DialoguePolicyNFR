@@ -1,0 +1,181 @@
+ID,Status,Details
+1,OK,Verified
+2,Line Fix,"AddPatientAction.java ""65-75 50-53"": Lines 50-53 are Javadoc/method signature, not password creation. Password line is at 56 (dependent) and 70 (regular). Should be ""AddPatientAction.java 65-75"" and ""AddPatientAction.java 51-56"". AddUAPAction.java 52-54 is listed twice. Reasoning wording typo: ""the user have"" → ""the user has""."
+3,OK,Verified
+4,OK,Verified
+5,OK,Verified
+6,OK,Verified
+7,OK,Verified
+8,OK,Verified
+9,OK,Verified
+10,OK,Verified
+11,Minor,"code_location is """" (empty string) instead of [] (empty array)"
+12,OK, Verified
+13,OK,Verified
+14,Line Fix,"EmergencyRecordController.java 70-77: File ends at line 76. The logViewEmergencyRecord method is at lines 69-75. Should be ""EmergencyRecordController.java 69-75""."
+15,OK,Verified
+16,OK,Verified
+17,OK,Verified
+18,OK,Verified
+19,OK,Verified
+20,OK,"Verified. 
+21,OK,"Verified. 
+22,OK,Verified. 
+23,OK,Verified. 
+24,OK,Verified
+25,OK,Verified
+26,OK,Verified
+27,OK,Verified
+28,OK,Verified
+29,OK,Verified
+30,OK,Verified
+31,OK,Verified
+32,OK,Verified
+33,Minor," requestRecordsReleaseHistory.jsp 47-60 uses getDependents() which filters by isDependent=1, so this code path only covers dependent representatives, I'm not sure if this counts for all legal representative, maybe should be weakly satisfied."
+34,OK,Verified
+35,OK,Verified
+36,OK,Verified
+37,OK,Verified
+38,OK,Verified
+39,OK,Verified
+40,OK,Verified
+41,OK,Verified
+42,OK,Verified
+43,OK,Verified
+44,OK,Verified
+45,OK,Verified
+46,OK,Verified
+47,Minor,"Grammar: ""invalid data in case of detecting a false information"" → ""invalidate an authorization when false information is detected""."
+48,OK,Verified
+49,OK,Verified
+50,OK,Verified
+51,Minor Issue, This seems like it should be the same level of satisfied as 53
+52,Minor,"Typo: ""recieved"" → ""received"" 
+53,Issue,See ID 51 — inconsistent level for similar evidence.
+54,OK,Verified
+55,OK,Verified
+56,Minor,"requestRecordsRelease.jsp 147-151 is just the consent text. The full form with all authorization elements is at 101-165. Maybe 101-165 should be included."
+57,OK,Verified
+58,OK,Verified
+59,OK,Verified
+60,OK,Verified
+61,OK,Verified
+62,OK,"Verified. 
+63,OK,Verified
+64,OK,Verified
+65,OK,Verified
+66,OK,Verified
+67,OK,Verified
+68,Line Fix,"viewMyAppts.jsp ""61-69"": Line 61 is row styling, Should be ""viewMyAppts.jsp 65-69""."
+69,OK,Verified
+70,OK,Verified
+71,OK,Verified
+72,OK,Verified
+73,OK,Verified
+74,OK,Verified
+75,OK,Verified. Note: similar to ID 172.
+76,OK,Verified. Note: similar to ID 167.
+77,OK,Verified. Note: similar t0 ID 168.
+78,OK,Verified. Note: similar to ID 169.
+79,Minor,"Typo: ""constitudes"" → ""constitutes""."
+80,Minor,"Typo: ""constitudes"" → ""constitutes""."
+81,OK,Verified
+82,OK,Verified
+83,OK,Verified
+84,OK,Verified
+85,OK,Verified
+86,OK,Verified
+87,OK,Verified
+88,OK,Verified
+89,OK,Verified
+90,OK,Verified
+91,OK,Verified
+92,OK,Verified
+93,OK,Verified
+94,OK,Verified
+95,OK,Verified
+96,OK,Verified
+97,OK,Verified
+98,OK,Verified
+99,OK,Verified
+100,OK,Verified
+101,OK,Verified
+102,OK,Verified
+103,Minor,"Reasoning says ""for assessing the integrity"" but the NFR is about availability."
+104,OK,Verified.
+105,OK,Verified.
+106,OK,Verified. 
+107,OK,Verified.
+108,OK,Verified. 
+109,OK,Verified
+110,OK,Verified
+111,OK,Verified
+112,OK,Verified
+113,Line Issue,"(1) ""veditPatient.jsp"" does not exist — actual file is editPatient.jsp at WebRoot/auth/hcp-uap/editPatient.jsp. (2) SearchUsersAction.java 122-190 points to fuzzySearchForPatients() while getPatientID.jsp line 78 calls searchForPatientsWithName() (lines 102-115). Both methods demonstrate the same point (no per-HCP patient filtering), so the reasoning is correct — just the wrong method is cited."
+114,OK,Verified
+115,OK,Verified
+116,OK,Verified
+117,OK,Verified
+118,OK,Verified
+119,OK,Verified
+120,OK,Verified
+121,Line Issue,"Same two problems as ID 113: (1) ""veditPatient.jsp"" → editPatient.jsp. (2) SearchUsersAction.java 122-190 → should be 102-115."
+122,OK,Verified
+123,OK,Verified
+124,OK,Verified
+125,OK,Verified
+126,OK,Verified
+127,OK,Verified
+128,OK,Verified
+129,OK,Verified
+130,OK,Verified
+131,OK,Verified
+132,OK,Verified
+133,Minor,"Reasoning says ""treatment operations"" but requirement is about ""health care operations"", code still satisfies this"
+134,OK,Verified
+135,OK,Verified
+136,OK,Verified
+137,OK,Verified
+138,OK,Verified
+139,OK,Verified
+140,OK,Verified
+141,OK,Verified
+142,OK,Verified. 
+143,OK,Verified
+144,OK,Verified
+145,OK,Verified
+146,OK,Verified
+147,OK,Verified
+148,OK,Verified
+149,OK,Verified
+150,Minor,"Typo: ""recieving"" → ""receiving""."
+151,OK,Verified
+152,Issue,"requestRecordsRelease.java 147-165 — Should be requestRecordsRelease.jsp at WebRoot/auth/patient/requestRecordsRelease.jsp.
+153,OK,Verified
+154,OK,Verified
+155,Issue,"Same filename error: requestRecordsRelease.java → .jsp."
+156,OK,Verified
+157,OK,Verified
+158,OK,Verified
+159,OK,Verified
+160,OK,Verified
+161,OK,Verified
+162,OK,Verified
+163,OK,Verified
+164,OK,Verified
+165,OK,Verified
+166,Issue,Exact duplicate of ID 165 — same description / reasoning / legacy_id (104). 
+167,OK,Verified
+168,OK,Verified
+169,Minor,"Typo: ""Ther"" → ""There""."
+170,OK,Verified
+171,OK,Verified
+172,OK,Verified. Note: similar to ID 75 (same requirement and evidence).
+173,OK,Verified
+174,OK,Verified
+175,OK,Verified
+176,Minor,"Rated ""Denied"" while similar cases (psychotherapy notes IDs 65-67, genetic data IDs 28-30) are ""NA"" with the same reasoning pattern. Both ratings are defensible, I'm not sure if this differs since there is no concept"
+177,Minor,Same as ID 176.
+178,Minor,Same as ID 176.
+179,OK,Verified
+180,OK,Verified
