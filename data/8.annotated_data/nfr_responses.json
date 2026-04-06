@@ -2884,7 +2884,7 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-29T21:28:46.141Z",
-            "satisfaction_level": "Not Applicable",
+            "satisfaction_level": "Satisfied",
             "reasoning": "No consent capture implemented; nothing indicates consent is required or supported",
             "code_location": [],
             "comp": 0
@@ -4746,8 +4746,8 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-29T19:25:17.621Z",
-            "satisfaction_level": "",
-            "reasoning": "",
+            "satisfaction_level": "Weakly Satisfied",
+            "reasoning": "Disclosure for treatment to another provider is only available via patient-initiated records release (form posts to `RecordsReleaseServlet`).",
             "code_location": [],
             "comp": 0
         },
@@ -4874,9 +4874,9 @@
             "forced_own_assessment": "",
             "nfr_acknowledged": true,
             "timestamp": "2026-03-31T00:06:09.300Z",
-            "satisfaction_level": "",
-            "reasoning": "",
-            "code_location": [],
+            "satisfaction_level": "Denied",
+            "reasoning": "Patients table has only email (no consent/opt-in/fallback flags). EmailUtil sends mail blindly to FakeEmail; no logic for consent, bounce handling, or paper copy.",
+            "code_location": ["createTables.sql 55-94", "EmailUtil.java 13-24"],
             "comp": 0
         },
         {
